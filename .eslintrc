@@ -1,0 +1,11 @@
+{
+  "extends": "eslint-config-egg/typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "array-bracket-spacing": "off",
+    "arrow-parens": "off",
+    "@typescript-eslint/indent": "off"
+  }
+}
