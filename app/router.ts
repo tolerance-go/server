@@ -9,5 +9,10 @@ export default (app: Application) => {
   router.resources('users', `${apiPrefix}/users`, controller.users);
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
   router.resources('pages', `${apiPrefix}/pages`, controller.pages);
+  router.resources(
+    'components',
+    `${apiPrefix}/components`,
+    controller.components,
+  );
   router.resources('versions', `${apiPrefix}/versions`, controller.versions);
 };
