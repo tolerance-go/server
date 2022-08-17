@@ -6,10 +6,10 @@ import {
   Model,
 } from 'sequelize';
 
-export interface DataModel
+export interface DatabaseModel
   extends Model<
-    InferAttributes<DataModel>,
-    InferCreationAttributes<DataModel>
+    InferAttributes<DatabaseModel>,
+    InferCreationAttributes<DatabaseModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>;
@@ -24,7 +24,7 @@ export interface DataModel
 export default (app: Application) => {
   const { STRING, INTEGER, DATE, JSON } = app.Sequelize;
 
-  const Component = app.model.define<DataModel>('data', {
+  const Database = app.model.define<DatabaseModel>('database', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: STRING,
     desc: STRING,
@@ -35,12 +35,12 @@ export default (app: Application) => {
   });
 
   (
-    Component as typeof Component & {
+    Database as typeof Database & {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.Component.belongsTo(app.model.App);
+    app.model.Database.belongsTo(app.model.App);
   };
 
-  return Component;
+  return Database;
 };

@@ -15,5 +15,6 @@ export default (app: Application) => {
     controller.components,
   );
   router.resources('versions', `${apiPrefix}/versions`, controller.versions);
-  router.resources('datas', `${apiPrefix}/datas`, controller.datas);
+  router.resources('databases', `${apiPrefix}/databases`, controller.databases);
+  router.resources('histories', `${apiPrefix}/histories`, controller.histories);
 };
