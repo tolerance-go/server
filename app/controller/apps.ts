@@ -107,6 +107,48 @@ export default class AppController extends Controller {
   }
 
   /**
+   * @summary 更新 app
+   * @description
+   * @router put /api/apps/:id/stage-size
+   * @request path string id id
+   * @request body string data 舞台尺寸的 json 字符串
+   * @response 200 BaseResponse
+   */
+  async updateStageSize() {
+    const ctx = this.ctx;
+    const id = toInt(ctx.params.id);
+    const app = await ctx.model.App.findByPk(id);
+    if (!app) {
+      throw new Error('未找到该资源');
+    }
+
+    /** 如果只有一个参数，body 如果是 JSON string，会自动转成对象，这里再转换一下 */
+    await app.update({ stage_size_data: JSON.stringify(ctx.request.body) });
+    ctx.body = app;
+  }
+
+  /**
+   * @summary 更新 app
+   * @description
+   * @router put /api/apps/:id/history
+   * @request path string id id
+   * @request body string data 历史操作记录数据的 json 字符串
+   * @response 200 BaseResponse
+   */
+  async updateHistory() {
+    const ctx = this.ctx;
+    const id = toInt(ctx.params.id);
+    const app = await ctx.model.App.findByPk(id);
+    if (!app) {
+      throw new Error('未找到该资源');
+    }
+
+    /** 如果只有一个参数，body 如果是 JSON string，会自动转成对象，这里再转换一下 */
+    await app.update({ history_data: JSON.stringify(ctx.request.body) });
+    ctx.body = app;
+  }
+
+  /**
    * @summary 删除 app
    * @description
    * @router delete /api/apps/:id

@@ -5,7 +5,7 @@ import 'egg';
 import ExportApps from '../../../app/controller/apps';
 import ExportComponents from '../../../app/controller/components';
 import ExportDatabases from '../../../app/controller/databases';
-import ExportHistories from '../../../app/controller/histories';
+import ExportDiscusses from '../../../app/controller/discusses';
 import ExportHome from '../../../app/controller/home';
 import ExportPages from '../../../app/controller/pages';
 import ExportUsers from '../../../app/controller/users';
@@ -16,7 +16,7 @@ declare module 'egg' {
     apps: ExportApps;
     components: ExportComponents;
     databases: ExportDatabases;
-    histories: ExportHistories;
+    discusses: ExportDiscusses;
     home: ExportHome;
     pages: ExportPages;
     users: ExportUsers;

@@ -15,6 +15,9 @@ export interface DatabaseModel
   id: CreationOptional<number>;
   name: string;
   desc: string;
+  /** 逻辑创建和更新时间，优先级更高 */
+  logic_created_at: CreationOptional<string>;
+  logic_updated_at: CreationOptional<string>;
   created_at: CreationOptional<string>;
   updated_at: CreationOptional<string>;
   data?: string;
@@ -28,6 +31,8 @@ export default (app: Application) => {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: STRING,
     desc: STRING,
+    logic_created_at: DATE,
+    logic_updated_at: DATE,
     app_id: INTEGER,
     data: JSON,
     created_at: DATE,

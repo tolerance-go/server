@@ -22,9 +22,7 @@ export default class AppBoot implements IBoot {
   async didReady() {
     if (this.app.config.env === 'local') {
       console.log('start force sync model');
-      await this.app.model.sync({
-        alter: true,
-      });
+      await this.app.model.sync();
     }
   }
 

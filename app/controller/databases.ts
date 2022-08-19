@@ -28,7 +28,17 @@ export default class DatabaseController extends Controller {
     const databases = await ctx.model.Database.findAll({
       limit: toInt(ctx.query.limit),
       offset: toInt(ctx.query.offset),
-      order: [['created_at', 'ASC']],
+      order: [
+        [
+          // https://www.runoob.com/mysql/mysql-functions.html
+          this.app.Sequelize.fn(
+            'IFNULL',
+            this.app.Sequelize.col('logic_created_at'),
+            this.app.Sequelize.col('created_at'),
+          ),
+          'ASC',
+        ],
+      ],
       where: {
         ...(ctx.query.appId && {
           app_id: {
@@ -65,12 +75,16 @@ export default class DatabaseController extends Controller {
 
     ctx.validate(DatabaseDto.CreationDatabase, ctx.request.body);
 
-    const { name, desc, app_id, data } = ctx.request.body;
+    const { name, desc, app_id, data, logic_created_at, logic_updated_at } =
+      ctx.request.body;
+
     const user = await ctx.model.Database.create({
       name,
       desc,
       app_id,
       data,
+      logic_created_at,
+      logic_updated_at,
     });
     ctx.status = 200;
     ctx.body = user;

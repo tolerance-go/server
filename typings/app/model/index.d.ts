@@ -5,7 +5,7 @@ import 'egg';
 import ExportApp from '../../../app/model/app';
 import ExportComponent from '../../../app/model/component';
 import ExportDatabase from '../../../app/model/database';
-import ExportHistory from '../../../app/model/history';
+import ExportDiscuss from '../../../app/model/discuss';
 import ExportPage from '../../../app/model/page';
 import ExportUser from '../../../app/model/user';
 import ExportVersion from '../../../app/model/version';
@@ -15,7 +15,7 @@ declare module 'egg' {
     App: ReturnType<typeof ExportApp>;
     Component: ReturnType<typeof ExportComponent>;
     Database: ReturnType<typeof ExportDatabase>;
-    History: ReturnType<typeof ExportHistory>;
+    Discuss: ReturnType<typeof ExportDiscuss>;
     Page: ReturnType<typeof ExportPage>;
     User: ReturnType<typeof ExportUser>;
     Version: ReturnType<typeof ExportVersion>;

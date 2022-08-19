@@ -20,8 +20,9 @@
     "autod": "autod",
     "lint": "eslint . --ext .ts --resolve-plugins-relative-to .",
     "clean": "ets clean",
-    "init:db": "npx sequelize migration:generate --name=init-histories",
+    "init:db": "npx sequelize migration:generate --name=add-column-database",
     "migrate": "NODE_ENV=development npx sequelize db:migrate",
+    "migrate:undo": "NODE_ENV=development npx sequelize db:migrate:undo",
     "migrate:test": "NODE_ENV=test npx sequelize db:migrate",
     "migrate:production": "NODE_ENV=production npx sequelize db:migrate"
   },
