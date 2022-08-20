@@ -27,10 +27,11 @@ export interface DiscussModel
   containerHeight: number;
   containerLeft: number;
   containerTop: number;
+  resolved?: boolean;
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
 
   const Discuss = app.model.define<DiscussModel>('discuss', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -40,6 +41,10 @@ export default (app: Application) => {
     desc: STRING,
     left: INTEGER,
     top: INTEGER,
+    resolved: {
+      type: BOOLEAN,
+      defaultValue: false,
+    },
     belongsToComStatId: { type: STRING, field: 'belongs_to_com_stat_id' },
     belongsToComId: {
       type: STRING,

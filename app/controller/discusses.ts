@@ -28,7 +28,7 @@ export default class DiscussController extends Controller {
     const discusses = await ctx.model.Discuss.findAll({
       limit: toInt(ctx.query.limit),
       offset: toInt(ctx.query.offset),
-      order: [['created_at', 'ASC']],
+      order: [['created_at', 'DESC']],
       where: {
         ...(ctx.query.pageId && {
           page_id: {
@@ -77,9 +77,11 @@ export default class DiscussController extends Controller {
       containerHeight,
       containerLeft,
       containerTop,
+      resolved,
     } = ctx.request.body;
 
     const user = await ctx.model.Discuss.create({
+      resolved,
       title,
       desc,
       pageId,
@@ -101,7 +103,7 @@ export default class DiscussController extends Controller {
    * @description
    * @router put /api/discusses/:id
    * @request path integer id id
-   * @request body CreationDiscuss data 应用对象
+   * @request body UpdationDiscuss data 应用对象
    * @response 200 DiscussShowResponse
    */
   async update() {
@@ -121,7 +123,7 @@ export default class DiscussController extends Controller {
    * @summary 删除 app
    * @description
    * @router delete /api/discusses/:id
-   * @request path string id id
+   * @request path integer id id
    * @response 200 DiscussShowResponse
    */
   async destroy() {
