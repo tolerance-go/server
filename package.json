@@ -20,7 +20,7 @@
     "autod": "autod",
     "lint": "eslint . --ext .ts --resolve-plugins-relative-to .",
     "clean": "ets clean",
-    "init:db": "npx sequelize migration:generate --name=add-column-database",
+    "init:db": "npx sequelize migration:generate --name=discuss-update",
     "migrate": "NODE_ENV=development npx sequelize db:migrate",
     "migrate:undo": "NODE_ENV=development npx sequelize db:migrate:undo",
     "migrate:test": "NODE_ENV=test npx sequelize db:migrate",

@@ -13,18 +13,20 @@ export interface DiscussModel
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>;
-  created_at: CreationOptional<string>;
-  updated_at: CreationOptional<string>;
-  page_id: number;
-  title: string;
+  createdAt: CreationOptional<string>;
+  updatedAt: CreationOptional<string>;
+  pageId: number;
+  title: CreationOptional<string>;
   desc: CreationOptional<string>;
-  belongsToComId: number;
-  belongsToComStatId: number;
+  belongsToComId: string;
+  belongsToComStatId: string;
   left: number;
   top: number;
   /** 创建时候所属组件的长宽，用来后期动态算比例 */
   containerWidth: number;
   containerHeight: number;
+  containerLeft: number;
+  containerTop: number;
 }
 
 export default (app: Application) => {
@@ -32,17 +34,22 @@ export default (app: Application) => {
 
   const Discuss = app.model.define<DiscussModel>('discuss', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    createdAt: { type: DATE, field: 'created_at' },
+    updatedAt: { type: DATE, field: 'updated_at' },
     title: STRING,
     desc: STRING,
-    belongsToComId: INTEGER,
-    belongsToComStatId: INTEGER,
     left: INTEGER,
     top: INTEGER,
-    containerWidth: INTEGER,
-    containerHeight: INTEGER,
-    page_id: INTEGER,
-    created_at: DATE,
-    updated_at: DATE,
+    belongsToComStatId: { type: STRING, field: 'belongs_to_com_stat_id' },
+    belongsToComId: {
+      type: STRING,
+      field: 'belongs_to_com_id',
+    },
+    containerWidth: { type: INTEGER, field: 'container_width' },
+    containerHeight: { type: INTEGER, field: 'container_height' },
+    containerLeft: { type: INTEGER, field: 'container_left' },
+    containerTop: { type: INTEGER, field: 'container_top' },
+    pageId: { type: INTEGER, field: 'page_id' },
   });
 
   (

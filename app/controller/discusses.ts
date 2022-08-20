@@ -17,7 +17,7 @@ export default class DiscussController extends Controller {
    * @summary 获取列表
    * @description 描述
    * @router get /api/discusses 路径
-   * @request query integer appId appId
+   * @request query integer pageId pageId
    * @request query integer limit limit
    * @request query integer offset offset
    * @response 200 DiscussListResponse
@@ -30,9 +30,9 @@ export default class DiscussController extends Controller {
       offset: toInt(ctx.query.offset),
       order: [['created_at', 'ASC']],
       where: {
-        ...(ctx.query.appId && {
-          app_id: {
-            [Op.eq]: ctx.query.appId,
+        ...(ctx.query.pageId && {
+          page_id: {
+            [Op.eq]: ctx.query.pageId,
           },
         }),
       },
@@ -68,25 +68,29 @@ export default class DiscussController extends Controller {
     const {
       title,
       desc,
-      page_id,
-      belongsToComId,
-      belongsToComStatId,
+      pageId,
       left,
       top,
+      belongsToComId,
+      belongsToComStatId,
       containerWidth,
       containerHeight,
+      containerLeft,
+      containerTop,
     } = ctx.request.body;
 
     const user = await ctx.model.Discuss.create({
       title,
       desc,
-      page_id,
-      belongsToComId,
-      belongsToComStatId,
+      pageId,
       left,
       top,
+      belongsToComId,
+      belongsToComStatId,
       containerWidth,
       containerHeight,
+      containerLeft,
+      containerTop,
     });
     ctx.status = 200;
     ctx.body = user;
@@ -96,9 +100,9 @@ export default class DiscussController extends Controller {
    * @summary 更新 data
    * @description
    * @router put /api/discusses/:id
-   * @request path string id id
+   * @request path integer id id
    * @request body CreationDiscuss data 应用对象
-   * @response 200 BaseResponse
+   * @response 200 DiscussShowResponse
    */
   async update() {
     const ctx = this.ctx;

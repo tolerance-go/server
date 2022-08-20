@@ -31,3 +31,10 @@ $ npm start
 
 - Node.js 8.x
 - Typescript 2.8+
+
+## resources
+
+1. 数据表迁移
+
+https://sequelize.org/docs/v6/other-topics/migrations/
+https://sequelize.org/docs/v7/other-topics/query-interface/
