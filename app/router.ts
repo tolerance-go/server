@@ -22,4 +22,10 @@ export default (app: Application) => {
   router.resources('versions', `${apiPrefix}/versions`, controller.versions);
   router.resources('databases', `${apiPrefix}/databases`, controller.databases);
   router.resources('discusses', `${apiPrefix}/discusses`, controller.discusses);
+  router.get(
+    `${apiPrefix}/discusses-count-comments`,
+    controller.discusses.countComments,
+  );
+  router.resources('comments', `${apiPrefix}/comments`, controller.comments);
+  router.delete(`${apiPrefix}/every-comments`, controller.comments.destroyEvery);
 };

@@ -38,3 +38,14 @@ $ npm start
 
 https://sequelize.org/docs/v6/other-topics/migrations/
 https://sequelize.org/docs/v7/other-topics/query-interface/
+
+2. swagger
+
+https://github.com/tolerance-go/egg-swagger-doc-custom
+
+## 注意
+
+1. findAll 传 raw 的时候，boolean 类型的值会转成 0 和 1
+
+2. router 中自定义的 api，可能和 resources 有冲突
+   比如 /discusses-count-comments 是可以的，但是 /discusses/count-comments 和 resources('discusses') 就有冲突

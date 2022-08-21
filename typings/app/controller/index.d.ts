@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportApps from '../../../app/controller/apps';
+import ExportComments from '../../../app/controller/comments';
 import ExportComponents from '../../../app/controller/components';
 import ExportDatabases from '../../../app/controller/databases';
 import ExportDiscusses from '../../../app/controller/discusses';
@@ -14,6 +15,7 @@ import ExportVersions from '../../../app/controller/versions';
 declare module 'egg' {
   interface IController {
     apps: ExportApps;
+    comments: ExportComments;
     components: ExportComponents;
     databases: ExportDatabases;
     discusses: ExportDiscusses;

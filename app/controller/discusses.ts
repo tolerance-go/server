@@ -42,6 +42,50 @@ export default class DiscussController extends Controller {
   }
 
   /**
+   * @summary 获取列表
+   * @description 描述
+   * @router get /api/discusses-count-comments 路径
+   * @request query integer pageId pageId
+   * @response 200 CounterResponse
+   */
+  async countComments() {
+    const ctx = this.ctx;
+
+    const discusses = await ctx.model.Discuss.findAll({
+      limit: toInt(ctx.query.limit),
+      offset: toInt(ctx.query.offset),
+      order: [['created_at', 'DESC']],
+      where: {
+        ...(ctx.query.pageId && {
+          page_id: {
+            [Op.eq]: ctx.query.pageId,
+          },
+        }),
+      },
+      raw: true,
+    });
+
+    const counters = await Promise.all(
+      discusses.map((item) => {
+        return ctx.model.Comment.count({
+          where: {
+            ...(item.id && {
+              discuss_id: {
+                [Op.eq]: item.id,
+              },
+            }),
+          },
+        }).then((count) => ({
+          id: item.id,
+          count,
+        }));
+      }),
+    );
+
+    ctx.body = counters;
+  }
+
+  /**
    * @summary 查看
    * @description 描述
    * @router get /api/discusses/:id 路径
@@ -50,7 +94,24 @@ export default class DiscussController extends Controller {
    */
   async show() {
     const ctx = this.ctx;
-    ctx.body = await ctx.model.Discuss.findByPk(toInt(ctx.params.id));
+
+    const discuss = await ctx.model.Discuss.findByPk(toInt(ctx.params.id));
+
+    if (discuss) {
+      const count = ctx.model.Comment.count({
+        where: {
+          ...(discuss.id && {
+            discuss_id: {
+              [Op.eq]: discuss.id,
+            },
+          }),
+        },
+      });
+      ctx.body = {
+        ...discuss,
+        commentsCount: count,
+      };
+    }
   }
 
   /**
