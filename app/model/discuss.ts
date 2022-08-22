@@ -31,7 +31,7 @@ export interface DiscussModel
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
+  const { STRING, INTEGER, FLOAT, DATE, BOOLEAN } = app.Sequelize;
 
   const Discuss = app.model.define<DiscussModel>('discuss', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -39,8 +39,8 @@ export default (app: Application) => {
     updatedAt: { type: DATE, field: 'updated_at' },
     title: STRING,
     desc: STRING,
-    left: INTEGER,
-    top: INTEGER,
+    left: FLOAT,
+    top: FLOAT,
     resolved: {
       type: BOOLEAN,
       defaultValue: false,
@@ -50,10 +50,10 @@ export default (app: Application) => {
       type: STRING,
       field: 'belongs_to_com_id',
     },
-    containerWidth: { type: INTEGER, field: 'container_width' },
-    containerHeight: { type: INTEGER, field: 'container_height' },
-    containerLeft: { type: INTEGER, field: 'container_left' },
-    containerTop: { type: INTEGER, field: 'container_top' },
+    containerWidth: { type: FLOAT, field: 'container_width' },
+    containerHeight: { type: FLOAT, field: 'container_height' },
+    containerLeft: { type: FLOAT, field: 'container_left' },
+    containerTop: { type: FLOAT, field: 'container_top' },
     pageId: { type: INTEGER, field: 'page_id' },
   });
 
