@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportApp from '../../../app/model/app';
+import ExportComIheritRelation from '../../../app/model/comIheritRelation';
 import ExportComment from '../../../app/model/comment';
 import ExportComponent from '../../../app/model/component';
 import ExportDatabase from '../../../app/model/database';
@@ -14,6 +15,7 @@ import ExportVersion from '../../../app/model/version';
 declare module 'egg' {
   interface IModel {
     App: ReturnType<typeof ExportApp>;
+    ComIheritRelation: ReturnType<typeof ExportComIheritRelation>;
     Comment: ReturnType<typeof ExportComment>;
     Component: ReturnType<typeof ExportComponent>;
     Database: ReturnType<typeof ExportDatabase>;

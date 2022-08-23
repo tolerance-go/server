@@ -12,6 +12,11 @@ export default () => {
   return async function errorHandler(ctx, next) {
     try {
       await next();
+
+      ctx.body = {
+        success: true,
+        data: ctx.body,
+      };
     } catch (error: any) {
       // 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志
       ctx.app.emit('error', error, ctx);
@@ -31,8 +36,8 @@ export default () => {
         errorCode: 0,
         errorMessage:
           error.code === 'invalid_param' ? '参数格式错误' : '服务器内部错误',
-        // invalid_param 会出现 errors
-        data: error.errors ?? error.message,
+        // invalid_param 会出现 errors，TODO：把它序列化放到 message 里面去
+        // data: error.errors ?? error.message,
       };
 
       ctx.status = 200;

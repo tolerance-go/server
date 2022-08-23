@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportApps from '../../../app/controller/apps';
+import ExportComIheritRelations from '../../../app/controller/comIheritRelations';
 import ExportComments from '../../../app/controller/comments';
 import ExportComponents from '../../../app/controller/components';
 import ExportDatabases from '../../../app/controller/databases';
@@ -15,6 +16,7 @@ import ExportVersions from '../../../app/controller/versions';
 declare module 'egg' {
   interface IController {
     apps: ExportApps;
+    comIheritRelations: ExportComIheritRelations;
     comments: ExportComments;
     components: ExportComponents;
     databases: ExportDatabases;

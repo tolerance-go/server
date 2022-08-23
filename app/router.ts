@@ -27,5 +27,18 @@ export default (app: Application) => {
     controller.discusses.countComments,
   );
   router.resources('comments', `${apiPrefix}/comments`, controller.comments);
-  router.delete(`${apiPrefix}/every-comments`, controller.comments.destroyEvery);
+  router.delete(
+    `${apiPrefix}/every-comments`,
+    controller.comments.destroyEvery,
+  );
+
+  router.resources(
+    'comIheritRelations',
+    `${apiPrefix}/comIheritRelations`,
+    controller.comIheritRelations,
+  );
+  router.delete(
+    `${apiPrefix}/everyComIheritRelations`,
+    controller.comIheritRelations.destroyEvery,
+  );
 };
