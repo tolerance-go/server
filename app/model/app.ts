@@ -20,6 +20,7 @@ export interface AppModel
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
   title: string;
+  userId: string;
 }
 
 export default (app: Application) => {
@@ -31,6 +32,10 @@ export default (app: Application) => {
       defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
+    },
+    userId: {
+      type: UUID,
+      field: 'user_id',
     },
     title: STRING(30),
     appData: jsonButObjectType<AppModel>(app, 'appData', 'app_data'),
@@ -57,6 +62,9 @@ export default (app: Application) => {
     app.model.App.hasMany(app.model.Version);
     app.model.App.hasMany(app.model.Component);
     app.model.App.hasMany(app.model.Database);
+    app.model.App.belongsToMany(app.model.User, {
+      through: app.model.AppUser,
+    });
   };
 
   return App;

@@ -6,10 +6,15 @@ export default (app: Application) => {
   const { controller, router } = app;
 
   router.get('/', controller.home.index);
-  router.resources('users', `${apiPrefix}/users`, controller.users);
 
+  // app
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
-  router.delete(`${apiPrefix}/everyApp`, controller.apps.destroyEvery);
+  router.delete(`${apiPrefix}/everyApp`, controller.apps.bulkDestroy);
+  router.post(`${apiPrefix}/apps-share`, controller.apps.shareToUser);
+  router.get(
+    `${apiPrefix}/apps-include-user`,
+    controller.apps.indexIncludeUser,
+  );
 
   router.put(`${apiPrefix}/apps/:id/history`, controller.apps.updateHistory);
   router.put(
@@ -48,4 +53,28 @@ export default (app: Application) => {
     `${apiPrefix}/everyComIheritRelations`,
     controller.comIheritRelations.destroyEvery,
   );
+
+  // 用户
+  router.resources('users', `${apiPrefix}/users`, controller.users);
+  router.get(`${apiPrefix}/logout`, controller.users.logout);
+  router.get(
+    `${apiPrefix}/users-show-with-session`,
+    controller.users.showWithSession,
+  );
+  router.post(`${apiPrefix}/login`, controller.users.login);
+
+  // local 授权策略（账号密码）
+  // router.post(
+  //   `${apiPrefix}/login`,
+  //   app.passport.authenticate('local', {
+  //     successRedirect: '/',
+  //   }),
+  // );
+
+  // github 授权策略
+  const githubAuth = app.passport.authenticate('github', {
+    successReturnToOrRedirect: '/',
+  });
+  app.get(`${apiPrefix}/passport/github`, githubAuth);
+  app.get(`${apiPrefix}/passport/github/callback`, githubAuth);
 };

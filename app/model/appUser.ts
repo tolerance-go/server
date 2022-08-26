@@ -5,44 +5,41 @@ import {
   InferCreationAttributes,
   Model,
 } from 'sequelize';
-export interface UserModel
+
+export interface AppUserModel
   extends Model<
-    InferAttributes<UserModel>,
-    InferCreationAttributes<UserModel>
+    InferAttributes<AppUserModel>,
+    InferCreationAttributes<AppUserModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<string>;
-  nickname: CreationOptional<string>;
-  password: string;
-  username: string;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
+  userId: string;
+  appId: string;
 }
 
 export default (app: Application) => {
-  const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
+  const { UUID, UUIDV4, DATE } = app.Sequelize;
 
-  const User = app.model.define<UserModel>('user', {
+  const AppUser = app.model.define<AppUserModel>('appUser', {
     id: {
       type: UUID,
       defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
-    password: STRING(30),
-    nickname: STRING(30),
-    username: STRING(30),
+    userId: {
+      type: UUID,
+      field: 'user_id',
+    },
+    appId: {
+      type: UUID,
+      field: 'app_id',
+    },
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
   });
 
-  (
-    User as typeof User & {
-      associate: () => void;
-    }
-  ).associate = () => {
-    app.model.User.hasMany(app.model.App);
-  };
-
-  return User;
+  return AppUser;
 };

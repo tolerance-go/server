@@ -190,12 +190,12 @@ export default class DiscussController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     const id = toInt(ctx.params.id);
-    const app = await ctx.model.Discuss.findByPk(id);
-    if (!app) {
+    const discuss = await ctx.model.Discuss.findByPk(id);
+    if (!discuss) {
       throw new Error('未找到该资源');
     }
 
-    await app.destroy();
-    ctx.body = app;
+    await discuss.destroy();
+    ctx.body = discuss;
   }
 }

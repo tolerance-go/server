@@ -24,13 +24,20 @@ export default () => {
       //   message: "Validation Failed"
       // }
       // 从 error 对象上读出各个属性，设置到响应中
+
+      const formatErrorMsg = () => {
+        if (error.code === 'invalid_param') {
+          return `参数格式错误: ${JSON.stringify(error.errors)}`;
+        }
+        return `服务器内部错误: ${error.message ?? '未知'}`;
+      };
+
       ctx.body = {
         success: false,
         // @TODO: 业务代码可以控制 showType
         showType: ErrorShowType.ERROR_NOTIFICATION,
         errorCode: 0,
-        errorMessage:
-          error.code === 'invalid_param' ? '参数格式错误' : '服务器内部错误',
+        errorMessage: formatErrorMsg(),
         // invalid_param 会出现 errors，TODO：把它序列化放到 message 里面去
         // data: error.errors ?? error.message,
       };

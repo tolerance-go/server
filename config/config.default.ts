@@ -54,6 +54,13 @@ export default (appInfo: EggAppInfo) => {
     enable: true, // 默认 true
   };
 
+  config.passportGithub = {
+    key: 'd851b821e52ed67852f7',
+    secret: '6f00f773407344a7b783e667c26362589a86edc5',
+    // callbackURL: '/passport/github/callback',
+    // proxy: false,
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,

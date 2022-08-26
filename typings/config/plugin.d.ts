@@ -17,6 +17,8 @@ import 'egg-view';
 import 'egg-sequelize';
 import 'egg-swagger-doc-custom';
 import 'egg-validate';
+import 'egg-passport';
+import 'egg-passport-github';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -35,5 +37,7 @@ declare module 'egg' {
     sequelize?: EggPluginItem;
     swaggerdoc?: EggPluginItem;
     validate?: EggPluginItem;
+    passport?: EggPluginItem;
+    passportGithub?: EggPluginItem;
   }
 }

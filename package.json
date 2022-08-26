@@ -28,12 +28,16 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
+    "egg-passport": "^2.1.1",
+    "egg-passport-github": "^1.0.0",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^6.0.0",
     "egg-validate": "^2.0.2",
+    "invariant": "^2.2.4",
     "koa-static-cache": "^5.1.4",
     "lodash": "^4.17.21",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "@eggjs/tsconfig": "^1.0.0",

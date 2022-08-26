@@ -1,9 +1,8 @@
 import 'egg';
-import { factory } from 'factory-girl';
+import { ModelStatic } from 'sequelize';
+import { getAuthorization } from '../app/model/authorization';
 
 declare module 'egg' {
   // 扩展 app
-  interface Application {
-    factory: typeof factory;
-  }
+  interface Application {}
 }

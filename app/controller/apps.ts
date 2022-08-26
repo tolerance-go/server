@@ -18,8 +18,12 @@ export default class AppController extends Controller {
    * @request query string labels labels
    * @response 200 AppListResponse
    */
-  async index() {
+  async index(includeUser = false) {
     const ctx = this.ctx;
+
+    if (!ctx.isAuthenticated()) {
+      throw new Error('用户未登录');
+    }
 
     const apps = await ctx.model.App.findAll({
       limit: toInt(ctx.query.limit),
@@ -37,9 +41,24 @@ export default class AppController extends Controller {
           },
         }),
       },
+      include: includeUser ? [ctx.model.User] : undefined,
     });
 
     ctx.body = apps;
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 描述
+   * @router get /api/apps-include-user 路径
+   * @request query integer limit limit
+   * @request query integer offset offset
+   * @request query string title title
+   * @request query string labels labels
+   * @response 200 AppIncludeUserListResponse
+   */
+  async indexIncludeUser() {
+    await this.index(true);
   }
 
   /**
@@ -64,11 +83,49 @@ export default class AppController extends Controller {
   async create() {
     const ctx = this.ctx;
 
+    if (!ctx.isAuthenticated()) {
+      throw new Error('用户未登录');
+    }
+
     ctx.validate(AppDto.CreationApp, ctx.request.body);
 
-    const user = await ctx.model.App.create(ctx.request.body);
+    const user = await ctx.model.App.create({
+      ...ctx.request.body,
+      userId: ctx.user.id,
+    });
     ctx.status = 200;
     ctx.body = user;
+  }
+
+  /**
+   * @summary 将 app 分享给其他用户
+   * @description
+   * @router post /api/apps-share
+   * @request body ShareAppRequest 入参
+   * @response 200 ResultResponse
+   */
+  async shareToUser() {
+    const ctx = this.ctx;
+
+    if (!ctx.isAuthenticated()) {
+      throw new Error('用户未登录');
+    }
+
+    ctx.validate(AppDto.ShareAppRequest, ctx.request.body);
+
+    const { userIds, appId } = ctx.request.body;
+
+    const items = await ctx.model.AppUser.bulkCreate(
+      userIds.map((userId) => {
+        return {
+          userId,
+          appId,
+        };
+      }),
+    );
+
+    ctx.status = 200;
+    ctx.body = items;
   }
 
   /**
@@ -161,44 +218,19 @@ export default class AppController extends Controller {
    * @description
    * @router delete /api/everyApp
    * @request body array[integer] ids
-   * @response 200 AppListResponse
+   * @response 200 CountResponse
    */
-  async destroyEvery() {
+  async bulkDestroy() {
     const ctx = this.ctx;
 
-    let transaction;
-
-    try {
-      // get transaction
-      transaction = await this.ctx.model.transaction();
-
-      // step 1
-      const apps = await ctx.model.App.findAll({
-        where: {
-          id: {
-            [Op.in]: ctx.request.body.map((item) => toInt(item)) ?? [],
-          },
+    const destroyedRows = await ctx.model.App.destroy({
+      where: {
+        id: {
+          [Op.in]: ctx.request.body ?? [],
         },
-        transaction,
-      });
+      },
+    });
 
-      await Promise.all(
-        apps.map((item) =>
-          item.destroy({
-            transaction,
-          }),
-        ),
-      );
-
-      // commit
-      await transaction.commit();
-
-      ctx.body = apps;
-    } catch (err) {
-      // Rollback transaction only if the transaction object is defined
-      if (transaction) await transaction.rollback();
-
-      throw new Error('删除失败');
-    }
+    ctx.body = destroyedRows;
   }
 }
