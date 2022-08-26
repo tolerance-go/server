@@ -152,7 +152,7 @@ export default class CommentController extends Controller {
       // Rollback transaction only if the transaction object is defined
       if (transaction) await transaction.rollback();
 
-      ctx.body = [];
+      throw new Error('删除失败');
     }
   }
 }

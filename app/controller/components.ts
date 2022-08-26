@@ -65,15 +65,91 @@ export default class ComponentController extends Controller {
 
     ctx.validate(ComponentDto.CreationComponent, ctx.request.body);
 
-    const { name, desc, app_id, stage_data } = ctx.request.body;
+    const { name, desc, app_id, stage_data, ...rest } = ctx.request.body;
     const user = await ctx.model.Component.create({
       name,
       desc,
       app_id,
       stage_data,
+      ...rest,
     });
     ctx.status = 200;
     ctx.body = user;
+  }
+
+  /**
+   * @summary 创建 component
+   * @description
+   * @router post /api/components/createWithRelation
+   * @request body CreationWithRelationComponent data
+   * @response 200 CreationWithRelationComponentResponse
+   */
+  async createWithRelation() {
+    const ctx = this.ctx;
+
+    // ctx.validate(ComponentDto.CreationComponent, ctx.request.body);
+
+    let transaction;
+    const { fromComId, appId } = ctx.request.body;
+
+    try {
+      // get transaction
+      transaction = await this.ctx.model.transaction();
+
+      const comIheritRelation = await ctx.model.ComIheritRelation.create(
+        {
+          appId,
+          componentId: fromComId,
+          fromId: fromComId,
+        },
+        {
+          transaction,
+        },
+      );
+
+      const fromCom = await ctx.model.Component.findByPk(fromComId);
+
+      if (!fromCom) {
+        throw new Error('未找到该资源');
+      }
+
+      // step 1
+      const component = await ctx.model.Component.create(
+        {
+          name: fromCom.name,
+          desc: fromCom.desc,
+          app_id: appId,
+          stage_data: fromCom.stage_data,
+          usedInPageIds: fromCom.usedInPageIds,
+          comIheritRelationId: comIheritRelation.id,
+        },
+        {
+          transaction,
+        },
+      );
+
+      await comIheritRelation.update(
+        {
+          toId: component.id,
+        },
+        {
+          transaction,
+        },
+      );
+
+      // commit
+      await transaction.commit();
+
+      ctx.body = {
+        component,
+        comIheritRelation,
+      };
+    } catch (err) {
+      // Rollback transaction only if the transaction object is defined
+      if (transaction) await transaction.rollback();
+
+      throw new Error('创建失败');
+    }
   }
 
   /**

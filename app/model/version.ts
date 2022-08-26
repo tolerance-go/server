@@ -12,22 +12,27 @@ export interface VersionModel
     InferCreationAttributes<VersionModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<number>;
+  id: CreationOptional<string>;
   name: string;
   created_at: CreationOptional<string>;
   updated_at: CreationOptional<string>;
-  app_id: number;
+  app_id: string;
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
 
   const Version = app.model.define<VersionModel>('version', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    id: {
+      type: UUID,
+      defaultValue: UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     name: STRING,
     created_at: DATE,
     updated_at: DATE,
-    app_id: INTEGER,
+    app_id: UUID,
   });
 
   (
@@ -37,6 +42,7 @@ export default (app: Application) => {
   ).associate = () => {
     app.model.Version.belongsTo(app.model.App);
     app.model.Version.hasMany(app.model.Page);
+    app.model.Version.hasMany(app.model.Database);
   };
 
   return Version;

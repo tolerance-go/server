@@ -12,30 +12,36 @@ export interface CommentModel
     InferCreationAttributes<CommentModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<number>;
+  id: CreationOptional<string>;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
-  discussId: number;
+  discussId: string;
   content: string;
-  replyTo: CreationOptional<number>;
+  replyTo: CreationOptional<string>;
   likeNum: CreationOptional<number>;
   dislikeNum: CreationOptional<number>;
+  commentId: CreationOptional<string>;
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, UUID, UUIDV4, INTEGER, DATE } = app.Sequelize;
 
   const Comment = app.model.define<CommentModel>('comment', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    id: {
+      type: UUID,
+      defaultValue: UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
     discussId: {
-      type: INTEGER,
+      type: UUID,
       field: 'discuss_id',
     },
     content: STRING,
     replyTo: {
-      type: INTEGER,
+      type: UUID,
       field: 'reply_to',
     },
     likeNum: {
@@ -46,6 +52,10 @@ export default (app: Application) => {
       type: INTEGER,
       field: 'dislike_num',
     },
+    commentId: {
+      type: UUID,
+      field: 'comment_id',
+    },
   });
 
   (
@@ -54,6 +64,8 @@ export default (app: Application) => {
     }
   ).associate = () => {
     app.model.Comment.belongsTo(app.model.Discuss);
+    app.model.Comment.hasOne(app.model.Comment);
+    app.model.Comment.belongsTo(app.model.Comment);
   };
 
   return Comment;

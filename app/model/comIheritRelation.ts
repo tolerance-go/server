@@ -12,35 +12,45 @@ export interface ComIheritRelationModel
     InferCreationAttributes<ComIheritRelationModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<number>;
+  id: CreationOptional<string>;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
-  fromId: number;
-  toId: number;
-  appId: number;
+  fromId: string;
+  toId: CreationOptional<string>;
+  appId: string;
+  componentId: string;
 }
 
 export default (app: Application) => {
-  const { INTEGER, DATE } = app.Sequelize;
+  const { UUID, UUIDV4, DATE } = app.Sequelize;
 
   const ComIheritRelation = app.model.define<ComIheritRelationModel>(
     'comIheritRelation',
     {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      id: {
+        type: UUID,
+        defaultValue: UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
       fromId: {
-        type: INTEGER,
+        type: UUID,
         field: 'from_id',
       },
       toId: {
-        type: INTEGER,
+        type: UUID,
         field: 'to_id',
       },
       appId: {
-        type: INTEGER,
+        type: UUID,
         field: 'app_id',
       },
       createdAt: { type: DATE, field: 'created_at' },
       updatedAt: { type: DATE, field: 'updated_at' },
+      componentId: {
+        type: UUID,
+        field: 'component_id',
+      },
     },
   );
 
@@ -50,7 +60,8 @@ export default (app: Application) => {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.ComIheritRelation.belongsTo(app.model.App);
+    app.model.ComIheritRelation.hasOne(app.model.Component);
+    app.model.ComIheritRelation.belongsTo(app.model.Component);
   };
 
   return ComIheritRelation;

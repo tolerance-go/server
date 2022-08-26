@@ -7,7 +7,10 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index);
   router.resources('users', `${apiPrefix}/users`, controller.users);
+
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
+  router.delete(`${apiPrefix}/everyApp`, controller.apps.destroyEvery);
+
   router.put(`${apiPrefix}/apps/:id/history`, controller.apps.updateHistory);
   router.put(
     `${apiPrefix}/apps/:id/stage-size`,
@@ -18,6 +21,10 @@ export default (app: Application) => {
     'components',
     `${apiPrefix}/components`,
     controller.components,
+  );
+  router.post(
+    `${apiPrefix}/components/createWithRelation`,
+    controller.components.createWithRelation,
   );
   router.resources('versions', `${apiPrefix}/versions`, controller.versions);
   router.resources('databases', `${apiPrefix}/databases`, controller.databases);

@@ -12,26 +12,31 @@ export interface PageModel
     InferCreationAttributes<PageModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<number>;
+  id: CreationOptional<string>;
   path: string;
   created_at: CreationOptional<string>;
   updated_at: CreationOptional<string>;
   stage_data?: string;
-  app_id: number;
-  version_id: CreationOptional<number>;
+  app_id: string;
+  version_id: CreationOptional<string>;
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, DATE, JSON } = app.Sequelize;
+  const { STRING, UUID, UUIDV4, DATE, JSON } = app.Sequelize;
 
   const Page = app.model.define<PageModel>('page', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    id: {
+      type: UUID,
+      defaultValue: UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     path: STRING,
-    app_id: INTEGER,
+    app_id: UUID,
     stage_data: JSON,
     created_at: DATE,
     updated_at: DATE,
-    version_id: INTEGER,
+    version_id: UUID,
   });
 
   (

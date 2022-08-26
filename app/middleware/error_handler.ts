@@ -12,11 +12,6 @@ export default () => {
   return async function errorHandler(ctx, next) {
     try {
       await next();
-
-      ctx.body = {
-        success: true,
-        data: ctx.body,
-      };
     } catch (error: any) {
       // 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志
       ctx.app.emit('error', error, ctx);

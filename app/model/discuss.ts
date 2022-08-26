@@ -12,10 +12,10 @@ export interface DiscussModel
     InferCreationAttributes<DiscussModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<number>;
+  id: CreationOptional<string>;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
-  pageId: number;
+  pageId: string;
   title: CreationOptional<string>;
   desc: CreationOptional<string>;
   belongsToComId: string;
@@ -31,10 +31,15 @@ export interface DiscussModel
 }
 
 export default (app: Application) => {
-  const { STRING, INTEGER, FLOAT, DATE, BOOLEAN } = app.Sequelize;
+  const { STRING, UUID, UUIDV4, FLOAT, DATE, BOOLEAN } = app.Sequelize;
 
   const Discuss = app.model.define<DiscussModel>('discuss', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    id: {
+      type: UUID,
+      defaultValue: UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
     title: STRING,
@@ -54,7 +59,7 @@ export default (app: Application) => {
     containerHeight: { type: FLOAT, field: 'container_height' },
     containerLeft: { type: FLOAT, field: 'container_left' },
     containerTop: { type: FLOAT, field: 'container_top' },
-    pageId: { type: INTEGER, field: 'page_id' },
+    pageId: { type: UUID, field: 'page_id' },
   });
 
   (
