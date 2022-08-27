@@ -7,6 +7,10 @@ export default () => {
       'POST:/api/login',
       'POST:/api/users',
       'GET:/swagger-doc',
+      'GET:/swagger-ui.html',
+      'GET:/swagger-ui.css',
+      'GET:/swagger-ui-bundle.js',
+      'GET:/swagger-ui-standalone-preset.js',
     ];
     if (whiteList.includes(`${ctx.request.method}:${ctx.request.url}`)) {
       return next();

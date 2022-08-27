@@ -2,12 +2,7 @@ import { Controller } from 'egg';
 import { Op } from 'sequelize';
 import PageDto from '../contract/dto/page';
 // import utl from 'lodash';
-
-function toInt(str) {
-  if (typeof str === 'number') return str;
-  if (!str) return str;
-  return parseInt(str, 10) || 0;
-}
+import { toInt } from '../utils/toInt';
 
 /**
  * @controller PageController
@@ -17,10 +12,9 @@ export default class PageController extends Controller {
    * @summary 获取列表
    * @description 描述
    * @router get /api/pages 路径
-   * @request query integer appId appId
-   * @request query integer versionId versionId
-   * @request query integer limit limit
-   * @request query integer offset offset
+   * @request query *string appId
+   * @request query integer limit
+   * @request query integer offset
    * @response 200 PageListResponse
    */
   async index() {
@@ -31,18 +25,9 @@ export default class PageController extends Controller {
       offset: toInt(ctx.query.offset),
       order: [['created_at', 'ASC']],
       where: {
-        ...(ctx.query.appId && {
-          app_id: {
-            [Op.eq]: ctx.query.appId,
-          },
-        }),
-        version_id: ctx.query.versionId
-          ? {
-              [Op.eq]: ctx.query.versionId,
-            }
-          : {
-              [Op.is]: undefined,
-            },
+        appId: {
+          [Op.eq]: ctx.query.appId,
+        },
       },
     });
 
@@ -58,7 +43,7 @@ export default class PageController extends Controller {
    */
   async show() {
     const ctx = this.ctx;
-    ctx.body = await ctx.model.Page.findByPk(toInt(ctx.params.id));
+    ctx.body = await ctx.model.Page.findByPk(ctx.params.id);
   }
 
   /**
@@ -73,11 +58,7 @@ export default class PageController extends Controller {
 
     ctx.validate(PageDto.CreationPage, ctx.request.body);
 
-    const { path, app_id } = ctx.request.body;
-    const user = await ctx.model.Page.create({
-      path,
-      app_id,
-    });
+    const user = await ctx.model.Page.create(ctx.request.body);
     ctx.status = 200;
     ctx.body = user;
   }
@@ -92,14 +73,14 @@ export default class PageController extends Controller {
    */
   async update() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const page = await ctx.model.Page.findByPk(id);
     if (!page) {
       throw new Error('未找到该资源');
     }
 
     /** 如果只有一个参数，body 如果是 JSON string，会自动转成对象，这里再转换一下 */
-    await page.update({ stage_data: JSON.stringify(ctx.request.body) });
+    await page.update(ctx.request.body);
     ctx.body = page;
   }
 
@@ -112,7 +93,7 @@ export default class PageController extends Controller {
    */
   async destroy() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const app = await ctx.model.Page.findByPk(id);
     if (!app) {
       throw new Error('未找到该资源');

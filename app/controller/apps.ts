@@ -90,7 +90,7 @@ export default class AppController extends Controller {
    */
   async show() {
     const ctx = this.ctx;
-    ctx.body = await ctx.model.App.findByPk(toInt(ctx.params.id));
+    ctx.body = await ctx.model.App.findByPk(ctx.params.id);
   }
 
   /**
@@ -161,7 +161,7 @@ export default class AppController extends Controller {
 
     ctx.validate(AppDto.UpdationApp, ctx.request.body);
 
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const app = await ctx.model.App.findByPk(id);
     if (!app) {
       throw new Error('未找到该资源');
@@ -182,7 +182,7 @@ export default class AppController extends Controller {
    */
   async updateStageSize() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const app = await ctx.model.App.findByPk(id);
     if (!app) {
       throw new Error('未找到该资源');
@@ -203,7 +203,7 @@ export default class AppController extends Controller {
    */
   async updateHistory() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const app = await ctx.model.App.findByPk(id);
     if (!app) {
       throw new Error('未找到该资源');
@@ -223,7 +223,7 @@ export default class AppController extends Controller {
    */
   async destroy() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.params.id;
     const app = await ctx.model.App.findByPk(id);
     if (!app) {
       throw new Error('未找到该资源');
