@@ -21,9 +21,13 @@ export default class AppController extends Controller {
   async index(includeUser = false) {
     const ctx = this.ctx;
 
-    if (!ctx.isAuthenticated()) {
-      throw new Error('用户未登录');
-    }
+    const linkages = await ctx.model.AppUser.findAll({
+      where: {
+        userId: ctx.state.user.id,
+      },
+    });
+
+    const appIds = linkages.map((item) => item.appId);
 
     const apps = await ctx.model.App.findAll({
       limit: toInt(ctx.query.limit),
@@ -40,8 +44,24 @@ export default class AppController extends Controller {
             [Op.like]: `%${ctx.query.labels}%`,
           },
         }),
+        [Op.or]: [
+          {
+            userId: ctx.state.user.id,
+          },
+          {
+            id: {
+              [Op.in]: appIds,
+            },
+          },
+        ],
       },
-      include: includeUser ? [ctx.model.User] : undefined,
+      include: includeUser
+        ? [
+            {
+              model: ctx.model.User,
+            },
+          ]
+        : undefined,
     });
 
     ctx.body = apps;

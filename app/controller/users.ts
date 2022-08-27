@@ -2,6 +2,9 @@ import { Controller } from 'egg';
 import UserDto from '../contract/dto/user';
 import { Op } from 'sequelize';
 import { toInt } from '../utils/toInt';
+import { getPrivateKey } from '../helpers/getPrivateKey';
+import fs from 'fs-extra';
+import path from 'path';
 
 /**
  * @controller UserController
@@ -62,11 +65,7 @@ export default class UserController extends Controller {
   async showWithSession() {
     const ctx = this.ctx;
 
-    if (!ctx.isAuthenticated()) {
-      throw new Error('当前用户未登录');
-    }
-
-    ctx.body = ctx.user;
+    ctx.body = ctx.state.user;
   }
 
   /**
@@ -93,7 +92,9 @@ export default class UserController extends Controller {
       throw new Error('用户名重复');
     }
 
-    const user = await ctx.model.User.create(ctx.request.body);
+    const user = await ctx.model.User.create({
+      ...ctx.request.body,
+    });
     ctx.status = 200;
     ctx.body = user;
   }
@@ -158,12 +159,18 @@ export default class UserController extends Controller {
     const existsUser = await ctx.model.User.findOne({
       where: {
         username,
-        password,
       },
     });
 
     if (!existsUser) {
-      throw new Error('用户未注册');
+      throw new Error('用户不存在');
+    }
+
+    const key = getPrivateKey();
+    if (
+      key.decrypt(existsUser.password, 'utf8') !== key.decrypt(password, 'utf8')
+    ) {
+      throw new Error('用户密码不正确');
     }
 
     await ctx.login(existsUser);
@@ -187,5 +194,56 @@ export default class UserController extends Controller {
     ctx.body = ctx.user;
 
     ctx.logout();
+  }
+
+  /**
+   * @summary 用户文件上传
+   * @description
+   * @router post /api/upload
+   * @response 200 StringArrayResponse
+   */
+  async upload() {
+    const { ctx } = this;
+    console.log(ctx.request.body);
+    console.log('got %d files', ctx.request.files.length);
+
+    if (!ctx.isAuthenticated()) {
+      throw new Error('用户未登录');
+    }
+
+    const successItems: string[] = [];
+
+    try {
+      const folderPath = path.join('public', 'files', ctx.user.username);
+      const sysFolderPath = path.join(process.cwd(), 'app', folderPath);
+
+      // 遍历处理多个文件
+      for (const file of ctx.request.files) {
+        console.log('field: ' + file.filename);
+        console.log('filename: ' + file.filename);
+        console.log('encoding: ' + file.encoding);
+        console.log('mime: ' + file.mime);
+        console.log('tmp filepath: ' + file.filepath);
+
+        if (fs.existsSync(sysFolderPath) === false) {
+          fs.mkdirpSync(sysFolderPath);
+        }
+
+        fs.copySync(file.filepath, path.join(sysFolderPath, file.filename));
+
+        successItems.push(`/${path.join(folderPath, file.filename)}`);
+      }
+      ctx.status = 200;
+      ctx.body = successItems;
+    } catch {
+      throw new Error(
+        `文件上传失败，成功 ${successItems.length} 个: ${
+          successItems.join(',') || '--'
+        }`,
+      );
+    } finally {
+      // 需要删除临时文件
+      await ctx.cleanupRequestFiles();
+    }
   }
 }

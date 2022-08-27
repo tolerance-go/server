@@ -62,6 +62,7 @@ export default (app: Application) => {
     controller.users.showWithSession,
   );
   router.post(`${apiPrefix}/login`, controller.users.login);
+  router.post(`${apiPrefix}/upload`, controller.users.upload);
 
   // local 授权策略（账号密码）
   // router.post(

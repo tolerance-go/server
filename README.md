@@ -49,3 +49,9 @@ https://github.com/tolerance-go/egg-swagger-doc-custom
 
 2. router 中自定义的 api，可能和 resources 有冲突
    比如 /discusses-count-comments 是可以的，但是 /discusses/count-comments 和 resources('discusses') 就有冲突
+
+3. ctx.user 的内容可能是旧的
+
+~~是最近一次保存进 session 的内容，要取 id 重新查询~~
+
+通过中间件，已经自动更新了 ctx.user 内容

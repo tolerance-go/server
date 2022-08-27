@@ -8,7 +8,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1657513962993_5337';
 
   // add your egg config in here
-  config.middleware = ['errorHandler'];
+  config.middleware = ['errorHandler', 'authTest'];
 
   // add your special config in here
   const bizConfig = {
@@ -59,6 +59,21 @@ export default (appInfo: EggAppInfo) => {
     secret: '6f00f773407344a7b783e667c26362589a86edc5',
     // callbackURL: '/passport/github/callback',
     // proxy: false,
+  };
+
+  config.multipart = {
+    mode: 'file',
+    // 表单 Field 文件名长度限制
+    fieldNameSize: 100,
+    // 表单 Field 内容大小
+    fieldSize: '100kb',
+    // 表单 Field 最大个数
+    fields: 10,
+
+    // 单个文件大小
+    fileSize: '10mb',
+    // 允许上传的最大文件数
+    files: 10,
   };
 
   // the return config will combines to EggAppConfig

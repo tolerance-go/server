@@ -14,6 +14,8 @@ export interface UserModel
   id: CreationOptional<string>;
   nickname: CreationOptional<string>;
   password: string;
+  email: CreationOptional<string>;
+  avatar: CreationOptional<string>;
   username: string;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
@@ -29,7 +31,9 @@ export default (app: Application) => {
       allowNull: false,
       primaryKey: true,
     },
-    password: STRING(30),
+    email: STRING,
+    avatar: STRING,
+    password: STRING,
     nickname: STRING(30),
     username: STRING(30),
     createdAt: { type: DATE, field: 'created_at' },
