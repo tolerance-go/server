@@ -51,6 +51,7 @@ export default (appInfo: EggAppInfo) => {
     enableSecurity: false, // 是否启用授权，默认 false
     // enableValidate: true, // 是否启用参数校验，默认 true
     // routerMap: false, // 是否启用自动生成路由(实验功能)，默认 true
+    routerMap: false,
     enable: true, // 默认 true
   };
 

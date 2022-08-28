@@ -81,10 +81,10 @@ export default class VersionController extends Controller {
 
     await ctx.model.Page.bulkCreate(
       pages.map((page) => {
-        const { path, app_id, stage_data } = page.toJSON();
+        const { path, appId, stage_data } = page.toJSON();
         return {
           path,
-          app_id,
+          appId,
           stage_data,
           version_id: version.id,
         };

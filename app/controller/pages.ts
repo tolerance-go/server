@@ -68,8 +68,8 @@ export default class PageController extends Controller {
    * @description
    * @router put /api/pages/:id
    * @request path string id id
-   * @request body string data 舞台数据的 json 字符串
-   * @response 200 BaseResponse
+   * @request body UpdationPage data
+   * @response 200 PageShowResponse
    */
   async update() {
     const ctx = this.ctx;

@@ -7,6 +7,8 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index);
 
+  router.get(`${apiPrefix}/admin/gen-widgets`, controller.admin.index);
+
   // app
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
   router.delete(`${apiPrefix}/everyApp`, controller.apps.bulkDestroy);
@@ -78,4 +80,23 @@ export default (app: Application) => {
   });
   app.get(`${apiPrefix}/passport/github`, githubAuth);
   app.get(`${apiPrefix}/passport/github/callback`, githubAuth);
+
+  // widget
+  router.resources('widgets', `${apiPrefix}/widgets`, controller.widgets);
+  router.get(
+    `${apiPrefix}/widgets-indexIncludeGroupAndLib`,
+    controller.widgets.indexIncludeGroupAndLib,
+  );
+
+  router.resources('widgetGroups', `${apiPrefix}/widgetGroups`, controller.widgetGroups);
+  router.get(
+    `${apiPrefix}/widgetGroups-indexIncludeWidgets`,
+    controller.widgetGroups.indexIncludeWidgets,
+  );
+
+  router.resources('widgetLibs', `${apiPrefix}/widgetLibs`, controller.widgetLibs);
+  router.get(
+    `${apiPrefix}/widgetLibs-indexIncludeGroupsAndWidgets`,
+    controller.widgetLibs.indexIncludeGroupsAndWidgets,
+  );
 };

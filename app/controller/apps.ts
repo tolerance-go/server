@@ -103,10 +103,6 @@ export default class AppController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    if (!ctx.isAuthenticated()) {
-      throw new Error('用户未登录');
-    }
-
     ctx.validate(AppDto.CreationApp, ctx.request.body);
 
     const user = await ctx.model.App.create({
@@ -126,10 +122,6 @@ export default class AppController extends Controller {
    */
   async shareToUser() {
     const ctx = this.ctx;
-
-    if (!ctx.isAuthenticated()) {
-      throw new Error('用户未登录');
-    }
 
     ctx.validate(AppDto.ShareAppRequest, ctx.request.body);
 

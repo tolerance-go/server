@@ -11,6 +11,9 @@ export default () => {
       'GET:/swagger-ui.css',
       'GET:/swagger-ui-bundle.js',
       'GET:/swagger-ui-standalone-preset.js',
+      'GET:/api/admin/gen-widgets',
+      'GET:/favicon-16x16.png',
+      'GET:/favicon-32x32.png',
     ];
     if (whiteList.includes(`${ctx.request.method}:${ctx.request.url}`)) {
       return next();

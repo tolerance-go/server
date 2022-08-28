@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAdmin from '../../../app/controller/admin';
 import ExportApps from '../../../app/controller/apps';
 import ExportComIheritRelations from '../../../app/controller/comIheritRelations';
 import ExportComments from '../../../app/controller/comments';
@@ -12,9 +13,13 @@ import ExportHome from '../../../app/controller/home';
 import ExportPages from '../../../app/controller/pages';
 import ExportUsers from '../../../app/controller/users';
 import ExportVersions from '../../../app/controller/versions';
+import ExportWidgetGroups from '../../../app/controller/widgetGroups';
+import ExportWidgetLibs from '../../../app/controller/widgetLibs';
+import ExportWidgets from '../../../app/controller/widgets';
 
 declare module 'egg' {
   interface IController {
+    admin: ExportAdmin;
     apps: ExportApps;
     comIheritRelations: ExportComIheritRelations;
     comments: ExportComments;
@@ -25,5 +30,8 @@ declare module 'egg' {
     pages: ExportPages;
     users: ExportUsers;
     versions: ExportVersions;
+    widgetGroups: ExportWidgetGroups;
+    widgetLibs: ExportWidgetLibs;
+    widgets: ExportWidgets;
   }
 }

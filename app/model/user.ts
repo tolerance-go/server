@@ -46,6 +46,8 @@ export default (app: Application) => {
     }
   ).associate = () => {
     app.model.User.hasMany(app.model.App);
+    app.model.User.hasMany(app.model.WidgetLib);
+    app.model.User.hasMany(app.model.Widget);
   };
 
   return User;
