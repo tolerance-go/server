@@ -7,7 +7,11 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index);
 
-  router.get(`${apiPrefix}/admin/gen-widgets`, controller.admin.index);
+  // admin
+  router.get(`${apiPrefix}/admin/db-init`, controller.admin.init);
+
+  // license
+  router.resources('licenses', `${apiPrefix}/licenses`, controller.licenses);
 
   // app
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
@@ -83,20 +87,24 @@ export default (app: Application) => {
 
   // widget
   router.resources('widgets', `${apiPrefix}/widgets`, controller.widgets);
-  router.get(
-    `${apiPrefix}/widgets-indexIncludeGroupAndLib`,
-    controller.widgets.indexIncludeGroupAndLib,
+  router.post(`${apiPrefix}/widgets-include`, controller.widgets.index);
+
+  // widgetGroup
+  router.resources(
+    'widgetGroups',
+    `${apiPrefix}/widgetGroups`,
+    controller.widgetGroups,
+  );
+  router.post(
+    `${apiPrefix}/widgetGroups-include`,
+    controller.widgetGroups.index,
   );
 
-  router.resources('widgetGroups', `${apiPrefix}/widgetGroups`, controller.widgetGroups);
-  router.get(
-    `${apiPrefix}/widgetGroups-indexIncludeWidgets`,
-    controller.widgetGroups.indexIncludeWidgets,
+  // widgetLib
+  router.resources(
+    'widgetLibs',
+    `${apiPrefix}/widgetLibs`,
+    controller.widgetLibs,
   );
-
-  router.resources('widgetLibs', `${apiPrefix}/widgetLibs`, controller.widgetLibs);
-  router.get(
-    `${apiPrefix}/widgetLibs-indexIncludeGroupsAndWidgets`,
-    controller.widgetLibs.indexIncludeGroupsAndWidgets,
-  );
+  router.post(`${apiPrefix}/widgetLibs-include`, controller.widgetLibs.index);
 };

@@ -1,10 +1,12 @@
 import { Controller } from 'egg';
 import WidgetGroupDto from '../contract/dto/widget';
 // import utl from 'lodash';
+import { omitBy } from 'lodash';
 import { Op } from 'sequelize';
-import { toInt } from '../utils/toInt';
-import { WidgetGroupModel } from '../model/widgetGroup';
-import { FindOptions, Attributes } from 'sequelize';
+import BaseDto from '../contract/dto/base';
+import { convertIncludeToRuntime } from '../helpers/convertIncludeToRuntime';
+import { convertOrderToRuntime } from '../helpers/convertOrderToRuntime';
+import { convertWhereToRuntime } from '../helpers/convertWhereToRuntime';
 
 /**
  * @controller WidgetGroupController
@@ -12,58 +14,31 @@ import { FindOptions, Attributes } from 'sequelize';
 export default class WidgetGroupController extends Controller {
   /**
    * @summary 获取列表
-   * @description 描述
-   * @router get /api/widgetGroups 路径
-   * @request query integer limit limit
-   * @request query integer offset offset
-   * @request query string name name
-   * @request query string labels labels
+   * @description 获取列表
+   * @router post /api/widgetGroups-include
+   * @request body FindOptions findOptions
    * @response 200 WidgetGroupListResponse
    */
   async index() {
-    await this.baseIndex();
-  }
-
-  /**
-   * @summary 获取列表
-   * @description 描述
-   * @router get /api/widgetGroups-indexIncludeWidgets 路径
-   * @request query integer limit limit
-   * @request query integer offset offset
-   * @request query string name name
-   * @request query string labels labels
-   * @response 200 ShownWidgetGroupIncludeWidgetsListResponse
-   */
-  async indexIncludeWidgets() {
     const ctx = this.ctx;
-    await this.baseIndex({
-      include: [ctx.model.Widget],
-    });
-  }
+    ctx.validate(BaseDto.FindOptions, ctx.request.body);
 
-  private async baseIndex(options?: FindOptions<Attributes<WidgetGroupModel>>) {
-    const ctx = this.ctx;
-
-    const widgetGroups = await ctx.model.WidgetGroup.findAll({
-      limit: toInt(ctx.query.limit),
-      offset: toInt(ctx.query.offset),
-      order: [['created_at', 'DESC']],
-      where: {
-        ...(ctx.query.title && {
-          title: {
-            [Op.like]: `%${ctx.query.title}%`,
-          },
-        }),
-        ...(ctx.query.labels && {
-          labels: {
-            [Op.like]: `%${ctx.query.labels}%`,
-          },
-        }),
+    const { limit, offset, wheres, includes } = ctx.request.body;
+    const include = convertIncludeToRuntime(ctx.model, includes);
+    const where = convertWhereToRuntime(wheres);
+    const order = convertOrderToRuntime(ctx.request.body.order);
+    const findOptions = omitBy(
+      {
+        order,
+        limit,
+        offset,
+        where,
+        include,
       },
-      ...options,
-    });
-
-    ctx.body = widgetGroups;
+      (val) => val === undefined,
+    );
+    const widgets = await ctx.model.WidgetGroup.findAll(findOptions);
+    ctx.body = widgets;
   }
 
   /**

@@ -11,7 +11,7 @@ export default () => {
       'GET:/swagger-ui.css',
       'GET:/swagger-ui-bundle.js',
       'GET:/swagger-ui-standalone-preset.js',
-      'GET:/api/admin/gen-widgets',
+      'GET:/api/admin/db-init',
       'GET:/favicon-16x16.png',
       'GET:/favicon-32x32.png',
     ];

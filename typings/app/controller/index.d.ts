@@ -10,6 +10,7 @@ import ExportComponents from '../../../app/controller/components';
 import ExportDatabases from '../../../app/controller/databases';
 import ExportDiscusses from '../../../app/controller/discusses';
 import ExportHome from '../../../app/controller/home';
+import ExportLicenses from '../../../app/controller/licenses';
 import ExportPages from '../../../app/controller/pages';
 import ExportUsers from '../../../app/controller/users';
 import ExportVersions from '../../../app/controller/versions';
@@ -27,6 +28,7 @@ declare module 'egg' {
     databases: ExportDatabases;
     discusses: ExportDiscusses;
     home: ExportHome;
+    licenses: ExportLicenses;
     pages: ExportPages;
     users: ExportUsers;
     versions: ExportVersions;

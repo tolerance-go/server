@@ -10,14 +10,13 @@ import ExportComment from '../../../app/model/comment';
 import ExportComponent from '../../../app/model/component';
 import ExportDatabase from '../../../app/model/database';
 import ExportDiscuss from '../../../app/model/discuss';
+import ExportLicense from '../../../app/model/license';
 import ExportPage from '../../../app/model/page';
 import ExportUser from '../../../app/model/user';
 import ExportVersion from '../../../app/model/version';
 import ExportWidget from '../../../app/model/widget';
 import ExportWidgetGroup from '../../../app/model/widgetGroup';
 import ExportWidgetLib from '../../../app/model/widgetLib';
-import ExportWidgetLibUser from '../../../app/model/widgetLibUser';
-import ExportWidgetUser from '../../../app/model/widgetUser';
 
 declare module 'egg' {
   interface IModel {
@@ -29,13 +28,12 @@ declare module 'egg' {
     Component: ReturnType<typeof ExportComponent>;
     Database: ReturnType<typeof ExportDatabase>;
     Discuss: ReturnType<typeof ExportDiscuss>;
+    License: ReturnType<typeof ExportLicense>;
     Page: ReturnType<typeof ExportPage>;
     User: ReturnType<typeof ExportUser>;
     Version: ReturnType<typeof ExportVersion>;
     Widget: ReturnType<typeof ExportWidget>;
     WidgetGroup: ReturnType<typeof ExportWidgetGroup>;
     WidgetLib: ReturnType<typeof ExportWidgetLib>;
-    WidgetLibUser: ReturnType<typeof ExportWidgetLibUser>;
-    WidgetUser: ReturnType<typeof ExportWidgetUser>;
   }
 }

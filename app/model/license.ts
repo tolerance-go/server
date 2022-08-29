@@ -5,30 +5,27 @@ import {
   InferCreationAttributes,
   Model,
 } from 'sequelize';
-import { stringButArrayType } from '../utils/stringButArrayType';
 
-export interface WidgetModel
+export interface LicenseModel
   extends Model<
-    InferAttributes<WidgetModel>,
-    InferCreationAttributes<WidgetModel>
+    InferAttributes<LicenseModel>,
+    InferCreationAttributes<LicenseModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<string>;
-  desc: CreationOptional<string>;
-  labels: CreationOptional<string>;
-  name: string;
-  elementType: string;
+  widgetType: string;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
-  type: string;
   widgetGroupId: CreationOptional<string>;
-  userId: CreationOptional<string>;
+  widgetId: CreationOptional<string>;
+  widgetLibId: CreationOptional<string>;
+  userId: string;
 }
 
 export default (app: Application) => {
   const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
 
-  const Widget = app.model.define<WidgetModel>('widget', {
+  const License = app.model.define<LicenseModel>('license', {
     id: {
       type: UUID,
       defaultValue: UUIDV4,
@@ -39,13 +36,23 @@ export default (app: Application) => {
       type: UUID,
       field: 'widget_group_id',
     },
-    elementType: STRING,
-    type: STRING,
-    name: STRING(30),
-    desc: STRING,
+    widgetId: {
+      type: UUID,
+      field: 'widget_id',
+    },
+    widgetLibId: {
+      type: UUID,
+      field: 'widget_lib_id',
+    },
+    widgetType: {
+      type: STRING,
+      field: 'widget_type',
+      validate: {
+        isIn: [['widget', 'widgetGroup', 'widgetLib']],
+      },
+    },
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
-    labels: stringButArrayType<WidgetModel>(app, 'labels'),
     userId: {
       type: UUID,
       field: 'user_id',
@@ -53,14 +60,15 @@ export default (app: Application) => {
   });
 
   (
-    Widget as typeof Widget & {
+    License as typeof License & {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.Widget.belongsTo(app.model.License);
-    app.model.Widget.belongsTo(app.model.WidgetGroup);
-    app.model.Widget.belongsTo(app.model.User);
+    app.model.License.hasOne(app.model.Widget);
+    app.model.License.hasOne(app.model.WidgetGroup);
+    app.model.License.hasOne(app.model.WidgetLib);
+    app.model.License.belongsTo(app.model.User);
   };
 
-  return Widget;
+  return License;
 };

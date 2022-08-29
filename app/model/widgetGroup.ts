@@ -24,6 +24,7 @@ export class WidgetGroupModel extends Model<
   type: string;
   widgetLibId: CreationOptional<string>;
   widgets?: CreationAttributes<WidgetModel>[];
+  userId: CreationOptional<string>;
   static associations: {
     widgets: Association<WidgetGroupModel, WidgetModel>;
   };
@@ -49,6 +50,10 @@ export default (app: Application) => {
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
     labels: stringButArrayType<WidgetGroupModel>(app, 'labels'),
+    userId: {
+      type: UUID,
+      field: 'user_id',
+    },
   });
 
   (
@@ -56,8 +61,10 @@ export default (app: Application) => {
       associate: () => void;
     }
   ).associate = () => {
+    app.model.Widget.belongsTo(app.model.License);
     app.model.WidgetGroup.belongsTo(app.model.WidgetLib);
     app.model.WidgetGroup.hasMany(app.model.Widget);
+    app.model.WidgetGroup.belongsTo(app.model.User);
   };
 
   return WidgetGroup;

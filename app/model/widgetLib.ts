@@ -58,9 +58,8 @@ export default (app: Application) => {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.WidgetLib.belongsToMany(app.model.User, {
-      through: app.model.WidgetLibUser,
-    });
+    app.model.Widget.belongsTo(app.model.License);
+    app.model.WidgetLib.belongsTo(app.model.User);
     app.model.WidgetLib.hasMany(app.model.WidgetGroup);
   };
 

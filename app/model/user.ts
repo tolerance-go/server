@@ -4,7 +4,9 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
+  CreationAttributes,
 } from 'sequelize';
+import { WidgetLibModel } from './widgetLib';
 export interface UserModel
   extends Model<
     InferAttributes<UserModel>,
@@ -19,6 +21,7 @@ export interface UserModel
   username: string;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
+  widget?: CreationAttributes<WidgetLibModel>[];
 }
 
 export default (app: Application) => {
@@ -48,6 +51,7 @@ export default (app: Application) => {
     app.model.User.hasMany(app.model.App);
     app.model.User.hasMany(app.model.WidgetLib);
     app.model.User.hasMany(app.model.Widget);
+    app.model.User.hasMany(app.model.License);
   };
 
   return User;
