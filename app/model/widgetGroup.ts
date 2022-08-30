@@ -70,7 +70,7 @@ export default (app: Application) => {
     app.model.WidgetGroup.belongsTo(app.model.WidgetLib);
     app.model.WidgetGroup.hasMany(app.model.Widget);
     app.model.WidgetGroup.belongsTo(app.model.User);
-    app.model.WidgetGroup.hasMany(app.model.Review);
+    // app.model.WidgetGroup.hasMany(app.model.Review);
   };
 
   return WidgetGroup;

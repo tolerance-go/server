@@ -66,7 +66,7 @@ export default (app: Application) => {
     app.model.Widget.belongsTo(app.model.License);
     app.model.WidgetLib.belongsTo(app.model.User);
     app.model.WidgetLib.hasMany(app.model.WidgetGroup);
-    app.model.WidgetLib.hasMany(app.model.Review);
+    // app.model.WidgetLib.hasMany(app.model.Review);
   };
 
   return WidgetLib;

@@ -52,6 +52,7 @@ export default (app: Application) => {
     app.model.User.hasMany(app.model.WidgetLib);
     app.model.User.hasMany(app.model.Widget);
     app.model.User.hasMany(app.model.License);
+    // app.model.User.hasMany(app.model.Review);
   };
 
   return User;
