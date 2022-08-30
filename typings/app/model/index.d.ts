@@ -12,6 +12,7 @@ import ExportDatabase from '../../../app/model/database';
 import ExportDiscuss from '../../../app/model/discuss';
 import ExportLicense from '../../../app/model/license';
 import ExportPage from '../../../app/model/page';
+import ExportReview from '../../../app/model/review';
 import ExportUser from '../../../app/model/user';
 import ExportVersion from '../../../app/model/version';
 import ExportWidget from '../../../app/model/widget';
@@ -30,6 +31,7 @@ declare module 'egg' {
     Discuss: ReturnType<typeof ExportDiscuss>;
     License: ReturnType<typeof ExportLicense>;
     Page: ReturnType<typeof ExportPage>;
+    Review: ReturnType<typeof ExportReview>;
     User: ReturnType<typeof ExportUser>;
     Version: ReturnType<typeof ExportVersion>;
     Widget: ReturnType<typeof ExportWidget>;

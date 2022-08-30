@@ -12,6 +12,15 @@ export default (app: Application) => {
 
   // license
   router.resources('licenses', `${apiPrefix}/licenses`, controller.licenses);
+  router.post(`${apiPrefix}/licenses/findAll`, controller.licenses.findAll);
+  router.post(
+    `${apiPrefix}/licenses/findAndCountAll`,
+    controller.licenses.findAndCountAll,
+  );
+  router.delete(
+    `${apiPrefix}/licenses/bulkDestroy`,
+    controller.licenses.bulkDestroy,
+  );
 
   // app
   router.resources('apps', `${apiPrefix}/apps`, controller.apps);
@@ -87,7 +96,15 @@ export default (app: Application) => {
 
   // widget
   router.resources('widgets', `${apiPrefix}/widgets`, controller.widgets);
-  router.post(`${apiPrefix}/widgets-include`, controller.widgets.index);
+  router.post(`${apiPrefix}/widgets/findAll`, controller.widgets.findAll);
+  router.post(
+    `${apiPrefix}/widgets/findAndCountAll`,
+    controller.widgets.findAndCountAll,
+  );
+  router.delete(
+    `${apiPrefix}/widgets/bulkDestroy`,
+    controller.widgets.bulkDestroy,
+  );
 
   // widgetGroup
   router.resources(
@@ -96,8 +113,16 @@ export default (app: Application) => {
     controller.widgetGroups,
   );
   router.post(
-    `${apiPrefix}/widgetGroups-include`,
-    controller.widgetGroups.index,
+    `${apiPrefix}/widgetGroups/findAll`,
+    controller.widgetGroups.findAll,
+  );
+  router.post(
+    `${apiPrefix}/widgetGroups/findAndCountAll`,
+    controller.widgetGroups.findAndCountAll,
+  );
+  router.delete(
+    `${apiPrefix}/widgetGroups/bulkDestroy`,
+    controller.widgetGroups.bulkDestroy,
   );
 
   // widgetLib
@@ -106,5 +131,25 @@ export default (app: Application) => {
     `${apiPrefix}/widgetLibs`,
     controller.widgetLibs,
   );
-  router.post(`${apiPrefix}/widgetLibs-include`, controller.widgetLibs.index);
+  router.post(`${apiPrefix}/widgetLibs/findAll`, controller.widgetLibs.findAll);
+  router.post(
+    `${apiPrefix}/widgetLibs/findAndCountAll`,
+    controller.widgetLibs.findAndCountAll,
+  );
+  router.delete(
+    `${apiPrefix}/widgetLibs/bulkDestroy`,
+    controller.widgetLibs.bulkDestroy,
+  );
+
+  // review
+  router.resources('reviews', `${apiPrefix}/reviews`, controller.reviews);
+  router.post(`${apiPrefix}/reviews/findAll`, controller.reviews.findAll);
+  router.post(
+    `${apiPrefix}/reviews/findAndCountAll`,
+    controller.reviews.findAndCountAll,
+  );
+  router.delete(
+    `${apiPrefix}/reviews/bulkDestroy`,
+    controller.reviews.bulkDestroy,
+  );
 };
