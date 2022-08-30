@@ -1,37 +1,3 @@
-# hackernews-async-ts
-
-[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
-
-## QuickStart
-
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
-
-### Deploy
-
-```bash
-$ npm run tsc
-$ npm start
-```
-
-### Npm Scripts
-
-- Use `npm run lint` to check code style
-- Use `npm test` to run unit test
-- se `npm run clean` to clean compiled js at development mode once
-
-### Requirement
-
-- Node.js 8.x
-- Typescript 2.8+
-
 ## resources
 
 1. 数据表迁移
@@ -55,3 +21,5 @@ https://github.com/tolerance-go/egg-swagger-doc-custom
 ~~是最近一次保存进 session 的内容，要取 id 重新查询~~
 
 通过中间件，已经自动更新了 ctx.user 内容
+
+# view 存放前端文件，只是为了 需求原子化，在同一个 commit 上完成前后端开发
