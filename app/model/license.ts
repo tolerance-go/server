@@ -13,17 +13,15 @@ export interface LicenseModel
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<string>;
-  widgetType: string;
   createdAt: CreationOptional<string>;
   updatedAt: CreationOptional<string>;
-  widgetGroupId: CreationOptional<string>;
-  widgetId: CreationOptional<string>;
-  widgetLibId: CreationOptional<string>;
+  // 过期时间
+  expiration: CreationOptional<string>;
   userId: string;
 }
 
 export default (app: Application) => {
-  const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
+  const { UUID, UUIDV4, DATE } = app.Sequelize;
 
   const License = app.model.define<LicenseModel>('license', {
     id: {
@@ -32,25 +30,7 @@ export default (app: Application) => {
       allowNull: false,
       primaryKey: true,
     },
-    widgetGroupId: {
-      type: UUID,
-      field: 'widget_group_id',
-    },
-    widgetId: {
-      type: UUID,
-      field: 'widget_id',
-    },
-    widgetLibId: {
-      type: UUID,
-      field: 'widget_lib_id',
-    },
-    widgetType: {
-      type: STRING,
-      field: 'widget_type',
-      validate: {
-        isIn: [['widget', 'widgetGroup', 'widgetLib']],
-      },
-    },
+    expiration: DATE,
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
     userId: {

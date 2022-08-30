@@ -23,6 +23,7 @@ export interface WidgetModel
   type: string;
   widgetGroupId: CreationOptional<string>;
   userId: CreationOptional<string>;
+  licenseId: CreationOptional<string>;
 }
 
 export default (app: Application) => {
@@ -34,6 +35,10 @@ export default (app: Application) => {
       defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
+    },
+    licenseId: {
+      type: UUID,
+      field: 'license_id',
     },
     widgetGroupId: {
       type: UUID,
@@ -60,6 +65,7 @@ export default (app: Application) => {
     app.model.Widget.belongsTo(app.model.License);
     app.model.Widget.belongsTo(app.model.WidgetGroup);
     app.model.Widget.belongsTo(app.model.User);
+    app.model.Widget.hasMany(app.model.Review);
   };
 
   return Widget;

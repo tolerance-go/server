@@ -1,12 +1,9 @@
-import { convertOrderToRuntime } from './../helpers/convertOrderToRuntime';
 import { Controller } from 'egg';
-import WidgetDto from '../contract/dto/widget';
 import BaseDto from '../contract/dto/base';
-// import utl from 'lodash';
-import { omitBy } from 'lodash';
+import WidgetDto from '../contract/dto/widget';
 import { Op } from 'sequelize';
-import { convertIncludeToRuntime } from '../helpers/convertIncludeToRuntime';
-import { convertWhereToRuntime } from '../helpers/convertWhereToRuntime';
+import { getFindOptions } from '../helpers/getFindOptions';
+import { toInt } from '../utils/toInt';
 
 /**
  * @controller WidgetController
@@ -14,31 +11,48 @@ import { convertWhereToRuntime } from '../helpers/convertWhereToRuntime';
 export default class WidgetController extends Controller {
   /**
    * @summary 获取列表
-   * @description 获取列表
-   * @router post /api/widgets-include
-   * @request body FindOptions findOptions
+   * @description 描述
+   * @router get /api/widgets 路径
+   * @request query integer limit limit
+   * @request query integer offset offset
    * @response 200 WidgetListResponse
    */
   async index() {
     const ctx = this.ctx;
-    ctx.validate(BaseDto.FindOptions, ctx.request.body);
 
-    const { limit, offset, wheres, includes } = ctx.request.body;
-    const include = convertIncludeToRuntime(ctx.model, includes);
-    const where = convertWhereToRuntime(wheres);
-    const order = convertOrderToRuntime(ctx.request.body.order);
-    const findOptions = omitBy(
-      {
-        order,
-        limit,
-        offset,
-        where,
-        include,
-      },
-      (val) => val === undefined,
-    );
-    const widgets = await ctx.model.Widget.findAll(findOptions);
-    ctx.body = widgets;
+    ctx.body = await ctx.model.Widget.findAll({
+      limit: toInt(ctx.query.limit),
+      offset: toInt(ctx.query.offset),
+      order: [['created_at', 'DESC']],
+    });
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/widgets/findAll
+   * @request body FindOptions findOptions
+   * @response 200 WidgetListResponse
+   */
+  async findAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.Widget.findAll(findOptions);
+    ctx.body = result;
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/widgets/findAndCountAll
+   * @request body FindOptions findOptions
+   * @response 200 WidgetListAndCountResponse
+   */
+  async findAndCountAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.Widget.findAndCountAll(findOptions);
+    ctx.body = result;
   }
 
   /**
@@ -65,12 +79,11 @@ export default class WidgetController extends Controller {
 
     ctx.validate(WidgetDto.CreationWidget, ctx.request.body);
 
-    const user = await ctx.model.Widget.create({
+    ctx.body = await ctx.model.Widget.create({
       ...ctx.request.body,
       userId: ctx.user.id,
     });
     ctx.status = 200;
-    ctx.body = user;
   }
 
   /**
@@ -87,14 +100,12 @@ export default class WidgetController extends Controller {
     ctx.validate(WidgetDto.UpdationWidget, ctx.request.body);
 
     const id = ctx.params.id;
-    const app = await ctx.model.Widget.findByPk(id);
-    if (!app) {
+    const target = await ctx.model.Widget.findByPk(id);
+    if (!target) {
       throw new Error('未找到该资源');
     }
-
-    /** 如果只有一个参数，body 如果是 JSON string，会自动转成对象，这里再转换一下 */
-    await app.update(ctx.request.body);
-    ctx.body = app;
+    await target.update(ctx.request.body);
+    ctx.body = target;
   }
 
   /**
@@ -107,19 +118,19 @@ export default class WidgetController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     const id = ctx.params.id;
-    const app = await ctx.model.Widget.findByPk(id);
-    if (!app) {
+    const target = await ctx.model.Widget.findByPk(id);
+    if (!target) {
       throw new Error('未找到该资源');
     }
 
-    await app.destroy();
+    await target.destroy();
     ctx.status = 200;
   }
 
   /**
    * @summary 删除 app
    * @description
-   * @router delete /api/everyWidget
+   * @router delete /api/widgets/bulkDestroy
    * @request body array[integer] ids
    * @response 200 CountResponse
    */
@@ -129,7 +140,7 @@ export default class WidgetController extends Controller {
     const destroyedRows = await ctx.model.Widget.destroy({
       where: {
         id: {
-          [Op.in]: ctx.request.body ?? [],
+          [Op.in]: ctx.request.body,
         },
       },
     });

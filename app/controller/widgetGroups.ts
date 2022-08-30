@@ -1,12 +1,9 @@
 import { Controller } from 'egg';
 import WidgetGroupDto from '../contract/dto/widget';
-// import utl from 'lodash';
-import { omitBy } from 'lodash';
 import { Op } from 'sequelize';
 import BaseDto from '../contract/dto/base';
-import { convertIncludeToRuntime } from '../helpers/convertIncludeToRuntime';
-import { convertOrderToRuntime } from '../helpers/convertOrderToRuntime';
-import { convertWhereToRuntime } from '../helpers/convertWhereToRuntime';
+import { getFindOptions } from '../helpers/getFindOptions';
+import { toInt } from '../utils/toInt';
 
 /**
  * @controller WidgetGroupController
@@ -14,31 +11,48 @@ import { convertWhereToRuntime } from '../helpers/convertWhereToRuntime';
 export default class WidgetGroupController extends Controller {
   /**
    * @summary 获取列表
-   * @description 获取列表
-   * @router post /api/widgetGroups-include
-   * @request body FindOptions findOptions
+   * @description 描述
+   * @router get /api/widgetGroups 路径
+   * @request query integer limit limit
+   * @request query integer offset offset
    * @response 200 WidgetGroupListResponse
    */
   async index() {
     const ctx = this.ctx;
-    ctx.validate(BaseDto.FindOptions, ctx.request.body);
 
-    const { limit, offset, wheres, includes } = ctx.request.body;
-    const include = convertIncludeToRuntime(ctx.model, includes);
-    const where = convertWhereToRuntime(wheres);
-    const order = convertOrderToRuntime(ctx.request.body.order);
-    const findOptions = omitBy(
-      {
-        order,
-        limit,
-        offset,
-        where,
-        include,
-      },
-      (val) => val === undefined,
-    );
-    const widgets = await ctx.model.WidgetGroup.findAll(findOptions);
-    ctx.body = widgets;
+    ctx.body = await ctx.model.WidgetGroup.findAll({
+      limit: toInt(ctx.query.limit),
+      offset: toInt(ctx.query.offset),
+      order: [['created_at', 'DESC']],
+    });
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/widgetGroups/findAll
+   * @request body FindOptions findOptions
+   * @response 200 WidgetGroupListResponse
+   */
+  async findAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.WidgetGroup.findAll(findOptions);
+    ctx.body = result;
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/widgetGroups/findAndCountAll
+   * @request body FindOptions findOptions
+   * @response 200 WidgetGroupListAndCountResponse
+   */
+  async findAndCountAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.WidgetGroup.findAndCountAll(findOptions);
+    ctx.body = result;
   }
 
   /**
@@ -119,7 +133,7 @@ export default class WidgetGroupController extends Controller {
   /**
    * @summary 删除 app
    * @description
-   * @router delete /api/everyWidgetGroup
+   * @router delete /api/widgetGroups/bulkDestroy
    * @request body array[integer] ids
    * @response 200 CountResponse
    */

@@ -1,59 +1,59 @@
 import { Controller } from 'egg';
 import LicenseDto from '../contract/dto/widget';
-// import utl from 'lodash';
 import { Op } from 'sequelize';
-import { toInt } from '../utils/toInt';
-import { LicenseModel } from '../model/license';
-import { FindOptions, Attributes } from 'sequelize';
 import { convertDtoToRule } from '../helpers/convertDtoToRule';
+import { toInt } from '../utils/toInt';
+import { getFindOptions } from '../helpers/getFindOptions';
+import BaseDto from '../contract/dto/base';
 
 /**
  * @controller LicenseController
  */
 export default class LicenseController extends Controller {
   /**
-   * @summary 内部属性
+   * @summary 获取列表
    * @description 描述
-   * @router get /api/licenses/baseIndex 路径
-   * @response 200 ResultResponse
+   * @router get /api/license 路径
+   * @request query integer limit limit
+   * @request query integer offset offset
+   * @response 200 LicenseListResponse
    */
-  async baseIndex(options?: FindOptions<Attributes<LicenseModel>>) {
+  async index() {
     const ctx = this.ctx;
 
-    const licenses = await ctx.model.License.findAll({
+    ctx.body = await ctx.model.License.findAll({
       limit: toInt(ctx.query.limit),
       offset: toInt(ctx.query.offset),
       order: [['created_at', 'DESC']],
-      where: {
-        ...(ctx.query.title && {
-          title: {
-            [Op.like]: `%${ctx.query.title}%`,
-          },
-        }),
-        ...(ctx.query.labels && {
-          labels: {
-            [Op.like]: `%${ctx.query.labels}%`,
-          },
-        }),
-      },
-      ...options,
     });
-
-    ctx.body = licenses;
   }
 
   /**
    * @summary 获取列表
-   * @description 描述
-   * @router get /api/licenses 路径
-   * @request query integer limit limit
-   * @request query integer offset offset
-   * @request query string name name
-   * @request query string labels labels
+   * @description 获取列表
+   * @router post /api/license/findAll
+   * @request body FindOptions findOptions
    * @response 200 LicenseListResponse
    */
-  async index() {
-    await this.baseIndex();
+  async findAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.License.findAll(findOptions);
+    ctx.body = result;
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/license/findAndCountAll
+   * @request body FindOptions findOptions
+   * @response 200 LicenseListAndCountResponse
+   */
+  async findAndCountAll() {
+    const ctx = this.ctx;
+    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const result = await ctx.model.License.findAndCountAll(findOptions);
+    ctx.body = result;
   }
 
   /**
@@ -137,7 +137,7 @@ export default class LicenseController extends Controller {
   /**
    * @summary 删除 app
    * @description
-   * @router delete /api/everyLicense
+   * @router delete /api/licenses/bulkDestroy
    * @request body array[integer] ids
    * @response 200 CountResponse
    */
