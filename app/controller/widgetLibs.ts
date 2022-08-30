@@ -1,7 +1,5 @@
 import { Controller } from 'egg';
-import WidgetLibDto from '../contract/dto/widget';
 import { Op } from 'sequelize';
-import BaseDto from '../contract/dto/base';
 import { getFindOptions } from '../helpers/getFindOptions';
 import { toInt } from '../utils/toInt';
 
@@ -36,7 +34,7 @@ export default class WidgetLibController extends Controller {
    */
   async findAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
     const result = await ctx.model.WidgetLib.findAll(findOptions);
     ctx.body = result;
   }
@@ -50,7 +48,7 @@ export default class WidgetLibController extends Controller {
    */
   async findAndCountAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
     const result = await ctx.model.WidgetLib.findAndCountAll(findOptions);
     ctx.body = result;
   }
@@ -77,7 +75,7 @@ export default class WidgetLibController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(WidgetLibDto.CreationWidgetLib, ctx.request.body);
+    ctx.validate(ctx.rule.CreationWidgetLib, ctx.request.body);
 
     const user = await ctx.model.WidgetLib.create({
       ...ctx.request.body,
@@ -98,7 +96,7 @@ export default class WidgetLibController extends Controller {
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(WidgetLibDto.UpdationWidgetLib, ctx.request.body);
+    ctx.validate(ctx.rule.UpdationWidgetLib, ctx.request.body);
 
     const id = ctx.params.id;
     const app = await ctx.model.WidgetLib.findByPk(id);

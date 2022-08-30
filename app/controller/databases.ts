@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import DatabaseDto from '../contract/dto/database';
 // import utl from 'lodash';
 
 function toInt(str) {
@@ -73,7 +72,7 @@ export default class DatabaseController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(DatabaseDto.CreationDatabase, ctx.request.body);
+    ctx.validate(ctx.rule.CreationDatabase, ctx.request.body);
 
     const { name, desc, app_id, data, logic_created_at, logic_updated_at } =
       ctx.request.body;

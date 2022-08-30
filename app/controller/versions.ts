@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import VersionDto from '../contract/dto/version';
 
 function toInt(str) {
   if (typeof str === 'number') return str;
@@ -62,7 +61,7 @@ export default class VersionController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(VersionDto.CreationVersion, ctx.request.body);
+    ctx.validate(ctx.rule.CreationVersion, ctx.request.body);
 
     const { name, app_id, pageIds } = ctx.request.body;
 

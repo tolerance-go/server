@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import ComIheritRelation from '../contract/dto/comIheritRelation';
 // import utl from 'lodash';
 
 function toInt(str) {
@@ -63,7 +62,7 @@ export default class ComIheritRelationController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ComIheritRelation.CreationComIheritRelation, ctx.request.body);
+    ctx.validate(ctx.rule.CreationComIheritRelation, ctx.request.body);
 
     const user = await ctx.model.ComIheritRelation.create(ctx.request.body);
     ctx.status = 200;

@@ -1,10 +1,7 @@
 import { Controller } from 'egg';
-import LicenseDto from '../contract/dto/widget';
 import { Op } from 'sequelize';
-import { convertDtoToRule } from '../helpers/convertDtoToRule';
-import { toInt } from '../utils/toInt';
 import { getFindOptions } from '../helpers/getFindOptions';
-import BaseDto from '../contract/dto/base';
+import { toInt } from '../utils/toInt';
 
 /**
  * @controller LicenseController
@@ -37,7 +34,7 @@ export default class LicenseController extends Controller {
    */
   async findAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
     const result = await ctx.model.License.findAll(findOptions);
     ctx.body = result;
   }
@@ -51,7 +48,7 @@ export default class LicenseController extends Controller {
    */
   async findAndCountAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, BaseDto.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
     const result = await ctx.model.License.findAndCountAll(findOptions);
     ctx.body = result;
   }
@@ -78,10 +75,7 @@ export default class LicenseController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(
-      convertDtoToRule(LicenseDto.CreationLicense),
-      ctx.request.body,
-    );
+    ctx.validate(ctx.rule.CreationLicense, ctx.request.body);
 
     const user = await ctx.model.License.create({
       ...ctx.request.body,
@@ -102,7 +96,7 @@ export default class LicenseController extends Controller {
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(LicenseDto.UpdationLicense, ctx.request.body);
+    ctx.validate(ctx.rule.UpdationLicense, ctx.request.body);
 
     const id = ctx.params.id;
     const app = await ctx.model.License.findByPk(id);

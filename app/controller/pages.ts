@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import PageDto from '../contract/dto/page';
 // import utl from 'lodash';
 import { toInt } from '../utils/toInt';
 
@@ -56,7 +55,7 @@ export default class PageController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(PageDto.CreationPage, ctx.request.body);
+    ctx.validate(ctx.rule.CreationPage, ctx.request.body);
 
     const user = await ctx.model.Page.create(ctx.request.body);
     ctx.status = 200;

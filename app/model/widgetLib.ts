@@ -25,7 +25,6 @@ export class WidgetLibModel extends Model<
   type: string;
   userId: CreationOptional<string>;
   widgetGroups?: CreationAttributes<WidgetGroupModel>[];
-  licenseId: CreationOptional<string>;
   static associations: {
     widgetGroups: Association<WidgetLibModel, WidgetGroupModel>;
     users: Association<WidgetLibModel, UserModel>;
@@ -46,10 +45,6 @@ export default (app: Application) => {
       type: UUID,
       field: 'user_id',
     },
-    licenseId: {
-      type: UUID,
-      field: 'license_id',
-    },
     type: STRING,
     name: STRING(30),
     desc: STRING,
@@ -63,10 +58,10 @@ export default (app: Application) => {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.Widget.belongsTo(app.model.License);
+    app.model.WidgetLib.hasMany(app.model.License);
     app.model.WidgetLib.belongsTo(app.model.User);
     app.model.WidgetLib.hasMany(app.model.WidgetGroup);
-    // app.model.WidgetLib.hasMany(app.model.Review);
+    app.model.WidgetLib.hasMany(app.model.Review);
   };
 
   return WidgetLib;

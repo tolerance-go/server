@@ -6,6 +6,9 @@ const { Identity, Timestamp, User } = require('../../constants/dto');
 
 const Base = {
   expiration: { type: 'string', required: false },
+  widgetId: { type: 'string', required: false },
+  widgetLibId: { type: 'string', required: false },
+  widgetGroupId: { type: 'string', required: false },
 };
 
 const ShownLicense = {

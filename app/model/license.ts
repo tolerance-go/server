@@ -18,6 +18,9 @@ export interface LicenseModel
   // 过期时间
   expiration: CreationOptional<string>;
   userId: string;
+  widgetGroupId: CreationOptional<string>;
+  widgetLibId: CreationOptional<string>;
+  widgetId: CreationOptional<string>;
 }
 
 export default (app: Application) => {
@@ -29,6 +32,18 @@ export default (app: Application) => {
       defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
+    },
+    widgetGroupId: {
+      type: UUID,
+      field: 'widget_group_id',
+    },
+    widgetId: {
+      type: UUID,
+      field: 'widget_id',
+    },
+    widgetLibId: {
+      type: UUID,
+      field: 'widget_lib_id',
     },
     expiration: DATE,
     createdAt: { type: DATE, field: 'created_at' },
@@ -44,9 +59,9 @@ export default (app: Application) => {
       associate: () => void;
     }
   ).associate = () => {
-    app.model.License.hasOne(app.model.Widget);
-    app.model.License.hasOne(app.model.WidgetGroup);
-    app.model.License.hasOne(app.model.WidgetLib);
+    app.model.License.belongsTo(app.model.Widget);
+    app.model.License.belongsTo(app.model.WidgetGroup);
+    app.model.License.belongsTo(app.model.WidgetLib);
     app.model.License.belongsTo(app.model.User);
   };
 

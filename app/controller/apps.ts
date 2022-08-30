@@ -1,5 +1,4 @@
 import { Controller } from 'egg';
-import AppDto from '../contract/dto/app';
 // import utl from 'lodash';
 import { Op } from 'sequelize';
 import { toInt } from '../utils/toInt';
@@ -103,7 +102,7 @@ export default class AppController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(AppDto.CreationApp, ctx.request.body);
+    ctx.validate(ctx.rule.CreationApp, ctx.request.body);
 
     const user = await ctx.model.App.create({
       ...ctx.request.body,
@@ -123,7 +122,7 @@ export default class AppController extends Controller {
   async shareToUser() {
     const ctx = this.ctx;
 
-    ctx.validate(AppDto.ShareAppRequest, ctx.request.body);
+    ctx.validate(ctx.rule.ShareAppRequest, ctx.request.body);
 
     const { userIds, appId } = ctx.request.body;
 
@@ -151,7 +150,7 @@ export default class AppController extends Controller {
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(AppDto.UpdationApp, ctx.request.body);
+    ctx.validate(ctx.rule.UpdationApp, ctx.request.body);
 
     const id = ctx.params.id;
     const app = await ctx.model.App.findByPk(id);

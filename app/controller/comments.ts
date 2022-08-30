@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import CommentDto from '../contract/dto/comment';
 // import utl from 'lodash';
 
 function toInt(str) {
@@ -63,7 +62,7 @@ export default class CommentController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(CommentDto.CreationComment, ctx.request.body);
+    ctx.validate(ctx.rule.CreationComment, ctx.request.body);
 
     const user = await ctx.model.Comment.create(ctx.request.body);
     ctx.status = 200;

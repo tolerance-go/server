@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import DiscussDto from '../contract/dto/discuss';
 // import utl from 'lodash';
 
 function toInt(str) {
@@ -124,7 +123,7 @@ export default class DiscussController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(DiscussDto.CreationDiscuss, ctx.request.body);
+    ctx.validate(ctx.rule.CreationDiscuss, ctx.request.body);
 
     const {
       title,

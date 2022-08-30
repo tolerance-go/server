@@ -1,10 +1,9 @@
 import { Controller } from 'egg';
-import UserDto from '../contract/dto/user';
-import { Op } from 'sequelize';
-import { toInt } from '../utils/toInt';
-import { getPrivateKey } from '../helpers/getPrivateKey';
 import fs from 'fs-extra';
 import path from 'path';
+import { Op } from 'sequelize';
+import { getPrivateKey } from '../helpers/getPrivateKey';
+import { toInt } from '../utils/toInt';
 
 /**
  * @controller UserController
@@ -78,7 +77,7 @@ export default class UserController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(UserDto.CreationUser, ctx.request.body);
+    ctx.validate(ctx.rule.CreationUser, ctx.request.body);
 
     const { username } = ctx.request.body;
 
@@ -110,7 +109,7 @@ export default class UserController extends Controller {
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(UserDto.UpdationUser, ctx.request.body);
+    ctx.validate(ctx.rule.UpdationUser, ctx.request.body);
 
     const id = toInt(ctx.params.id);
     const app = await ctx.model.User.findByPk(id);
@@ -152,7 +151,7 @@ export default class UserController extends Controller {
   async login() {
     const ctx = this.ctx;
 
-    ctx.validate(UserDto.CreationUser, ctx.request.body);
+    ctx.validate(ctx.rule.CreationUser, ctx.request.body);
 
     const { username, password } = ctx.request.body;
 

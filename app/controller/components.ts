@@ -1,6 +1,5 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
-import ComponentDto from '../contract/dto/component';
 // import utl from 'lodash';
 
 function toInt(str) {
@@ -63,7 +62,7 @@ export default class ComponentController extends Controller {
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ComponentDto.CreationComponent, ctx.request.body);
+    ctx.validate(ctx.rule.CreationComponent, ctx.request.body);
 
     const { name, desc, app_id, stage_data, ...rest } = ctx.request.body;
     const user = await ctx.model.Component.create({

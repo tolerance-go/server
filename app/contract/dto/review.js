@@ -20,16 +20,7 @@ const ShownReview = {
   ...Base,
 };
 
-const ShownReviewIncludeGroupIncludeLib = {
-  ...ShownReview,
-  widgetGroup: {
-    type: 'ShownReviewGroupIncludeLib',
-    required: true,
-  },
-};
-
 module.exports = {
-  ShownReviewIncludeGroupIncludeLib,
   Review: {
     ...Identity,
     ...Base,
