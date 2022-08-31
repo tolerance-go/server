@@ -20,12 +20,14 @@ export default () => {
     }
 
     if (!ctx.isAuthenticated()) {
+      ctx.status = 401;
       throw new Error('用户未登录');
     }
 
     const user = await ctx.model.User.findByPk(ctx.user.id);
 
     if (!user) {
+      ctx.status = 401;
       throw new Error('token 失效');
     }
 
