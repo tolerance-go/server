@@ -1,38 +1,29 @@
 import { Application } from 'egg';
-import {
-  CreationAttributes,
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  Association,
-} from 'sequelize';
+import { Association, Model } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
 import { UserModel } from './user';
-import { WidgetModel } from './widget';
+import { CreationWidgetEntity, WidgetModel } from './widget';
 import { WidgetLibModel } from './widgetLib';
 
-export class WidgetGroupModel extends Model<
-  InferAttributes<WidgetGroupModel>,
-  InferCreationAttributes<WidgetGroupModel>
-> {
-  // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
-  desc: CreationOptional<string>;
-  labels: CreationOptional<string>;
+export type WidgetGroupEntity = {
+  id?: string;
+  desc?: string;
+  labels?: string;
   name: string;
-  createdAt: CreationOptional<string>;
-  updatedAt: CreationOptional<string>;
+  createdAt?: string;
+  updatedAt?: string;
   type: string;
-  widgetLibId: CreationOptional<string>;
-  widgets?: CreationAttributes<WidgetModel>[];
-  userId: CreationOptional<string>;
-  static associations: {
-    user: Association<WidgetGroupModel, UserModel>;
-    widgets: Association<WidgetGroupModel, WidgetModel>;
-    widgetLib: Association<WidgetGroupModel, WidgetLibModel>;
-  };
-}
+  widgetLibId?: string;
+  userId?: string;
+};
+
+export type CreationWidgetGroupEntity = WidgetGroupEntity & {
+  widgets?: CreationWidgetEntity[];
+};
+export type WidgetGroupModel = Model<
+  Required<WidgetGroupEntity>,
+  CreationWidgetGroupEntity
+>;
 
 export default (app: Application) => {
   const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
@@ -53,18 +44,23 @@ export default (app: Application) => {
     desc: STRING,
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
-    labels: stringButArrayType<WidgetGroupModel>(app, 'labels'),
+    labels: stringButArrayType<WidgetGroupEntity>(app, 'labels'),
     userId: {
       type: UUID,
       field: 'user_id',
     },
   });
 
-  (
-    WidgetGroup as typeof WidgetGroup & {
-      associate: () => void;
-    }
-  ).associate = () => {
+  const next = WidgetGroup as typeof WidgetGroup & {
+    associate: () => void;
+    associations: {
+      user: Association<WidgetGroupModel, UserModel>;
+      widgets: Association<WidgetGroupModel, WidgetModel>;
+      widgetLib: Association<WidgetGroupModel, WidgetLibModel>;
+    };
+  };
+
+  next.associate = () => {
     app.model.WidgetGroup.hasMany(app.model.License);
     app.model.WidgetGroup.hasMany(app.model.Widget);
     app.model.WidgetGroup.belongsTo(app.model.WidgetLib);
@@ -72,5 +68,5 @@ export default (app: Application) => {
     app.model.WidgetGroup.hasMany(app.model.Review);
   };
 
-  return WidgetGroup;
+  return next;
 };

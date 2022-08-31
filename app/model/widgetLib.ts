@@ -1,36 +1,29 @@
 import { Application } from 'egg';
-import {
-  Association,
-  CreationAttributes,
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-} from 'sequelize';
+import { Association, Model } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
 import { UserModel } from './user';
 import { WidgetModel } from './widget';
-import { WidgetGroupModel } from './widgetGroup';
+import { CreationWidgetGroupEntity, WidgetGroupModel } from './widgetGroup';
 
-export class WidgetLibModel extends Model<
-  InferAttributes<WidgetLibModel>,
-  InferCreationAttributes<WidgetLibModel>
-> {
-  // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
-  desc: CreationOptional<string>;
-  labels: CreationOptional<string>;
+export type WidgetLibEntity = {
+  id?: string;
+  desc?: string;
+  labels?: string;
   name: string;
-  createdAt: CreationOptional<string>;
-  updatedAt: CreationOptional<string>;
+  createdAt?: string;
+  updatedAt?: string;
   type: string;
-  userId: CreationOptional<string>;
-  widgetGroups?: CreationAttributes<WidgetGroupModel>[];
-  static associations: {
-    user: Association<WidgetModel, UserModel>;
-    widgetGroups: Association<WidgetLibModel, WidgetGroupModel>;
-  };
-}
+  userId?: string;
+};
+
+export type CreationWidgetLibEntity = WidgetLibEntity & {
+  widgetGroups?: CreationWidgetGroupEntity[];
+};
+
+export type WidgetLibModel = Model<
+  Required<WidgetLibEntity>,
+  CreationWidgetLibEntity
+>;
 
 export default (app: Application) => {
   const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
@@ -51,19 +44,23 @@ export default (app: Application) => {
     desc: STRING,
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
-    labels: stringButArrayType<WidgetLibModel>(app, 'labels'),
+    labels: stringButArrayType<WidgetLibEntity>(app, 'labels'),
   });
 
-  (
-    WidgetLib as typeof WidgetLib & {
-      associate: () => void;
-    }
-  ).associate = () => {
+  const next = WidgetLib as typeof WidgetLib & {
+    associate: () => void;
+    associations: {
+      user: Association<WidgetModel, UserModel>;
+      widgetGroups: Association<WidgetLibModel, WidgetGroupModel>;
+    };
+  };
+
+  next.associate = () => {
     app.model.WidgetLib.hasMany(app.model.License);
     app.model.WidgetLib.belongsTo(app.model.User);
     app.model.WidgetLib.hasMany(app.model.WidgetGroup);
     app.model.WidgetLib.hasMany(app.model.Review);
   };
 
-  return WidgetLib;
+  return next;
 };
