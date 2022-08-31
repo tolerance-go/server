@@ -8,7 +8,9 @@ import {
   Association,
 } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
+import { UserModel } from './user';
 import { WidgetModel } from './widget';
+import { WidgetLibModel } from './widgetLib';
 
 export class WidgetGroupModel extends Model<
   InferAttributes<WidgetGroupModel>,
@@ -26,7 +28,9 @@ export class WidgetGroupModel extends Model<
   widgets?: CreationAttributes<WidgetModel>[];
   userId: CreationOptional<string>;
   static associations: {
+    user: Association<WidgetGroupModel, UserModel>;
     widgets: Association<WidgetGroupModel, WidgetModel>;
+    widgetLib: Association<WidgetGroupModel, WidgetLibModel>;
   };
 }
 

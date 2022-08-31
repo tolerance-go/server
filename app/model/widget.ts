@@ -1,17 +1,19 @@
+import { WidgetGroupModel } from './widgetGroup';
 import { Application } from 'egg';
 import {
+  Association,
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
   Model,
 } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
+import { UserModel } from './user';
 
-export interface WidgetModel
-  extends Model<
-    InferAttributes<WidgetModel>,
-    InferCreationAttributes<WidgetModel>
-  > {
+export class WidgetModel extends Model<
+  InferAttributes<WidgetModel>,
+  InferCreationAttributes<WidgetModel>
+> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<string>;
   desc: CreationOptional<string>;
@@ -23,6 +25,10 @@ export interface WidgetModel
   type: string;
   widgetGroupId: CreationOptional<string>;
   userId: CreationOptional<string>;
+  static associations: {
+    user: Association<WidgetModel, UserModel>;
+    widgetGroup: Association<WidgetModel, WidgetGroupModel>;
+  };
 }
 
 export default (app: Application) => {

@@ -6,11 +6,12 @@ import {
   WidgetIncludeGroupIncludeLibAndUserAndLicense,
   WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense,
 } from '@/typings/includes';
-import { ProList } from '@ant-design/pro-components';
+import { ProList, ProListProps } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
 import { Badge, Col, Row } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import useWidgetMeta from './useWidgetMeta';
 
 const renderBadge = (count?: number, active = false) => {
   return (
@@ -36,6 +37,17 @@ export default () => {
     widgetGroups: WidgetGroupIncludeLibAndUserAndWidgetsAndLicense[];
     widgetLibs: WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense[];
   }>();
+  const [searchVal, setSearchVal] = useState('');
+
+  const listPropsWithWidgets = useWidgetMeta({
+    searchText: searchVal,
+  });
+
+  const keyMapProps: Record<Key, ProListProps> = {
+    widgets: listPropsWithWidgets,
+    widgetGroups: listPropsWithWidgets,
+    widgetLibs: listPropsWithWidgets,
+  };
 
   useRequest(
     async () => {
@@ -97,8 +109,6 @@ export default () => {
     },
   );
 
-  const [searchVal, setSearchVal] = useState('');
-
   const result = useMemo(() => {
     if (activeKey === 'widgetGroups') {
       return searchVal
@@ -115,15 +125,6 @@ export default () => {
           )
         : widgetMeta?.widgetLibs;
     }
-
-    return searchVal
-      ? widgetMeta?.widgets?.filter(
-          (item) =>
-            item.name.includes(searchVal) ||
-            item.widgetGroup.name.includes(searchVal) ||
-            item.widgetGroup.widgetLib.name.includes(searchVal),
-        )
-      : widgetMeta?.widgets;
   }, [widgetMeta, searchVal, activeKey]);
 
   return (
@@ -133,6 +134,7 @@ export default () => {
       | WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense
     >
       rowKey="id"
+      {...keyMapProps[activeKey]}
       dataSource={result}
       {...(activeKey === 'widgetGroups'
         ? {
@@ -142,7 +144,8 @@ export default () => {
                 title: '名称',
                 dataIndex: 'name',
                 render(dom, entity) {
-                  const item = entity as WidgetGroupIncludeLibAndUserAndWidgetsAndLicense;
+                  const item =
+                    entity as WidgetGroupIncludeLibAndUserAndWidgetsAndLicense;
                   return (
                     <span>
                       <Highlighter
@@ -253,7 +256,8 @@ export default () => {
               content: {
                 search: false,
                 render: (__, row) => {
-                  const item = row as WidgetIncludeGroupIncludeLibAndUserAndLicense;
+                  const item =
+                    row as WidgetIncludeGroupIncludeLibAndUserAndLicense;
                   return (
                     <Row>
                       <Col span={8}>

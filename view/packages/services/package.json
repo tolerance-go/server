@@ -1,21 +1,18 @@
 {
-  "name": "helpers",
+  "name": "services",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
   "license": "ISC",
   "author": "",
-  "main": "src",
   "scripts": {
+    "openapi": "ts-node openapi.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "antd": "^4.22.8",
-    "axios": "^0.27.2",
-    "node-rsa": "^1.1.1"
-  },
   "devDependencies": {
-    "@types/node-rsa": "^1.1.1",
-    "@types/react": "^18.0.0"
+    "@umijs/openapi": "^1.7.0"
+  },
+  "dependencies": {
+    "helpers": "workspace:^1.0.0"
   }
 }

@@ -13,7 +13,7 @@ export default class WidgetLibController extends Controller {
    * @router get /api/widgetLibs 路径
    * @request query integer limit limit
    * @request query integer offset offset
-   * @response 200 WidgetLibListResponse
+   * @response 200 WidgetLibListRsp
    */
   async index() {
     const ctx = this.ctx;
@@ -30,7 +30,7 @@ export default class WidgetLibController extends Controller {
    * @description 获取列表
    * @router post /api/widgetLibs/findAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetLibListResponse
+   * @response 200 WidgetLibListRsp
    */
   async findAll() {
     const ctx = this.ctx;
@@ -44,7 +44,7 @@ export default class WidgetLibController extends Controller {
    * @description 获取列表
    * @router post /api/widgetLibs/findAndCountAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetLibListAndCountResponse
+   * @response 200 WidgetLibListAndCountRsp
    */
   async findAndCountAll() {
     const ctx = this.ctx;
@@ -58,7 +58,7 @@ export default class WidgetLibController extends Controller {
    * @description 描述
    * @router get /api/widgetLibs/:id 路径
    * @request path string id id
-   * @response 200 WidgetLibShowResponse
+   * @response 200 WidgetLibRsp
    */
   async show() {
     const ctx = this.ctx;
@@ -69,13 +69,13 @@ export default class WidgetLibController extends Controller {
    * @summary 创建 app
    * @description
    * @router post /api/widgetLibs
-   * @request body CreationWidgetLib app 应用对象
-   * @response 200 WidgetLibShowResponse
+   * @request body WidgetLibCreateReqData app 应用对象
+   * @response 200 WidgetLibRsp
    */
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.CreationWidgetLib, ctx.request.body);
+    ctx.validate(ctx.rule.WidgetLibCreateReqData, ctx.request.body);
 
     const user = await ctx.model.WidgetLib.create({
       ...ctx.request.body,
@@ -90,13 +90,13 @@ export default class WidgetLibController extends Controller {
    * @description
    * @router put /api/widgetLibs/:id
    * @request path string id id
-   * @request body UpdationWidgetLib data
-   * @response 200 WidgetLibShowResponse
+   * @request body WidgetLibUpdateReqData data
+   * @response 200 WidgetLibRsp
    */
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.UpdationWidgetLib, ctx.request.body);
+    ctx.validate(ctx.rule.WidgetLibUpdateReqData, ctx.request.body);
 
     const id = ctx.params.id;
     const app = await ctx.model.WidgetLib.findByPk(id);
@@ -114,7 +114,7 @@ export default class WidgetLibController extends Controller {
    * @description
    * @router delete /api/widgetLibs/:id
    * @request path string id id
-   * @response 200 WidgetLibShowResponse
+   * @response 200 WidgetLibRsp
    */
   async destroy() {
     const ctx = this.ctx;

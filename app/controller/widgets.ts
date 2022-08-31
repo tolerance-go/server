@@ -13,7 +13,7 @@ export default class WidgetController extends Controller {
    * @router get /api/widgets 路径
    * @request query integer limit limit
    * @request query integer offset offset
-   * @response 200 WidgetListResponse
+   * @response 200 WidgetListRsp
    */
   async index() {
     const ctx = this.ctx;
@@ -30,7 +30,7 @@ export default class WidgetController extends Controller {
    * @description 获取列表
    * @router post /api/widgets/findAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetListResponse
+   * @response 200 WidgetListRsp
    */
   async findAll() {
     const ctx = this.ctx;
@@ -44,7 +44,7 @@ export default class WidgetController extends Controller {
    * @description 获取列表
    * @router post /api/widgets/findAndCountAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetListAndCountResponse
+   * @response 200 WidgetListAndCountRsp
    */
   async findAndCountAll() {
     const ctx = this.ctx;
@@ -58,7 +58,7 @@ export default class WidgetController extends Controller {
    * @description 描述
    * @router get /api/widgets/:id 路径
    * @request path string id id
-   * @response 200 WidgetShowResponse
+   * @response 200 WidgetRsp
    */
   async show() {
     const ctx = this.ctx;
@@ -69,13 +69,13 @@ export default class WidgetController extends Controller {
    * @summary 创建 app
    * @description
    * @router post /api/widgets
-   * @request body CreationWidget app 应用对象
-   * @response 200 WidgetShowResponse
+   * @request body WidgetCreateReqData app 应用对象
+   * @response 200 WidgetRsp
    */
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.CreationWidget, ctx.request.body);
+    ctx.validate(ctx.rule.WidgetCreateReqData, ctx.request.body);
 
     ctx.body = await ctx.model.Widget.create({
       ...ctx.request.body,
@@ -89,13 +89,13 @@ export default class WidgetController extends Controller {
    * @description
    * @router put /api/widgets/:id
    * @request path string id id
-   * @request body UpdationWidget data
-   * @response 200 WidgetShowResponse
+   * @request body WidgetUpdateReqData data
+   * @response 200 WidgetRsp
    */
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.UpdationWidget, ctx.request.body);
+    ctx.validate(ctx.rule.WidgetUpdateReqData, ctx.request.body);
 
     const id = ctx.params.id;
     const target = await ctx.model.Widget.findByPk(id);
@@ -111,7 +111,7 @@ export default class WidgetController extends Controller {
    * @description
    * @router delete /api/widgets/:id
    * @request path string id id
-   * @response 200 WidgetShowResponse
+   * @response 200 WidgetRsp
    */
   async destroy() {
     const ctx = this.ctx;

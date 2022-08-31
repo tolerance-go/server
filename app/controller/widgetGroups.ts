@@ -13,7 +13,7 @@ export default class WidgetGroupController extends Controller {
    * @router get /api/widgetGroups 路径
    * @request query integer limit limit
    * @request query integer offset offset
-   * @response 200 WidgetGroupListResponse
+   * @response 200 WidgetListRsp
    */
   async index() {
     const ctx = this.ctx;
@@ -30,7 +30,7 @@ export default class WidgetGroupController extends Controller {
    * @description 获取列表
    * @router post /api/widgetGroups/findAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetGroupListResponse
+   * @response 200 WidgetListRsp
    */
   async findAll() {
     const ctx = this.ctx;
@@ -44,7 +44,7 @@ export default class WidgetGroupController extends Controller {
    * @description 获取列表
    * @router post /api/widgetGroups/findAndCountAll
    * @request body FindOptions findOptions
-   * @response 200 WidgetGroupListAndCountResponse
+   * @response 200 WidgetGroupListAndCountRsp
    */
   async findAndCountAll() {
     const ctx = this.ctx;
@@ -58,7 +58,7 @@ export default class WidgetGroupController extends Controller {
    * @description 描述
    * @router get /api/widgetGroups/:id 路径
    * @request path string id id
-   * @response 200 WidgetGroupShowResponse
+   * @response 200 WidgetGroupRsp
    */
   async show() {
     const ctx = this.ctx;
@@ -69,13 +69,13 @@ export default class WidgetGroupController extends Controller {
    * @summary 创建 app
    * @description
    * @router post /api/widgetGroups
-   * @request body CreationWidgetGroup app 应用对象
-   * @response 200 WidgetGroupShowResponse
+   * @request body WidgetGroupCreateReqData app 应用对象
+   * @response 200 WidgetGroupRsp
    */
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.CreationWidgetGroup, ctx.request.body);
+    ctx.validate(ctx.rule.WidgetGroupCreateReqData, ctx.request.body);
 
     const user = await ctx.model.WidgetGroup.create({
       ...ctx.request.body,
@@ -90,8 +90,8 @@ export default class WidgetGroupController extends Controller {
    * @description
    * @router put /api/widgetGroups/:id
    * @request path string id id
-   * @request body UpdationWidgetGroup data
-   * @response 200 WidgetGroupShowResponse
+   * @request body WidgetGroupUpdateReqData data
+   * @response 200 WidgetGroupRsp
    */
   async update() {
     const ctx = this.ctx;
@@ -114,7 +114,7 @@ export default class WidgetGroupController extends Controller {
    * @description
    * @router delete /api/widgetGroups/:id
    * @request path string id id
-   * @response 200 WidgetGroupShowResponse
+   * @response 200 WidgetGroupRsp
    */
   async destroy() {
     const ctx = this.ctx;

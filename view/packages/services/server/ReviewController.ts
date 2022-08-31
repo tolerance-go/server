@@ -1,0 +1,125 @@
+// @ts-ignore
+/* eslint-disable */
+import { request } from 'helpers/request';
+
+/** 获取列表  描述  GET /api/reviews */
+export async function ReviewControllerIndex(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: Server.ReviewControllerIndexParams,
+  options?: { [key: string]: any },
+) {
+  return request<Server.ReviewListResponse>('/api/reviews', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 创建 app  POST /api/reviews */
+export async function ReviewControllerCreate(
+  body: Server.CreationReview,
+  options?: { [key: string]: any },
+) {
+  return request<Server.ReviewShowResponse>('/api/reviews', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 查看  描述  GET /api/reviews/${param0} */
+export async function ReviewControllerShow(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: Server.ReviewControllerShowParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<Server.ReviewShowResponse>(`/api/reviews/${param0}`, {
+    method: 'GET',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
+/** 更新 app  PUT /api/reviews/${param0} */
+export async function ReviewControllerUpdate(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: Server.ReviewControllerUpdateParams,
+  body: Server.UpdationReview,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<Server.ReviewShowResponse>(`/api/reviews/${param0}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params: { ...queryParams },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除 app  DELETE /api/reviews/${param0} */
+export async function ReviewControllerDestroy(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: Server.ReviewControllerDestroyParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<Server.ReviewShowResponse>(`/api/reviews/${param0}`, {
+    method: 'DELETE',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
+/** 删除 app  DELETE /api/reviews/bulkDestroy */
+export async function ReviewControllerBulkDestroy(
+  body: number[],
+  options?: { [key: string]: any },
+) {
+  return request<Server.CountResponse>('/api/reviews/bulkDestroy', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取列表  获取列表  POST /api/reviews/findAll */
+export async function ReviewControllerFindAll(
+  body: Server.FindOptions,
+  options?: { [key: string]: any },
+) {
+  return request<Server.ReviewListResponse>('/api/reviews/findAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取列表  获取列表  POST /api/reviews/findAndCountAll */
+export async function ReviewControllerFindAndCountAll(
+  body: Server.FindOptions,
+  options?: { [key: string]: any },
+) {
+  return request<Server.ReviewListAndCountResponse>('/api/reviews/findAndCountAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

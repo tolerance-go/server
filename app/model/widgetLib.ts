@@ -1,14 +1,15 @@
 import { Application } from 'egg';
 import {
+  Association,
   CreationAttributes,
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
   Model,
-  Association,
 } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
 import { UserModel } from './user';
+import { WidgetModel } from './widget';
 import { WidgetGroupModel } from './widgetGroup';
 
 export class WidgetLibModel extends Model<
@@ -26,8 +27,8 @@ export class WidgetLibModel extends Model<
   userId: CreationOptional<string>;
   widgetGroups?: CreationAttributes<WidgetGroupModel>[];
   static associations: {
+    user: Association<WidgetModel, UserModel>;
     widgetGroups: Association<WidgetLibModel, WidgetGroupModel>;
-    users: Association<WidgetLibModel, UserModel>;
   };
 }
 

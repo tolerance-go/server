@@ -5,29 +5,29 @@
 const base = require('./base');
 
 module.exports = {
-  WidgetShowResponse: {
-    ...base.BaseResponse,
-    data: { type: 'ShownWidget', required: true },
+  WidgetRsp: {
+    ...base.BaseRsp,
+    data: { type: 'Widget', required: true },
   },
-  WidgetListResponse: {
-    ...base.BaseResponse,
-    data: { type: 'array', itemType: 'ShownWidget', required: true },
+  WidgetListRsp: {
+    ...base.BaseRsp,
+    data: { type: 'array', itemType: 'Widget', required: true },
   },
-  WidgetListAndCountData: {
+  WidgetListAndCountRspData: {
     count: {
       type: 'integer',
       required: true,
     },
     rows: {
       type: 'array',
-      itemType: 'ShownWidget',
+      itemType: 'Widget',
       required: true,
     },
   },
-  WidgetListAndCountResponse: {
-    ...base.BaseResponse,
+  WidgetListAndCountRsp: {
+    ...base.BaseRsp,
     data: {
-      type: 'WidgetListAndCountData',
+      type: 'WidgetListAndCountRspData',
       required: true,
     },
   },

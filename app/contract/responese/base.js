@@ -11,6 +11,9 @@ module.exports = {
   BaseResponse: {
     ...Base,
   },
+  BaseRsp: {
+    ...Base,
+  },
   ResultResponse: {
     ...Base,
     data: {

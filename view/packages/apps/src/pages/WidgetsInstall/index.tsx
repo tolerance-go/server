@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components';
 import React, { useState } from 'react';
-import List from './List';
+import Installed from './Installed';
 import Markets from './Markets';
 
 const TableList: React.FC<unknown> = () => {
@@ -31,7 +31,7 @@ const TableList: React.FC<unknown> = () => {
       {
         {
           markets: <Markets />,
-          install: <List />,
+          install: <Installed />,
         }[activeTabKey]
       }
     </PageContainer>
