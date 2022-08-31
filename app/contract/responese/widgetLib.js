@@ -2,15 +2,15 @@
 
 'use strict';
 
-const base = require('./base');
+const { ResponseBase } = require('../../constants/dto');
 
 module.exports = {
   WidgetLibRsp: {
-    ...base.BaseRsp,
+    ...ResponseBase,
     data: { type: 'WidgetLib', required: true },
   },
   WidgetLibListRsp: {
-    ...base.BaseRsp,
+    ...ResponseBase,
     data: { type: 'array', itemType: 'WidgetLib', required: true },
   },
   WidgetLibListAndCountRspData: {
@@ -25,7 +25,7 @@ module.exports = {
     },
   },
   WidgetLibListAndCountRsp: {
-    ...base.BaseRsp,
+    ...ResponseBase,
     data: {
       type: 'WidgetLibListAndCountRspData',
       required: true,

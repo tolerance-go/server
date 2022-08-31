@@ -2,7 +2,7 @@
 'use strict';
 
 const { mapValues } = require('lodash');
-const { Identity, Timestamp, User } = require('../../constants/dto');
+const { Identity, Timestamp } = require('../../constants/dto');
 
 const Base = {
   title: { type: 'string', required: true },
@@ -14,7 +14,7 @@ const Base = {
 };
 
 const ShownApp = {
-  ...User,
+  userId: { type: 'string', required: true },
   ...Timestamp,
   ...Identity,
   ...Base,

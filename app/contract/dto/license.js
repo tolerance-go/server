@@ -2,7 +2,7 @@
 'use strict';
 
 const { mapValues } = require('lodash');
-const { Identity, Timestamp, User } = require('../../constants/dto');
+const { Identity, Timestamp } = require('../../constants/dto');
 
 const Base = {
   expiration: { type: 'string', required: false },
@@ -15,7 +15,7 @@ const ShownLicense = {
   ...Timestamp,
   ...Identity,
   ...Base,
-  ...User,
+  userId: { type: 'string', required: true },
 };
 
 module.exports = {

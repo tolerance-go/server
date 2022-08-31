@@ -7,12 +7,15 @@ const Timestamp = {
   updatedAt: { type: 'string', required: true },
 };
 
-const User = {
-  userId: { type: 'string', required: true },
+const ResponseBase = {
+  success: { type: 'boolean', required: true },
+  errorCode: { type: 'integer', required: false },
+  errorMessage: { type: 'string', required: false },
+  showType: { type: 'integer', required: false },
 };
 
 module.exports = {
-  User,
   Identity,
   Timestamp,
+  ResponseBase,
 };
