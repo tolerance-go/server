@@ -29,12 +29,12 @@ export default class LicenseController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/license/findAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 LicenseListResponse
    */
   async findAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.License.findAll(findOptions);
     ctx.body = result;
   }
@@ -43,12 +43,12 @@ export default class LicenseController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/license/findAndCountAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 LicenseListAndCountResponse
    */
   async findAndCountAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.License.findAndCountAll(findOptions);
     ctx.body = result;
   }

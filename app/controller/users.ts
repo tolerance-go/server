@@ -160,7 +160,6 @@ export default class UserController extends Controller {
         username,
       },
     });
-
     if (!existsUser) {
       throw new Error('用户不存在');
     }

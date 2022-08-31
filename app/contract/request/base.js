@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  FindOptions: {
+  SearchReqData: {
     order: {
       type: 'array',
       itemType: 'OrderItem',

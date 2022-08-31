@@ -29,12 +29,12 @@ export default class WidgetLibController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/widgetLibs/findAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 WidgetLibListRsp
    */
   async findAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.WidgetLib.findAll(findOptions);
     ctx.body = result;
   }
@@ -43,12 +43,12 @@ export default class WidgetLibController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/widgetLibs/findAndCountAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 WidgetLibListAndCountRsp
    */
   async findAndCountAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.WidgetLib.findAndCountAll(findOptions);
     ctx.body = result;
   }

@@ -1,25 +1,38 @@
 import { Application } from 'egg';
-import { Association, Model } from 'sequelize';
+import {
+  Association,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
 import { UserModel } from './user';
 import { WidgetGroupModel } from './widgetGroup';
 
-export type WidgetEntity = {
-  id?: string;
-  desc?: string;
-  labels?: string;
-  name: string;
-  elementType: string;
-  createdAt?: string;
-  updatedAt?: string;
-  type: string;
-  widgetGroupId?: string;
-  userId?: string;
-};
+export type WidgetEntity = {};
 
 export type CreationWidgetEntity = WidgetEntity;
 
-export type WidgetModel = Model<Required<WidgetEntity>, CreationWidgetEntity>;
+export class WidgetModel extends Model<
+  InferAttributes<WidgetModel>,
+  InferCreationAttributes<WidgetModel>
+> {
+  declare id: CreationOptional<string>;
+  declare desc: CreationOptional<string>;
+  declare labels: CreationOptional<string>;
+  declare name: string;
+  declare elementType: string;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
+  declare type: string;
+  declare widgetGroupId: CreationOptional<string>;
+  declare userId: CreationOptional<string>;
+  declare static associations: {
+    user: Association<WidgetModel, UserModel>;
+    widgetGroup: Association<WidgetModel, WidgetGroupModel>;
+  };
+}
 
 export default (app: Application) => {
   const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
@@ -41,27 +54,23 @@ export default (app: Application) => {
     desc: STRING,
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
-    labels: stringButArrayType<WidgetEntity>(app, 'labels'),
+    labels: stringButArrayType<WidgetModel>(app, 'labels'),
     userId: {
       type: UUID,
       field: 'user_id',
     },
   });
 
-  const next = Widget as typeof Widget & {
-    associate: () => void;
-    associations: {
-      user: Association<WidgetModel, UserModel>;
-      widgetGroup: Association<WidgetModel, WidgetGroupModel>;
-    };
-  };
-
-  next.associate = () => {
+  (
+    Widget as typeof Widget & {
+      associate: () => void;
+    }
+  ).associate = () => {
     app.model.Widget.hasMany(app.model.License);
     app.model.Widget.belongsTo(app.model.WidgetGroup);
     app.model.Widget.belongsTo(app.model.User);
     app.model.Widget.hasMany(app.model.Review);
   };
 
-  return next;
+  return Widget;
 };

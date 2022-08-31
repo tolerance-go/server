@@ -3,8 +3,8 @@ import { convertIncludeToRuntime } from './convertIncludeToRuntime';
 import { convertOrderToRuntime } from './convertOrderToRuntime';
 import { convertWhereToRuntime } from './convertWhereToRuntime';
 
-export const getFindOptions = (ctx, FindOptions) => {
-  ctx.validate(FindOptions, ctx.request.body);
+export const getFindOptions = (ctx, SearchReqData) => {
+  ctx.validate(SearchReqData, ctx.request.body);
 
   const { limit, offset, wheres, includes } = ctx.request.body;
   const include = convertIncludeToRuntime(ctx.model, includes);

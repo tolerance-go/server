@@ -29,12 +29,12 @@ export default class ReviewController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/reviews/findAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 ReviewListResponse
    */
   async findAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.Review.findAll(findOptions);
     ctx.body = result;
   }
@@ -43,12 +43,12 @@ export default class ReviewController extends Controller {
    * @summary 获取列表
    * @description 获取列表
    * @router post /api/reviews/findAndCountAll
-   * @request body FindOptions findOptions
+   * @request body SearchReqData findOptions
    * @response 200 ReviewListAndCountResponse
    */
   async findAndCountAll() {
     const ctx = this.ctx;
-    const findOptions = getFindOptions(ctx, ctx.rule.FindOptions);
+    const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.Review.findAndCountAll(findOptions);
     ctx.body = result;
   }

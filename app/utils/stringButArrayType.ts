@@ -1,11 +1,11 @@
 import { Application } from 'egg';
-import { DataType, ModelAttributeColumnOptions } from 'sequelize';
+import { DataType, ModelAttributeColumnOptions, Model } from 'sequelize';
 
-export const stringButArrayType = <Entity extends object>(
+export const stringButArrayType = <Entity extends Model>(
   app: Application,
   key: Extract<keyof Entity, string>,
   dbKey: string = key,
-): DataType | ModelAttributeColumnOptions => {
+): DataType | ModelAttributeColumnOptions<Model> => {
   const { STRING } = app.Sequelize;
   return {
     type: STRING,
