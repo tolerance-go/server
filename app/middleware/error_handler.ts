@@ -41,8 +41,6 @@ export default () => {
         // invalid_param 会出现 errors，TODO：把它序列化放到 message 里面去
         // data: error.errors ?? error.message,
       };
-
-      ctx.status = 200;
     }
   };
 };
