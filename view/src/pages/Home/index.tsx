@@ -1,26 +1,96 @@
 /* eslint no-undef: 0 */
 /* eslint arrow-parens: 0 */
-import React from 'react';
+import { PATHS } from '@/constants/path';
+import { UserControllerShowWithSession } from '@/services/server/UserController';
+import { useModel, useNavigate } from '@umijs/max';
 import { enquireScreen } from 'enquire-js';
-
-import Nav3 from './Nav3';
+import React from 'react';
 import Banner5 from './Banner5';
-import Feature0 from './Feature0';
-import Pricing1 from './Pricing1';
 import Content5 from './Content5';
-import Footer2 from './Footer2';
-import Footer0 from './Footer0';
-
 import {
-  Nav30DataSource,
   Banner50DataSource,
-  Feature00DataSource,
-  Pricing10DataSource,
   Content50DataSource,
-  Footer20DataSource,
+  Feature00DataSource,
   Footer00DataSource,
+  Pricing10DataSource,
 } from './data.source';
+import Feature0 from './Feature0';
+import Footer0 from './Footer0';
 import './less/antMotionStyle.less';
+import Nav3 from './Nav3';
+import Pricing1 from './Pricing1';
+
+const Nav33 = ({ isMobile }: { isMobile: boolean }) => {
+  const { setInitialState } = useModel('@@initialState');
+  const navigate = useNavigate();
+  const Nav30DataSource = {
+    wrapper: { className: 'header3 home-page-wrapper l5c4lv1na9k-editor_css' },
+    page: { className: 'home-page' },
+    logo: {
+      className: 'header3-logo',
+      children:
+        'https://gw.alipayobjects.com/zos/basement_prod/b30cdc2a-d91c-4c78-be9c-7c63b308d4b3.svg',
+    },
+    Menu: {
+      className: 'header3-menu',
+      children: [
+        {
+          name: 'chat',
+          className: 'header3-item',
+          children: {
+            href: '#',
+            children: [{ children: '交流社群', name: 'text' }],
+          },
+        },
+        {
+          name: 'item3',
+          className: 'header3-item',
+          children: {
+            href: '#',
+            children: [{ children: '组件市场', name: 'text' }],
+          },
+        },
+        {
+          name: 'item4',
+          className: 'header3-item',
+          children: {
+            href: '#',
+            children: [{ children: '开发者文档', name: 'text' }],
+          },
+        },
+        {
+          name: 'workbench',
+          className: 'header3-item',
+          children: {
+            onClick: async () => {
+              try {
+                const user = await UserControllerShowWithSession({
+                  skipServerErrorHandle: true,
+                  skipNetworkErrorHandle: true,
+                });
+                navigate(PATHS.DASHBOARD);
+                setInitialState({ user });
+              } catch {
+                navigate(PATHS.LOGIN);
+              }
+            },
+            children: [{ children: '工作台', name: 'text' }],
+          },
+        },
+      ],
+    },
+    mobileMenu: { className: 'header3-mobile-menu' },
+  };
+
+  return (
+    <Nav3
+      id="Nav3_0"
+      key="Nav3_0"
+      dataSource={Nav30DataSource}
+      isMobile={isMobile}
+    />
+  );
+};
 
 let isMobile;
 enquireScreen((b) => {
@@ -58,12 +128,7 @@ export default class Home extends React.Component {
 
   render() {
     const children = [
-      <Nav3
-        id="Nav3_0"
-        key="Nav3_0"
-        dataSource={Nav30DataSource}
-        isMobile={this.state.isMobile}
-      />,
+      <Nav33 isMobile={this.state.isMobile} />,
       <Banner5
         id="Banner5_0"
         key="Banner5_0"

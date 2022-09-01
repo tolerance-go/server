@@ -59,42 +59,49 @@ export default defineConfig({
       footerRender: false,
       menuRender: false,
       hideInMenu: true,
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '工作台',
       path: PATHS.DASHBOARD,
       component: './Dashboard',
       icon: 'carryOut',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '需求管理',
       path: '/demands',
       component: './Demands',
       icon: 'compass',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '应用管理',
-      path: '/apps',
+      path: PATHS.APP_LIST,
       component: './Apps',
       icon: 'partition',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '讨论管理',
       path: '/discuss',
       component: './Discuss',
       icon: 'message',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '版本管理',
       path: '/versions',
       component: './Versions',
       icon: 'branches',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '团队管理',
       path: '/teams',
       component: './Teams',
       icon: 'team',
+      wrappers: ['@/wrappers/auth'],
     },
     {
       name: '组件管理',
@@ -105,19 +112,22 @@ export default defineConfig({
           name: '我的安装',
           path: '/widgets/install',
           component: './WidgetsInstall',
+          wrappers: ['@/wrappers/auth'],
         },
         {
           name: '我的发布',
           path: '/widgets/publish',
           component: './WidgetsPublish',
+          wrappers: ['@/wrappers/auth'],
         },
       ],
     },
     {
       path: '*',
       component: '/404',
-
+      wrappers: ['@/wrappers/auth'],
       // 以下不起作用
+      // @TODO: 上报该 bug
       // // 不展示顶栏
       // headerRender: false,
       // // 不展示页脚

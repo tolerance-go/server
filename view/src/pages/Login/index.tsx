@@ -21,7 +21,7 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
+import { useModel, Link, useNavigate } from '@umijs/max';
 import { useMemoizedFn, useResponsive } from 'ahooks';
 import { Divider, message, Space, Tabs } from 'antd';
 import type { CSSProperties } from 'react';
@@ -102,6 +102,7 @@ export default () => {
   const responsive = useResponsive();
   const [loginType, setLoginType] = useState<LoginType>('login');
   const { setInitialState } = useModel('@@initialState');
+  const navigate = useNavigate();
 
   const login = useMemoizedFn(async (username: string, password: string) => {
     const user = await UserControllerLogin({
@@ -112,7 +113,7 @@ export default () => {
 
     store.set(STORE_TAG.SAY_HI_ALREADY, true);
     setInitialState({ user });
-    history.push(PATHS.DASHBOARD);
+    navigate(PATHS.DASHBOARD);
     logWelcomeMsg(user);
   });
 
@@ -139,6 +140,16 @@ export default () => {
           [{bgTarget.share}]
         </a>
       )}
+      <Link
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 15,
+        }}
+        to={PATHS.HOME}
+      >
+        返回主页
+      </Link>
       <LoginFormPage<{
         username: string;
         password: string;

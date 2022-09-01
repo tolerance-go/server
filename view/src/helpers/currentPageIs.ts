@@ -8,3 +8,7 @@ export const currentPageIs = (pathname: string) => {
 export const currentPageIsLogin = () => {
   return history.location.pathname === PATHS.LOGIN;
 };
+
+export const currentPageIsHome = () => {
+  return history.location.pathname === PATHS.HOME;
+};

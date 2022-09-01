@@ -3,4 +3,5 @@ export const PATHS = {
   HOME: '/',
   DESIGN: '/design',
   DASHBOARD: '/dashboard',
+  APP_LIST: '/apps',
 };

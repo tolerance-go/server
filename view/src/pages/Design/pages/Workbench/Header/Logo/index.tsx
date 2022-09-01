@@ -1,16 +1,22 @@
+import { PATHS } from '@/constants/path';
 import { DownOutlined } from '@ant-design/icons';
+import { useNavigate } from '@umijs/max';
 import { Button, Dropdown, Menu, Space } from 'antd';
 import { useState } from 'react';
 import Keybord from './Keybord';
 
 const LogoMenu = () => {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
   return (
     <Menu
       items={[
         {
           label: '返回应用管理',
           key: '1',
+          onClick: () => {
+            navigate(PATHS.APP_LIST);
+          },
         },
         {
           label: <Keybord visible={visible} setVisible={setVisible} />,

@@ -81,6 +81,8 @@ type ServerResponseData = ServerResponseStructure | any;
 type RequestConfigs = {
   // 跳过服务器错误处理
   skipServerErrorHandle?: boolean;
+  // 跳过网络错误处理
+  skipNetworkErrorHandle?: boolean;
 };
 
 type ResponseConfig = AxiosRequestConfig & RequestConfigs;
@@ -111,6 +113,12 @@ axios.interceptors.response.use(
 
     if (error.response) {
       const response: Response | AxiosResponse = error.response;
+
+      if (axios.isAxiosError(error)) {
+        if ((error.response.config as ResponseConfig).skipNetworkErrorHandle) {
+          return Promise.reject(error);
+        }
+      }
 
       // Axios 的错误
       // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围

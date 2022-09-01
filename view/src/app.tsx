@@ -10,23 +10,19 @@ import { Tooltip } from 'antd';
 import { UserSettings } from './components/UserSettings';
 import { PUBLIC_PATH } from './constants/base';
 import { PATHS } from './constants/path';
-import { currentPageIsLogin } from './helpers/currentPageIs';
+import { currentPageIsHome, currentPageIsLogin } from './helpers/currentPageIs';
 
 // umi getInitialState 不反回，页面不会渲染
 export async function getInitialState(): Promise<{
   user?: API.ShownUser;
 }> {
   // 登录页面不自动获取用户信息
-  if (currentPageIsLogin()) return {};
+  if (currentPageIsLogin() || currentPageIsHome()) return {};
 
-  try {
-    // 失败会抛出异常
-    const user = await UserControllerShowWithSession();
+  // 失败会抛出异常
+  const user = await UserControllerShowWithSession();
 
-    return { user };
-  } catch {
-    return {};
-  }
+  return { user };
 }
 
 export const layout: RunTimeLayoutConfig = ({
@@ -34,7 +30,13 @@ export const layout: RunTimeLayoutConfig = ({
   initialState,
   setInitialState,
 }) => {
-  if (error) {
+  /** 
+   * 登录页和首页刷新，避免闪烁
+   * @@initialState model 可能为空：在 其他 model 中的进行 use
+   * initialState 可能为空，getInitialState 内部抛出异常
+   * initialState.user 可能为空，登录页和首页首次进入不拉用户数据
+   */
+  if (error || !initialState?.user) {
     return {
       menuRender: false,
     };
