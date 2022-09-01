@@ -23,9 +23,6 @@ const TableList: React.FC<unknown> = () => {
           key: 'install',
         },
       ]}
-      tabProps={{
-        type: 'card',
-      }}
       onTabChange={setActiveTabKey}
     >
       {

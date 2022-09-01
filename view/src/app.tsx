@@ -9,7 +9,8 @@ import { history, RunTimeLayoutConfig } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { UserSettings } from './components/UserSettings';
 import { PUBLIC_PATH } from './constants/base';
-import { PATHS } from './constants/path';
+import { PATHS, PATH_KEYS } from './constants/path';
+import appendQueryStrToPath from './helpers/appendQueryStrToPath';
 import { currentPageIsHome, currentPageIsLogin } from './helpers/currentPageIs';
 
 // umi getInitialState 不反回，页面不会渲染
@@ -25,22 +26,21 @@ export async function getInitialState(): Promise<{
   return { user };
 }
 
-export const layout: RunTimeLayoutConfig = ({
-  error,
-  initialState,
-  setInitialState,
-}) => {
-  /** 
+export const layout: RunTimeLayoutConfig = (props) => {
+  const { error, initialState, setInitialState } = props;
+  /**
    * 登录页和首页刷新，避免闪烁
    * @@initialState model 可能为空：在 其他 model 中的进行 use
    * initialState 可能为空，getInitialState 内部抛出异常
    * initialState.user 可能为空，登录页和首页首次进入不拉用户数据
    */
-  if (error || !initialState?.user) {
+  // 注意 error 不会恢复，约定根据 user 存在来进行判断
+  if (!initialState?.user) {
     return {
       menuRender: false,
     };
   }
+  console.log('render layout2', props);
   return {
     logo: `${PUBLIC_PATH}logo.svg`,
     menu: {
@@ -63,7 +63,15 @@ export const layout: RunTimeLayoutConfig = ({
             onClick={async () => {
               await UserControllerLogout();
               setInitialState({});
-              history.push(PATHS.LOGIN);
+
+              history.push(
+                appendQueryStrToPath(PATHS.LOGIN, {
+                  // 从什么页面退出
+                  // 注意 window.location.pathname 是当前页面路径
+                  // @TODO: history.location.pathname 拿到的并不是
+                  [PATH_KEYS.QUIT_FROM]: window.location.pathname,
+                }),
+              );
             }}
           />
         </Tooltip>,

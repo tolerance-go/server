@@ -1,5 +1,5 @@
 import { PUBLIC_PATH } from '@/constants/base';
-import { PATHS } from '@/constants/path';
+import { PATHS, PATH_KEYS } from '@/constants/path';
 import { STORE_TAG } from '@/constants/store';
 import { getPublicKey } from '@/helpers/getPublicKey';
 import {
@@ -7,6 +7,7 @@ import {
   UserControllerLogin,
 } from '@/services/server/UserController';
 // 运行时配置
+import delay from 'delay';
 
 import {
   AlipayOutlined,
@@ -21,7 +22,7 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useModel, Link, useNavigate } from '@umijs/max';
+import { useModel, Link, useNavigate, useSearchParams } from '@umijs/max';
 import { useMemoizedFn, useResponsive } from 'ahooks';
 import { Divider, message, Space, Tabs } from 'antd';
 import type { CSSProperties } from 'react';
@@ -104,6 +105,8 @@ export default () => {
   const { setInitialState } = useModel('@@initialState');
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+
   const login = useMemoizedFn(async (username: string, password: string) => {
     const user = await UserControllerLogin({
       username,
@@ -111,9 +114,26 @@ export default () => {
       password,
     });
 
+    const quitFrom = searchParams.get(PATH_KEYS.QUIT_FROM);
+
+    const validatePathname = (pathname: string) => {
+      try {
+        const url = new URL(`http://www.dump.com${pathname}`);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
     store.set(STORE_TAG.SAY_HI_ALREADY, true);
     setInitialState({ user });
-    navigate(PATHS.DASHBOARD);
+
+    /** 等待一下，防止 initialState 还没有恢复，页面会有 401 的闪烁 */
+    await delay(500);
+
+    navigate(
+      quitFrom && validatePathname(quitFrom) ? quitFrom : PATHS.DASHBOARD,
+    );
     logWelcomeMsg(user);
   });
 

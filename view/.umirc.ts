@@ -22,6 +22,7 @@ export default defineConfig({
       changeOrigin: true,
     },
   },
+  clickToComponent: {},
   antd: {},
   access: {},
   model: {},
@@ -107,18 +108,17 @@ export default defineConfig({
       name: '组件管理',
       path: '/widgets',
       icon: 'appstoreAdd',
+      wrappers: ['@/wrappers/auth'],
       routes: [
         {
           name: '我的安装',
           path: '/widgets/install',
           component: './WidgetsInstall',
-          wrappers: ['@/wrappers/auth'],
         },
         {
           name: '我的发布',
           path: '/widgets/publish',
           component: './WidgetsPublish',
-          wrappers: ['@/wrappers/auth'],
         },
       ],
     },

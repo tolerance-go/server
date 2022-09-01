@@ -20,6 +20,28 @@
   }
 }
 
+// 开启了 click-to-component 之后，额外需要加下面的样式，防止 login 页面边距不对
+.ant-pro {
+  .ant-pro-layout {
+    .ant-pro-layout-content {
+      margin: 0;
+    }
+  }
+}
+
 .selectedProListItem {
   background-color: #e9f6fe;
+}
+
+// 恢复和老版本 ant-layout-pro 一样的样式
+.ant-pro-layout-content-has-page-container {
+  .ant-pro-card:not(.ant-pro-card-ghost) {
+    border-radius: 6px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%), 0 1px 2px 0 rgb(25 15 15 / 7%),
+      0 0 1px 0 rgb(0 0 0 / 8%);
+  }
+
+  .ant-page-header {
+    padding-bottom: 0;
+  }
 }

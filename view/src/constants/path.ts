@@ -5,3 +5,7 @@ export const PATHS = {
   DASHBOARD: '/dashboard',
   APP_LIST: '/apps',
 };
+
+export const PATH_KEYS = {
+  QUIT_FROM: 'quitFrom',
+};

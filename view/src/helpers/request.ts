@@ -1,7 +1,9 @@
+import { PATHS } from '@/constants/path';
 import { history } from '@umijs/max';
 import { message, notification, Typography } from 'antd';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import React from 'react';
+import appendQueryStrToPath from './appendQueryStrToPath';
 
 enum ErrorShowType {
   SILENT = 0,
@@ -128,7 +130,12 @@ axios.interceptors.response.use(
       });
 
       if (response.status === 401) {
-        history.push('/login');
+        history.push(
+          appendQueryStrToPath(PATHS.LOGIN, {
+            // 从什么页面退出
+            quitFrom: history.location.pathname,
+          }),
+        );
       }
     } else if (error.request) {
       // 请求已经成功发起，但没有收到响应
