@@ -142,6 +142,7 @@ export default (app: Application) => {
     `${apiPrefix}/widgetLibs/bulkDestroy`,
     controller.widgetLibs.bulkDestroy,
   );
+  router.post(`${apiPrefix}/widgetLibs/count`, controller.widgetLibs.count);
 
   // review
   router.resources('reviews', `${apiPrefix}/reviews`, controller.reviews);

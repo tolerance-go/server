@@ -2,6 +2,7 @@ import BadgeWithTitle from '@/components/BadgeWithTitle';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import { WidgetControllerCount } from '@/services/server/WidgetController';
 import { WidgetGroupControllerCount } from '@/services/server/WidgetGroupController';
+import { WidgetLibControllerCount } from '@/services/server/WidgetLibController';
 import { WidgetsType } from '@/typings/widgets';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
@@ -25,6 +26,7 @@ export default ({
 
   const [widgetsCount, setWidgetsCount] = useState<number>();
   const [widgetGroupCount, setWidgetGroupCount] = useState<number>();
+  const [widgetLibCount, setWidgetLibCount] = useState<number>();
 
   useRequestInternal(
     async () => {
@@ -44,6 +46,17 @@ export default ({
     {
       onSuccess(data) {
         setWidgetGroupCount(data);
+      },
+    },
+  );
+
+  useRequestInternal(
+    async () => {
+      return WidgetLibControllerCount({});
+    },
+    {
+      onSuccess(data) {
+        setWidgetLibCount(data);
       },
     },
   );
@@ -91,7 +104,10 @@ export default ({
         tab={
           <span>
             库
-            <BadgeWithTitle />
+            <BadgeWithTitle
+              count={widgetLibCount}
+              active={searchType === 'widgetLib'}
+            />
           </span>
         }
         key="widgetLib"
