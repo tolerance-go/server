@@ -1,3 +1,7 @@
+import { useModel } from '@/.umi/plugin-model';
+import BadgeTabItem from '@/components/BadgeTabItem';
+import { useRequestInternal } from '@/helpers/useRequestInternal';
+import useLoginUser from '@/hooks/useLoginUser';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
 import { WidgetGroupControllerFindAll } from '@/services/server/WidgetGroupController';
 import { WidgetLibControllerFindAll } from '@/services/server/WidgetLibController';
@@ -7,27 +11,10 @@ import {
   WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense,
 } from '@/typings/includes';
 import { ProList, ProListProps } from '@ant-design/pro-components';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
-import { Badge, Col, Row } from 'antd';
+import { Badge } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import useWidgetMeta from './useWidgetMeta';
-import { useModel } from '@/.umi/plugin-model';
-import useLoginUser from '@/hooks/useLoginUser';
-
-const renderBadge = (count?: number, active = false) => {
-  return (
-    <Badge
-      count={count}
-      style={{
-        marginTop: -3,
-        marginLeft: 4,
-        color: active ? '#1890FF' : '#999',
-        backgroundColor: active ? '#E6F7FF' : '#eee',
-      }}
-    />
-  );
-};
 
 type Key = 'widgets' | 'widgetGroups' | 'widgetLibs';
 
@@ -249,10 +236,10 @@ export default () => {
               label: (
                 <span>
                   组件
-                  {renderBadge(
-                    keyMapProps[activeKey].dataSource?.length,
-                    activeKey === 'widgets',
-                  )}
+                  <BadgeTabItem
+                    count={keyMapProps[activeKey].dataSource?.length}
+                    active={activeKey === 'widgets'}
+                  />
                 </span>
               ),
             },
@@ -261,10 +248,10 @@ export default () => {
               label: (
                 <span>
                   组
-                  {renderBadge(
-                    widgetMeta?.widgetGroups.length,
-                    activeKey === 'widgetGroups',
-                  )}
+                  <BadgeTabItem
+                    count={widgetMeta?.widgetGroups.length}
+                    active={activeKey === 'widgetGroups'}
+                  />
                 </span>
               ),
             },
@@ -273,10 +260,10 @@ export default () => {
               label: (
                 <span>
                   库
-                  {renderBadge(
-                    widgetMeta?.widgetLibs.length,
-                    activeKey === 'widgetLibs',
-                  )}
+                  <BadgeTabItem
+                    count={widgetMeta?.widgetLibs.length}
+                    active={activeKey === 'widgetLibs'}
+                  />
                 </span>
               ),
             },

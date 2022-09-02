@@ -26,4 +26,15 @@ module.exports = {
       required: false,
     },
   },
+  CountReqData: {
+    wheres: {
+      type: 'Wheres',
+      required: false,
+    },
+    includes: {
+      type: 'array',
+      itemType: 'Include',
+      required: false,
+    },
+  },
 };

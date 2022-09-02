@@ -4,7 +4,8 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { Card, Input, Row, Space, Tabs, Typography } from 'antd';
 import { useState } from 'react';
-import styles from './SearchForm.less';
+import styles from './index.less';
+import SearchTabs from './SearchTabs';
 
 const { TabPane } = Tabs;
 const quickSearch = ['小程序开发', '入驻', 'ISV 权限'];
@@ -14,13 +15,9 @@ export default () => {
     setSearchVal: model.setSearchVal,
   }));
 
-  const { searchType, setSearchType } = useModel(
-    'widgetsMarket.searchType',
-    (model) => ({
-      searchType: model.searchType,
-      setSearchType: model.setSearchType,
-    }),
-  );
+  const { searchType } = useModel('widgetsMarket.searchType', (model) => ({
+    searchType: model.searchType,
+  }));
 
   const { requestDataSource: requestDataSourceByWidgets } = useModel(
     'widgetsMarket.tableList.widgets',
@@ -96,27 +93,7 @@ export default () => {
         </Space>
       </Row>
 
-      <Tabs
-        size="large"
-        activeKey={searchType}
-        onChange={(key) =>
-          setSearchType(key as API.CreationLicense['widgetType'])
-        }
-        tabBarExtraContent={
-          <a
-            className={styles.filterTrigger}
-            onClick={() => {
-              setShowFilter(!showFilter);
-            }}
-          >
-            高级筛选 {showFilter ? <UpOutlined /> : <DownOutlined />}
-          </a>
-        }
-      >
-        <TabPane tab="组件" key="widget" />
-        <TabPane tab="组" key="widgetGroup" />
-        <TabPane tab="库" key="widgetLib" />
-      </Tabs>
+      <SearchTabs showFilter={showFilter} setShowFilter={setShowFilter} />
       {showFilter ? (
         <QueryFilter
           submitter={false}

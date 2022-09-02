@@ -105,6 +105,10 @@ export default (app: Application) => {
     `${apiPrefix}/widgets/bulkDestroy`,
     controller.widgets.bulkDestroy,
   );
+  router.post(
+    `${apiPrefix}/widgets/count`,
+    controller.widgets.count,
+  );
 
   // widgetGroup
   router.resources(

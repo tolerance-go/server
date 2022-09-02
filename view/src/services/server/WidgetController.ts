@@ -94,6 +94,21 @@ export async function WidgetControllerBulkDestroy(
   });
 }
 
+/** 获取列表  获取列表  POST /api/widgets/count */
+export async function WidgetControllerCount(
+  body: API.CountReqData,
+  options?: { [key: string]: any },
+) {
+  return request<API.CountResponse>('/api/widgets/count', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 获取列表  获取列表  POST /api/widgets/findAll */
 export async function WidgetControllerFindAll(
   body: API.SearchReqData,

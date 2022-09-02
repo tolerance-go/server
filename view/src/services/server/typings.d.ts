@@ -276,6 +276,11 @@ declare namespace API {
     data: Counter[];
   };
 
+  type CountReqData = {
+    wheres?: Wheres;
+    includes?: Include[];
+  };
+
   type CountResponse = {
     success: boolean;
     errorCode?: number;
@@ -548,11 +553,11 @@ declare namespace API {
     createdAt: string;
     updatedAt: string;
     id: string;
+    userId: string;
     expiration?: string;
     widgetId?: string;
     widgetLibId?: string;
     widgetGroupId?: string;
-    userId: string;
   };
 
   type LicenseControllerDestroyParams = {
@@ -578,13 +583,10 @@ declare namespace API {
   };
 
   type LicenseCreateReqData = {
-    createdAt: string;
-    updatedAt: string;
     expiration?: string;
     widgetId?: string;
     widgetLibId?: string;
     widgetGroupId?: string;
-    userId: string;
   };
 
   type LicenseListAndCountRsp = {
@@ -620,11 +622,11 @@ declare namespace API {
     createdAt?: string;
     updatedAt?: string;
     id?: string;
+    userId?: string;
     expiration?: string;
     widgetId?: string;
     widgetLibId?: string;
     widgetGroupId?: string;
-    userId?: string;
   };
 
   type LoginAuth = {
