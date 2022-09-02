@@ -6,6 +6,7 @@ import { WidgetIncludeGroupIncludeLibAndUserAndLicense } from '@/typings/include
 import { DownloadOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
+import { useMount } from 'ahooks';
 import { Col, Drawer, Rate, Row, Space, Tag, Typography } from 'antd';
 import { useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -29,9 +30,8 @@ export default () => {
 
   const user = useLoginUser();
 
-  useFetchIfUndefinedWhenMounted({
-    value: widgets,
-    fetch: requestDataSource,
+  useMount(() => {
+    requestDataSource();
   });
 
   const [visible, setVisible] = useState(false);

@@ -43,11 +43,13 @@ export default () => {
       onSuccess: (data) => {
         setWidgets(data);
       },
+      manual: true,
+      loadingDelay: widgets ? 300 : undefined,
     },
   );
 
   const addLicenseToItem = useMemoizedFn(
-    (id: string, license: API.ShownLicense) => {
+    (id: string, license: API.License) => {
       setWidgets((draft) => {
         const target = draft?.find((item) => item.id === id);
         if (target) {

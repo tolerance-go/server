@@ -136,6 +136,7 @@ export default class WidgetController extends Controller {
     }
 
     await target.destroy();
+    ctx.body = target;
     ctx.status = 200;
   }
 

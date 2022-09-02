@@ -1,21 +1,24 @@
 import { useModel } from '@/.umi/plugin-model';
+import { ProButton } from '@/components/ProButton';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
+import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
 import { ProListProps } from '@ant-design/pro-components';
 import { useMount } from 'ahooks';
-import { Col, Row } from 'antd';
+import { Button, Col, message, Row } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { InstallWidget } from './models/widgetList';
 
 export default ({ searchText }: { searchText: string }): ProListProps => {
-  const { widgets, setWidgets, requestWidgets } = useModel(
+  const { widgets, setWidgets, requestWidgets, removeItemLic } = useModel(
     'WidgetsInstall.Installed.widgetList',
     (model) => ({
       widgets: model.widgets,
       setWidgets: model.setWidgets,
       requestWidgets: model.requestWidgets,
+      removeItemLic: model.removeItemLic,
     }),
   );
 
@@ -88,6 +91,31 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
               </div>
             </Col>
           </Row>
+        );
+      },
+    },
+    actions: {
+      render(dom, entity, index, action, schema) {
+        const lic = entity.licenses.find((lic) => lic.userId === user.id);
+        return (
+          <ProButton
+            style={{
+              width: 80,
+            }}
+            type="link"
+            size="small"
+            disabled={!lic}
+            request={async () => {
+              return LicenseControllerDestroy({
+                id: lic!.id,
+              });
+            }}
+            onReqSuccess={(lic) => {
+              removeItemLic(entity.id, lic.id);
+            }}
+          >
+            {lic ? '卸载' : '已卸载'}
+          </ProButton>
         );
       },
     },

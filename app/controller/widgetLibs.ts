@@ -119,12 +119,13 @@ export default class WidgetLibController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     const id = ctx.params.id;
-    const app = await ctx.model.WidgetLib.findByPk(id);
-    if (!app) {
+    const target = await ctx.model.WidgetLib.findByPk(id);
+    if (!target) {
       throw new Error('未找到该资源');
     }
 
-    await app.destroy();
+    await target.destroy();
+    ctx.body = target;
     ctx.status = 200;
   }
 
