@@ -1,24 +1,20 @@
 import BadgeWithTitle from '@/components/BadgeWithTitle';
-import useLoginUser from '@/hooks/useLoginUser';
-import {
-  WidgetGroupIncludeLibAndUserAndWidgetsAndLicense,
-  WidgetIncludeGroupIncludeLibAndUserAndLicense,
-  WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense,
-} from '@/typings/includes';
+import { useModelPick } from '@/utils/useModelPick';
 import { ProList, ProListProps } from '@ant-design/pro-components';
 import { useState } from 'react';
-import useWidgetGroupMeta from './useWidgetGroupMeta';
-import useWidgetLibMeta from './useWidgetLibMeta';
-import useWidgetMeta from './useWidgetMeta';
-
-type Key = 'widgets' | 'widgetGroups' | 'widgetLibs';
+import { WidgetKey } from './models/activeKey';
+import useWidgetGroupMeta, {
+  InstalledWidgetGroupItem,
+} from './useWidgetGroupMeta';
+import useWidgetLibMeta, { InstalledWidgetLibItem } from './useWidgetLibMeta';
+import useWidgetMeta, { InstallWidget } from './useWidgetMeta';
 
 export default () => {
-  const [activeKey, setActiveKey] = useState<Key>('widgets');
-
   const [searchVal, setSearchVal] = useState('');
-
-  const user = useLoginUser();
+  const { activeKey, setActiveKey } = useModelPick(
+    'WidgetsInstall.Installed.activeKey',
+    ['activeKey', 'setActiveKey'],
+  );
 
   const { run: requestWidgets, listProps: listPropsWithWidgets } =
     useWidgetMeta({
@@ -35,18 +31,14 @@ export default () => {
       searchText: searchVal,
     });
 
-  const keyMapProps: Record<Key, ProListProps> = {
+  const keyMapProps: Record<WidgetKey, ProListProps> = {
     widgets: listPropsWithWidgets,
     widgetGroups: listPropsWithWidgetGroup,
     widgetLibs: listPropsWithWidgetLib,
   };
 
   return (
-    <ProList<
-      | WidgetIncludeGroupIncludeLibAndUserAndLicense
-      | WidgetGroupIncludeLibAndUserAndWidgetsAndLicense
-      | WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense
-    >
+    <ProList<InstalledWidgetLibItem | InstallWidget | InstalledWidgetGroupItem>
       rowKey="id"
       {...keyMapProps[activeKey]}
       toolbar={{
@@ -83,7 +75,7 @@ export default () => {
                 <span>
                   库
                   <BadgeWithTitle
-                    count={listPropsWithWidgets.dataSource?.length}
+                    count={listPropsWithWidgetLib.dataSource?.length}
                     active={activeKey === 'widgetLibs'}
                   />
                 </span>
@@ -91,14 +83,14 @@ export default () => {
             },
           ],
           onChange(key) {
-            setActiveKey(key as Key);
+            setActiveKey(key as WidgetKey);
           },
         },
         search: {
           onSearch: (value: string) => {
             setSearchVal(value);
             if (activeKey === 'widgets') {
-              requestWidgets(user);
+              requestWidgets();
               return;
             }
             if (activeKey === 'widgetGroups') {

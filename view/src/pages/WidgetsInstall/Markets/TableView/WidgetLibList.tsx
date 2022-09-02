@@ -1,10 +1,10 @@
 import { ProButton } from '@/components/ProButton';
-import useFetchIfUndefinedWhenMounted from '@/hooks/useFetchIfUndefinedWhenMounted';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense } from '@/typings/includes';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
+import { useMount } from 'ahooks';
 import { Badge } from 'antd';
 import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -30,9 +30,8 @@ export default () => {
       : widgetLibs;
   }, [widgetLibs, searchVal]);
 
-  useFetchIfUndefinedWhenMounted({
-    value: widgetLibs,
-    fetch: requestDataSource,
+  useMount(() => {
+    requestDataSource();
   });
 
   return (

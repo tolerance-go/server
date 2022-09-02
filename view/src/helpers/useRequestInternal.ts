@@ -19,6 +19,8 @@ export const useRequestInternal: typeof useRequest = (
     service,
     {
       ready: !!initialState?.user,
+      // 通过设置 options.loadingDelay ，可以延迟 loading 变成 true 的时间，有效防止闪烁。
+      loadingDelay: 300,
       ...options,
     },
     plugins,

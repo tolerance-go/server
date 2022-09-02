@@ -5,6 +5,7 @@ import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetGroupIncludeLibAndUserAndWidgetsAndLicense } from '@/typings/includes';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
+import { useMount } from 'ahooks';
 import { Badge } from 'antd';
 import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -31,9 +32,8 @@ export default () => {
       : widgetGroups;
   }, [widgetGroups, searchVal]);
 
-  useFetchIfUndefinedWhenMounted({
-    value: widgetGroups,
-    fetch: requestDataSource,
+  useMount(() => {
+    requestDataSource();
   });
 
   return (

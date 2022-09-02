@@ -1,8 +1,12 @@
 import BadgeWithTitle from '@/components/BadgeWithTitle';
+import { ProButton } from '@/components/ProButton';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
+import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetLibControllerFindAll } from '@/services/server/WidgetLibController';
+import useGetImmer from '@/utils/useGetImmer';
 import { ProListProps } from '@ant-design/pro-components';
+import { useMemoizedFn } from 'ahooks';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
@@ -15,9 +19,19 @@ export type InstalledWidgetLibItem = API.WidgetLib & {
 };
 
 export default ({ searchText }: { searchText: string }) => {
-  const [widgetLibs, setWidgetLibs] = useState<InstalledWidgetLibItem[]>();
+  const [widgetLibs, setWidgetLibs] = useGetImmer<InstalledWidgetLibItem[]>();
 
   const user = useLoginUser();
+
+  const removeItemLic = useMemoizedFn((id: string, licId: string) => {
+    setWidgetLibs((draft) => {
+      const target = draft?.find((item) => item.id === id);
+      if (target) {
+        const index = target.licenses.findIndex((item) => item.id === licId);
+        target.licenses.splice(index, 1);
+      }
+    });
+  });
 
   const { run } = useRequestInternal(
     async () => {
@@ -87,6 +101,31 @@ export default ({ searchText }: { searchText: string }) => {
     subTitle: {
       title: '标签',
       dataIndex: 'labels',
+    },
+    actions: {
+      render(dom, entity, index, action, schema) {
+        const lic = entity.licenses.find((lic) => lic.userId === user.id);
+        return (
+          <ProButton
+            style={{
+              width: 80,
+            }}
+            type="link"
+            size="small"
+            disabled={!lic}
+            request={async () => {
+              return LicenseControllerDestroy({
+                id: lic!.id,
+              });
+            }}
+            onReqSuccess={(lic) => {
+              removeItemLic(entity.id, lic.id);
+            }}
+          >
+            {lic ? '卸载' : '已卸载'}
+          </ProButton>
+        );
+      },
     },
   };
 
