@@ -1,61 +1,34 @@
+import { useModel } from '@/.umi/plugin-model';
+import { ProButton } from '@/components/ProButton';
+import { useRequestInternal } from '@/helpers/useRequestInternal';
+import useLoginUser from '@/hooks/useLoginUser';
+import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
 import { ProListProps } from '@ant-design/pro-components';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
-import { Col, Row } from 'antd';
-import { useMemo, useState } from 'react';
+import { useMount } from 'ahooks';
+import { Button, Col, message, Row } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import useAuth from '@/hooks/useAuth';
-import useLoginUser from '@/hooks/useLoginUser';
-
-export type InstallWidget = API.Widget & {
-  widgetGroup: API.WidgetGroup & {
-    widgetLib: API.WidgetLib;
-  };
-  user: API.User;
-};
+import { InstallWidget } from './models/widgetList';
 
 export default ({ searchText }: { searchText: string }): ProListProps => {
-  const [widgets, setWidgets] = useState<InstallWidget[]>();
+  const { widgets, setWidgets, requestWidgets, removeItemLic } = useModel(
+    'WidgetsInstall.Installed.widgetList',
+    (model) => ({
+      widgets: model.widgets,
+      setWidgets: model.setWidgets,
+      requestWidgets: model.requestWidgets,
+      removeItemLic: model.removeItemLic,
+    }),
+  );
 
   const user = useLoginUser();
 
-  useRequestInternal(
-    async () => {
-      return WidgetControllerFindAll({
-        wheres: {
-          where: [
-            {
-              fieldName: 'userId',
-              conditions: {
-                eq: user.id,
-              },
-            },
-          ],
-        },
-        includes: [
-          {
-            model: 'WidgetGroup',
-            include: [
-              {
-                model: 'WidgetLib',
-              },
-            ],
-          },
-          {
-            model: 'User',
-          },
-        ],
-      }) as Promise<InstallWidget[]>;
-    },
-    {
-      onSuccess: (data) => {
-        setWidgets(data);
-      },
-    },
-  );
+  useMount(() => {
+    requestWidgets(user);
+  });
 
   const metas: ProListProps<InstallWidget>['metas'] = {
-    dataSource: widgets,
     title: {
       title: '名称',
       dataIndex: 'name',
@@ -121,6 +94,31 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
         );
       },
     },
+    actions: {
+      render(dom, entity, index, action, schema) {
+        const lic = entity.licenses.find((lic) => lic.userId === user.id);
+        return (
+          <ProButton
+            style={{
+              width: 80,
+            }}
+            type="link"
+            size="small"
+            disabled={!lic}
+            request={async () => {
+              return LicenseControllerDestroy({
+                id: lic!.id,
+              });
+            }}
+            onReqSuccess={(lic) => {
+              removeItemLic(entity.id, lic.id);
+            }}
+          >
+            {lic ? '卸载' : '已卸载'}
+          </ProButton>
+        );
+      },
+    },
   };
 
   const dataSource = useMemo(() => {
@@ -137,5 +135,6 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
   return {
     metas,
     dataSource,
+    split: true,
   };
 };

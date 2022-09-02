@@ -1,6 +1,7 @@
-import BadgeTabItem from '@/components/BadgeTabItem';
+import BadgeWithTitle from '@/components/BadgeWithTitle';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import { WidgetControllerCount } from '@/services/server/WidgetController';
+import { WidgetGroupControllerCount } from '@/services/server/WidgetGroupController';
 import { WidgetsType } from '@/typings/widgets';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
@@ -23,6 +24,7 @@ export default ({
   );
 
   const [widgetsCount, setWidgetsCount] = useState<number>();
+  const [widgetGroupCount, setWidgetGroupCount] = useState<number>();
 
   useRequestInternal(
     async () => {
@@ -31,6 +33,17 @@ export default ({
     {
       onSuccess(data) {
         setWidgetsCount(data);
+      },
+    },
+  );
+
+  useRequestInternal(
+    async () => {
+      return WidgetGroupControllerCount({});
+    },
+    {
+      onSuccess(data) {
+        setWidgetGroupCount(data);
       },
     },
   );
@@ -54,7 +67,7 @@ export default ({
         tab={
           <span>
             组件
-            <BadgeTabItem
+            <BadgeWithTitle
               count={widgetsCount}
               active={searchType === 'widget'}
             />
@@ -66,7 +79,10 @@ export default ({
         tab={
           <span>
             组
-            <BadgeTabItem />
+            <BadgeWithTitle
+              count={widgetGroupCount}
+              active={searchType === 'widgetGroup'}
+            />
           </span>
         }
         key="widgetGroup"
@@ -75,7 +91,7 @@ export default ({
         tab={
           <span>
             库
-            <BadgeTabItem />
+            <BadgeWithTitle />
           </span>
         }
         key="widgetLib"

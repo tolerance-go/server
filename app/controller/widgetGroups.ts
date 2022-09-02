@@ -1,5 +1,6 @@
 import { Controller } from 'egg';
 import { Op } from 'sequelize';
+import { getCountOptions } from '../helpers/getCountOptions';
 import { getFindOptions } from '../helpers/getFindOptions';
 import { toInt } from '../utils/toInt';
 
@@ -51,6 +52,19 @@ export default class WidgetGroupController extends Controller {
     const findOptions = getFindOptions(ctx, ctx.rule.SearchReqData);
     const result = await ctx.model.WidgetGroup.findAndCountAll(findOptions);
     ctx.body = result;
+  }
+
+  /**
+   * @summary 获取列表
+   * @description 获取列表
+   * @router post /api/widgetGroups/count
+   * @request body CountReqData countReqData
+   * @response 200 CountResponse
+   */
+  async count() {
+    const ctx = this.ctx;
+    const findOptions = getCountOptions(ctx, ctx.rule.CountReqData);
+    ctx.body = await ctx.model.WidgetGroup.count(findOptions);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { useModel } from '@/.umi/plugin-model';
-import BadgeTabItem from '@/components/BadgeTabItem';
+import BadgeWithTitle from '@/components/BadgeWithTitle';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
@@ -14,6 +14,7 @@ import { ProList, ProListProps } from '@ant-design/pro-components';
 import { Badge } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import useWidgetGroupMeta from './useWidgetGroupMeta';
 import useWidgetMeta from './useWidgetMeta';
 
 type Key = 'widgets' | 'widgetGroups' | 'widgetLibs';
@@ -41,9 +42,13 @@ export default () => {
     searchText: searchVal,
   });
 
+  const listPropsWithWidgetGroup = useWidgetGroupMeta({
+    searchText: searchVal,
+  });
+
   const keyMapProps: Record<Key, ProListProps> = {
     widgets: listPropsWithWidgets,
-    widgetGroups: listPropsWithWidgets,
+    widgetGroups: listPropsWithWidgetGroup,
     widgetLibs: listPropsWithWidgets,
   };
 
@@ -134,48 +139,7 @@ export default () => {
       rowKey="id"
       dataSource={result}
       {...keyMapProps[activeKey]}
-      {...(activeKey === 'widgetGroups'
-        ? {
-            grid: { gutter: 16, column: 4 },
-            metas: {
-              title: {
-                title: '名称',
-                dataIndex: 'name',
-                render(dom, entity) {
-                  const item =
-                    entity as WidgetGroupIncludeLibAndUserAndWidgetsAndLicense;
-                  return (
-                    <span>
-                      <Highlighter
-                        searchWords={[searchVal]}
-                        autoEscape={true}
-                        textToHighlight={entity.name}
-                      />
-                      <Badge
-                        count={item.widgets.length}
-                        style={{
-                          marginTop: -3,
-                          marginLeft: 4,
-                          color: '#1890FF',
-                          backgroundColor: '#E6F7FF',
-                        }}
-                      />
-                    </span>
-                  );
-                },
-              },
-              description: {
-                title: '描述',
-                dataIndex: 'desc',
-                search: false,
-              },
-              subTitle: {
-                title: '标签',
-                dataIndex: 'labels',
-              },
-            },
-          }
-        : activeKey === 'widgetLibs'
+      {...(activeKey === 'widgetLibs'
         ? {
             grid: { gutter: 16, column: 3 },
             metas: {
@@ -236,8 +200,8 @@ export default () => {
               label: (
                 <span>
                   组件
-                  <BadgeTabItem
-                    count={keyMapProps[activeKey].dataSource?.length}
+                  <BadgeWithTitle
+                    count={listPropsWithWidgets.dataSource?.length}
                     active={activeKey === 'widgets'}
                   />
                 </span>
@@ -248,8 +212,8 @@ export default () => {
               label: (
                 <span>
                   组
-                  <BadgeTabItem
-                    count={widgetMeta?.widgetGroups.length}
+                  <BadgeWithTitle
+                    count={listPropsWithWidgetGroup.dataSource?.length}
                     active={activeKey === 'widgetGroups'}
                   />
                 </span>
@@ -260,7 +224,7 @@ export default () => {
               label: (
                 <span>
                   库
-                  <BadgeTabItem
+                  <BadgeWithTitle
                     count={widgetMeta?.widgetLibs.length}
                     active={activeKey === 'widgetLibs'}
                   />
