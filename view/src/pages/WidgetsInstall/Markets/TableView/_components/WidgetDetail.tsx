@@ -1,3 +1,4 @@
+import { useModelPick } from '@/utils/useModelPick';
 import { DownloadOutlined, LineOutlined } from '@ant-design/icons';
 import {
   Avatar,
@@ -12,8 +13,15 @@ import {
   Tag,
   Typography,
 } from 'antd';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+const markdown = 'Just a link: https://reactjs.com.';
 
 export default () => {
+  const { widget } = useModelPick('WidgetsInstall.selectedWidgetMeta', [
+    'widget',
+  ]);
   return (
     <div>
       <Row gutter={30}>
@@ -28,7 +36,7 @@ export default () => {
                   marginBottom: 10,
                 }}
               >
-                Flutter
+                {widget?.name}
               </Typography.Title>
               <Tag
                 style={{
@@ -42,7 +50,9 @@ export default () => {
           </Row>
           <Row>
             <Space split={<LineOutlined rotate={90} />} align="end">
-              <Typography.Text>作者</Typography.Text>
+              <Typography.Text>
+                {widget?.user.nickname ?? widget?.user.username}
+              </Typography.Text>
               <Space>
                 <DownloadOutlined />
                 <Typography.Text>3234,234</Typography.Text>
@@ -62,7 +72,7 @@ export default () => {
               marginTop: 10,
             }}
           >
-            aldsjflajsdfljasldfj
+            {widget?.desc}
           </Typography.Paragraph>
           <Row>
             <Button size="small" type="primary">
@@ -79,16 +89,13 @@ export default () => {
         <Tabs.TabPane key="detail" tab="详情介绍">
           <Row gutter={30}>
             <Col span={18}>
-              <Typography>
-                <Typography.Title level={3}>Introduction</Typography.Title>
-                <Typography.Paragraph>
-                  In the process of internal desktop applications development,
-                  many different design specs and implementations would be
-                  involved, which might cause designers and developers
-                  difficulties and duplication and reduce the efficiency of
-                  development.
-                </Typography.Paragraph>
-              </Typography>
+              {widget?.detail ? (
+                <ReactMarkdown
+                  linkTarget={'_blank'}
+                  children={widget?.detail}
+                  remarkPlugins={[remarkGfm]}
+                />
+              ) : null}
             </Col>
             <Col
               span={6}
@@ -126,8 +133,8 @@ export default () => {
             </Col>
           </Row>
         </Tabs.TabPane>
-        <Tabs.TabPane key="detail" tab="更新日志"></Tabs.TabPane>
-        <Tabs.TabPane key="detail" tab="评价"></Tabs.TabPane>
+        <Tabs.TabPane key="changelog" tab="更新日志"></Tabs.TabPane>
+        <Tabs.TabPane key="rate" tab="评价"></Tabs.TabPane>
       </Tabs>
     </div>
   );

@@ -14,6 +14,7 @@ module.exports = {
     elementType: { type: 'string', required: true },
     type: { type: 'string', required: true },
     desc: { type: 'string', required: false },
+    detail: { type: 'string', required: false },
     labels: { type: 'array', itemType: 'string', required: false },
     ...Identity,
     ...Timestamp,

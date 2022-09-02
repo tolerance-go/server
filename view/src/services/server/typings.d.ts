@@ -1105,6 +1105,7 @@ declare namespace API {
     elementType: string;
     type: string;
     desc?: string;
+    detail?: string;
     labels?: string[];
     id: string;
     createdAt: string;
@@ -1139,6 +1140,7 @@ declare namespace API {
     elementType: string;
     type: string;
     desc?: string;
+    detail?: string;
     labels?: string[];
     createdAt: string;
     updatedAt: string;
@@ -1348,6 +1350,7 @@ declare namespace API {
     elementType?: string;
     type?: string;
     desc?: string;
+    detail?: string;
     labels?: string[];
     id?: string;
     createdAt?: string;

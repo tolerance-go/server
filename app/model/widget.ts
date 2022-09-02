@@ -27,6 +27,7 @@ export class WidgetModel extends Model<
   declare updatedAt: CreationOptional<string>;
   declare type: string;
   declare display: string;
+  declare detail?: string;
   declare widgetGroupId: CreationOptional<string>;
   declare userId: CreationOptional<string>;
   declare static associations: {
@@ -36,7 +37,8 @@ export class WidgetModel extends Model<
 }
 
 export default (app: Application) => {
-  const { STRING, UUID, UUIDV4, DATE } = app.Sequelize;
+  // https://sequelize.org/docs/v7/other-topics/other-data-types/
+  const { TEXT, STRING, UUID, UUIDV4, DATE } = app.Sequelize;
 
   const Widget = app.model.define<WidgetModel>('widget', {
     id: {
@@ -66,6 +68,7 @@ export default (app: Application) => {
       type: UUID,
       field: 'user_id',
     },
+    detail: TEXT('long'),
   });
 
   (

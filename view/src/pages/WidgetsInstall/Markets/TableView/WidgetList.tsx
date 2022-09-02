@@ -1,8 +1,8 @@
 import { ProButton } from '@/components/ProButton';
-import useFetchIfUndefinedWhenMounted from '@/hooks/useFetchIfUndefinedWhenMounted';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetIncludeGroupIncludeLibAndUserAndLicense } from '@/typings/includes';
+import { useModelPick } from '@/utils/useModelPick';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -29,6 +29,10 @@ export default () => {
     }),
   );
 
+  const { setWidget } = useModelPick('WidgetsInstall.selectedWidgetMeta', [
+    'setWidget',
+  ]);
+
   const { search } = useSearchReq();
 
   const user = useLoginUser();
@@ -54,10 +58,11 @@ export default () => {
         dataSource={widgets}
         split
         loading={loading}
-        onRow={() => {
+        onRow={(item) => {
           return {
             onClick: () => {
               setVisible(true);
+              setWidget(item);
             },
           };
         }}
@@ -83,13 +88,6 @@ export default () => {
             title: '描述',
             dataIndex: 'desc',
             search: false,
-            render() {
-              return (
-                <div>
-                  需要从一组相关联的数据集合进行选择，例如省市区，公司层级，事物分类等。
-                </div>
-              );
-            },
           },
           subTitle: {
             title: '标签',
