@@ -1,48 +1,31 @@
+import { useModel } from '@/.umi/plugin-model';
+import { useRequestInternal } from '@/helpers/useRequestInternal';
+import useLoginUser from '@/hooks/useLoginUser';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
 import { ProListProps } from '@ant-design/pro-components';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useMount } from 'ahooks';
 import { Col, Row } from 'antd';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-
-export type WidgetIncludeWidgetGroupIncludeWidgetLibAndUser = API.Widget & {
-  widgetGroup: API.WidgetGroup & {
-    widgetLib: API.WidgetLib;
-  };
-  user: API.User;
-};
+import { InstallWidget } from './models/widgetList';
 
 export default ({ searchText }: { searchText: string }): ProListProps => {
-  const [widgets, setWidgets] =
-    useState<WidgetIncludeWidgetGroupIncludeWidgetLibAndUser[]>();
-
-  useRequestInternal(
-    async () => {
-      return WidgetControllerFindAll({
-        includes: [
-          {
-            model: 'WidgetGroup',
-            include: [
-              {
-                model: 'WidgetLib',
-              },
-            ],
-          },
-          {
-            model: 'User',
-          },
-        ],
-      });
-    },
-    {
-      onSuccess: (data) => {
-        setWidgets(data as WidgetIncludeWidgetGroupIncludeWidgetLibAndUser[]);
-      },
-    },
+  const { widgets, setWidgets, requestWidgets } = useModel(
+    'WidgetsInstall.Installed.widgetList',
+    (model) => ({
+      widgets: model.widgets,
+      setWidgets: model.setWidgets,
+      requestWidgets: model.requestWidgets,
+    }),
   );
 
-  const metas: ProListProps<API.Widget>['metas'] = {
-    dataSource: widgets,
+  const user = useLoginUser();
+
+  useMount(() => {
+    requestWidgets(user);
+  });
+
+  const metas: ProListProps<InstallWidget>['metas'] = {
     title: {
       title: '名称',
       dataIndex: 'name',
@@ -124,5 +107,6 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
   return {
     metas,
     dataSource,
+    split: true,
   };
 };

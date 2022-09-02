@@ -8,7 +8,7 @@ export async function LicenseControllerIndex(
   params: API.LicenseControllerIndexParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.LicenseListResponse>('/api/license', {
+  return request<API.LicenseListRsp>('/api/license', {
     method: 'GET',
     params: {
       ...params,
@@ -22,7 +22,7 @@ export async function LicenseControllerFindAll(
   body: API.SearchReqData,
   options?: { [key: string]: any },
 ) {
-  return request<API.LicenseListResponse>('/api/license/findAll', {
+  return request<API.LicenseListRsp>('/api/license/findAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export async function LicenseControllerFindAndCountAll(
   body: API.SearchReqData,
   options?: { [key: string]: any },
 ) {
-  return request<API.LicenseListAndCountResponse>('/api/license/findAndCountAll', {
+  return request<API.LicenseListAndCountRsp>('/api/license/findAndCountAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,10 +49,10 @@ export async function LicenseControllerFindAndCountAll(
 
 /** 创建 app  POST /api/licenses */
 export async function LicenseControllerCreate(
-  body: API.CreationLicense,
+  body: API.LicenseCreateReqData,
   options?: { [key: string]: any },
 ) {
-  return request<API.LicenseShowResponse>('/api/licenses', {
+  return request<API.LicenseRsp>('/api/licenses', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export async function LicenseControllerShow(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.LicenseShowResponse>(`/api/licenses/${param0}`, {
+  return request<API.LicenseRsp>(`/api/licenses/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -80,11 +80,11 @@ export async function LicenseControllerShow(
 export async function LicenseControllerUpdate(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.LicenseControllerUpdateParams,
-  body: API.UpdationLicense,
+  body: API.LicenseUpdateReqData,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.LicenseShowResponse>(`/api/licenses/${param0}`, {
+  return request<API.LicenseRsp>(`/api/licenses/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export async function LicenseControllerDestroy(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.LicenseShowResponse>(`/api/licenses/${param0}`, {
+  return request<API.LicenseRsp>(`/api/licenses/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {}),

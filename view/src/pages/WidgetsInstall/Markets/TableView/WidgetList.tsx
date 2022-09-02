@@ -1,5 +1,6 @@
 import { ProButton } from '@/components/ProButton';
 import useFetchIfUndefinedWhenMounted from '@/hooks/useFetchIfUndefinedWhenMounted';
+import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetIncludeGroupIncludeLibAndUserAndLicense } from '@/typings/includes';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -26,6 +27,8 @@ export default () => {
     }),
   );
 
+  const user = useLoginUser();
+
   useFetchIfUndefinedWhenMounted({
     value: widgets,
     fetch: requestDataSource,
@@ -35,7 +38,12 @@ export default () => {
 
   return (
     <>
-      <Drawer title='组件详情' width={'70%'} visible={visible} onClose={() => setVisible(false)}>
+      <Drawer
+        title="组件详情"
+        width={'70%'}
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
         <WidgetDetail />
       </Drawer>
       <ProList<WidgetIncludeGroupIncludeLibAndUserAndLicense>
@@ -142,7 +150,7 @@ export default () => {
           actions: {
             render: (dom, record) => {
               const license = record.licenses.find(
-                (lic) => lic.widgetId === record.id,
+                (lic) => lic.userId === user.id && lic.widgetId === record.id,
               );
 
               return [

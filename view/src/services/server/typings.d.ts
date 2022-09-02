@@ -341,13 +341,6 @@ declare namespace API {
     resolved?: boolean;
   };
 
-  type CreationLicense = {
-    expiration?: string;
-    widgetId?: string;
-    widgetLibId?: string;
-    widgetGroupId?: string;
-  };
-
   type CreationPage = {
     path: string;
     appId: string;
@@ -552,11 +545,14 @@ declare namespace API {
   };
 
   type License = {
+    createdAt: string;
+    updatedAt: string;
     id: string;
     expiration?: string;
     widgetId?: string;
     widgetLibId?: string;
     widgetGroupId?: string;
+    userId: string;
   };
 
   type LicenseControllerDestroyParams = {
@@ -581,33 +577,54 @@ declare namespace API {
     id: string;
   };
 
-  type LicenseListAndCountData = {
+  type LicenseCreateReqData = {
+    createdAt: string;
+    updatedAt: string;
+    expiration?: string;
+    widgetId?: string;
+    widgetLibId?: string;
+    widgetGroupId?: string;
+    userId: string;
+  };
+
+  type LicenseListAndCountRsp = {
+    success: boolean;
+    errorCode?: number;
+    errorMessage?: string;
+    showType?: number;
+    data: LicenseListAndCountRspData;
+  };
+
+  type LicenseListAndCountRspData = {
     count: number;
-    rows: ShownLicense[];
+    rows: License[];
   };
 
-  type LicenseListAndCountResponse = {
+  type LicenseListRsp = {
     success: boolean;
     errorCode?: number;
     errorMessage?: string;
     showType?: number;
-    data: LicenseListAndCountData;
+    data: License[];
   };
 
-  type LicenseListResponse = {
+  type LicenseRsp = {
     success: boolean;
     errorCode?: number;
     errorMessage?: string;
     showType?: number;
-    data: ShownLicense[];
+    data: License;
   };
 
-  type LicenseShowResponse = {
-    success: boolean;
-    errorCode?: number;
-    errorMessage?: string;
-    showType?: number;
-    data: ShownLicense;
+  type LicenseUpdateReqData = {
+    createdAt?: string;
+    updatedAt?: string;
+    id?: string;
+    expiration?: string;
+    widgetId?: string;
+    widgetLibId?: string;
+    widgetGroupId?: string;
+    userId?: string;
   };
 
   type LoginAuth = {
@@ -848,17 +865,6 @@ declare namespace API {
     resolved?: boolean;
   };
 
-  type ShownLicense = {
-    createdAt: string;
-    updatedAt: string;
-    id: string;
-    expiration?: string;
-    widgetId?: string;
-    widgetLibId?: string;
-    widgetGroupId?: string;
-    userId: string;
-  };
-
   type ShownPage = {
     createdAt: string;
     updatedAt: string;
@@ -946,13 +952,6 @@ declare namespace API {
     containerTop?: number;
     pageId?: string;
     resolved?: boolean;
-  };
-
-  type UpdationLicense = {
-    expiration?: string;
-    widgetId?: string;
-    widgetLibId?: string;
-    widgetGroupId?: string;
   };
 
   type UpdationPage = {

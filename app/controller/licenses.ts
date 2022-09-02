@@ -13,7 +13,7 @@ export default class LicenseController extends Controller {
    * @router get /api/license 路径
    * @request query integer limit limit
    * @request query integer offset offset
-   * @response 200 LicenseListResponse
+   * @response 200 LicenseListRsp
    */
   async index() {
     const ctx = this.ctx;
@@ -30,7 +30,7 @@ export default class LicenseController extends Controller {
    * @description 获取列表
    * @router post /api/license/findAll
    * @request body SearchReqData findOptions
-   * @response 200 LicenseListResponse
+   * @response 200 LicenseListRsp
    */
   async findAll() {
     const ctx = this.ctx;
@@ -44,7 +44,7 @@ export default class LicenseController extends Controller {
    * @description 获取列表
    * @router post /api/license/findAndCountAll
    * @request body SearchReqData findOptions
-   * @response 200 LicenseListAndCountResponse
+   * @response 200 LicenseListAndCountRsp
    */
   async findAndCountAll() {
     const ctx = this.ctx;
@@ -58,7 +58,7 @@ export default class LicenseController extends Controller {
    * @description 描述
    * @router get /api/licenses/:id 路径
    * @request path string id id
-   * @response 200 LicenseShowResponse
+   * @response 200 LicenseRsp
    */
   async show() {
     const ctx = this.ctx;
@@ -69,13 +69,13 @@ export default class LicenseController extends Controller {
    * @summary 创建 app
    * @description
    * @router post /api/licenses
-   * @request body CreationLicense app 应用对象
-   * @response 200 LicenseShowResponse
+   * @request body LicenseCreateReqData app 应用对象
+   * @response 200 LicenseRsp
    */
   async create() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.CreationLicense, ctx.request.body);
+    ctx.validate(ctx.rule.LicenseCreateReqData, ctx.request.body);
 
     const user = await ctx.model.License.create({
       ...ctx.request.body,
@@ -90,13 +90,13 @@ export default class LicenseController extends Controller {
    * @description
    * @router put /api/licenses/:id
    * @request path string id id
-   * @request body UpdationLicense data
-   * @response 200 LicenseShowResponse
+   * @request body LicenseUpdateReqData data
+   * @response 200 LicenseRsp
    */
   async update() {
     const ctx = this.ctx;
 
-    ctx.validate(ctx.rule.UpdationLicense, ctx.request.body);
+    ctx.validate(ctx.rule.LicenseUpdateReqData, ctx.request.body);
 
     const id = ctx.params.id;
     const app = await ctx.model.License.findByPk(id);
@@ -114,7 +114,7 @@ export default class LicenseController extends Controller {
    * @description
    * @router delete /api/licenses/:id
    * @request path string id id
-   * @response 200 LicenseShowResponse
+   * @response 200 LicenseRsp
    */
   async destroy() {
     const ctx = this.ctx;

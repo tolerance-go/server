@@ -133,7 +133,8 @@ axios.interceptors.response.use(
         history.push(
           appendQueryStrToPath(PATHS.LOGIN, {
             // 从什么页面退出
-            quitFrom: history.location.pathname,
+            // https://github.com/umijs/umi/issues/9207
+            quitFrom: window.location.pathname,
           }),
         );
       }

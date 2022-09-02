@@ -1,16 +1,10 @@
 // 运行时配置
 
-import {
-  UserControllerLogout,
-  UserControllerShowWithSession,
-} from '@/services/server/UserController';
-import { LogoutOutlined } from '@ant-design/icons';
-import { history, RunTimeLayoutConfig } from '@umijs/max';
-import { Tooltip } from 'antd';
+import { UserControllerShowWithSession } from '@/services/server/UserController';
+import { RunTimeLayoutConfig } from '@umijs/max';
+import QuitAdminBtn from './components/QuitAdminBtn';
 import { UserSettings } from './components/UserSettings';
 import { PUBLIC_PATH } from './constants/base';
-import { PATHS, PATH_KEYS } from './constants/path';
-import appendQueryStrToPath from './helpers/appendQueryStrToPath';
 import { currentPageIsHome, currentPageIsLogin } from './helpers/currentPageIs';
 
 // umi getInitialState 不反回，页面不会渲染
@@ -58,23 +52,7 @@ export const layout: RunTimeLayoutConfig = (props) => {
         // <InfoCircleFilled key="InfoCircleFilled" />,
         // <QuestionCircleFilled key="QuestionCircleFilled" />,
         <UserSettings key="settings"></UserSettings>,
-        <Tooltip title="退出登录" key="GithubFilled">
-          <LogoutOutlined
-            onClick={async () => {
-              await UserControllerLogout();
-              setInitialState({});
-
-              history.push(
-                appendQueryStrToPath(PATHS.LOGIN, {
-                  // 从什么页面退出
-                  // 注意 window.location.pathname 是当前页面路径
-                  // @TODO: history.location.pathname 拿到的并不是
-                  [PATH_KEYS.QUIT_FROM]: window.location.pathname,
-                }),
-              );
-            }}
-          />
-        </Tooltip>,
+        <QuitAdminBtn key="quit" setInitialState={setInitialState} />,
       ];
     },
   };

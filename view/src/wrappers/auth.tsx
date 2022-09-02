@@ -11,12 +11,12 @@ import { Button, Result, Space } from 'antd';
  * 我们不希望这样，所以渲染一个更有意义的页面让用户知道并选择下一步怎么做
  */
 export default () => {
-  const { isLogin } = useAuth();
+  const { isLogin, user } = useAuth();
 
   const navigate = useNavigate();
 
   if (isLogin) {
-    return <Outlet />;
+    return <Outlet key={user?.id} />;
   } else {
     return (
       <Result

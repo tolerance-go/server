@@ -2,6 +2,10 @@ const Identity = {
   id: { type: 'string', required: true },
 };
 
+const UserId = {
+  userId: { type: 'string', required: true },
+};
+
 const Timestamp = {
   createdAt: { type: 'string', required: true },
   updatedAt: { type: 'string', required: true },
@@ -15,6 +19,7 @@ const ResponseBase = {
 };
 
 module.exports = {
+  UserId,
   Identity,
   Timestamp,
   ResponseBase,

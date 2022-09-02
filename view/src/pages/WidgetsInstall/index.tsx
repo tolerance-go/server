@@ -1,13 +1,13 @@
+import { useSearchParams } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import React, { useState } from 'react';
 import Installed from './Installed';
 import Markets from './Markets';
+import useUrlState from '@ahooksjs/use-url-state';
 
 const TableList: React.FC<unknown> = () => {
-  // 已购
-  const [activeTabKey, setActiveTabKey] = useState<
-    'markets' | 'purchase' | 'install' | string
-  >('markets');
+  const [query, setQuery] = useUrlState({ activeTabKey: 'markets' });
+
   return (
     <PageContainer
       header={{
@@ -23,13 +23,15 @@ const TableList: React.FC<unknown> = () => {
           key: 'install',
         },
       ]}
-      onTabChange={setActiveTabKey}
+      tabActiveKey={query.activeTabKey ?? '2'}
+      onTabChange={(key) => setQuery({ activeTabKey: key })}
     >
       {
         {
           markets: <Markets />,
           install: <Installed />,
-        }[activeTabKey]
+          // https://github.com/alibaba/hooks/issues/1856
+        }[query.activeTabKey as string]
       }
     </PageContainer>
   );

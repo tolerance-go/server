@@ -2,32 +2,32 @@
 
 'use strict';
 
-const base = require('./base');
+const { ResponseBase } = require('../../constants/dto');
 
 module.exports = {
-  LicenseShowResponse: {
-    ...base.BaseResponse,
-    data: { type: 'ShownLicense', required: true },
+  LicenseRsp: {
+    ...ResponseBase,
+    data: { type: 'License', required: true },
   },
-  LicenseListResponse: {
-    ...base.BaseResponse,
-    data: { type: 'array', itemType: 'ShownLicense', required: true },
+  LicenseListRsp: {
+    ...ResponseBase,
+    data: { type: 'array', itemType: 'License', required: true },
   },
-  LicenseListAndCountData: {
+  LicenseListAndCountRspData: {
     count: {
       type: 'integer',
       required: true,
     },
     rows: {
       type: 'array',
-      itemType: 'ShownLicense',
+      itemType: 'License',
       required: true,
     },
   },
-  LicenseListAndCountResponse: {
-    ...base.BaseResponse,
+  LicenseListAndCountRsp: {
+    ...ResponseBase,
     data: {
-      type: 'LicenseListAndCountData',
+      type: 'LicenseListAndCountRspData',
       required: true,
     },
   },

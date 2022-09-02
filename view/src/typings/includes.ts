@@ -1,24 +1,24 @@
-export type WidgetIncludeGroupIncludeLibAndUserAndLicense = API.ShownWidget & {
-  widgetGroup: API.ShownWidgetGroup & {
-    widgetLib: API.ShownWidgetLib;
+export type WidgetIncludeGroupIncludeLibAndUserAndLicense = API.Widget & {
+  widgetGroup: API.WidgetGroup & {
+    widgetLib: API.WidgetLib;
   };
-  user: API.ShownUser;
-  licenses: API.ShownLicense[];
+  user: API.User;
+  licenses: API.License[];
 };
 
 export type WidgetGroupIncludeLibAndUserAndWidgetsAndLicense =
-  API.ShownWidgetGroup & {
-    widgetLib: API.ShownWidgetLib;
-    user: API.ShownUser;
-    widgets: API.ShownWidget[];
-    licenses: API.ShownLicense[];
+  API.WidgetGroup & {
+    widgetLib: API.WidgetLib;
+    user: API.User;
+    widgets: API.Widget[];
+    licenses: API.License[];
   };
 
 export type WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense =
-  API.ShownWidget & {
-    user: API.ShownUser;
-    widgetGroups: (API.ShownWidgetGroup & {
-      widgets: API.ShownWidget[];
+  API.Widget & {
+    user: API.User;
+    widgetGroups: (API.WidgetGroup & {
+      widgets: API.Widget[];
     })[];
-    licenses: API.ShownLicense[];
+    licenses: API.License[];
   };

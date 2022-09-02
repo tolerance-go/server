@@ -12,6 +12,8 @@ import { Badge, Col, Row } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import useWidgetMeta from './useWidgetMeta';
+import { useModel } from '@/.umi/plugin-model';
+import useLoginUser from '@/hooks/useLoginUser';
 
 const renderBadge = (count?: number, active = false) => {
   return (
@@ -38,6 +40,15 @@ export default () => {
     widgetLibs: WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense[];
   }>();
   const [searchVal, setSearchVal] = useState('');
+
+  const user = useLoginUser();
+
+  const { requestWidgets } = useModel(
+    'WidgetsInstall.Installed.widgetList',
+    (model) => ({
+      requestWidgets: model.requestWidgets,
+    }),
+  );
 
   const listPropsWithWidgets = useWidgetMeta({
     searchText: searchVal,
@@ -134,8 +145,8 @@ export default () => {
       | WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense
     >
       rowKey="id"
-      {...keyMapProps[activeKey]}
       dataSource={result}
+      {...keyMapProps[activeKey]}
       {...(activeKey === 'widgetGroups'
         ? {
             grid: { gutter: 16, column: 4 },
@@ -228,74 +239,7 @@ export default () => {
               },
             },
           }
-        : {
-            split: true,
-            metas: {
-              title: {
-                title: '名称',
-                dataIndex: 'name',
-                render(dom, entity) {
-                  return (
-                    <Highlighter
-                      searchWords={[searchVal]}
-                      autoEscape={true}
-                      textToHighlight={entity.name}
-                    />
-                  );
-                },
-              },
-              description: {
-                title: '描述',
-                dataIndex: 'desc',
-                search: false,
-              },
-              subTitle: {
-                title: '标签',
-                dataIndex: 'labels',
-              },
-              content: {
-                search: false,
-                render: (__, row) => {
-                  const item =
-                    row as WidgetIncludeGroupIncludeLibAndUserAndLicense;
-                  return (
-                    <Row>
-                      <Col span={8}>
-                        <div style={{ color: '#00000073' }}>类型</div>
-                        <div style={{ color: '#000000D9' }}>
-                          <Highlighter
-                            searchWords={[searchVal]}
-                            autoEscape={true}
-                            textToHighlight={item.elementType}
-                          />
-                        </div>
-                      </Col>
-                      <Col span={8}>
-                        <div style={{ color: '#00000073' }}>分组</div>
-                        <div style={{ color: '#000000D9' }}>
-                          <Highlighter
-                            searchWords={[searchVal]}
-                            autoEscape={true}
-                            textToHighlight={item.widgetGroup.name}
-                          />
-                        </div>
-                      </Col>
-                      <Col span={8}>
-                        <div style={{ color: '#00000073' }}>组件库</div>
-                        <div style={{ color: '#000000D9' }}>
-                          <Highlighter
-                            searchWords={[searchVal]}
-                            autoEscape={true}
-                            textToHighlight={item.widgetGroup.widgetLib.name}
-                          />
-                        </div>
-                      </Col>
-                    </Row>
-                  );
-                },
-              },
-            },
-          })}
+        : {})}
       toolbar={{
         menu: {
           activeKey,
@@ -306,7 +250,7 @@ export default () => {
                 <span>
                   组件
                   {renderBadge(
-                    widgetMeta?.widgets.length,
+                    keyMapProps[activeKey].dataSource?.length,
                     activeKey === 'widgets',
                   )}
                 </span>
@@ -344,6 +288,9 @@ export default () => {
         search: {
           onSearch: (value: string) => {
             setSearchVal(value);
+            if (activeKey === 'widgets') {
+              requestWidgets(user);
+            }
           },
         },
       }}

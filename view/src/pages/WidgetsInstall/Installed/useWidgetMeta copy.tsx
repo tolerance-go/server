@@ -4,13 +4,34 @@ import { useRequestInternal } from '@/helpers/useRequestInternal';
 import { Col, Row } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import useAuth from '@/hooks/useAuth';
+import useLoginUser from '@/hooks/useLoginUser';
+
+export type InstallWidget = API.Widget & {
+  widgetGroup: API.WidgetGroup & {
+    widgetLib: API.WidgetLib;
+  };
+  user: API.User;
+};
 
 export default ({ searchText }: { searchText: string }): ProListProps => {
-  const [widgets, setWidgets] = useState<API.Widget[]>();
+  const [widgets, setWidgets] = useState<InstallWidget[]>();
+
+  const user = useLoginUser();
 
   useRequestInternal(
     async () => {
       return WidgetControllerFindAll({
+        wheres: {
+          where: [
+            {
+              fieldName: 'userId',
+              conditions: {
+                eq: user.id,
+              },
+            },
+          ],
+        },
         includes: [
           {
             model: 'WidgetGroup',
@@ -24,7 +45,7 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
             model: 'User',
           },
         ],
-      });
+      }) as Promise<InstallWidget[]>;
     },
     {
       onSuccess: (data) => {
@@ -33,7 +54,7 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
     },
   );
 
-  const metas: ProListProps<API.Widget>['metas'] = {
+  const metas: ProListProps<InstallWidget>['metas'] = {
     dataSource: widgets,
     title: {
       title: '名称',
