@@ -1,10 +1,10 @@
-import { useInitialState } from '@/pages/Design/hooks/useInitialState';
+import { useRequestInternal } from '@/helpers/useRequestInternal';
+import useAppId from '@/pages/Design/hooks/useAppId';
 import { PageControllerIndex } from '@/services/server/PageController';
 import { useModel, useSearchParams } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
 import clsx from 'clsx';
 import { useLayoutEffect } from 'react';
 import styles from './index.less';
@@ -12,9 +12,9 @@ import { MenuItem } from './MenuItem';
 import { TempInput } from './TempCreateInput';
 
 const PageNav = () => {
-  const { initialState } = useInitialState();
-
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const appId = useAppId();
 
   const { pageList, setList } = useModel('Design.page.pageList', (model) => ({
     pageList: model.pageList,
@@ -40,14 +40,13 @@ const PageNav = () => {
   const { run, loading } = useRequestInternal(
     async () => {
       return PageControllerIndex({
-        appId: initialState.appId,
+        appId,
       });
     },
     {
       onSuccess: (data) => {
         setList(data);
       },
-      loadingDelay: 300,
       manual: true,
     },
   );

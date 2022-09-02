@@ -59,7 +59,7 @@ export const AtomWorkbenchWrapper = (
         })}
         style={{
           padding: 8,
-          display: props.display === 'inline' ? 'inline-block' : 'block',
+          display: props.display,
         }}
         onMouseEnter={(event) => {
           event.stopPropagation();

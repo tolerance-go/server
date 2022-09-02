@@ -2,51 +2,56 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import consola from 'consola';
 import { nanoid } from 'nanoid';
-import { ComGridItem } from './index';
 
 export const useHandleComGridItemClick = () => {
-  const { mode: siderLeftMode } = useModel('Design.workbench.siderLeftMode', (model) => ({
-    mode: model?.siderLeftMode,
-  }));
+  const { mode: siderLeftMode } = useModel(
+    'Design.workbench.siderLeftMode',
+    (model) => ({
+      mode: model.siderLeftMode,
+    }),
+  );
 
   const { addComponentToStage, addComToStageSlot } = useModel(
     'Design.page.comsStructures',
     (model) => ({
-      addComponentToStage: model?.addComponentToStage,
-      addComToStageSlot: model?.addComToStageSlot,
+      addComponentToStage: model.addComponentToStage,
+      addComToStageSlot: model.addComToStageSlot,
     }),
   );
 
   const { getLatestComsInitalSettings } = useModel(
     'Design.config.comsSettingsConfigs',
     (model) => ({
-      getLatestComsInitalSettings: model?.getLatestComsInitalSettings,
+      getLatestComsInitalSettings: model.getLatestComsInitalSettings,
     }),
   );
 
   const { focusComId, focusSlotName, focusSlotPosition } = useModel(
     'Design.stage.slotsInsert',
     (model) => ({
-      focusComId: model?.focusComId,
-      focusSlotName: model?.focusSlotName,
-      focusSlotPosition: model?.focusSlotPosition,
+      focusComId: model.focusComId,
+      focusSlotName: model.focusSlotName,
+      focusSlotPosition: model.focusSlotPosition,
     }),
   );
 
   const { setSelectedComponentStatusId } = useModel(
     'Design.stage.selectedComponentStatusId',
     (model) => ({
-      setSelectedComponentStatusId: model?.setSelectedComponentStatusId,
+      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
     }),
   );
 
   const { initComStatus } = useModel('Design.page.comsStatus', (model) => ({
-    initComStatus: model?.initComStatus,
+    initComStatus: model.initComStatus,
   }));
 
-  const { setComStatSetting } = useModel('Design.page.comsSettings', (model) => ({
-    setComStatSetting: model.setComStatSetting,
-  }));
+  const { setComStatSetting } = useModel(
+    'Design.page.comsSettings',
+    (model) => ({
+      setComStatSetting: model.setComStatSetting,
+    }),
+  );
 
   const { setComStatStyle } = useModel('Design.page.comsStyles', (model) => ({
     setComStatStyle: model.setComStatStyle,
@@ -59,88 +64,49 @@ export const useHandleComGridItemClick = () => {
     }),
   );
 
-  const { setStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    setStageSelectNodeId: model?.setStageSelectNodeId,
-  }));
+  const { setStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      setStageSelectNodeId: model.setStageSelectNodeId,
+    }),
+  );
 
-  const { triggerSaveTimeChange } = useModel('Design.app.stageAutoSave', (model) => {
-    return {
-      triggerSaveTimeChange: model?.triggerPrepareSaveTimeChange,
-    };
-  });
+  const { triggerSaveTimeChange } = useModel(
+    'Design.app.stageAutoSave',
+    (model) => {
+      return {
+        triggerSaveTimeChange: model.triggerPrepareSaveTimeChange,
+      };
+    },
+  );
 
-  const handleComGridItemClick = useMemoizedFn((item: ComGridItem) => {
+  const handleComGridItemClick = useMemoizedFn((widget: API.Widget) => {
     const newComId = nanoid();
     const statusId = nanoid();
-    if (item.name === 'button') {
-      if (siderLeftMode === 'insert') {
-        if (!focusComId || !focusSlotName) {
-          throw new Error('当前 focusCom 信息异常消失');
-        }
 
-        addComToStageSlot({
-          parentId: focusComId,
-          newId: newComId,
-          slotName: focusSlotName,
-          type: 'button',
-          display: 'inline',
-          postion: focusSlotPosition,
-        });
-      } else {
-        consola.info('添加新组件到舞台');
-        addComponentToStage('button', {
-          id: newComId,
-          display: 'inline',
-          parentId: 'root',
-          slotName: 'root',
-        });
-      }
-    } else if (item.name === 'line') {
-      if (siderLeftMode === 'insert') {
-        if (!focusComId || !focusSlotName) {
-          throw new Error('当前 focusCom 信息异常消失');
-        }
+    /** 处理直接向舞台加入 */
 
-        addComToStageSlot({
-          parentId: focusComId,
-          newId: newComId,
-          slotName: focusSlotName,
-          type: 'line',
-          display: 'block',
-          postion: focusSlotPosition,
-        });
-      } else {
-        consola.info('添加新组件到舞台');
-        addComponentToStage('line', {
-          id: newComId,
-          display: 'block',
-          parentId: 'root',
-          slotName: 'root',
-        });
+    /** 处理插槽插入 */
+    if (siderLeftMode === 'insert') {
+      if (!focusComId || !focusSlotName) {
+        throw new Error('当前 focusCom 信息异常消失');
       }
-    } else if (item.name === 'table') {
-      if (siderLeftMode === 'insert') {
-        if (!focusComId || !focusSlotName) {
-          throw new Error('当前 focusCom 信息异常消失');
-        }
 
-        addComToStageSlot({
-          parentId: focusComId,
-          newId: newComId,
-          slotName: focusSlotName,
-          type: 'table',
-          display: 'block',
-          postion: focusSlotPosition,
-        });
-      } else {
-        consola.info('添加新组件到舞台');
-        addComponentToStage('table', {
-          id: newComId,
-          display: 'block',
-          parentId: 'root',
-          slotName: 'root',
-        });
-      }
+      addComToStageSlot({
+        parentId: focusComId,
+        newId: newComId,
+        slotName: focusSlotName,
+        type: widget.type,
+        display: widget.display,
+        postion: focusSlotPosition,
+      });
+    } else {
+      addComponentToStage(widget.type, {
+        id: newComId,
+        display: widget.display,
+        parentId: 'root',
+        slotName: 'root',
+      });
     }
 
     // 初始化新组件的初始化状态
@@ -152,7 +118,7 @@ export const useHandleComGridItemClick = () => {
     setComStatSetting(
       newComId,
       statusId,
-      getLatestComsInitalSettings()?.[item.name] ?? {},
+      getLatestComsInitalSettings()?.[widget.name] ?? {},
     );
 
     setComStatStyle(newComId, statusId, {});

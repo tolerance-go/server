@@ -17,32 +17,31 @@ export default () => {
 
   if (isLogin) {
     return <Outlet key={user?.id} />;
-  } else {
-    return (
-      <Result
-        status="403"
-        title="403"
-        subTitle="抱歉，你暂时没有权限访问该页面，请尝试登录或返回首页"
-        extra={
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                navigate(PATHS.LOGIN);
-              }}
-            >
-              返回登录页
-            </Button>
-            <Button
-              onClick={() => {
-                navigate(PATHS.DASHBOARD);
-              }}
-            >
-              返回系统首页
-            </Button>
-          </Space>
-        }
-      />
-    );
   }
+  return (
+    <Result
+      status="403"
+      title="403"
+      subTitle="抱歉，你暂时没有权限访问该页面，请尝试登录或返回首页"
+      extra={
+        <Space>
+          <Button
+            onClick={() => {
+              navigate(PATHS.DASHBOARD);
+            }}
+          >
+            返回系统首页
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate(PATHS.LOGIN);
+            }}
+          >
+            返回登录页
+          </Button>
+        </Space>
+      }
+    />
+  );
 };

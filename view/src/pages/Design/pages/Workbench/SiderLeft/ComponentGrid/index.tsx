@@ -1,16 +1,10 @@
-import { Affix, Card, Row, Tabs, Typography } from 'antd';
+import { useModelPick } from '@/utils/useModelPick';
+import { Affix, Card, message, Row, Tabs, Typography } from 'antd';
 import React, { useRef } from 'react';
 import { useGridData } from './useGridData';
 import { useHandleComGridItemClick } from './useHandleComGridItemClick';
 
 const { TabPane } = Tabs;
-
-export type ComGridItem = {
-  type: string;
-  name: string;
-  title: string;
-  children?: ComGridItem[];
-};
 
 const gridStyle: React.CSSProperties = {
   width: '50%',
@@ -24,7 +18,11 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
 
   const { handleComGridItemClick } = useHandleComGridItemClick();
 
-  const { gridData } = useGridData();
+  const { widgetsData } = useGridData();
+
+  const { widgetElements } = useModelPick('Design.widgetElements', [
+    'widgetElements',
+  ]);
 
   return (
     <div ref={ref}>
@@ -37,16 +35,16 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
         size="small"
         destroyInactiveTabPane
       >
-        {gridData.map((tabItem) => {
+        {widgetsData?.map((lib) => {
           return (
-            <TabPane tab={tabItem.title} key={tabItem.title}>
-              {tabItem.children.map((group) => {
+            <TabPane tab={lib.name} key={lib.id}>
+              {lib.widgetGroups.map((group) => {
                 return (
-                  <div key={group.title}>
+                  <div key={group.name}>
                     <Affix offsetTop={0} target={() => siderRef.current}>
                       <Row
                         style={{
-                          padding: `15px 5px 15px 5px`,
+                          padding: '15px 5px 15px 5px',
                           background: '#fff',
                         }}
                       >
@@ -56,12 +54,12 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
                           }}
                           strong
                         >
-                          {group.title}
+                          {group.name}
                         </Typography.Text>
                       </Row>
                     </Affix>
                     <Card
-                      key={group.title}
+                      key={group.id}
                       bordered={false}
                       size="small"
                       style={{
@@ -69,29 +67,35 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
                         margin: '0 1px',
                       }}
                     >
-                      {group.children.map((item) => {
+                      {group.widgets.map((widget) => {
                         return (
                           <Card.Grid
-                            key={item.title}
+                            key={widget.id}
                             hoverable={false}
                             style={gridStyle}
                             onClick={() => {
-                              handleComGridItemClick(item);
+                              if (!widgetElements[widget.type]) {
+                                message.info('暂未支持，敬请期待');
+                                return;
+                              }
+                              handleComGridItemClick(widget);
                             }}
                           >
                             <Typography.Text
+                              type={
+                                widgetElements[widget.type]
+                                  ? undefined
+                                  : 'secondary'
+                              }
                               style={{
                                 fontSize: 14,
                               }}
                             >
-                              {item.title}
+                              {widget.name}
                             </Typography.Text>
                           </Card.Grid>
                         );
                       })}
-                      <Card.Grid hoverable={false} style={gridStyle}>
-                        ...
-                      </Card.Grid>
                     </Card>
                   </div>
                 );

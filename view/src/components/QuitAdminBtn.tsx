@@ -1,5 +1,5 @@
 import { InitDataType, useLocation, useNavigate } from '@/.umi/exports';
-import { PATHS, PATH_KEYS } from '@/constants/path';
+import { PATHS, QUERY_KEYS } from '@/constants/path';
 import appendQueryStrToPath from '@/helpers/appendQueryStrToPath';
 import { UserControllerLogout } from '@/services/server/UserController';
 import { LogoutOutlined } from '@ant-design/icons';
@@ -21,7 +21,7 @@ export default ({ setInitialState }: Pick<InitDataType, 'setInitialState'>) => {
               // 从什么页面退出
               // 注意 window.location.pathname 是当前页面路径
               // @TODO: history.location.pathname 拿到的并不是
-              [PATH_KEYS.QUIT_FROM]: `${location.pathname}${location.search}`,
+              [QUERY_KEYS.QUIT_FROM]: `${location.pathname}${location.search}`,
             }),
           );
         }}

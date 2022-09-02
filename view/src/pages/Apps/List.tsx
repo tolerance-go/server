@@ -1,4 +1,7 @@
+import { useNavigate } from '@/.umi/exports';
 import { ProButton } from '@/components/ProButton';
+import { PATHS } from '@/constants/path';
+import useLoginUser from '@/hooks/useLoginUser';
 import {
   AppControllerDestroy,
   AppControllerIndexIncludeUser,
@@ -12,24 +15,17 @@ import {
   ProFormSelect,
   ProList,
 } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
-// import { useCookieState } from 'ahooks';
 import { Avatar, Button, message, Space, Tag, Tooltip, Typography } from 'antd';
-import qs from 'qs';
 import { useRef } from 'react';
 import CreateForm from './CreateForm';
+import qs from 'qs';
 
 export default () => {
   const listRef = useRef<ActionType>(null);
-  const { initialState } = useModel('@@initialState');
 
-  // const [token, setToken] = useCookieState('EGG_SESS', {
-  //   path: '/',
-  // });
+  const navigate = useNavigate();
 
-  if (!initialState?.user) {
-    return null;
-  }
+  const user = useLoginUser();
 
   return (
     <ProList<API.ShownAppIncludeUser>
@@ -160,7 +156,7 @@ export default () => {
                           }))
                           .filter(
                             (item) =>
-                              initialState?.user?.id !== item.value &&
+                              user.id !== item.value &&
                               !record.users.find(
                                 (user) => user.id === item.value,
                               ),
@@ -184,20 +180,15 @@ export default () => {
               type="link"
               onClick={() => {
                 window.open(
-                  `http://localhost:8001/workbench?${qs.stringify({
+                  `${PATHS.DESIGN}?${qs.stringify({
                     appId: record.id,
-                    // token,
-                    userInfo: {
-                      username: initialState.user!.username,
-                      password: initialState.user!.password,
-                    },
                   })}`,
                 );
               }}
             >
               设计
             </Button>,
-            initialState?.user?.id !== record.userId ? null : (
+            user.id !== record.userId ? null : (
               <ProButton
                 style={{
                   padding: 0,

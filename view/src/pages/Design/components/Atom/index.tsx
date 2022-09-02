@@ -1,4 +1,3 @@
-import { ElementsCxt } from '@/pages/Design/components/ElementsCtx';
 import { useComActiveStatSetting } from '@/pages/Design/hooks/useComActiveStatSetting';
 import { useComActiveStatStyle } from '@/pages/Design/hooks/useComActiveStatStyle';
 import { useComDefaultStatId } from '@/pages/Design/hooks/useComDefaultStatId';
@@ -6,9 +5,9 @@ import { useComDefaultStatSetting } from '@/pages/Design/hooks/useComDefaultStat
 import { useComDefaultStatStyle } from '@/pages/Design/hooks/useComDefaultStatStyle';
 import { useComponentUsedSettings } from '@/pages/Design/hooks/useComponentUsedSettings';
 import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
+import { useModelPick } from '@/utils/useModelPick';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
-import { useContext } from 'react';
 import { AtomPlaygroundWrapper } from './wrappers/Playground';
 import { AtomWorkbenchWrapper } from './wrappers/Workbench';
 
@@ -21,14 +20,19 @@ export const Atom = (props: ComponentStructure) => {
     stageMode: model.stageMode,
   }));
 
-  const elements = useContext(ElementsCxt);
+  const { widgetElements } = useModelPick('Design.widgetElements', [
+    'widgetElements',
+  ]);
 
-  const Element = elements[props.type];
+  const Element = widgetElements[props.type];
   const { slots } = props;
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    stageSelectNodeId: model.stageSelectNodeId,
-  }));
+  const { stageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      stageSelectNodeId: model.stageSelectNodeId,
+    }),
+  );
 
   const { defaultStatId } = useComDefaultStatId(props.id);
   const { settings: defaultSettings } = useComDefaultStatSetting(props.id);

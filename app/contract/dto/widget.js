@@ -6,6 +6,11 @@ const { Identity, Timestamp } = require('../../constants/dto');
 module.exports = {
   Widget: {
     name: { type: 'string', required: true },
+    display: {
+      type: 'string',
+      required: true,
+      enum: ['block', 'inline-block'],
+    },
     elementType: { type: 'string', required: true },
     type: { type: 'string', required: true },
     desc: { type: 'string', required: false },

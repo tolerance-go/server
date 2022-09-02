@@ -1,5 +1,5 @@
 import { PUBLIC_PATH } from '@/constants/base';
-import { PATHS, PATH_KEYS } from '@/constants/path';
+import { PATHS, QUERY_KEYS } from '@/constants/path';
 import { STORE_TAG } from '@/constants/store';
 import { getPublicKey } from '@/helpers/getPublicKey';
 import {
@@ -114,7 +114,7 @@ export default () => {
       password,
     });
 
-    const quitFrom = searchParams.get(PATH_KEYS.QUIT_FROM);
+    const quitFrom = searchParams.get(QUERY_KEYS.QUIT_FROM);
 
     const validatePathname = (pathname: string) => {
       try {

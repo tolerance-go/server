@@ -1,5 +1,6 @@
 import { SlotPosition } from '@/pages/Design/models/stage/slotsInsert';
 import { ComId, SlotName } from '@/pages/Design/typings/keys';
+import { Server } from '@/typings/Server';
 // import { useModel } from '@umijs/max';
 import { useGetState, useMemoizedFn } from 'ahooks';
 import { produce } from 'immer';
@@ -18,7 +19,7 @@ export type ComponentStructure = {
    * value 为组件的 id
    */
   slots: Record<SlotName, string[]>;
-  display: 'block' | 'inline';
+  display: Server.WidgetDisplay;
   /** 标记该组件是否和 component 关联 */
   fromComId?: number;
 };

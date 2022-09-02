@@ -6,6 +6,7 @@ export const PATHS = {
   APP_LIST: '/apps',
 };
 
-export const PATH_KEYS = {
+export const QUERY_KEYS = {
   QUIT_FROM: 'quitFrom',
+  APP_ID: 'appId',
 };

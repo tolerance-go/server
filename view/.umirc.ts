@@ -35,7 +35,7 @@ export default defineConfig({
   routes: [
     {
       path: PATHS.HOME,
-      component: './Home',
+      component: '@/pages/Home',
       // 不展示顶栏
       headerRender: false,
       // 不展示页脚
@@ -47,7 +47,7 @@ export default defineConfig({
     },
     {
       path: PATHS.LOGIN,
-      component: './Login',
+      component: '@/pages/Login',
       headerRender: false,
       footerRender: false,
       menuRender: false,
@@ -55,52 +55,52 @@ export default defineConfig({
     },
     {
       path: PATHS.DESIGN,
-      component: './Design/pages/Workbench',
+      component: '@/pages/Design/pages/Workbench',
       headerRender: false,
       footerRender: false,
       menuRender: false,
       hideInMenu: true,
-      wrappers: ['@/wrappers/auth'],
+      wrappers: ['@/wrappers/auth', '@/pages/Design/wrappers/appId'],
     },
     {
       name: '工作台',
       path: PATHS.DASHBOARD,
-      component: './Dashboard',
+      component: '@/pages/Dashboard',
       icon: 'carryOut',
       wrappers: ['@/wrappers/auth'],
     },
     {
       name: '需求管理',
       path: '/demands',
-      component: './Demands',
+      component: '@/pages/Demands',
       icon: 'compass',
       wrappers: ['@/wrappers/auth'],
     },
     {
       name: '应用管理',
       path: PATHS.APP_LIST,
-      component: './Apps',
+      component: '@/pages/Apps',
       icon: 'partition',
       wrappers: ['@/wrappers/auth'],
     },
     {
       name: '讨论管理',
       path: '/discuss',
-      component: './Discuss',
+      component: '@/pages/Discuss',
       icon: 'message',
       wrappers: ['@/wrappers/auth'],
     },
     {
       name: '版本管理',
       path: '/versions',
-      component: './Versions',
+      component: '@/pages/Versions',
       icon: 'branches',
       wrappers: ['@/wrappers/auth'],
     },
     {
       name: '团队管理',
       path: '/teams',
-      component: './Teams',
+      component: '@/pages/Teams',
       icon: 'team',
       wrappers: ['@/wrappers/auth'],
     },
@@ -113,12 +113,12 @@ export default defineConfig({
         {
           name: '我的安装',
           path: '/widgets/install',
-          component: './WidgetsInstall',
+          component: '@/pages/WidgetsInstall',
         },
         {
           name: '我的发布',
           path: '/widgets/publish',
-          component: './WidgetsPublish',
+          component: '@/pages/WidgetsPublish',
         },
       ],
     },
@@ -140,12 +140,12 @@ export default defineConfig({
     // {
     //   name: '权限演示',
     //   path: '/access',
-    //   component: './Access',
+    //   component: '@/pages/Access',
     // },
     // {
     //   name: '测试页面',
     //   path: '/test',
-    //   component: './test',
+    //   component: '@/pages/test',
     // },
   ],
   npmClient: 'pnpm',

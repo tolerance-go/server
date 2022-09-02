@@ -26,6 +26,7 @@ export class WidgetModel extends Model<
   declare createdAt: CreationOptional<string>;
   declare updatedAt: CreationOptional<string>;
   declare type: string;
+  declare display: string;
   declare widgetGroupId: CreationOptional<string>;
   declare userId: CreationOptional<string>;
   declare static associations: {
@@ -43,6 +44,12 @@ export default (app: Application) => {
       defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
+    },
+    display: {
+      type: STRING(30),
+      validate: {
+        isIn: [['inline-block', 'block']],
+      },
     },
     widgetGroupId: {
       type: UUID,

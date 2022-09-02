@@ -5,6 +5,7 @@ import { useClickAway, useEventTarget } from 'ahooks';
 import { Input, Spin } from 'antd';
 import { useRef } from 'react';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
+import useAppId from '@/pages/Design/hooks/useAppId';
 
 export const TempInput = () => {
   const { pushPath } = useModel('Design.page.pageList', (model) => ({
@@ -27,13 +28,13 @@ export const TempInput = () => {
     initialValue: creatingMeta.defaultInputValue,
   });
 
-  const { initialState } = useInitialState();
+  const appId = useAppId();
 
   const { loading, run } = useRequestInternal(
     async (value) => {
       return PageControllerCreate({
         path: value,
-        appId: initialState.appId,
+        appId,
       });
     },
     {

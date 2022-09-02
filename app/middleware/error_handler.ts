@@ -8,6 +8,12 @@ enum ErrorShowType {
   REDIRECT = 9,
 }
 
+type InvalidParamErrors = {
+  message: string;
+  field: string;
+  code: string;
+}[];
+
 export default () => {
   return async function errorHandler(ctx, next) {
     try {
@@ -26,10 +32,16 @@ export default () => {
       // 从 error 对象上读出各个属性，设置到响应中
 
       const formatErrorMsg = () => {
-        if (error.code === 'invalid_param') {
-          return `参数格式错误: ${JSON.stringify(error.errors)}`;
+        try {
+          if (error.code === 'invalid_param') {
+            return `参数格式错误: ${(error.errors as InvalidParamErrors)
+              .map((item) => `${item.field}: ${item.message}`)
+              .join('\n')}`;
+          }
+          return `服务器内部错误: ${error.message ?? '未知'}`;
+        } catch {
+          return '服务器内部错误: 格式化消息出现问题';
         }
-        return `服务器内部错误: ${error.message ?? '未知'}`;
       };
 
       ctx.body = {

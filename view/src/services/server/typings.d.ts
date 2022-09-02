@@ -1101,6 +1101,7 @@ declare namespace API {
 
   type Widget = {
     name: string;
+    display: 'block' | 'inline-block';
     elementType: string;
     type: string;
     desc?: string;
@@ -1134,6 +1135,7 @@ declare namespace API {
 
   type WidgetCreateReqData = {
     name: string;
+    display: 'block' | 'inline-block';
     elementType: string;
     type: string;
     desc?: string;
@@ -1342,6 +1344,7 @@ declare namespace API {
 
   type WidgetUpdateReqData = {
     name?: string;
+    display?: 'block' | 'inline-block';
     elementType?: string;
     type?: string;
     desc?: string;
