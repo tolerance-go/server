@@ -4,6 +4,7 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { Card, Input, Row, Space, Tabs, Typography } from 'antd';
 import { useState } from 'react';
+import useSearchReq from '../_hooks/useSearchReq';
 import styles from './index.less';
 import SearchTabs from './SearchTabs';
 
@@ -15,40 +16,7 @@ export default () => {
     setSearchVal: model.setSearchVal,
   }));
 
-  const { searchType } = useModel('widgetsMarket.searchType', (model) => ({
-    searchType: model.searchType,
-  }));
-
-  const { requestDataSource: requestDataSourceByWidgets } = useModel(
-    'widgetsMarket.tableList.widgets',
-    (model) => ({
-      requestDataSource: model.requestDataSource,
-    }),
-  );
-
-  const { requestDataSource: requestDataSourceByWidgetGroups } = useModel(
-    'widgetsMarket.tableList.widgetGroups',
-    (model) => ({
-      requestDataSource: model.requestDataSource,
-    }),
-  );
-
-  const { requestDataSource: requestDataSourceByWidgetLibs } = useModel(
-    'widgetsMarket.tableList.widgetLibs',
-    (model) => ({
-      requestDataSource: model.requestDataSource,
-    }),
-  );
-
-  const requestDataSource = useMemoizedFn((searchText?: string) => {
-    if (searchType === 'widget') {
-      requestDataSourceByWidgets(searchText);
-    } else if (searchType === 'widgetGroup') {
-      requestDataSourceByWidgetGroups(searchText);
-    } else {
-      requestDataSourceByWidgetLibs(searchText);
-    }
-  });
+  const { searchByText } = useSearchReq();
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
@@ -71,7 +39,7 @@ export default () => {
           }}
           onSearch={() => {
             setSearchVal(inputVal);
-            requestDataSource(inputVal);
+            searchByText(inputVal);
           }}
           style={{ maxWidth: 522, width: '100%' }}
         />

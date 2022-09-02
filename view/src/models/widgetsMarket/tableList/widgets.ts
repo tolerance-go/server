@@ -3,14 +3,23 @@ import { WidgetIncludeGroupIncludeLibAndUserAndLicense } from '@/typings/include
 import useGetImmer from '@/utils/useGetImmer';
 import { useMemoizedFn } from 'ahooks';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { OrderValues } from '@/pages/WidgetsInstall/models/marketListOrderMeta';
 
 export default () => {
   const [widgets, setWidgets] =
     useGetImmer<WidgetIncludeGroupIncludeLibAndUserAndLicense[]>();
 
   const { run, loading } = useRequestInternal(
-    async (searchText?: string) => {
+    async (searchText: string, orderValues: OrderValues) => {
       return WidgetControllerFindAll({
+        order: orderValues
+          ? [
+              {
+                orderType: orderValues.orderType,
+                fieldName: orderValues.orderBy,
+              },
+            ]
+          : undefined,
         wheres: {
           where: [
             {
@@ -48,16 +57,14 @@ export default () => {
     },
   );
 
-  const addLicenseToItem = useMemoizedFn(
-    (id: string, license: API.License) => {
-      setWidgets((draft) => {
-        const target = draft?.find((item) => item.id === id);
-        if (target) {
-          target.licenses.push(license);
-        }
-      });
-    },
-  );
+  const addLicenseToItem = useMemoizedFn((id: string, license: API.License) => {
+    setWidgets((draft) => {
+      const target = draft?.find((item) => item.id === id);
+      if (target) {
+        target.licenses.push(license);
+      }
+    });
+  });
 
   return {
     widgets,

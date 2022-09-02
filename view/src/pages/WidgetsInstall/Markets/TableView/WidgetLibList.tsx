@@ -8,17 +8,17 @@ import { useMount } from 'ahooks';
 import { Badge } from 'antd';
 import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
+import useSearchReq from '../_hooks/useSearchReq';
 import Filter from './_components/Filter';
 
 export default () => {
   const { searchVal } = useModel('widgetsMarket.searchValue', (model) => ({
     searchVal: model.searchVal,
   }));
-  const { widgetLibs, requestDataSource, addLicenseToItem } = useModel(
+  const { widgetLibs, addLicenseToItem } = useModel(
     'widgetsMarket.tableList.widgetLibs',
     (model) => ({
       widgetLibs: model.widgetLibs,
-      requestDataSource: model.requestDataSource,
       addLicenseToItem: model.addLicenseToItem,
     }),
   );
@@ -30,8 +30,10 @@ export default () => {
       : widgetLibs;
   }, [widgetLibs, searchVal]);
 
+  const { search } = useSearchReq();
+
   useMount(() => {
-    requestDataSource();
+    search();
   });
 
   return (

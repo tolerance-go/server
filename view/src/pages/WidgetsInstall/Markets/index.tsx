@@ -1,3 +1,4 @@
+import { Server } from '@/typings/Server';
 import { ProCard } from '@ant-design/pro-components';
 import SearchForm from './SearchForm';
 import TableView from './TableView';

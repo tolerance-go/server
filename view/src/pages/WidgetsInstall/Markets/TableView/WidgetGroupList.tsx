@@ -9,6 +9,7 @@ import { useMount } from 'ahooks';
 import { Badge } from 'antd';
 import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
+import useSearchReq from '../_hooks/useSearchReq';
 import Filter from './_components/Filter';
 
 export default () => {
@@ -32,8 +33,10 @@ export default () => {
       : widgetGroups;
   }, [widgetGroups, searchVal]);
 
+  const { search } = useSearchReq();
+
   useMount(() => {
-    requestDataSource();
+    search();
   });
 
   return (

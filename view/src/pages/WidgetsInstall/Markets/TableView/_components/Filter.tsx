@@ -1,40 +1,68 @@
+import { useModel } from '@/.umi/plugin-model';
+import {
+  OrderType,
+  OrderValues,
+} from '@/pages/WidgetsInstall/models/marketListOrderMeta';
+import { useModelPick } from '@/utils/useModelPick';
 import {
   LightFilter,
   ProFormRadio,
   ProFormSelect,
 } from '@ant-design/pro-components';
+import ReactDOM from 'react-dom';
+import useSearchReq from '../../_hooks/useSearchReq';
 
 export default () => {
+  const { orderBy, orderValueEnum, orderType, setOrderBy, setOrderType } =
+    useModelPick('WidgetsInstall.marketListOrderMeta', [
+      'orderBy',
+      'orderValueEnum',
+      'setOrderBy',
+      'orderType',
+      'setOrderType',
+    ]);
+
+  const { searchByOrder } = useSearchReq();
+
   return (
-    <LightFilter key="1" onFinish={async (values) => console.log(values.sex)}>
+    <LightFilter<OrderValues>
+      onFinish={async (values) => {
+        setOrderBy(values.orderBy);
+        setOrderType(values.orderType);
+        searchByOrder({
+          orderBy: values.orderBy,
+          orderType: values.orderType,
+        });
+      }}
+      initialValues={{
+        orderBy: orderBy,
+        orderType,
+      }}
+    >
       <ProFormSelect
-        name="sex"
+        name="orderBy"
         label="排序按"
         showSearch
         allowClear={false}
         fieldProps={{
-          labelInValue: true,
           placement: 'bottomRight',
           width: '120px',
         }}
-        valueEnum={{
-          rate: '评分',
-          download: '下载数',
-        }}
+        valueEnum={orderValueEnum}
       />
       <ProFormRadio.Group
-        name="radio"
+        name="orderType"
         radioType="button"
         fieldProps={{
           size: 'small',
         }}
         options={[
           {
-            value: 'weekly',
+            value: 'DESC',
             label: '倒序',
           },
           {
-            value: 'quarterly',
+            value: 'ASC',
             label: '升序',
           },
         ]}

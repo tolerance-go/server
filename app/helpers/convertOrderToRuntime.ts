@@ -1,6 +1,8 @@
+import { OrderType } from '../typings/OrderType';
+
 export type OrderItem = {
   fieldName: string;
-  orderType: 'ASC' | 'DESC';
+  orderType: OrderType;
 };
 
 export const convertOrderToRuntime = (orderData?: OrderItem[]) => {

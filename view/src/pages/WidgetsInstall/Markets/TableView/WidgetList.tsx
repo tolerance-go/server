@@ -10,6 +10,7 @@ import { useMount } from 'ahooks';
 import { Col, Drawer, Rate, Row, Space, Tag, Typography } from 'antd';
 import { useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import useSearchReq from '../_hooks/useSearchReq';
 import Filter from './_components/Filter';
 import WidgetDetail from './_components/WidgetDetail';
 
@@ -28,10 +29,12 @@ export default () => {
     }),
   );
 
+  const { search } = useSearchReq();
+
   const user = useLoginUser();
 
   useMount(() => {
-    requestDataSource();
+    search();
   });
 
   const [visible, setVisible] = useState(false);

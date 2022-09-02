@@ -4,14 +4,25 @@ import { WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense } from '@/typings/
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import { useState } from 'react';
 import { useMemoizedFn } from 'ahooks';
+import { OrderValues } from '@/pages/WidgetsInstall/models/marketListOrderMeta';
 
 export default () => {
   const [widgetLibs, setWidgetLibs] =
     useGetImmer<WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense[]>();
 
   const { run, loading } = useRequestInternal(
-    async (name?: string) => {
+    async (searchText: string, orderValues: OrderValues) => {
       return WidgetLibControllerFindAll({
+        wheres: {
+          where: [
+            {
+              fieldName: 'name',
+              conditions: {
+                like: searchText ? `%${searchText}%` : undefined,
+              },
+            },
+          ],
+        },
         includes: [
           { model: 'User' },
           {
