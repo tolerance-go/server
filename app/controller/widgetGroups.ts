@@ -13,7 +13,7 @@ export default class WidgetGroupController extends Controller {
    * @router get /api/widgetGroups 路径
    * @request query integer limit limit
    * @request query integer offset offset
-   * @response 200 WidgetListRsp
+   * @response 200 WidgetGroupListRsp
    */
   async index() {
     const ctx = this.ctx;
@@ -30,7 +30,7 @@ export default class WidgetGroupController extends Controller {
    * @description 获取列表
    * @router post /api/widgetGroups/findAll
    * @request body SearchReqData findOptions
-   * @response 200 WidgetListRsp
+   * @response 200 WidgetGroupListRsp
    */
   async findAll() {
     const ctx = this.ctx;

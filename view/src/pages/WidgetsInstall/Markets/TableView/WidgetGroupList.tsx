@@ -1,4 +1,7 @@
+import { ProButton } from '@/components/ProButton';
 import useFetchIfUndefinedWhenMounted from '@/hooks/useFetchIfUndefinedWhenMounted';
+import useLoginUser from '@/hooks/useLoginUser';
+import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetGroupIncludeLibAndUserAndWidgetsAndLicense } from '@/typings/includes';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -7,31 +10,20 @@ import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
 import Filter from './_components/Filter';
 
-const renderBadge = (count?: number, active = false) => {
-  return (
-    <Badge
-      count={count}
-      style={{
-        marginTop: -3,
-        marginLeft: 4,
-        color: active ? '#1890FF' : '#999',
-        backgroundColor: active ? '#E6F7FF' : '#eee',
-      }}
-    />
-  );
-};
-
 export default () => {
   const { searchVal } = useModel('widgetsMarket.searchValue', (model) => ({
     searchVal: model.searchVal,
   }));
-  const { widgetGroups, requestDataSource } = useModel(
+  const { widgetGroups, requestDataSource, addLicenseToItem } = useModel(
     'widgetsMarket.tableList.widgetGroups',
     (model) => ({
       widgetGroups: model.widgetGroups,
       requestDataSource: model.requestDataSource,
+      addLicenseToItem: model.addLicenseToItem,
     }),
   );
+
+  const user = useLoginUser();
 
   const result = useMemo(() => {
     return searchVal
@@ -54,7 +46,8 @@ export default () => {
           title: '名称',
           dataIndex: 'name',
           render(dom, entity) {
-            const item = entity as WidgetGroupIncludeLibAndUserAndWidgetsAndLicense;
+            const item =
+              entity as WidgetGroupIncludeLibAndUserAndWidgetsAndLicense;
             return (
               <span>
                 <Highlighter
@@ -83,6 +76,37 @@ export default () => {
         subTitle: {
           title: '标签',
           dataIndex: 'labels',
+        },
+        actions: {
+          render(dom, entity, index, action, schema) {
+            const license = entity.licenses.find(
+              (lic) =>
+                lic.userId === user.id && lic.widgetGroupId === entity.id,
+            );
+
+            return (
+              <ProButton
+                style={{
+                  width: 80,
+                }}
+                disabled={!!license}
+                size="small"
+                type="link"
+                key={'get'}
+                request={async () => {
+                  const license = await LicenseControllerCreate({
+                    widgetGroupId: entity.id,
+                  });
+                  return license;
+                }}
+                onReqSuccess={(data) => {
+                  addLicenseToItem(entity.id, data);
+                }}
+              >
+                {!!license ? '已安装' : '免费安装'}
+              </ProButton>
+            );
+          },
         },
       }}
       toolBarRender={() => {

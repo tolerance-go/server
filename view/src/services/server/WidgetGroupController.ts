@@ -8,7 +8,7 @@ export async function WidgetGroupControllerIndex(
   params: API.WidgetGroupControllerIndexParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.WidgetListRsp>('/api/widgetGroups', {
+  return request<API.WidgetGroupListRsp>('/api/widgetGroups', {
     method: 'GET',
     params: {
       ...params,
@@ -99,7 +99,7 @@ export async function WidgetGroupControllerFindAll(
   body: API.SearchReqData,
   options?: { [key: string]: any },
 ) {
-  return request<API.WidgetListRsp>('/api/widgetGroups/findAll', {
+  return request<API.WidgetGroupListRsp>('/api/widgetGroups/findAll', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
