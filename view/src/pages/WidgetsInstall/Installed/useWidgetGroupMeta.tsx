@@ -10,13 +10,13 @@ export type InstalledWidgetGroupItem = API.WidgetGroup & {
   widgets: API.Widget[];
 };
 
-export default ({ searchText }: { searchText: string }): ProListProps => {
+export default ({ searchText }: { searchText: string }) => {
   const [widgetGroups, setWidgetGroups] =
     useState<InstalledWidgetGroupItem[]>();
 
   const user = useLoginUser();
 
-  useRequestInternal(
+  const { run } = useRequestInternal(
     async () => {
       return WidgetGroupControllerFindAll({
         includes: [
@@ -80,8 +80,11 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
   }, [searchText, widgetGroups]);
 
   return {
-    metas,
-    dataSource,
-    grid: { gutter: 16, column: 4 },
+    listProps: {
+      metas,
+      dataSource,
+      grid: { gutter: 16, column: 4 },
+    },
+    run,
   };
 };

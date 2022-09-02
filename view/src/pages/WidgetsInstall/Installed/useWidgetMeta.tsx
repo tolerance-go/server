@@ -1,32 +1,75 @@
-import { useModel } from '@/.umi/plugin-model';
 import { ProButton } from '@/components/ProButton';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
+import useGetImmer from '@/utils/useGetImmer';
 import { ProListProps } from '@ant-design/pro-components';
-import { useMount } from 'ahooks';
-import { Button, Col, message, Row } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemoizedFn, useMount } from 'ahooks';
+import { Col, Row } from 'antd';
+import { useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
-import { InstallWidget } from './models/widgetList';
 
-export default ({ searchText }: { searchText: string }): ProListProps => {
-  const { widgets, setWidgets, requestWidgets, removeItemLic } = useModel(
-    'WidgetsInstall.Installed.widgetList',
-    (model) => ({
-      widgets: model.widgets,
-      setWidgets: model.setWidgets,
-      requestWidgets: model.requestWidgets,
-      removeItemLic: model.removeItemLic,
-    }),
-  );
+export type InstallWidget = API.Widget & {
+  widgetGroup: API.WidgetGroup & {
+    widgetLib: API.WidgetLib;
+  };
+  user: API.User;
+  licenses: API.License[];
+};
+
+export default ({ searchText }: { searchText: string }) => {
+  const [widgets, setWidgets] = useGetImmer<InstallWidget[]>();
+
+  const removeItemLic = useMemoizedFn((id: string, licId: string) => {
+    setWidgets((draft) => {
+      const target = draft?.find((item) => item.id === id);
+      if (target) {
+        const index = target.licenses.findIndex((item) => item.id === licId);
+        target.licenses.splice(index, 1);
+      }
+    });
+  });
 
   const user = useLoginUser();
 
-  useMount(() => {
-    requestWidgets(user);
-  });
+  const { run } = useRequestInternal(
+    async () => {
+      return WidgetControllerFindAll({
+        includes: [
+          {
+            model: 'WidgetGroup',
+            include: [
+              {
+                model: 'WidgetLib',
+              },
+            ],
+          },
+          {
+            model: 'User',
+          },
+          {
+            model: 'License',
+            wheres: {
+              where: [
+                {
+                  fieldName: 'userId',
+                  conditions: {
+                    eq: user.id,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }) as Promise<InstallWidget[]>;
+    },
+    {
+      onSuccess: (data) => {
+        setWidgets(data);
+      },
+    },
+  );
 
   const metas: ProListProps<InstallWidget>['metas'] = {
     title: {
@@ -133,8 +176,11 @@ export default ({ searchText }: { searchText: string }): ProListProps => {
   }, [searchText, widgets]);
 
   return {
-    metas,
-    dataSource,
-    split: true,
+    listProps: {
+      metas,
+      dataSource,
+      split: true,
+    },
+    run,
   };
 };
