@@ -1,7 +1,8 @@
+import { useModelPick } from '@/utils/useModelPick';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { ProForm, ProFormText, QueryFilter } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { useMemoizedFn } from 'ahooks';
+import { useControllableValue, useMemoizedFn } from 'ahooks';
 import { Card, Input, Row, Space, Tabs, Typography } from 'antd';
 import { useState } from 'react';
 import useSearchReq from '../_hooks/useSearchReq';
@@ -12,9 +13,9 @@ const { TabPane } = Tabs;
 const quickSearch = ['小程序开发', '入驻', 'ISV 权限'];
 
 export default () => {
-  const { setSearchVal } = useModel('widgetsMarket.searchValue', (model) => ({
-    setSearchVal: model.setSearchVal,
-  }));
+  const { setSearchVal } = useModelPick('widgetsMarket.searchValue', [
+    'setSearchVal',
+  ]);
 
   const { searchByText } = useSearchReq();
 

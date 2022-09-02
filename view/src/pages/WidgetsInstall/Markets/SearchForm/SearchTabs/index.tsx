@@ -4,8 +4,10 @@ import { WidgetControllerCount } from '@/services/server/WidgetController';
 import { WidgetGroupControllerCount } from '@/services/server/WidgetGroupController';
 import { WidgetLibControllerCount } from '@/services/server/WidgetLibController';
 import { WidgetsType } from '@/typings/widgets';
+import { useModelPick } from '@/utils/useModelPick';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
+import { useUpdateEffect } from 'ahooks';
 import { Tabs } from 'antd';
 import { useState } from 'react';
 
@@ -28,9 +30,24 @@ export default ({
   const [widgetGroupCount, setWidgetGroupCount] = useState<number>();
   const [widgetLibCount, setWidgetLibCount] = useState<number>();
 
-  useRequestInternal(
-    async () => {
-      return WidgetControllerCount({});
+  const { searchVal } = useModelPick('widgetsMarket.searchValue', [
+    'searchVal',
+  ]);
+
+  const { run: requestWithWidget } = useRequestInternal(
+    async (searchText = '') => {
+      return WidgetControllerCount({
+        wheres: {
+          where: [
+            {
+              fieldName: 'name',
+              conditions: {
+                like: searchText ? `%${searchText}%` : undefined,
+              },
+            },
+          ],
+        },
+      });
     },
     {
       onSuccess(data) {
@@ -39,9 +56,20 @@ export default ({
     },
   );
 
-  useRequestInternal(
-    async () => {
-      return WidgetGroupControllerCount({});
+  const { run: requestWithWidgetGroup } = useRequestInternal(
+    async (searchText = '') => {
+      return WidgetGroupControllerCount({
+        wheres: {
+          where: [
+            {
+              fieldName: 'name',
+              conditions: {
+                like: searchText ? `%${searchText}%` : undefined,
+              },
+            },
+          ],
+        },
+      });
     },
     {
       onSuccess(data) {
@@ -50,9 +78,20 @@ export default ({
     },
   );
 
-  useRequestInternal(
-    async () => {
-      return WidgetLibControllerCount({});
+  const { run: requestWithWidgetLib } = useRequestInternal(
+    async (searchText = '') => {
+      return WidgetLibControllerCount({
+        wheres: {
+          where: [
+            {
+              fieldName: 'name',
+              conditions: {
+                like: searchText ? `%${searchText}%` : undefined,
+              },
+            },
+          ],
+        },
+      });
     },
     {
       onSuccess(data) {
@@ -60,6 +99,12 @@ export default ({
       },
     },
   );
+
+  useUpdateEffect(() => {
+    requestWithWidget(searchVal);
+    requestWithWidgetGroup(searchVal);
+    requestWithWidgetLib(searchVal);
+  }, [searchVal]);
 
   return (
     <Tabs
