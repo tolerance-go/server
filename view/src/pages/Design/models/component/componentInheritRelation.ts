@@ -1,5 +1,5 @@
 import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
-import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
 import useGetImmer from '@/pages/Design/utils/useGetImmer';
 import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';

@@ -10,6 +10,7 @@ import { Button, Result, Space } from 'antd';
  * 自动发出的请求还会根据 401 继续返回登录页，如果没有则就是一个空页面
  * 我们不希望这样，所以渲染一个更有意义的页面让用户知道并选择下一步怎么做
  */
+
 export default () => {
   const { isLogin, user } = useAuth();
 

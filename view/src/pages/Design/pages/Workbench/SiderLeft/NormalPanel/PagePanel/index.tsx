@@ -1,6 +1,7 @@
 import { SiderContentTopper } from '@/pages/Design/components/SiderContentTopper';
 import { Col, Row } from 'antd';
 import { PageCreator } from './PageCreator';
+import PageFetchReloadTrigger from './PageFetchReloadTrigger';
 import PageNav from './PageNav';
 
 export default () => {
@@ -16,7 +17,10 @@ export default () => {
       <Col flex={'none'}>
         <SiderContentTopper
           title="路径"
-          renderCreator={() => <PageCreator />}
+          actions={[
+            <PageFetchReloadTrigger key={'0'} />,
+            <PageCreator key="1" />,
+          ]}
         ></SiderContentTopper>
       </Col>
       <Col

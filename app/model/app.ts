@@ -5,7 +5,6 @@ import {
   InferCreationAttributes,
   Model,
 } from 'sequelize';
-import { jsonButObjectType } from '../utils/jsonButObjectType';
 import { stringButArrayType } from '../utils/stringButArrayType';
 
 export interface AppModel
@@ -24,7 +23,7 @@ export interface AppModel
 }
 
 export default (app: Application) => {
-  const { STRING, UUID, UUIDV4, DATE, JSON: JSON_TYPE } = app.Sequelize;
+  const { STRING, UUID, UUIDV4, DATE, JSON } = app.Sequelize;
 
   const App = app.model.define<AppModel>('app', {
     id: {
@@ -38,16 +37,16 @@ export default (app: Application) => {
       field: 'user_id',
     },
     title: STRING(30),
-    appData: jsonButObjectType<AppModel>(app, 'appData', 'app_data'),
+    appData: JSON,
     historyData: {
-      type: JSON_TYPE,
+      type: JSON,
       field: 'history_data',
     },
     desc: STRING,
     createdAt: { type: DATE, field: 'created_at' },
     updatedAt: { type: DATE, field: 'updated_at' },
     stageSizeData: {
-      type: JSON_TYPE,
+      type: JSON,
       field: 'stage_size_data',
     },
     labels: stringButArrayType<AppModel>(app, 'labels'),

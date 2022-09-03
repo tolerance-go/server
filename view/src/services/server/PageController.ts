@@ -8,7 +8,7 @@ export async function PageControllerIndex(
   params: API.PageControllerIndexParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.PageListResponse>('/api/pages', {
+  return request<API.PageListRsp>('/api/pages', {
     method: 'GET',
     params: {
       ...params,
@@ -19,10 +19,10 @@ export async function PageControllerIndex(
 
 /** 创建 page  POST /api/pages */
 export async function PageControllerCreate(
-  body: API.CreationPage,
+  body: API.PageCreateReqData,
   options?: { [key: string]: any },
 ) {
-  return request<API.PageShowResponse>('/api/pages', {
+  return request<API.PageRsp>('/api/pages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export async function PageControllerShow(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.PageShowResponse>(`/api/pages/${param0}`, {
+  return request<API.PageRsp>(`/api/pages/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -50,11 +50,11 @@ export async function PageControllerShow(
 export async function PageControllerUpdate(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.PageControllerUpdateParams,
-  body: API.UpdationPage,
+  body: API.PageUpdateReqData,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.PageShowResponse>(`/api/pages/${param0}`, {
+  return request<API.PageRsp>(`/api/pages/${param0}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -72,9 +72,66 @@ export async function PageControllerDestroy(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.PageShowResponse>(`/api/pages/${param0}`, {
+  return request<API.PageRsp>(`/api/pages/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
+/** 删除 app  DELETE /api/pages/bulkDestroy */
+export async function PageControllerBulkDestroy(body: number[], options?: { [key: string]: any }) {
+  return request<API.CountResponse>('/api/pages/bulkDestroy', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取列表  获取列表  POST /api/pages/count */
+export async function PageControllerCount(
+  body: API.CountReqData,
+  options?: { [key: string]: any },
+) {
+  return request<API.CountResponse>('/api/pages/count', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取列表  获取列表  POST /api/pages/findAll */
+export async function PageControllerFindAll(
+  body: API.SearchReqData,
+  options?: { [key: string]: any },
+) {
+  return request<API.PageListRsp>('/api/pages/findAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取列表  获取列表  POST /api/pages/findAndCountAll */
+export async function PageControllerFindAndCountAll(
+  body: API.SearchReqData,
+  options?: { [key: string]: any },
+) {
+  return request<API.PageListAndCountRsp>('/api/pages/findAndCountAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }

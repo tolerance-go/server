@@ -14,6 +14,9 @@ module.exports = {
     ]),
   },
   LicenseUpdateReqData: {
-    ...mapValues(License, (item) => ({ ...item, required: false })),
+    ...mapValues(omit(License, Object.keys(Identity)), (item) => ({
+      ...item,
+      required: false,
+    })),
   },
 };

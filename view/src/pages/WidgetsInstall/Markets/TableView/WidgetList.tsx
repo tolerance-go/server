@@ -2,7 +2,7 @@ import { ProButton } from '@/components/ProButton';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerCreate } from '@/services/server/LicenseController';
 import { WidgetIncludeGroupIncludeLibAndUserAndLicense } from '@/typings/includes';
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -28,7 +28,7 @@ export default () => {
     }),
   );
 
-  const { setWidget } = useModelPick('WidgetsInstall.selectedWidgetMeta', [
+  const { setWidget } = usePickModel('WidgetsInstall.selectedWidgetMeta', [
     'setWidget',
   ]);
 

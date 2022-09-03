@@ -1,5 +1,5 @@
 import BadgeWithTitle from '@/components/BadgeWithTitle';
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import { ProList, ProListProps } from '@ant-design/pro-components';
 import { useState } from 'react';
 import { WidgetKey } from './models/activeKey';
@@ -11,7 +11,7 @@ import useWidgetMeta, { InstallWidget } from './useWidgetMeta';
 
 export default () => {
   const [searchVal, setSearchVal] = useState('');
-  const { activeKey, setActiveKey } = useModelPick(
+  const { activeKey, setActiveKey } = usePickModel(
     'WidgetsInstall.Installed.activeKey',
     ['activeKey', 'setActiveKey'],
   );

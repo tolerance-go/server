@@ -1,7 +1,7 @@
 import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
 import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
 import { useGetSliceStageData } from '@/pages/Design/hooks/initials/useGetSliceStageData';
-import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
 import { ComponentControllerCreate } from '@/services/server/ComponentController';
 import { useModel } from '@umijs/max';
 import { useRequestInternal } from '@/helpers/useRequestInternal';
@@ -32,7 +32,7 @@ export const LinkageComponentCreator = (props: {
   );
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.comsStructures',
+    'Design.page.nodesStructures',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),

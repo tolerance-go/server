@@ -1,9 +1,9 @@
-import { getURLQuery } from '@/helpers/getURLQuery';
+import { getInitialStateFromURL } from '@/utils/getInitialStateFromURL';
 import { useGetState } from 'ahooks';
 
 export default () => {
-  const [searchVal, setSearchVal, getSearchVal] = useGetState<string>(
-    () => (getURLQuery().searchText as string | undefined) ?? '',
+  const [searchVal, setSearchVal, getSearchVal] = useGetState(
+    () => getInitialStateFromURL('searchText', 'string') ?? '',
   );
 
   return {

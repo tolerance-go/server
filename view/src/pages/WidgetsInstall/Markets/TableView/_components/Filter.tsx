@@ -3,7 +3,7 @@ import {
   OrderType,
   OrderValues,
 } from '@/pages/WidgetsInstall/models/marketListOrderMeta';
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import {
   LightFilter,
   ProFormRadio,
@@ -14,7 +14,7 @@ import useSearchReq from '../../_hooks/useSearchReq';
 
 export default () => {
   const { orderBy, orderValueEnum, orderType, setOrderBy, setOrderType } =
-    useModelPick('WidgetsInstall.marketListOrderMeta', [
+    usePickModel('WidgetsInstall.marketListOrderMeta', [
       'orderBy',
       'orderValueEnum',
       'setOrderBy',

@@ -102,8 +102,8 @@ export default class ReviewController extends Controller {
     if (!target) {
       throw new Error('未找到该资源');
     }
-    await target.update(ctx.request.body);
-    ctx.body = target;
+    const next = await target.update(ctx.request.body);
+    ctx.body = next;
   }
 
   /**

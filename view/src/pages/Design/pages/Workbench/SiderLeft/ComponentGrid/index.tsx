@@ -1,4 +1,4 @@
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import { Affix, Card, message, Row, Tabs, Typography } from 'antd';
 import React, { useRef } from 'react';
 import { useGridData } from './useGridData';
@@ -20,7 +20,7 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
 
   const { widgetsData } = useGridData();
 
-  const { widgetElements } = useModelPick('Design.widgetElements', [
+  const { widgetElements } = usePickModel('Design.widgetElements', [
     'widgetElements',
   ]);
 

@@ -4,7 +4,7 @@ import { WidgetControllerCount } from '@/services/server/WidgetController';
 import { WidgetGroupControllerCount } from '@/services/server/WidgetGroupController';
 import { WidgetLibControllerCount } from '@/services/server/WidgetLibController';
 import { WidgetsType } from '@/typings/widgets';
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
@@ -30,7 +30,7 @@ export default ({
   const [widgetGroupCount, setWidgetGroupCount] = useState<number>();
   const [widgetLibCount, setWidgetLibCount] = useState<number>();
 
-  const { searchVal } = useModelPick('widgetsMarket.searchValue', [
+  const { searchVal } = usePickModel('widgetsMarket.searchValue', [
     'searchVal',
   ]);
 

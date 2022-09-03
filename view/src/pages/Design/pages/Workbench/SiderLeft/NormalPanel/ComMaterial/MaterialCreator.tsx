@@ -35,7 +35,7 @@ export default () => {
   const { getSliceStageData } = useGetSliceStageData();
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.comsStructures',
+    'Design.page.nodesStructures',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),

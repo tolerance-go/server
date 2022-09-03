@@ -1,8 +1,8 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Space, Typography } from 'antd';
 
 export const SiderContentTopper = (props: {
   title: string;
-  renderCreator: () => React.ReactNode;
+  actions: React.ReactNode[];
 }) => {
   return (
     <Row
@@ -23,7 +23,11 @@ export const SiderContentTopper = (props: {
           {props.title}
         </Typography.Text>
       </Col>
-      <Col>{props.renderCreator()}</Col>
+      <Col>
+        <Space size={5} align="center">
+          {props.actions}
+        </Space>
+      </Col>
     </Row>
   );
 };

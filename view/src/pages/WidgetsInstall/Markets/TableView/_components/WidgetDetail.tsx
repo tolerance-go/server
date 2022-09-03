@@ -1,4 +1,4 @@
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import { DownloadOutlined, LineOutlined } from '@ant-design/icons';
 import {
   Avatar,
@@ -19,7 +19,7 @@ import remarkGfm from 'remark-gfm';
 const markdown = 'Just a link: https://reactjs.com.';
 
 export default () => {
-  const { widget } = useModelPick('WidgetsInstall.selectedWidgetMeta', [
+  const { widget } = usePickModel('WidgetsInstall.selectedWidgetMeta', [
     'widget',
   ]);
   return (

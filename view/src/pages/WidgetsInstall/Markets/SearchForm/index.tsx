@@ -1,4 +1,4 @@
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 import useUrlState from '@ahooksjs/use-url-state';
 import { ProForm, ProFormText, QueryFilter } from '@ant-design/pro-components';
 import { useMemoizedFn, useUnmount } from 'ahooks';
@@ -11,7 +11,7 @@ import SearchTabs from './SearchTabs';
 const quickSearch = ['小程序开发', '入驻', 'ISV 权限'];
 
 export default () => {
-  const { setSearchVal } = useModelPick('widgetsMarket.searchValue', [
+  const { setSearchVal } = usePickModel('widgetsMarket.searchValue', [
     'setSearchVal',
   ]);
 

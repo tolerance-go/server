@@ -1,26 +1,26 @@
-import { useRequestInternal } from '@/helpers/useRequestInternal';
 import useAppId from '@/pages/Design/hooks/useAppId';
-import { PageControllerIndex } from '@/services/server/PageController';
-import { useModel, useSearchParams } from '@umijs/max';
-import { useUpdateEffect } from 'ahooks';
+import { usePickModel } from '@/utils/useModelTypes';
+import useUrlState from '@ahooksjs/use-url-state';
+import { useModel } from '@umijs/max';
+import { useMount, useUnmount, useUpdateEffect } from 'ahooks';
 import { Menu, Skeleton } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import clsx from 'clsx';
-import { useLayoutEffect } from 'react';
 import styles from './index.less';
 import { MenuItem } from './MenuItem';
 import { TempInput } from './TempCreateInput';
 
 const PageNav = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setUrlState] = useUrlState({
+    selectedPageId: undefined,
+  });
 
   const appId = useAppId();
 
-  const { pageList, setList } = useModel('Design.page.pageList', (model) => ({
-    pageList: model.pageList,
-    setList: model.setList,
-    getList: model.getList,
-  }));
+  const { pageList, request, setList, requestLoading } = usePickModel(
+    'Design.page.pageList',
+    ['pageList', 'getList', 'request', 'setList', 'requestLoading'],
+  );
 
   const { selectedPageId, choosePageId } = useModel(
     'Design.page.selectedPageId',
@@ -37,39 +37,23 @@ const PageNav = () => {
     }),
   );
 
-  const { run, loading } = useRequestInternal(
-    async () => {
-      return PageControllerIndex({
-        appId,
-      });
-    },
-    {
-      onSuccess: (data) => {
-        setList(data);
-      },
-      manual: true,
-    },
-  );
+  useMount(() => {
+    request(appId);
+  });
 
-  /** 初始化 list */
-  useLayoutEffect(() => {
-    if (pageList === undefined) {
-      run();
-    }
-  }, []);
+  useUnmount(() => {
+    setList(undefined);
+  });
 
   /** 同步修改到 url */
   useUpdateEffect(() => {
-    if (selectedPageId) {
-      searchParams.set('selectedPageId', selectedPageId);
-    } else {
-      searchParams.delete('selectedPageId');
-    }
-    setSearchParams(searchParams);
+    setUrlState({
+      selectedPageId,
+    });
   }, [selectedPageId]);
 
   return (
-    <Skeleton loading={loading}>
+    <Skeleton loading={requestLoading}>
       <div className={styles.wrap}>
         <Menu
           selectedKeys={selectedPageId ? [selectedPageId] : undefined}

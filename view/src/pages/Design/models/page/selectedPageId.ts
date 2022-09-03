@@ -1,11 +1,12 @@
-import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
+import { QUERY_KEYS } from '@/constants/path';
 import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { getInitialStateFromURL } from '@/utils/getInitialStateFromURL';
 import { useMemoizedFn } from 'ahooks';
 
 export default () => {
   /** 当前激活的 page path */
-  const [selectedPageId, setSelectedPageId] = useGetImmer<string | undefined>(
-    () => getURLQuery().selectedPageId as string | undefined,
+  const [selectedPageId, setSelectedPageId, getSelectedPageId] = useGetImmer(
+    () => getInitialStateFromURL(QUERY_KEYS.SELECTED_PAGE_ID, 'string'),
   );
 
   /** 设置 versionId 对应的 pageList */
@@ -29,5 +30,6 @@ export default () => {
   return {
     selectedPageId,
     choosePageId,
+    getSelectedPageId,
   };
 };

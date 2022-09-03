@@ -36,7 +36,18 @@ export default (app: Application) => {
     `${apiPrefix}/apps/:id/stage-size`,
     controller.apps.updateStageSize,
   );
+
+  // pages
   router.resources('pages', `${apiPrefix}/pages`, controller.pages);
+  router.post(`${apiPrefix}/pages/findAll`, controller.pages.findAll);
+  router.post(
+    `${apiPrefix}/pages/findAndCountAll`,
+    controller.pages.findAndCountAll,
+  );
+  router.delete(`${apiPrefix}/pages/bulkDestroy`, controller.pages.bulkDestroy);
+  router.post(`${apiPrefix}/pages/count`, controller.pages.count);
+
+  // components
   router.resources(
     'components',
     `${apiPrefix}/components`,

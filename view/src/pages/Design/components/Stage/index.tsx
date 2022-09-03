@@ -1,5 +1,5 @@
 import { Atom } from '@/pages/Design/components/Atom';
-import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
 import { useMemo } from 'react';
@@ -10,7 +10,7 @@ import { StageWorkbenchWrapper } from './wrappers/Workbench';
 
 export default function Stage() {
   const { rootIds, stageComponentsModel } = useModel(
-    'Design.page.comsStructures',
+    'Design.page.nodesStructures',
     (model) => {
       return {
         stageComponentsModel: model.stageComponentsModel,

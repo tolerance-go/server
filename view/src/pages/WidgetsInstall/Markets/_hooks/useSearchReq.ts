@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks';
 import { useModel } from '@umijs/max';
 import { OrderValues } from '../../models/marketListOrderMeta';
-import { useModelPick } from '@/utils/useModelPick';
+import { usePickModel } from '@/utils/useModelTypes';
 
 export default () => {
   const { searchType } = useModel('widgetsMarket.searchType', (model) => ({
@@ -12,21 +12,21 @@ export default () => {
     getSearchVal: model.getSearchVal,
   }));
 
-  const { getOrderMeta } = useModelPick('WidgetsInstall.marketListOrderMeta', [
+  const { getOrderMeta } = usePickModel('WidgetsInstall.marketListOrderMeta', [
     'getOrderMeta',
   ]);
 
-  const { requestDataSource: requestDataSourceByWidgets } = useModelPick(
+  const { requestDataSource: requestDataSourceByWidgets } = usePickModel(
     'widgetsMarket.tableList.widgets',
     ['requestDataSource'],
   );
 
-  const { requestDataSource: requestDataSourceByWidgetGroups } = useModelPick(
+  const { requestDataSource: requestDataSourceByWidgetGroups } = usePickModel(
     'widgetsMarket.tableList.widgetGroups',
     ['requestDataSource'],
   );
 
-  const { requestDataSource: requestDataSourceByWidgetLibs } = useModelPick(
+  const { requestDataSource: requestDataSourceByWidgetLibs } = usePickModel(
     'widgetsMarket.tableList.widgetLibs',
     ['requestDataSource'],
   );

@@ -2,19 +2,19 @@
 'use strict';
 
 const { mapValues, omit } = require('lodash');
-const { WidgetLib } = require('../dto/widgetLib');
 const { Timestamp, Identity, UserId } = require('../../constants/dto');
+const { Page } = require('../dto/page');
 
 module.exports = {
-  WidgetLibCreateReqData: {
-    ...omit(WidgetLib, [
+  PageCreateReqData: {
+    ...omit(Page, [
       ...Object.keys(Timestamp),
       ...Object.keys(Identity),
       ...Object.keys(UserId),
     ]),
   },
-  WidgetLibUpdateReqData: {
-    ...mapValues(omit(WidgetLib, Object.keys(Identity)), (item) => ({
+  PageUpdateReqData: {
+    ...mapValues(omit(Page, Object.keys(Identity)), (item) => ({
       ...item,
       required: false,
     })),

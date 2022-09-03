@@ -5,7 +5,6 @@ import {
   InferCreationAttributes,
   Model,
 } from 'sequelize';
-import { jsonButObjectType } from '../utils/jsonButObjectType';
 
 export interface PageModel
   extends Model<
@@ -37,6 +36,8 @@ export interface PageModel
   nodesStatusRelations: CreationOptional<string>;
   // 所有节点的 - 默认状态
   nodesDefaultsStatus: CreationOptional<string>;
+  // 舞台跟节点
+  stageRootNodes: CreationOptional<string>;
 }
 
 export default (app: Application) => {
@@ -61,26 +62,16 @@ export default (app: Application) => {
       type: UUID,
       field: 'version_id',
     },
-    nodesStructures: jsonButObjectType(
-      app,
-      'nodesStructures',
-      'nodes_structures',
-    ),
-    nodesStyles: jsonButObjectType(app, 'nodesStyles', 'nodes_styles'),
-    nodesSettings: jsonButObjectType(app, 'nodesSettings', 'nodes_settings'),
-    nodesEvents: jsonButObjectType(app, 'nodesEvents', 'nodes_events'),
-    nodesActions: jsonButObjectType(app, 'nodesActions', 'nodes_actions'),
-    nodesStatus: jsonButObjectType(app, 'nodesStatus', 'nodes_status'),
-    nodesStatusRelations: jsonButObjectType(
-      app,
-      'nodesStatusRelations',
-      'nodes_status_relations',
-    ),
-    nodesDefaultsStatus: jsonButObjectType(
-      app,
-      'nodesDefaultsStatus',
-      'nodes_defaults_status',
-    ),
+    /** 舞台节点结构 */
+    nodesStructures: JSON,
+    stageRootNodes: JSON,
+    nodesStyles: JSON,
+    nodesSettings: JSON,
+    nodesEvents: JSON,
+    nodesActions: JSON,
+    nodesStatus: JSON,
+    nodesStatusRelations: JSON,
+    nodesDefaultsStatus: JSON,
   });
 
   (

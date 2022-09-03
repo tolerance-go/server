@@ -4,8 +4,8 @@ import { useComDefaultStatId } from '@/pages/Design/hooks/useComDefaultStatId';
 import { useComDefaultStatSetting } from '@/pages/Design/hooks/useComDefaultStatSetting';
 import { useComDefaultStatStyle } from '@/pages/Design/hooks/useComDefaultStatStyle';
 import { useComponentUsedSettings } from '@/pages/Design/hooks/useComponentUsedSettings';
-import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
-import { useModelPick } from '@/utils/useModelPick';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { usePickModel } from '@/utils/useModelTypes';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
 import { AtomPlaygroundWrapper } from './wrappers/Playground';
@@ -20,7 +20,7 @@ export const Atom = (props: ComponentStructure) => {
     stageMode: model.stageMode,
   }));
 
-  const { widgetElements } = useModelPick('Design.widgetElements', [
+  const { widgetElements } = usePickModel('Design.widgetElements', [
     'widgetElements',
   ]);
 

@@ -3,7 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 
 export const useGetStageData = () => {
   const { getData: getComsTreeData } = useModel(
-    'Design.page.comsStructures',
+    'Design.page.nodesStructures',
     (model) => {
       return {
         getData: model.getData,

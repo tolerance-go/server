@@ -12,7 +12,7 @@ export const useHandleComGridItemClick = () => {
   );
 
   const { addComponentToStage, addComToStageSlot } = useModel(
-    'Design.page.comsStructures',
+    'Design.page.nodesStructures',
     (model) => ({
       addComponentToStage: model.addComponentToStage,
       addComToStageSlot: model.addComToStageSlot,
@@ -98,7 +98,7 @@ export const useHandleComGridItemClick = () => {
         slotName: focusSlotName,
         type: widget.type,
         display: widget.display,
-        postion: focusSlotPosition,
+        position: focusSlotPosition,
       });
     } else {
       addComponentToStage(widget.type, {

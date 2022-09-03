@@ -1,5 +1,5 @@
 import { PLAYGROUND_ATOM_WRAPPER_CLASS_NAME } from '@/pages/Design/constants/atoms';
-import { ComponentStructure } from '@/pages/Design/models/page/comsStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
 import React from 'react';
 
 export const AtomPlaygroundWrapper = (

@@ -61,7 +61,7 @@ export default () => {
     <div>
       <SiderContentTopper
         title="暂存组件"
-        renderCreator={() => <MaterialCreator />}
+        actions={[<MaterialCreator key={'0'} />]}
       ></SiderContentTopper>
       <Tree<TreeNode>
         showLine={{

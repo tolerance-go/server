@@ -346,21 +346,6 @@ declare namespace API {
     resolved?: boolean;
   };
 
-  type CreationPage = {
-    path: string;
-    appId: string;
-    versionId?: string;
-    stage_data?: string;
-    nodesStructures?: PlainObject;
-    nodesStyles?: PlainObject;
-    nodesSettings?: PlainObject;
-    nodesEvents?: PlainObject;
-    nodesActions?: PlainObject;
-    nodesStatus?: PlainObject;
-    nodesStatusRelations?: PlainObject;
-    nodesDefaultsStatus?: PlainObject;
-  };
-
   type CreationReview = {
     content: string;
     rateNum: string;
@@ -621,7 +606,6 @@ declare namespace API {
   type LicenseUpdateReqData = {
     createdAt?: string;
     updatedAt?: string;
-    id?: string;
     userId?: string;
     expiration?: string;
     widgetId?: string;
@@ -640,19 +624,22 @@ declare namespace API {
   };
 
   type Page = {
-    id: string;
     path: string;
     appId: string;
     versionId?: string;
     stage_data?: string;
-    nodesStructures?: PlainObject;
-    nodesStyles?: PlainObject;
-    nodesSettings?: PlainObject;
-    nodesEvents?: PlainObject;
-    nodesActions?: PlainObject;
-    nodesStatus?: PlainObject;
-    nodesStatusRelations?: PlainObject;
-    nodesDefaultsStatus?: PlainObject;
+    nodesStructures?: string;
+    nodesStyles?: string;
+    nodesSettings?: string;
+    nodesEvents?: string;
+    nodesActions?: string;
+    nodesStatus?: string;
+    nodesStatusRelations?: string;
+    nodesDefaultsStatus?: string;
+    stageRootNodes?: string;
+    id: string;
+    createdAt: string;
+    updatedAt: string;
   };
 
   type PageControllerDestroyParams = {
@@ -661,7 +648,6 @@ declare namespace API {
   };
 
   type PageControllerIndexParams = {
-    appId?: any;
     limit?: number;
     offset?: number;
   };
@@ -676,20 +662,67 @@ declare namespace API {
     id: string;
   };
 
-  type PageListResponse = {
-    success: boolean;
-    errorCode?: number;
-    errorMessage?: string;
-    showType?: number;
-    data: ShownPage[];
+  type PageCreateReqData = {
+    path: string;
+    appId: string;
+    versionId?: string;
+    stage_data?: string;
+    nodesStructures?: string;
+    nodesStyles?: string;
+    nodesSettings?: string;
+    nodesEvents?: string;
+    nodesActions?: string;
+    nodesStatus?: string;
+    nodesStatusRelations?: string;
+    nodesDefaultsStatus?: string;
+    stageRootNodes?: string;
   };
 
-  type PageShowResponse = {
+  type PageListAndCountRsp = {
     success: boolean;
     errorCode?: number;
     errorMessage?: string;
     showType?: number;
-    data: ShownPage;
+    data: PageListAndCountRspData;
+  };
+
+  type PageListAndCountRspData = {
+    count: number;
+    rows: Page[];
+  };
+
+  type PageListRsp = {
+    success: boolean;
+    errorCode?: number;
+    errorMessage?: string;
+    showType?: number;
+    data: Page[];
+  };
+
+  type PageRsp = {
+    success: boolean;
+    errorCode?: number;
+    errorMessage?: string;
+    showType?: number;
+    data: Page;
+  };
+
+  type PageUpdateReqData = {
+    path?: string;
+    appId?: string;
+    versionId?: string;
+    stage_data?: string;
+    nodesStructures?: string;
+    nodesStyles?: string;
+    nodesSettings?: string;
+    nodesEvents?: string;
+    nodesActions?: string;
+    nodesStatus?: string;
+    nodesStatusRelations?: string;
+    nodesDefaultsStatus?: string;
+    stageRootNodes?: string;
+    createdAt?: string;
+    updatedAt?: string;
   };
 
   type PlainObject = {};
@@ -867,24 +900,6 @@ declare namespace API {
     resolved?: boolean;
   };
 
-  type ShownPage = {
-    createdAt: string;
-    updatedAt: string;
-    id: string;
-    path: string;
-    appId: string;
-    versionId?: string;
-    stage_data?: string;
-    nodesStructures?: PlainObject;
-    nodesStyles?: PlainObject;
-    nodesSettings?: PlainObject;
-    nodesEvents?: PlainObject;
-    nodesActions?: PlainObject;
-    nodesStatus?: PlainObject;
-    nodesStatusRelations?: PlainObject;
-    nodesDefaultsStatus?: PlainObject;
-  };
-
   type ShownReview = {
     createdAt: string;
     updatedAt: string;
@@ -954,21 +969,6 @@ declare namespace API {
     containerTop?: number;
     pageId?: string;
     resolved?: boolean;
-  };
-
-  type UpdationPage = {
-    path?: string;
-    appId?: string;
-    versionId?: string;
-    stage_data?: string;
-    nodesStructures?: PlainObject;
-    nodesStyles?: PlainObject;
-    nodesSettings?: PlainObject;
-    nodesEvents?: PlainObject;
-    nodesActions?: PlainObject;
-    nodesStatus?: PlainObject;
-    nodesStatusRelations?: PlainObject;
-    nodesDefaultsStatus?: PlainObject;
   };
 
   type UpdationReview = {
@@ -1142,8 +1142,6 @@ declare namespace API {
     desc?: string;
     detail?: string;
     labels?: string[];
-    createdAt: string;
-    updatedAt: string;
   };
 
   type WidgetGroup = {
@@ -1185,8 +1183,6 @@ declare namespace API {
     type: string;
     desc?: string;
     labels?: string[];
-    createdAt: string;
-    updatedAt: string;
   };
 
   type WidgetGroupListAndCountRsp = {
@@ -1224,7 +1220,6 @@ declare namespace API {
     type?: string;
     desc?: string;
     labels?: string[];
-    id?: string;
     createdAt?: string;
     updatedAt?: string;
   };
@@ -1266,12 +1261,9 @@ declare namespace API {
   type WidgetLibCreateReqData = {
     name: string;
     widgetLibId?: string;
-    userId?: string;
     type: string;
     desc?: string;
     labels?: string[];
-    createdAt: string;
-    updatedAt: string;
   };
 
   type WidgetLibListAndCountRsp = {
@@ -1310,7 +1302,6 @@ declare namespace API {
     type?: string;
     desc?: string;
     labels?: string[];
-    id?: string;
     createdAt?: string;
     updatedAt?: string;
   };
@@ -1352,7 +1343,6 @@ declare namespace API {
     desc?: string;
     detail?: string;
     labels?: string[];
-    id?: string;
     createdAt?: string;
     updatedAt?: string;
   };

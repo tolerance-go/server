@@ -3,7 +3,7 @@ import { useUpdateEffect } from 'ahooks';
 import { useMemo } from 'react';
 
 export default () => {
-  const { initData } = useModel('Design.page.comsStructures', (model) => ({
+  const { initData } = useModel('Design.page.nodesStructures', (model) => ({
     initData: model.initData,
   }));
 

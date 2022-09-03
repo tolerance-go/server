@@ -2,15 +2,33 @@
 
 'use strict';
 
-const base = require('./base');
+const { ResponseBase } = require('../../constants/dto');
 
 module.exports = {
-  PageShowResponse: {
-    ...base.BaseResponse,
-    data: { type: 'ShownPage', required: true },
+  PageRsp: {
+    ...ResponseBase,
+    data: { type: 'Page', required: true },
   },
-  PageListResponse: {
-    ...base.BaseResponse,
-    data: { type: 'array', itemType: 'ShownPage', required: true },
+  PageListRsp: {
+    ...ResponseBase,
+    data: { type: 'array', itemType: 'Page', required: true },
+  },
+  PageListAndCountRspData: {
+    count: {
+      type: 'integer',
+      required: true,
+    },
+    rows: {
+      type: 'array',
+      itemType: 'Page',
+      required: true,
+    },
+  },
+  PageListAndCountRsp: {
+    ...ResponseBase,
+    data: {
+      type: 'PageListAndCountRspData',
+      required: true,
+    },
   },
 };

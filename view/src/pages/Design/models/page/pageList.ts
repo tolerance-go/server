@@ -1,5 +1,7 @@
+import { useRequestInternal } from '@/helpers/useRequestInternal';
 import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
-import { useModel } from '@umijs/max';
+import { PageControllerFindAll } from '@/services/server/PageController';
+import { useModel, request } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 /** 路径管理 */
@@ -55,7 +57,31 @@ const usePageList = () => {
     },
   );
 
+  const { run: request, loading } = useRequestInternal(
+    async (appId: string) => {
+      return PageControllerFindAll({
+        wheres: {
+          where: [
+            {
+              fieldName: 'appId',
+              conditions: {
+                eq: appId,
+              },
+            },
+          ],
+        },
+      });
+    },
+    {
+      onSuccess: (data) => {
+        setList(data);
+      },
+    },
+  );
+
   return {
+    requestLoading: loading,
+    request,
     pageList: list,
     updatePath,
     getList,
