@@ -9,7 +9,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { Tabs } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default ({
   showFilter,
@@ -100,7 +100,8 @@ export default ({
     },
   );
 
-  useUpdateEffect(() => {
+  /** url 会初始化 searchVal */
+  useEffect(() => {
     requestWithWidget(searchVal);
     requestWithWidgetGroup(searchVal);
     requestWithWidgetLib(searchVal);

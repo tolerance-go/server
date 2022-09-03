@@ -1,8 +1,10 @@
+import { getURLQuery } from '@/helpers/getURLQuery';
 import { useGetState } from 'ahooks';
-import { useState } from 'react';
 
 export default () => {
-  const [searchVal, setSearchVal, getSearchVal] = useGetState<string>('');
+  const [searchVal, setSearchVal, getSearchVal] = useGetState<string>(
+    () => (getURLQuery().searchText as string | undefined) ?? '',
+  );
 
   return {
     getSearchVal,

@@ -19,12 +19,11 @@ export default () => {
     searchVal: model.searchVal,
   }));
 
-  const { widgets, requestDataSource, loading, addLicenseToItem } = useModel(
+  const { widgets, loading, addLicenseToItem } = useModel(
     'widgetsMarket.tableList.widgets',
     (model) => ({
       widgets: model.widgets,
       loading: model.loading,
-      requestDataSource: model.requestDataSource,
       addLicenseToItem: model.addLicenseToItem,
     }),
   );

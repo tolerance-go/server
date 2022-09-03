@@ -1,15 +1,13 @@
 import { useModelPick } from '@/utils/useModelPick';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import useUrlState from '@ahooksjs/use-url-state';
 import { ProForm, ProFormText, QueryFilter } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
-import { useControllableValue, useMemoizedFn } from 'ahooks';
-import { Card, Input, Row, Space, Tabs, Typography } from 'antd';
+import { useMemoizedFn, useMount } from 'ahooks';
+import { Card, Input, Row, Space, Typography } from 'antd';
 import { useState } from 'react';
 import useSearchReq from '../_hooks/useSearchReq';
 import styles from './index.less';
 import SearchTabs from './SearchTabs';
 
-const { TabPane } = Tabs;
 const quickSearch = ['小程序开发', '入驻', 'ISV 权限'];
 
 export default () => {
@@ -21,7 +19,18 @@ export default () => {
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
-  const [inputVal, setInputVal] = useState<string>('');
+  const [urlState, setUrlState] = useUrlState({
+    searchText: '',
+  });
+  const [inputVal, setInputVal] = useState<string>(urlState.searchText);
+
+  const search = useMemoizedFn((val: string) => {
+    setSearchVal(val);
+    setUrlState({
+      searchText: val,
+    });
+    searchByText(val);
+  });
 
   return (
     <Card
@@ -39,8 +48,7 @@ export default () => {
             setInputVal(e.target.value);
           }}
           onSearch={() => {
-            setSearchVal(inputVal);
-            searchByText(inputVal);
+            search(inputVal);
           }}
           style={{ maxWidth: 522, width: '100%' }}
         />
@@ -70,9 +78,9 @@ export default () => {
           labelWidth="auto"
           split
           className={styles.filter}
-          onFinish={async () => {
-            requestDataSource();
-          }}
+          // onFinish={async () => {
+          //   requestDataSource();
+          // }}
         >
           <ProForm.Group title="作者">
             <ProFormText name="username" label="姓名" />
