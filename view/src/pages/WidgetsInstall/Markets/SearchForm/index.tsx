@@ -1,7 +1,7 @@
 import { useModelPick } from '@/utils/useModelPick';
 import useUrlState from '@ahooksjs/use-url-state';
 import { ProForm, ProFormText, QueryFilter } from '@ant-design/pro-components';
-import { useMemoizedFn, useMount } from 'ahooks';
+import { useMemoizedFn, useUnmount } from 'ahooks';
 import { Card, Input, Row, Space, Typography } from 'antd';
 import { useState } from 'react';
 import useSearchReq from '../_hooks/useSearchReq';
@@ -30,6 +30,10 @@ export default () => {
       searchText: val,
     });
     searchByText(val);
+  });
+
+  useUnmount(() => {
+    setSearchVal('');
   });
 
   return (
