@@ -7,7 +7,7 @@ import {
   WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense,
 } from '@/typings/includes';
 import { ProList } from '@ant-design/pro-components';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Badge, Col, Row } from 'antd';
 import { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -37,7 +37,7 @@ export default () => {
     widgetLibs: WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense[];
   }>();
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const [widgets, widgetGroups, widgetLibs] = await Promise.all([
         WidgetControllerFindAll({

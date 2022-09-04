@@ -7,11 +7,11 @@ export const useInitSatgeDataWithPage = () => {
 
   const initSatgeDataWithPage = useMemoizedFn(async (activePageId: number) => {
     try {
-      const data = await PageControllerShow({
-        id: activePageId,
-      });
-      const stageData = data?.stage_data ? JSON.parse(data?.stage_data) : {};
-      initStageData(stageData);
+      // const data = await PageControllerShow({
+      //   id: activePageId,
+      // });
+      // const stageData = data?.stage_data ? JSON.parse(data?.stage_data) : {};
+      // initStageData(stageData);
     } catch {}
   });
 

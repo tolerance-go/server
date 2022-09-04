@@ -1,5 +1,5 @@
 import { ProButton } from '@/components/ProButton';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
@@ -33,7 +33,7 @@ export default ({ searchText }: { searchText: string }) => {
 
   const user = useLoginUser();
 
-  const { run } = useRequestInternal(
+  const { run } = useRequestReadyOnAuth(
     async () => {
       return WidgetControllerFindAll({
         includes: [

@@ -1,6 +1,6 @@
 import { PageControllerDestroy } from '@/services/server/PageController';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Spin } from 'antd';
 
 export default ({ item }: { item: API.ShownPage }) => {
@@ -8,7 +8,7 @@ export default ({ item }: { item: API.ShownPage }) => {
     deletePath: model.deletePath,
   }));
 
-  const { run: runDelete, loading: deleteLoading } = useRequestInternal(
+  const { run: runDelete, loading: deleteLoading } = useRequestReadyOnAuth(
     async () => {
       return PageControllerDestroy({
         id: item.id,

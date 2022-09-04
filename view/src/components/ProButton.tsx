@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Button, ButtonProps, Popconfirm, PopconfirmProps } from 'antd';
 
 export const ProButton = <T, TParams extends any[]>({
@@ -14,7 +14,7 @@ export const ProButton = <T, TParams extends any[]>({
   popconfirm?: PopconfirmProps;
   defaultParams?: TParams;
 } & ButtonProps) => {
-  const { run, loading } = useRequestInternal<T, TParams>(
+  const { run, loading } = useRequestReadyOnAuth<T, TParams>(
     async (...params) => {
       return request!(...params);
     },

@@ -24,21 +24,24 @@ const useComsLayout = () => {
   /** 是否展示全部插槽 */
   const [showAllSlots, setShowAllSlots] = useState<boolean>(false);
 
-  const { getLatestStageComponentsModel } = useModel(
-    'Design.page.nodesStructures',
+  const { getNodesStructures } = useModel(
+    'Design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
-        getLatestStageComponentsModel: model?.getLatestStageComponentsModel,
+        getNodesStructures: model?.getNodesStructures,
       };
     },
   );
 
   /** 层级打开指定的菜单 */
   const openTargetFromTreeMenu = useMemoizedFn((targetId: string) => {
-    const stageComponentsModel = getLatestStageComponentsModel();
+    const stageComponentsModel = getNodesStructures();
 
     const findAllParentsId = (comId: string, dist: string[] = []) => {
-      if (comId === 'root' || stageComponentsModel?.[comId]?.parentId === 'root')
+      if (
+        comId === 'root' ||
+        stageComponentsModel?.[comId]?.parentId === 'root'
+      )
         return dist;
       const parentId = stageComponentsModel?.[comId]?.parentId;
 

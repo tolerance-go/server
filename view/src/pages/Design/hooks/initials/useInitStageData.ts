@@ -3,7 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 
 export const useInitSatgeData = () => {
   const { initData: initComsTreeData } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
       initData: model.initData,
     }),

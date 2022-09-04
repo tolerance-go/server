@@ -1,8 +1,7 @@
 import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
 import { WidgetGroupControllerFindAll } from '@/services/server/WidgetGroupController';
 import { WidgetGroupIncludeLibAndUserAndWidgetsAndLicense } from '@/typings/includes';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
-import { useState } from 'react';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { useMemoizedFn } from 'ahooks';
 import { OrderValues } from '@/pages/WidgetsInstall/models/marketListOrderMeta';
 
@@ -10,7 +9,7 @@ export default () => {
   const [widgetGroups, setWidgetGroups] =
     useGetImmer<WidgetGroupIncludeLibAndUserAndWidgetsAndLicense[]>();
 
-  const { run, loading } = useRequestInternal(
+  const { run, loading } = useRequestReadyOnAuth(
     async (searchText: string, orderValues: OrderValues) => {
       return WidgetGroupControllerFindAll({
         order: orderValues

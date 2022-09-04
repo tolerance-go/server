@@ -1,7 +1,7 @@
 import { WidgetGroupControllerFindAll } from '@/services/server/WidgetGroupController';
 import { WidgetLibControllerFindAll } from '@/services/server/WidgetLibController';
 import { WidgetControllerFindAll } from '@/services/server/WidgetController';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { useState } from 'react';
 import { useModel } from '@umijs/max';
 import useLoginUser from '@/hooks/useLoginUser';
@@ -28,7 +28,7 @@ export const useGridData = () => {
 
   const [widgetsData, setWidgetsData] = useState<DesignInstalledWidgetLib[]>();
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const [widgets, widgetGroups, widgetLibs] = await Promise.all([
         WidgetControllerFindAll({

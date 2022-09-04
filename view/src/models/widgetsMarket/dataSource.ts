@@ -6,7 +6,7 @@ import {
   WidgetIncludeGroupIncludeLibAndUserAndLicense,
   WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense,
 } from '@/typings/includes';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { useState } from 'react';
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
     widgetLibs: WidgetLibIncludeUserAndGroupIncludeWidgetsAndLicense[];
   }>();
 
-  const { run, loading } = useRequestInternal(
+  const { run, loading } = useRequestReadyOnAuth(
     async (name?: string) => {
       const [widgets, widgetGroups, widgetLibs] = await Promise.all([
         WidgetControllerFindAll({

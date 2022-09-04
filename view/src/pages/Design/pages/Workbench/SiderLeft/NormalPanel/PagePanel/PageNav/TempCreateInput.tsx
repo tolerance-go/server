@@ -4,7 +4,7 @@ import { useModel } from '@umijs/max';
 import { useClickAway, useEventTarget } from 'ahooks';
 import { Input, Spin } from 'antd';
 import { useRef } from 'react';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import useAppId from '@/pages/Design/hooks/useAppId';
 
 export const TempInput = () => {
@@ -30,7 +30,7 @@ export const TempInput = () => {
 
   const appId = useAppId();
 
-  const { loading, run } = useRequestInternal(
+  const { loading, run } = useRequestReadyOnAuth(
     async (value) => {
       return PageControllerCreate({
         path: value,

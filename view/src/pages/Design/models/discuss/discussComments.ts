@@ -6,7 +6,7 @@ import {
 } from '@/services/server/CommentController';
 import { findTreeNode } from '@/pages/Design/utils/treeUtils/findTreeNode';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { produce } from 'immer';
 import { useMemo, useState } from 'react';
 
@@ -81,7 +81,7 @@ const useDiscussComments = () => {
   const {
     run: requestIndexDiscussComments,
     loading: requestIndexDiscussCommentsLoading,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (discussId: number) => {
       return CommentControllerIndex({
         discussId,
@@ -100,7 +100,7 @@ const useDiscussComments = () => {
   const {
     run: requestCreateDiscussComments,
     loading: requestCreateDiscussCommentsLoading,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (
       data: API.CreationComment,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -126,7 +126,7 @@ const useDiscussComments = () => {
   const {
     run: requestUpdateDiscussComments,
     loading: requestUpdateDiscussCommentsLoading,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (id: number, data: API.UpdationComment) => {
       return CommentControllerUpdate(
         {
@@ -156,7 +156,7 @@ const useDiscussComments = () => {
   const {
     run: requestDeleteDiscussComments,
     loading: requestDeleteDiscussCommentsLoading,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (id: number) => {
       const findAllReplyToTargetComments = (
         targets: NestDiscussComment[],

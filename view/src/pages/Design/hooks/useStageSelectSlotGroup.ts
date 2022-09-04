@@ -11,9 +11,9 @@ const useStageSelectSlotGroup = () => {
   );
 
   const { stageComponentsModel } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
-      stageComponentsModel: model.stageComponentsModel,
+      stageComponentsModel: model.nodesStructures,
     }),
   );
 

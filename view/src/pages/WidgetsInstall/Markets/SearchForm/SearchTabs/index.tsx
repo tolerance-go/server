@@ -1,5 +1,5 @@
 import BadgeWithTitle from '@/components/BadgeWithTitle';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { WidgetControllerCount } from '@/services/server/WidgetController';
 import { WidgetGroupControllerCount } from '@/services/server/WidgetGroupController';
 import { WidgetLibControllerCount } from '@/services/server/WidgetLibController';
@@ -34,7 +34,7 @@ export default ({
     'searchVal',
   ]);
 
-  const { run: requestWithWidget } = useRequestInternal(
+  const { run: requestWithWidget } = useRequestReadyOnAuth(
     async (searchText = '') => {
       return WidgetControllerCount({
         wheres: {
@@ -56,7 +56,7 @@ export default ({
     },
   );
 
-  const { run: requestWithWidgetGroup } = useRequestInternal(
+  const { run: requestWithWidgetGroup } = useRequestReadyOnAuth(
     async (searchText = '') => {
       return WidgetGroupControllerCount({
         wheres: {
@@ -78,7 +78,7 @@ export default ({
     },
   );
 
-  const { run: requestWithWidgetLib } = useRequestInternal(
+  const { run: requestWithWidgetLib } = useRequestReadyOnAuth(
     async (searchText = '') => {
       return WidgetLibControllerCount({
         wheres: {

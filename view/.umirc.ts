@@ -1,9 +1,13 @@
 import { defineConfig } from '@umijs/max';
+import path from 'path';
 import { BASE, PUBLIC_PATH } from './src/constants/base';
 import { PATHS } from './src/constants/path';
 
 export default defineConfig({
-  plugins: [require.resolve('@umijs/max-plugin-openapi')],
+  plugins: [
+    require.resolve('@umijs/max-plugin-openapi'),
+    path.join(__dirname, 'plugins', 'executor', 'index.ts'),
+  ],
   openAPI: [
     {
       requestLibPath: "import { request } from '@/helpers/request'",

@@ -63,6 +63,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-highlight-words": "^0.16.4",
     "@types/store": "^2.0.2",
+    "@umijs/bundler-utils": "^4.0.17",
     "@umijs/max-plugin-openapi": "^1.0.5",
     "@umijs/openapi": "^1.7.0",
     "delay": "^5.0.0",

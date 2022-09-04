@@ -1,7 +1,7 @@
 import { SLOTS_NAME } from '@/pages/Design/constants';
 import { joinSlotGroupId } from '@/pages/Design/helps';
 import { SlotPosition } from '@/pages/Design/models/slotsInsert';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { PlusOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Button } from 'antd';
@@ -42,9 +42,9 @@ export const AddSlotBtn = ({
     focusSlotName: model?.focusSlotName,
   }));
 
-  const { stageComponentsModel } = useModel('Design.page.nodesStructures', (model) => {
+  const { stageComponentsModel } = useModel('Design.page.nodesStructuresAndRootIds', (model) => {
     return {
-      stageComponentsModel: model?.stageComponentsModel,
+      stageComponentsModel: model?.nodesStructures,
     };
   });
 

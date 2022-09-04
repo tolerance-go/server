@@ -1,4 +1,5 @@
 import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
@@ -10,9 +11,7 @@ export default () => {
     isCreating: false,
   });
 
-  const { getList } = useModel('Design.page.pageList', (model) => ({
-    getList: model.getList,
-  }));
+  const { getList } = useModel('Design.page.pageList', pickModel(['getList']));
 
   /** 设置输入框的 value，根据 list 下标 */
   const setTempInputValueByIndex = useMemoizedFn(() => {
@@ -23,7 +22,7 @@ export default () => {
   });
 
   /** 设置输入框 value，根据点击的对象 */
-  const setTempInputValueByTarget = useMemoizedFn((target: API.ShownPage) => {
+  const setTempInputValueByTarget = useMemoizedFn((target: API.Page) => {
     setCreatingMeta({
       isCreating: true,
       defaultInputValue: `${target.path}-2`,

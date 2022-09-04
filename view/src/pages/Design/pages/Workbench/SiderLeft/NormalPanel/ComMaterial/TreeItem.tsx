@@ -2,7 +2,7 @@ import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
 import { ComponentControllerCreateWithRelation } from '@/services/server/ComponentController';
 import { RelationTreeItem } from '@/pages/Design/utils/treeUtils/makeTreeWithRelation';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Dropdown, Menu, Row, Tag, Tooltip, Typography } from 'antd';
 
 export const TreeItem = ({
@@ -33,7 +33,7 @@ export const TreeItem = ({
   );
 
   /** 从其他组件继承创建 */
-  const { run: requestCreateComIheritOtherCom } = useRequestInternal(
+  const { run: requestCreateComIheritOtherCom } = useRequestReadyOnAuth(
     async (otherComId: number) => {
       const appId = getAppIdOrThrow();
 

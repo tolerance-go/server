@@ -1,12 +1,12 @@
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
 import { useMemo } from 'react';
 
 export const useSelectedNode = () => {
   const { stageComponentsModel } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
-      stageComponentsModel: model.stageComponentsModel,
+      stageComponentsModel: model.nodesStructures,
     }),
   );
 

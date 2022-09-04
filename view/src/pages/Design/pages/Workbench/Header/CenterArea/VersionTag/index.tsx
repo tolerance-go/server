@@ -1,7 +1,7 @@
 import { VersionControllerShow } from '@/services/server/VersionController';
 import { ExportOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 import { Popover, Space, Spin, Tag, Tooltip } from 'antd';
 import HistoryList from './HistoryList';
@@ -16,7 +16,7 @@ export const VersionTag = () => {
     }),
   );
 
-  const { data, loading } = useRequestInternal(
+  const { data, loading } = useRequestReadyOnAuth(
     async () => {
       if (!activeVersionId) {
         return;

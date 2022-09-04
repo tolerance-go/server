@@ -1,6 +1,6 @@
 import { VersionControllerIndex } from '@/services/server/VersionController';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 import { useMemoizedFn } from 'ahooks';
 import consola from 'consola';
@@ -23,7 +23,7 @@ const useVersionList = () => {
     setSelectNodeId: model?.setStageSelectNodeId,
   }));
 
-  const { loading, run } = useRequestInternal(
+  const { loading, run } = useRequestReadyOnAuth(
     async () => {
       return VersionControllerIndex({
         appId: Number(appId),

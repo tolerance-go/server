@@ -1,6 +1,6 @@
 import BadgeWithTitle from '@/components/BadgeWithTitle';
 import { ProButton } from '@/components/ProButton';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import useLoginUser from '@/hooks/useLoginUser';
 import { LicenseControllerDestroy } from '@/services/server/LicenseController';
 import { WidgetLibControllerFindAll } from '@/services/server/WidgetLibController';
@@ -33,7 +33,7 @@ export default ({ searchText }: { searchText: string }) => {
     });
   });
 
-  const { run } = useRequestInternal(
+  const { run } = useRequestReadyOnAuth(
     async () => {
       return WidgetLibControllerFindAll({
         includes: [

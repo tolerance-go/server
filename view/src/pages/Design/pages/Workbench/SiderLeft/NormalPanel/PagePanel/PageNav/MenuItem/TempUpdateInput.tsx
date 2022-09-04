@@ -3,7 +3,7 @@ import { useModel } from '@umijs/max';
 import { useClickAway, useEventTarget } from 'ahooks';
 import { Input, Spin } from 'antd';
 import { useRef } from 'react';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 export default ({ item }: { item: API.ShownPage }) => {
   const { updatePath } = useModel('Design.page.pageList', (model) => ({
@@ -21,7 +21,7 @@ export default ({ item }: { item: API.ShownPage }) => {
     initialValue: item.path,
   });
 
-  const { loading, run } = useRequestInternal(
+  const { loading, run } = useRequestReadyOnAuth(
     async (value) => {
       return PageControllerUpdate(
         {

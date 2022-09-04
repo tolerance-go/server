@@ -6,7 +6,7 @@ export const useDeleteComsFromStage = () => {
     setStageSelectNodeId: model.setStageSelectNodeId,
   }));
 
-  const { deleteComModelByIds } = useModel('Design.page.nodesStructures', (model) => {
+  const { deleteComModelByIds } = useModel('Design.page.nodesStructuresAndRootIds', (model) => {
     return {
       deleteComModelByIds: model.deleteComModelByIds,
     };

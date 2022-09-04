@@ -5,7 +5,7 @@ import {
   DiscussControllerIndex,
   DiscussControllerUpdate,
 } from '@/services/server/DiscussController';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 import { useGetState, useLatest, useMemoizedFn, useUpdateEffect } from 'ahooks';
 import { produce } from 'immer';
@@ -120,7 +120,7 @@ const usePlayground = () => {
   }, [selectedItemIndex, filterDiscusses]);
 
   const { run: requestCreateDiscuss, loading: requestCreateDiscussLoading } =
-    useRequestInternal(
+    useRequestReadyOnAuth(
       async (
         params: API.CreationDiscuss,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -145,7 +145,7 @@ const usePlayground = () => {
     );
 
   const { run: requestUpdateDiscuss, loading: requestUpdateDiscussLoading } =
-    useRequestInternal(
+    useRequestReadyOnAuth(
       async (
         id: number,
         data: API.UpdationDiscuss,
@@ -174,7 +174,7 @@ const usePlayground = () => {
   const {
     run: requestResolvedDiscuss,
     loading: requestResolvedDiscussLoading,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (
       id: number,
       data: {
@@ -202,7 +202,7 @@ const usePlayground = () => {
   );
 
   const { run: requestDeleteDiscuss, loading: requestDeleteDiscussLoading } =
-    useRequestInternal(
+    useRequestReadyOnAuth(
       async (
         id: number,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -223,7 +223,7 @@ const usePlayground = () => {
       },
     );
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const pageId = getPageIdOrThrow();
       return DiscussControllerIndex({

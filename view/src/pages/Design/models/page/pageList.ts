@@ -1,4 +1,4 @@
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
 import { PageControllerFindAll } from '@/services/server/PageController';
 import { useModel, request } from '@umijs/max';
@@ -57,7 +57,7 @@ const usePageList = () => {
     },
   );
 
-  const { run: request, loading } = useRequestInternal(
+  const { run: request, loading } = useRequestReadyOnAuth(
     async (appId: string) => {
       return PageControllerFindAll({
         wheres: {

@@ -1,7 +1,7 @@
 import { VersionControllerDestroy } from '@/services/server/VersionController';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Badge, Button, Popconfirm, Space, Tag } from 'antd';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ export const RemoveBtn = ({ item }: { item: API.Version }) => {
     deleteVersion: model?.deleteVersion,
   }));
 
-  const { run, loading } = useRequestInternal(
+  const { run, loading } = useRequestReadyOnAuth(
     async () => {
       return VersionControllerDestroy({
         id: String(item.id),

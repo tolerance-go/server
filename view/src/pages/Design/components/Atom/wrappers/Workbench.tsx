@@ -1,4 +1,4 @@
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
 import { Dropdown, Menu } from 'antd';
 import clsx from 'clsx';

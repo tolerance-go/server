@@ -2,9 +2,8 @@ import { SlotPosition } from '@/pages/Design/models/stage/slotsInsert';
 import { ComId, SlotName } from '@/pages/Design/typings/keys';
 import { Server } from '@/typings/Server';
 // import { useModel } from '@umijs/max';
-import { useGetState, useMemoizedFn } from 'ahooks';
-import { produce } from 'immer';
-import { useState } from 'react';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
+import { useMemoizedFn } from 'ahooks';
 
 /** 物料的组件都是引用该这里 */
 export type ComponentStructure = {
@@ -29,9 +28,15 @@ export type NodesStructures = Record<ComId, ComponentStructure>;
 export type RootIds = string[];
 
 const useStageComponentsModel = () => {
-  const [rootIds, setRootIds] = useState<RootIds>([]);
-  const [nodesStructures, setNodesStructures, getNodesStructures] =
-    useGetState<NodesStructures>();
+  const [rootIds, setRootIds, getRootIds, initRootIds, getRootIdsUpdateMode] =
+    useUpdateModeState<RootIds>([]);
+  const [
+    nodesStructures,
+    setNodesStructures,
+    getNodesStructures,
+    initNodesStructures,
+    getNodesStructuresUpdateMode,
+  ] = useUpdateModeState<NodesStructures | undefined>(undefined);
 
   /** 新增组建到舞台 */
   const addComponentToStage = useMemoizedFn(
@@ -106,76 +111,23 @@ const useStageComponentsModel = () => {
 
   /** 删除组件单独根据 comId */
   const deleteComModelByIds = useMemoizedFn((comIds: string[]) => {
-    setRootIds(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          const index = draft.findIndex((item) => item === comId);
-          if (index > -1) {
-            draft.splice(index, 1);
-          }
-        });
-      }),
-    );
+    setRootIds((draft) => {
+      comIds.forEach((comId) => {
+        const index = draft.findIndex((item) => item === comId);
+        if (index > -1) {
+          draft.splice(index, 1);
+        }
+      });
+    });
 
-    setNodesStructures(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          const comModel = draft?.[comId];
-          if (comModel) {
-            const { parentId, slotName } = comModel;
+    setNodesStructures((draft) => {
+      comIds.forEach((comId) => {
+        const comModel = draft?.[comId];
+        if (comModel) {
+          const { parentId, slotName } = comModel;
 
-            /** 从父级中删除自己 */
-            const parent = draft?.[parentId];
-            if (parent) {
-              const targetSlots = parent.slots?.[slotName];
-              const slotIndex = targetSlots.findIndex((item) => item === comId);
-              targetSlots.splice(slotIndex, 1);
-            }
-
-            /** 删除所有子组件 */
-            let allSlots: string[] = [];
-            const collectAllSlotComIds = (id: string) => {
-              const target = nodesStructures?.[id];
-              if (!target) return;
-              Object.keys(target.slots).forEach((slotName) => {
-                const slotComIds = target.slots[slotName];
-                allSlots = allSlots.concat(slotComIds);
-                slotComIds.forEach((slotComId) =>
-                  collectAllSlotComIds(slotComId),
-                );
-              });
-            };
-            collectAllSlotComIds(comId);
-            allSlots.forEach((slotComId) => {
-              delete draft?.[slotComId];
-            });
-
-            /** 删除自身 */
-            delete draft?.[comId];
-          }
-        });
-      }),
-    );
-  });
-
-  /** 删除组件 */
-  const removeComFromTree = useMemoizedFn(
-    (options: { comId: string; parentId: string; slotName: string }) => {
-      const { comId, parentId, slotName } = options;
-
-      /** 删除跟组件 */
-      if (parentId === 'root') {
-        setRootIds((prev) => {
-          const index = prev.findIndex((item) => item === comId);
-          prev.splice(index, 1);
-          return [...prev];
-        });
-      }
-
-      setNodesStructures(
-        produce((prev) => {
-          /** 删除自己在父组件中的插槽 */
-          const parent = prev?.[parentId];
+          /** 从父级中删除自己 */
+          const parent = draft?.[parentId];
           if (parent) {
             const targetSlots = parent.slots?.[slotName];
             const slotIndex = targetSlots.findIndex((item) => item === comId);
@@ -197,15 +149,60 @@ const useStageComponentsModel = () => {
           };
           collectAllSlotComIds(comId);
           allSlots.forEach((slotComId) => {
-            delete prev?.[slotComId];
-            // removeComSettings(slotComId);
+            delete draft?.[slotComId];
           });
 
           /** 删除自身 */
-          delete prev?.[comId];
-          // removeComSettings(comId);
-        }),
-      );
+          delete draft?.[comId];
+        }
+      });
+    });
+  });
+
+  /** 删除组件 */
+  const removeComFromTree = useMemoizedFn(
+    (options: { comId: string; parentId: string; slotName: string }) => {
+      const { comId, parentId, slotName } = options;
+
+      /** 删除跟组件 */
+      if (parentId === 'root') {
+        setRootIds((prev) => {
+          const index = prev.findIndex((item) => item === comId);
+          prev.splice(index, 1);
+          return [...prev];
+        });
+      }
+
+      setNodesStructures((prev) => {
+        /** 删除自己在父组件中的插槽 */
+        const parent = prev?.[parentId];
+        if (parent) {
+          const targetSlots = parent.slots?.[slotName];
+          const slotIndex = targetSlots.findIndex((item) => item === comId);
+          targetSlots.splice(slotIndex, 1);
+        }
+
+        /** 删除所有子组件 */
+        let allSlots: string[] = [];
+        const collectAllSlotComIds = (id: string) => {
+          const target = nodesStructures?.[id];
+          if (!target) return;
+          Object.keys(target.slots).forEach((slotName) => {
+            const slotComIds = target.slots[slotName];
+            allSlots = allSlots.concat(slotComIds);
+            slotComIds.forEach((slotComId) => collectAllSlotComIds(slotComId));
+          });
+        };
+        collectAllSlotComIds(comId);
+        allSlots.forEach((slotComId) => {
+          delete prev?.[slotComId];
+          // removeComSettings(slotComId);
+        });
+
+        /** 删除自身 */
+        delete prev?.[comId];
+        // removeComSettings(comId);
+      });
     },
   );
 
@@ -224,14 +221,12 @@ const useStageComponentsModel = () => {
         });
       });
 
-      setNodesStructures(
-        produce((prev) => {
-          /** 删除插槽自身 */
-          delete prev?.[comId].slots[slotName];
+      setNodesStructures((prev) => {
+        /** 删除插槽自身 */
+        delete prev?.[comId].slots[slotName];
 
-          return prev;
-        }),
-      );
+        return prev;
+      });
     },
   );
 
@@ -261,119 +256,103 @@ const useStageComponentsModel = () => {
 
       /** 移动的是跟组件，放置的目标是跟组件 */
       if (parentId === 'root' && targetSlotName === 'root') {
-        setRootIds(
-          produce((prev) => {
-            const index = prev.findIndex((item) => item === comId);
+        setRootIds((prev) => {
+          const index = prev.findIndex((item) => item === comId);
 
-            if (index === targetIndex) {
-              return prev;
-            }
+          if (index === targetIndex) {
+            return prev;
+          }
 
-            console.log(targetIndex);
-            prev.splice(index, 1);
-            prev.splice(
-              index < targetIndex ? targetIndex - 1 : targetIndex,
-              0,
-              comId,
-            );
-          }),
-        );
+          console.log(targetIndex);
+          prev.splice(index, 1);
+          prev.splice(
+            index < targetIndex ? targetIndex - 1 : targetIndex,
+            0,
+            comId,
+          );
+        });
         /** 移动的是插槽组件，放置目标也是插槽 */
       } else if (parentId !== 'root' && targetSlotName !== 'root') {
-        setNodesStructures(
-          produce((prev) => {
-            // 找到要移动的元素
-            const node = prev?.[comId];
+        setNodesStructures((prev) => {
+          // 找到要移动的元素
+          const node = prev?.[comId];
 
-            if (node) {
-              /**
-               * 从原来位置删除
-               * 只是从父组件插槽相应删除
-               */
-              const parentNode = prev?.[parentId];
-              if (parentNode) {
-                const index = parentNode.slots[slotName].findIndex(
-                  (slotComId) => slotComId === comId,
-                );
-                parentNode.slots[slotName].splice(index, 1);
+          if (node) {
+            /**
+             * 从原来位置删除
+             * 只是从父组件插槽相应删除
+             */
+            const parentNode = prev?.[parentId];
+            if (parentNode) {
+              const index = parentNode.slots[slotName].findIndex(
+                (slotComId) => slotComId === comId,
+              );
+              parentNode.slots[slotName].splice(index, 1);
 
-                // 在新的组件指定插槽下的指定顺序放置
-                const targetCom = prev?.[targetComId];
+              // 在新的组件指定插槽下的指定顺序放置
+              const targetCom = prev?.[targetComId];
 
-                if (targetCom) {
-                  /** 同一个插槽内移动 */
-                  if (targetComId === parentId) {
-                    targetCom.slots[targetSlotName].splice(
-                      index < targetIndex ? targetIndex - 1 : targetIndex,
-                      0,
-                      comId,
-                    );
-                  } else {
-                    /** 2个不同插槽移动 */
-                    targetCom.slots[targetSlotName].splice(
-                      targetIndex,
-                      0,
-                      comId,
-                    );
-                  }
+              if (targetCom) {
+                /** 同一个插槽内移动 */
+                if (targetComId === parentId) {
+                  targetCom.slots[targetSlotName].splice(
+                    index < targetIndex ? targetIndex - 1 : targetIndex,
+                    0,
+                    comId,
+                  );
+                } else {
+                  /** 2个不同插槽移动 */
+                  targetCom.slots[targetSlotName].splice(targetIndex, 0, comId);
                 }
               }
             }
-          }),
-        );
+          }
+        });
 
         /** 移动的是跟组件，放置的是插槽组件 */
       } else if (parentId === 'root' && targetSlotName !== 'root') {
-        setRootIds(
-          produce((prev) => {
-            const index = prev.findIndex((item) => item === comId);
-            prev.splice(index, 1);
-          }),
-        );
+        setRootIds((prev) => {
+          const index = prev.findIndex((item) => item === comId);
+          prev.splice(index, 1);
+        });
 
-        setNodesStructures(
-          produce((prev) => {
-            // 在新的组件指定插槽下的指定顺序放置
-            const targetParentNode = prev?.[targetComId];
+        setNodesStructures((prev) => {
+          // 在新的组件指定插槽下的指定顺序放置
+          const targetParentNode = prev?.[targetComId];
 
-            if (targetParentNode) {
-              targetParentNode.slots[targetSlotName].splice(
-                targetIndex,
-                0,
-                comId,
-              );
-            }
-          }),
-        );
+          if (targetParentNode) {
+            targetParentNode.slots[targetSlotName].splice(
+              targetIndex,
+              0,
+              comId,
+            );
+          }
+        });
 
         /** 移动是插槽组件，放置的是跟组件 */
       } else if (slotName !== 'root' && targetParentId === 'root') {
-        setNodesStructures(
-          produce((prev) => {
-            // 找到要移动的元素
-            const node = prev?.[comId];
+        setNodesStructures((prev) => {
+          // 找到要移动的元素
+          const node = prev?.[comId];
 
-            if (node) {
-              /**
-               * 从原来位置删除
-               * 只是从父组件插槽相应删除
-               */
-              const parentNode = prev?.[parentId];
-              if (parentNode) {
-                const index = parentNode.slots[slotName].findIndex(
-                  (slotComId) => slotComId === comId,
-                );
-                parentNode.slots[slotName].splice(index, 1);
-              }
+          if (node) {
+            /**
+             * 从原来位置删除
+             * 只是从父组件插槽相应删除
+             */
+            const parentNode = prev?.[parentId];
+            if (parentNode) {
+              const index = parentNode.slots[slotName].findIndex(
+                (slotComId) => slotComId === comId,
+              );
+              parentNode.slots[slotName].splice(index, 1);
             }
-          }),
-        );
+          }
+        });
 
-        setRootIds(
-          produce((prev) => {
-            prev.splice(targetIndex, 0, comId);
-          }),
-        );
+        setRootIds((prev) => {
+          prev.splice(targetIndex, 0, comId);
+        });
       }
     },
   );
@@ -418,15 +397,11 @@ const useStageComponentsModel = () => {
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { rootIds: string[]; stageComponentsModel: NodesStructures }) => {
-      setRootIds(from?.rootIds ?? []);
-      setNodesStructures(from?.stageComponentsModel);
+    (from?: { rootIds: string[]; nodesStructures: NodesStructures }) => {
+      initRootIds(from?.rootIds ?? []);
+      initNodesStructures(from?.nodesStructures);
     },
   );
-
-  const getLatestStageComponentsModel = useMemoizedFn(() => {
-    return nodesStructures;
-  });
 
   /**
    * 从舞台上删除指定组件，但是相关配置依旧保留
@@ -450,32 +425,28 @@ const useStageComponentsModel = () => {
       });
 
       if (inRootIds.length) {
-        setRootIds(
-          produce((draft) => {
-            inRootIds.forEach((item) => {
-              draft.splice(item.index, 1);
-            });
-          }),
-        );
+        setRootIds((draft) => {
+          inRootIds.forEach((item) => {
+            draft.splice(item.index, 1);
+          });
+        });
       }
 
       if (notInRootIds.length) {
-        setNodesStructures(
-          produce((draft) => {
-            notInRootIds.forEach((comId) => {
-              if (draft?.[comId].parentId) {
-                Object.keys(draft?.[draft?.[comId].parentId].slots).forEach(
-                  (slotName) => {
-                    const slots =
-                      draft?.[draft?.[comId].parentId].slots[slotName];
-                    const index = slots.findIndex((item) => item === comId);
-                    slots.splice(index, 1);
-                  },
-                );
-              }
-            });
-          }),
-        );
+        setNodesStructures((draft) => {
+          notInRootIds.forEach((comId) => {
+            if (draft?.[comId].parentId) {
+              Object.keys(draft?.[draft?.[comId].parentId].slots).forEach(
+                (slotName) => {
+                  const slots =
+                    draft?.[draft?.[comId].parentId].slots[slotName];
+                  const index = slots.findIndex((item) => item === comId);
+                  slots.splice(index, 1);
+                },
+              );
+            }
+          });
+        });
       }
     },
   );
@@ -485,20 +456,20 @@ const useStageComponentsModel = () => {
    */
   const markNodeFromComponent = useMemoizedFn(
     (comId: number, nodeId: string) => {
-      setNodesStructures(
-        produce((draft) => {
-          if (draft) {
-            draft[nodeId].fromComId = comId;
-          }
-        }),
-      );
+      setNodesStructures((draft) => {
+        if (draft) {
+          draft[nodeId].fromComId = comId;
+        }
+      });
     },
   );
 
   return {
+    getNodesStructuresUpdateMode,
+    getRootIds,
+    getRootIdsUpdateMode,
     rootIds,
     nodesStructures,
-    stageComponentsModel: nodesStructures,
     markNodeFromComponent,
     getNodesStructures,
     deleteComModelByIds,
@@ -511,7 +482,6 @@ const useStageComponentsModel = () => {
     removeComFromTree,
     removeSlotFromTree,
     moveComFromTree,
-    getLatestStageComponentsModel,
   };
 };
 

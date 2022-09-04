@@ -1,4 +1,4 @@
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
 import { DiscussControllerCountComments } from '@/services/server/DiscussController';
 import { useMemoizedFn } from 'ahooks';
@@ -9,7 +9,7 @@ const useAllDiscussCommentsCount = () => {
     Record<string, number>
   >({});
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const pageId = getPageIdOrThrow();
 

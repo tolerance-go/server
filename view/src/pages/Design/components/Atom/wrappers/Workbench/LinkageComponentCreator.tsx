@@ -1,10 +1,10 @@
 import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
 import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
 import { useGetSliceStageData } from '@/pages/Design/hooks/initials/useGetSliceStageData';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { ComponentControllerCreate } from '@/services/server/ComponentController';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Spin } from 'antd';
 
 export const LinkageComponentCreator = (props: {
@@ -32,7 +32,7 @@ export const LinkageComponentCreator = (props: {
   );
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),
@@ -51,7 +51,7 @@ export const LinkageComponentCreator = (props: {
   const {
     loading: requestComponentFromStageNodeLoading,
     run: requestComponentFromStageNode,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (
       stateNodeId: string,
       params: Pick<API.CreationComponent, 'name' | 'desc'>,

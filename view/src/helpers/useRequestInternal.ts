@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 import { useRequest } from 'ahooks';
 
 // 内部版本
-export const useRequestInternal: typeof useRequest = (
+export const useRequestReadyOnAuth: typeof useRequest = (
   service,
   options,
   plugins,

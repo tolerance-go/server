@@ -5,9 +5,9 @@ import produce from 'immer';
 import utl from 'lodash';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { setComStatTypeWithName } from '@/pages/Design/models/_utils/setComStatTypeWithName';
-import { updateComStatTypeWithName } from '@/pages/Design/models/_utils/updateComStatTypeWithName';
-import { useCopyComPropsFromStatToOtherStat } from '@/pages/Design/models/_utils/useCopyComPropsFromStatToOtherStat';
+import { setComStatTypeWithName } from '@/pages/Design/helps/setComStatTypeWithName';
+import { updateComStatTypeWithName } from '@/pages/Design/helps/updateComStatTypeWithName';
+import { useCopyComPropsFromStatToOtherStat } from '@/pages/Design/helps/useCopyComPropsFromStatToOtherStat';
 
 /**
  * eg：

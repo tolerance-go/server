@@ -1,4 +1,4 @@
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
 import {
   HistoryManager,
@@ -27,7 +27,7 @@ const useAppStateHistory = () => {
 
   window.__historyManager = historyManager;
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const query = getURLQuery();
 

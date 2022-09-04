@@ -9,7 +9,7 @@ import { useMemoizedFn } from 'ahooks';
 import { produce } from 'immer';
 import { useMemo, useState } from 'react';
 import { getAppIdOrThrow } from './../../helps/getAppIdOrThrow';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 const useComsMaterialList = () => {
   const [comsMaterialList, setComsMaterialList] =
@@ -55,7 +55,7 @@ const useComsMaterialList = () => {
   });
 
   /** 默认拉取当前组件列表 */
-  const { loading } = useRequestInternal(
+  const { loading } = useRequestReadyOnAuth(
     async () => {
       const query = getURLQuery();
       const { appId } = query;
@@ -73,7 +73,7 @@ const useComsMaterialList = () => {
 
   /** 删除组件 */
   const { loading: requestRemoveLoading, run: requestRemove } =
-    useRequestInternal(
+    useRequestReadyOnAuth(
       async (id: API.Component['id']) => {
         return ComponentControllerDestroy({
           id: String(id),
@@ -94,7 +94,7 @@ const useComsMaterialList = () => {
     loading: requestCreateComponentLoading,
     run: requestCreateComponent,
     runAsync: requestCreateComponentAsync,
-  } = useRequestInternal(
+  } = useRequestReadyOnAuth(
     async (params: Omit<API.CreationComponent, 'app_id'>) => {
       const appId = getAppIdOrThrow();
       return ComponentControllerCreate({

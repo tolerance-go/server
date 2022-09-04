@@ -4,7 +4,7 @@ import { useComDefaultStatId } from '@/pages/Design/hooks/useComDefaultStatId';
 import { useComDefaultStatSetting } from '@/pages/Design/hooks/useComDefaultStatSetting';
 import { useComDefaultStatStyle } from '@/pages/Design/hooks/useComDefaultStatStyle';
 import { useComponentUsedSettings } from '@/pages/Design/hooks/useComponentUsedSettings';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructures';
+import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { usePickModel } from '@/utils/useModelTypes';
 import { useModel } from '@umijs/max';
 import consola from 'consola';

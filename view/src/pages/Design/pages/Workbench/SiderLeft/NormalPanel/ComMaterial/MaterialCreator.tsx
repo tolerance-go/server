@@ -11,7 +11,7 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 type FormValues = {
   name: string;
@@ -35,13 +35,13 @@ export default () => {
   const { getSliceStageData } = useGetSliceStageData();
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),
   );
 
-  const { runAsync: requestCreateComponentAsync } = useRequestInternal(
+  const { runAsync: requestCreateComponentAsync } = useRequestReadyOnAuth(
     async (values: FormValues) => {
       const { name, desc, nodeId, isLink } = values;
 

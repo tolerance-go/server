@@ -10,7 +10,7 @@ import { moveOffsetArrayItem } from '@/pages/Design/utils/moveOffsetArrayItem';
 import { ProColumns, ProFieldValueType } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { message } from 'antd';
 import produce from 'immer';
 import qs from 'qs';
@@ -112,7 +112,7 @@ const useDataList = () => {
     },
   );
 
-  const { loading } = useRequestInternal(
+  const { loading } = useRequestReadyOnAuth(
     async () => {
       const query = qs.parse(location.search, {
         ignoreQueryPrefix: true,

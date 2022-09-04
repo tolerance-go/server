@@ -9,9 +9,9 @@ import TreeItemMenu from './TreeItemMenu';
 
 export default () => {
   const { stageComponentsModel, rootIds, moveComFromTree } = useModel(
-    'Design.page.nodesStructures',
+    'Design.page.nodesStructuresAndRootIds',
     (model) => ({
-      stageComponentsModel: model?.stageComponentsModel,
+      stageComponentsModel: model?.nodesStructures,
       rootIds: model?.rootIds,
       moveComFromTree: model?.moveComFromTree,
     }),

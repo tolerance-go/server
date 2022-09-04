@@ -5,7 +5,7 @@ import {
   AppControllerUpdateStageSize,
 } from '@/services/server/AppController';
 import { useModel } from '@umijs/max';
-import { useRequestInternal } from '@/helpers/useRequestInternal';
+import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 import { useGetState, useMemoizedFn, useUpdateEffect } from 'ahooks';
 import { useRef } from 'react';
@@ -26,7 +26,7 @@ const useStageSize = () => {
 
   const updateCauseInitedRef = useRef<boolean>(false);
 
-  const { run: updateRemoteStageSize } = useRequestInternal(
+  const { run: updateRemoteStageSize } = useRequestReadyOnAuth(
     async (data: BoxSize | undefined) => {
       const query = getURLQuery();
 
@@ -55,7 +55,7 @@ const useStageSize = () => {
     },
   );
 
-  useRequestInternal(
+  useRequestReadyOnAuth(
     async () => {
       const query = getURLQuery();
 
