@@ -1,20 +1,18 @@
-import { NormalStatus } from '@/pages/Design/models/workbench/normalModeSubMode';
+import { PagesSiderMode } from '@/pages/Design/models/workbench/normalModeSubMode';
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { Segmented } from 'antd';
 
 export default () => {
-  const { normalStatus, setNormalStatus } = useModel(
+  const { pagesSiderMode, setPagesSiderMode } = useModel(
     'Design.workbench.normalModeSubMode',
-    (model) => ({
-      normalStatus: model.normalStatus,
-      setNormalStatus: model.setNormalStatus,
-    }),
+    pickModel(['pagesSiderMode', 'setPagesSiderMode']),
   );
 
   return (
     <Segmented
-      onChange={(val) => setNormalStatus(val as NormalStatus)}
-      value={normalStatus}
+      onChange={(val) => setPagesSiderMode(val as PagesSiderMode)}
+      value={pagesSiderMode}
       block
       options={[
         {

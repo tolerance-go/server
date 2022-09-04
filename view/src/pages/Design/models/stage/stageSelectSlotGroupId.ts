@@ -1,3 +1,5 @@
+import { useUpdateEffect } from 'ahooks';
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { useEffect, useState } from 'react';
 
@@ -22,20 +24,41 @@ const useStageSelectSlotGroup = () => {
   const [stageSelectSlotGroupId, setStageSelectSlotGroupId] =
     useState<string>();
 
-  const { openTargetFromTreeMenu } = useModel('Design.workbench.comsLayout', (model) => ({
-    openTargetFromTreeMenu: model?.openTargetFromTreeMenu,
-  }));
+  const { openTargetFromTreeMenu } = useModel(
+    'Design.workbench.comsLayout',
+    (model) => ({
+      openTargetFromTreeMenu: model?.openTargetFromTreeMenu,
+    }),
+  );
+
+  const { setSiderLeftMode } = useModel(
+    'Design.workbench.siderLeftMode',
+    pickModel(['setSiderLeftMode']),
+  );
+
+  const { setPagesSiderMode } = useModel(
+    'Design.workbench.normalModeSubMode',
+    pickModel(['setPagesSiderMode']),
+  );
 
   /** 当舞台选中组件 id 发生变化，打开树形节点菜单 */
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (stageSelectSlotGroupId) {
       openTargetFromTreeMenu(stageSelectSlotGroupId);
     }
   }, [stageSelectSlotGroupId]);
 
+  /** 当舞台选中组件，切换布局 */
+  useUpdateEffect(() => {
+    if (stageSelectSlotGroupId) {
+      setSiderLeftMode('pages');
+      setPagesSiderMode('layout');
+    }
+  }, [stageSelectSlotGroupId]);
+
   return {
-    stageSelectSlotGroupId: stageSelectSlotGroupId,
-    setStageSelectSlotGroupId: setStageSelectSlotGroupId,
+    stageSelectSlotGroupId,
+    setStageSelectSlotGroupId,
   };
 };
 

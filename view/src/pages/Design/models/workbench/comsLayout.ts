@@ -6,8 +6,6 @@ import utl from 'lodash';
 import { useState } from 'react';
 import { splitSlotGroupId } from '@/pages/Design/helps';
 
-export type NormalStatus = 'page' | 'layout' | 'asset';
-
 export type SelfTreeDataNode = TreeDataNode & {
   data: {
     type: string;

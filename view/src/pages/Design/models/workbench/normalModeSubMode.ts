@@ -1,13 +1,11 @@
 import { useState } from 'react';
 
-export type NormalStatus = 'page' | 'layout' | 'material';
+export type PagesSiderMode = 'page' | 'layout' | 'material';
 
-const useNormalModeSubMode = () => {
-  const [normalStatus, setNormalStatus] = useState<NormalStatus>('page');
+export default () => {
+  const [pagesSiderMode, setPagesSiderMode] = useState<PagesSiderMode>('page');
   return {
-    normalStatus,
-    setNormalStatus,
+    pagesSiderMode,
+    setPagesSiderMode,
   };
 };
-
-export default useNormalModeSubMode;

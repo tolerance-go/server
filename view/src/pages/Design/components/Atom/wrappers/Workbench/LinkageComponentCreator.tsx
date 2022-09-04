@@ -17,10 +17,10 @@ export const LinkageComponentCreator = (props: {
     addComMaterial: model.addComMaterial,
   }));
 
-  const { setNormalStatus } = useModel(
+  const { setPagesSiderMode } = useModel(
     'Design.workbench.normalModeSubMode',
     (model) => ({
-      setNormalStatus: model.setNormalStatus,
+      setPagesSiderMode: model.setPagesSiderMode,
     }),
   );
 
@@ -72,7 +72,7 @@ export const LinkageComponentCreator = (props: {
       manual: true,
       onSuccess(data, params) {
         addComMaterial(data);
-        setNormalStatus('material');
+        setPagesSiderMode('material');
         setHighlightId(data.id);
 
         markNodeFromComponent(data.id, props.nodeId);

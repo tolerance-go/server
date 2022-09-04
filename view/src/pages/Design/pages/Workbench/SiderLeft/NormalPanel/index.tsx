@@ -6,8 +6,8 @@ import PagePanel from './PagePanel';
 import Segmented from './Segmented';
 
 export default () => {
-  const { normalStatus } = useModel('Design.workbench.normalModeSubMode', (model) => ({
-    normalStatus: model.normalStatus,
+  const { pagesSiderMode } = useModel('Design.workbench.normalModeSubMode', (model) => ({
+    pagesSiderMode: model.pagesSiderMode,
   }));
 
   return (
@@ -33,13 +33,13 @@ export default () => {
       </Col>
       <Col flex={'auto'}>
         {(() => {
-          if (normalStatus === 'page') {
+          if (pagesSiderMode === 'page') {
             return <PagePanel />;
           }
-          if (normalStatus === 'layout') {
+          if (pagesSiderMode === 'layout') {
             return <ComTree />;
           }
-          if (normalStatus === 'material') {
+          if (pagesSiderMode === 'material') {
             return <ComMaterial />;
           }
           return null;

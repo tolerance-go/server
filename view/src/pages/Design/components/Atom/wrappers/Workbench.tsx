@@ -23,15 +23,15 @@ export const AtomWorkbenchWrapper = (
   const { setStageSelectNodeId, stageSelectNodeId } = useModel(
     'Design.stage.stageSelectNodeId',
     (model) => ({
-      setStageSelectNodeId: model?.setStageSelectNodeId,
-      stageSelectNodeId: model?.stageSelectNodeId,
+      setStageSelectNodeId: model.setStageSelectNodeId,
+      stageSelectNodeId: model.stageSelectNodeId,
     }),
   );
   const { hoverNodeId, setHoverNodeId } = useModel(
     'Design.stage.hoverNodeId',
     (model) => ({
-      hoverNodeId: model?.hoverNodeId,
-      setHoverNodeId: model?.setHoverNodeId,
+      hoverNodeId: model.hoverNodeId,
+      setHoverNodeId: model.setHoverNodeId,
     }),
   );
 
@@ -83,9 +83,6 @@ export const AtomWorkbenchWrapper = (
           }
         }}
         onClick={(event) => {
-          consola.info('atom 被点击', props);
-
-          consola.success('选中组件', props.id);
           setStageSelectNodeId(props.id);
 
           /** 防止多层级的 Atom */
