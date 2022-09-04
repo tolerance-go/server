@@ -1,11 +1,11 @@
 import { SLOTS_NAME } from '@/pages/Design/constants';
 import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentCommonStyle } from '@/pages/Design/models/comsStyles';
+import { ComponentCommonStyle } from '@/pages/Design/models/page/comsStyles';
 import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
 import { useModel } from '@umijs/max';
 import { Button, ButtonProps } from 'antd';
 import { CSSProperties, useEffect } from 'react';
-import { AddSlotBtn } from '../../AddSlotProxy';
+import { AddSlotProxy } from '../../AddSlotProxy';
 import { useCommonActionHandler } from '../_hooks/useCommonActionHandler';
 import { getStyleFromDefaultStyle } from '../_utils/getStyleFromDefaultStyle';
 
@@ -52,9 +52,9 @@ export const AtomButton = (
 
   return (
     <>
-      <AddSlotBtn
+      <AddSlotProxy
         slots={props.slots}
-        comId={props.id}
+        nodeId={props.id}
         slotName={SLOTS_NAME.ADDON_BEFORE}
       />
 
@@ -72,19 +72,19 @@ export const AtomButton = (
           );
         }}
       >
-        {!!text ? (
+        {text ? (
           text
         ) : (
-          <AddSlotBtn
+          <AddSlotProxy
             slots={props.slots}
-            comId={props.id}
+            nodeId={props.id}
             slotName={'children'}
           />
         )}
       </Button>
-      <AddSlotBtn
+      <AddSlotProxy
         slots={props.slots}
-        comId={props.id}
+        nodeId={props.id}
         slotName={SLOTS_NAME.ADDON_AFTER}
       />
     </>

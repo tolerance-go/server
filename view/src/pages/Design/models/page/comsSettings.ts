@@ -29,9 +29,12 @@ const useComsSettings = () => {
     }),
   );
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    getStageSelectNodeId: model.getStageSelectNodeId,
-  }));
+  const { getStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getStageSelectNodeId: model.getStageSelectNodeId,
+    }),
+  );
 
   const setComStatSetting = useMemoizedFn(
     (comId: string, statId: string, setting: ComponentSetting) => {

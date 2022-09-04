@@ -1,107 +1,48 @@
 import { SLOTS_NAME } from '@/pages/Design/constants';
 import { joinSlotGroupId } from '@/pages/Design/helps';
-import { SlotPosition } from '@/pages/Design/models/slotsInsert';
 import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
-import { PlusOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Button } from 'antd';
 import { useMemo } from 'react';
 import { Atom } from '../Atom';
+import AddSlotButton from './AddSlotButton';
 import SlotGroup from './SlotGroup';
 
-export const AddSlotBtn = ({
-  comId,
+export const AddSlotProxy = ({
+  nodeId,
   slotName,
   slots,
 }: {
-  comId: string;
+  nodeId: string;
   slotName: string;
   slots?: Record<string, string[]>;
 }) => {
-  const { setMode } = useModel('Design.workbench.siderLeftMode', (model) => ({
-    setMode: model?.setSiderLeftMode,
-  }));
-
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
-    stageMode: model.stageMode,
-  }));
-
-  const {
-    setFocusComId,
-    setFocusSlotName,
-    setFocusSlotPosition,
-    focusSlotPosition,
-    focusComId,
-    focusSlotName,
-  } = useModel('Design.stage.slotsInsert', (model) => ({
-    setFocusComId: model?.setFocusComId,
-    setFocusSlotName: model?.setFocusSlotName,
-    setFocusSlotPosition: model?.setFocusSlotPosition,
-    focusSlotPosition: model?.focusSlotPosition,
-    focusComId: model?.focusComId,
-    focusSlotName: model?.focusSlotName,
-  }));
-
-  const { stageComponentsModel } = useModel('Design.page.nodesStructuresAndRootIds', (model) => {
-    return {
-      stageComponentsModel: model?.nodesStructures,
-    };
-  });
+  const { stageComponentsModel } = useModel(
+    'Design.page.nodesStructuresAndRootIds',
+    (model) => {
+      return {
+        stageComponentsModel: model?.nodesStructures,
+      };
+    },
+  );
 
   const slotModels = useMemo(() => {
     return slots?.[slotName]
       ? slots?.[slotName]
           .map((childId) => stageComponentsModel?.[childId])
-          .filter(
-            (item): item is ComponentStructure => item !== undefined,
-          )
+          .filter((item): item is ComponentStructure => item !== undefined)
       : undefined;
   }, [slots, slotName, stageComponentsModel]);
-
-  const renderBtn = (slotPos: SlotPosition) => {
-    return stageMode === 'playground' ? null : (
-      <Button
-        shape="circle"
-        size="small"
-        style={{
-          margin: 4,
-        }}
-        type={
-          comId === focusComId &&
-          slotName === focusSlotName &&
-          focusSlotPosition === slotPos
-            ? 'primary'
-            : 'dashed'
-        }
-        icon={
-          <PlusOutlined
-            style={{
-              cursor: 'pointer',
-            }}
-          />
-        }
-        onClick={(event) => {
-          setFocusComId(comId);
-          setFocusSlotName(slotName);
-          setFocusSlotPosition(slotPos);
-
-          event.stopPropagation();
-          setMode('insert');
-        }}
-      ></Button>
-    );
-  };
 
   const slotsDom = slotModels?.map((model) => (
     <Atom key={model?.id} {...model} />
   ));
 
-  const slotId = joinSlotGroupId(comId, slotName);
+  const slotId = joinSlotGroupId(nodeId, slotName);
 
   if (slotName === SLOTS_NAME.ADDON_BEFORE) {
     return (
       <SlotGroup slotGroupId={slotId} hasSlotsDom={!!slotsDom?.length}>
-        {renderBtn('before')}
+        <AddSlotButton nodeId={nodeId} slotName={slotName} slotPos="before" />
         {slotsDom}
       </SlotGroup>
     );
@@ -111,16 +52,18 @@ export const AddSlotBtn = ({
     return (
       <SlotGroup slotGroupId={slotId} hasSlotsDom={!!slotsDom?.length}>
         {slotsDom}
-        {renderBtn('after')}
+        <AddSlotButton nodeId={nodeId} slotName={slotName} slotPos="after" />
       </SlotGroup>
     );
   }
 
   return (
     <SlotGroup slotGroupId={slotId} hasSlotsDom={!!slotsDom?.length}>
-      {renderBtn('before')}
+      <AddSlotButton nodeId={nodeId} slotName={slotName} slotPos="before" />
       {slotsDom}
-      {slotsDom ? renderBtn('after') : null}
+      {slotsDom ? (
+        <AddSlotButton nodeId={nodeId} slotName={slotName} slotPos="after" />
+      ) : null}
     </SlotGroup>
   );
 };

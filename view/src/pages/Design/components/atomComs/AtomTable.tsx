@@ -7,7 +7,7 @@ import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
 import { useModel } from '@umijs/max';
 import { Table, TableProps } from 'antd';
 import { CSSProperties, useEffect } from 'react';
-import { AddSlotBtn } from '../AddSlotProxy';
+import { AddSlotProxy } from '../AddSlotProxy';
 import { useCommonActionHandler } from './_hooks/useCommonActionHandler';
 import { getStyleFromDefaultStyle } from './_utils/getStyleFromDefaultStyle';
 
@@ -96,15 +96,15 @@ export const AtomTable = (
 
   return (
     <>
-      <AddSlotBtn
+      <AddSlotProxy
         slots={props.slots}
-        comId={props.id}
+        nodeId={props.id}
         slotName={SLOTS_NAME.ADDON_BEFORE}
       />
       <Table {...rest} style={style}></Table>
-      <AddSlotBtn
+      <AddSlotProxy
         slots={props.slots}
-        comId={props.id}
+        nodeId={props.id}
         slotName={SLOTS_NAME.ADDON_AFTER}
       />
     </>
