@@ -59,7 +59,7 @@ export default defineConfig({
     },
     {
       path: PATHS.DESIGN,
-      component: '@/pages/Design/pages/Workbench',
+      component: '@/pages/Design',
       headerRender: false,
       footerRender: false,
       menuRender: false,

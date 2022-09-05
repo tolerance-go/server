@@ -9,7 +9,7 @@ import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { useModel } from '@umijs/max';
 import { Form } from 'antd';
 import consola from 'consola';
-import useNodeActiveStatSettings from '@/pages/Design/pages/Workbench/SiderRight/SettingForm/hooks/useNodeActiveStatSettings';
+import useNodeActiveStatSettings from './hooks/useNodeActiveStatSettings';
 
 export const SettingForm = () => {
   const { stageSelectNode } = useSelectedNode();
