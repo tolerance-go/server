@@ -180,7 +180,11 @@ const useComsActions = () => {
 
   /** 获取指定组件的状态下的动作 */
   const getComStatAction = useMemoizedFn(
-    (comId: string, statId: string, actionId: string) => {
+    (
+      comId: string,
+      statId: string,
+      actionId: string,
+    ): ComponentAction | undefined => {
       return nodesActions[comId]?.[statId]?.[actionId];
     },
   );
