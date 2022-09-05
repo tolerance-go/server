@@ -1,6 +1,6 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/page/nodesActions';
+import { NodeAction } from '@/pages/Design/models/page/nodesActions';
 import { ComStatRelation } from '@/pages/Design/models/page/statusConnectRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
@@ -18,7 +18,7 @@ export default ({
   actionItem,
   extendRelation,
 }: {
-  actionItem?: ComponentAction;
+  actionItem?: NodeAction;
   extendRelation?: ComStatRelation;
 }) => {
   const { comsActionsConfigs } = useModel('Design.config.comsActionsConfigs', (model) => ({

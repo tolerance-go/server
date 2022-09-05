@@ -1,8 +1,6 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useComStatusExtendActions } from '@/pages/Design/hooks/relations/useComStatusExtendActions';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/nodesActions';
-import { ComStatRelation } from '@/pages/Design/models/statusRelations';
 import { EditOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -14,6 +12,8 @@ import {
 import { useModel } from '@umijs/max';
 import { Button } from 'antd';
 import { useMemo, useRef } from 'react';
+import { NodeAction } from '../models/page/nodesActions';
+import { ComStatRelation } from '../models/page/statusConnectRelations';
 
 /** 组件的动作编辑和创建表单 */
 export default ({
@@ -22,12 +22,13 @@ export default ({
   extendRelation,
 }: {
   mode: 'edit' | 'create';
-  actionItem?: ComponentAction;
+  actionItem?: NodeAction;
   extendRelation?: ComStatRelation;
 }) => {
-  const { comsActionsConfigs } = useModel('Design.config.comsActionsConfigs', (model) => ({
-    comsActionsConfigs: model.comsActionsConfigs,
-  }));
+  const { comsActionsConfigs } = useModel(
+    'Design.config.comsActionsConfigs',
+    (model) => ({ comsActionsConfigs: model.comsActionsConfigs }),
+  );
 
   const { stageSelectNode } = useSelectedNode();
 
@@ -99,18 +100,10 @@ export default ({
       activeNodeStatId &&
       actionItem?.id
     ) {
-      return nodesActions[stageSelectNodeId][activeNodeStatId][
-        actionItem?.id
-      ];
+      return nodesActions[stageSelectNodeId][activeNodeStatId][actionItem?.id];
     }
     return undefined;
-  }, [
-    mode,
-    nodesActions,
-    actionItem?.id,
-    stageSelectNodeId,
-    activeNodeStatId,
-  ]);
+  }, [mode, nodesActions, actionItem?.id, stageSelectNodeId, activeNodeStatId]);
 
   if (disabled) {
     return renderTrigger();
@@ -128,7 +121,7 @@ export default ({
         settings: actionData?.settings,
       }}
       modalProps={{
-        destroyOnClose: mode === 'edit' ? true : false,
+        destroyOnClose: mode === 'edit',
       }}
       title={mode === 'create' ? '新建动作' : '编辑动作'}
       trigger={renderTrigger()}

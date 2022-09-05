@@ -16,6 +16,9 @@ const switchStatusAction: ComActionsConfig = {
       name: 'targetComId',
       label: '目标组件',
       required: true,
+      initialValue: ({ getSelectedNodeId }) => {
+        return getSelectedNodeId();
+      },
     },
     {
       type: 'select',

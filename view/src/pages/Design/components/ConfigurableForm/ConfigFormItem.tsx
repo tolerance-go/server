@@ -1,3 +1,4 @@
+import { useModel } from '@/.umi/plugin-model';
 import { ConfigurableFormProps } from '@/pages/Design/components/ConfigurableForm/typings/ConfigsFormProps';
 import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
 import {
@@ -23,6 +24,13 @@ export const ConfigFormItem = ({
   ConfigurableFormProps,
   'renderLabel' | 'formItemNamePrefix' | 'configInputProps' | 'theme'
 >) => {
+  const { getSelectedNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getSelectedNodeId: model.getStageSelectNodeId,
+    }),
+  );
+
   const commonFormItemProps = {
     className: clsx({
       [styles.labelAlignLeft]: item.labelAlignLeft ?? true,
@@ -41,6 +49,12 @@ export const ConfigFormItem = ({
     label: renderLabel?.(item) ?? item.label,
     name: formItemNamePrefix ? [formItemNamePrefix, item.name] : item.name,
     colon: false,
+    initialValue:
+      typeof item.initialValue === 'function'
+        ? item.initialValue({
+            getSelectedNodeId,
+          })
+        : item.initialValue,
   };
 
   const extraInputProps = configInputProps?.(item);

@@ -3,7 +3,7 @@ import ComActionViewForm from '@/pages/Design/components/ComActionViewForm';
 import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
 import { useSelectedComActiveStatExtendRelation } from '@/pages/Design/hooks/selected/useSelectedComActiveStatExtendRelation';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/page/nodesActions';
+import { NodeAction } from '@/pages/Design/models/page/nodesActions';
 import { isExtendReactionView } from '@/pages/Design/utils/isExtendReactionView';
 import { DeleteOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
@@ -59,7 +59,7 @@ export default () => {
   }
 
   return (
-    <ProList<ComponentAction>
+    <ProList<NodeAction>
       style={{
         marginTop: 10,
       }}

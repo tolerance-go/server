@@ -1,5 +1,5 @@
 import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentAction } from '@/pages/Design/models/page/nodesActions';
+import { NodeAction } from '@/pages/Design/models/page/nodesActions';
 import { SwitchStatusAction } from '@/pages/Design/typings/actions';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -22,7 +22,7 @@ export const useCommonActionHandler = () => {
   const commonActionHandler = useMemoizedFn(
     (
       params: EventHandlerParams,
-      extra?: (action: ComponentAction) => void,
+      extra?: (action: NodeAction) => void,
     ) => {
       const { event } = params;
       const action = getComStatAction(

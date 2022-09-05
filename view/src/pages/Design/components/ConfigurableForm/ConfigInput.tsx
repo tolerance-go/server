@@ -32,11 +32,14 @@ export const ConfigInput = ({
 }: ConfigInputProps) => {
   const { getSelectedComStatus } = useSelectedComponentStatus();
 
-  const { getComponentsStatus } = useModel('Design.page.nodesStatus', (model) => {
-    return {
-      getComponentsStatus: model.getComponentsStatus,
-    };
-  });
+  const { getComponentsStatus } = useModel(
+    'Design.page.nodesStatus',
+    (model) => {
+      return {
+        getComponentsStatus: model.getComponentsStatus,
+      };
+    },
+  );
 
   if (config.type === 'string') {
     return (

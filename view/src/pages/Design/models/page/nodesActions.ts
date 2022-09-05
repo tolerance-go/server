@@ -13,7 +13,7 @@ import { useUpdateModeState } from '@/utils/useUpdateModeState';
  * 1. 按钮发送请求
  * 2. 切换其他状态
  */
-export type ComponentAction = {
+export type NodeAction = {
   id: string;
   type: string;
   settings: object;
@@ -22,19 +22,19 @@ export type ComponentAction = {
 };
 
 /** key: actionId */
-export type ComponentActions = Record<ActionId, ComponentAction>;
+export type NodeActions = Record<ActionId, NodeAction>;
 
 /**
  * 组件的不同状态
  * key: statId
  */
-export type ComponentStatusActions = Record<StatId, ComponentActions>;
+export type NodeStatusActions = Record<StatId, NodeActions>;
 
 /**
  * 所有组件的所有状态下的配置
  * key: comId
  */
-export type ComponentsActions = Record<ComId, ComponentStatusActions>;
+export type NodesActions = Record<ComId, NodeStatusActions>;
 
 /** 组件的动作 */
 const useComsActions = () => {
@@ -45,7 +45,7 @@ const useComsActions = () => {
     initNodesActions,
     nodesActionsUpdateMode,
     getNodesActionsUpdateMode,
-  ] = useUpdateModeState<ComponentsActions>({});
+  ] = useUpdateModeState<NodesActions>({});
 
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
@@ -63,7 +63,7 @@ const useComsActions = () => {
 
   /** 创建新的动作 */
   const createComStatAction = useMemoizedFn(
-    (comId: string, statId: string, action: Omit<ComponentAction, 'id'>) => {
+    (comId: string, statId: string, action: Omit<NodeAction, 'id'>) => {
       setComsActions((draft) => {
         const newId = nanoid();
 
@@ -84,7 +84,7 @@ const useComsActions = () => {
   );
 
   const setComStatAction = useMemoizedFn(
-    (comId: string, statId: string, action: ComponentAction) => {
+    (comId: string, statId: string, action: NodeAction) => {
       setComsActions((draft) => {
         if (draft[comId] === undefined) {
           draft[comId] = {};
@@ -99,7 +99,7 @@ const useComsActions = () => {
       comId: string,
       statId: string,
       actionWithName: {
-        [actionName: string]: ComponentAction;
+        [actionName: string]: NodeAction;
       },
     ) => {
       setComsActions((draft) => {
@@ -114,7 +114,7 @@ const useComsActions = () => {
       comId: string,
       statId: string,
       actionWithName: Partial<{
-        [actionName: string]: ComponentAction;
+        [actionName: string]: NodeAction;
       }>,
     ) => {
       setComsActions((draft) => {
@@ -128,8 +128,8 @@ const useComsActions = () => {
     (
       comId: string,
       statId: string,
-      action: Omit<Partial<ComponentAction>, 'id'> &
-        Pick<ComponentAction, 'id'>,
+      action: Omit<Partial<NodeAction>, 'id'> &
+        Pick<NodeAction, 'id'>,
     ) => {
       setComsActions((draft) => {
         draft[comId][statId][action.id] = {
@@ -164,7 +164,7 @@ const useComsActions = () => {
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { nodesActions: ComponentsActions }) => {
+    (from?: { nodesActions: NodesActions }) => {
       initNodesActions(from?.nodesActions ?? {});
     },
   );
@@ -184,7 +184,7 @@ const useComsActions = () => {
       comId: string,
       statId: string,
       actionId: string,
-    ): ComponentAction | undefined => {
+    ): NodeAction | undefined => {
       return nodesActions[comId]?.[statId]?.[actionId];
     },
   );
