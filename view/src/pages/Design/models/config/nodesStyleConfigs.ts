@@ -54,7 +54,7 @@ const defaultConfigs: SettingFormConfig = [
   },
 ];
 
-export type ComsInitalStyles = {
+export type ComsInitialStyles = {
   button: DefaultStylesValue;
   line: DefaultStylesValue;
   table: DefaultStylesValue;
@@ -64,31 +64,30 @@ export type ComsInitalStyles = {
  * 组件对应样式表单的描述信息
  * 及其组件对应初始化样式信息
  */
-const useComsStyleConfigs = () => {
-  const [comsInitalStyles, setComsInitalStyles] = useState<ComsInitalStyles>({
-    button: {},
-    line: {},
-    table: {},
-  });
-  const [comsStylesConfigs, setComsStylesConfigs] = useState<
-    Record<keyof ComsInitalStyles, SettingFormConfig>
+export default () => {
+  const [nodesInitialStyles, setNodesInitialStyles] =
+    useState<ComsInitialStyles>({
+      button: {},
+      line: {},
+      table: {},
+    });
+  const [nodesStylesConfigs, setNodesStylesConfigs] = useState<
+    Record<keyof ComsInitialStyles, SettingFormConfig>
   >({
     button: [...defaultConfigs],
     line: [...defaultConfigs],
     table: [...defaultConfigs],
   });
 
-  const getComsInitalStyles = useMemoizedFn(() => {
-    return comsInitalStyles;
+  const getComsInitialStyles = useMemoizedFn(() => {
+    return nodesInitialStyles;
   });
 
   return {
-    comsInitalStyles,
-    comsStylesConfigs,
-    getComsInitalStyles,
-    setComsInitalStyles,
-    setComsStylesConfigs,
+    nodesInitialStyles,
+    nodesStylesConfigs,
+    getComsInitialStyles,
+    setNodesInitialStyles,
+    setNodesStylesConfigs,
   };
 };
-
-export default useComsStyleConfigs;

@@ -51,8 +51,8 @@ const switchStatusAction: ComActionsConfig = {
   ],
 };
 
-const useComsActionsConfigs = () => {
-  const [comsActionsConfigs, setcomsActionsConfigs] = useState<{
+export default () => {
+  const [nodesActionsConfigs, setcomsActionsConfigs] = useState<{
     button: ComActionsConfig[];
     table: ComActionsConfig[];
     [key: string]: ComActionsConfig[];
@@ -107,9 +107,7 @@ const useComsActionsConfigs = () => {
   });
 
   return {
-    comsActionsConfigs,
+    nodesActionsConfigs,
     setcomsActionsConfigs,
   };
 };
-
-export default useComsActionsConfigs;

@@ -34,8 +34,8 @@ export default () => {
     showAllSlots: model.showAllSlots,
   }));
 
-  const { comsSlotsNames } = useModel('Design.config.componentsSlots', (model) => ({
-    comsSlotsNames: model.comsSlotsNames,
+  const { nodesSlotsNames } = useModel('Design.config.nodesSlotsNames', (model) => ({
+    nodesSlotsNames: model.nodesSlotsNames,
   }));
 
   const { setHoverNodeId } = useModel('Design.stage.hoverNodeId', (model) => ({
@@ -96,7 +96,7 @@ export default () => {
             .concat(
               (showAllSlots
                 ? utl.difference(
-                    comsSlotsNames[model.type],
+                    nodesSlotsNames[model.type],
                     Object.keys(model?.slots ?? {}),
                   )
                 : []

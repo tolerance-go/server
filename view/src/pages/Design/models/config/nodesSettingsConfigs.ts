@@ -6,7 +6,7 @@ import { useState } from 'react';
  * 及其组件对应初始化配置信息
  */
 export default () => {
-  const [comsSettingsFormConfigs, setComsSettingsFormConfigs] = useState<
+  const [nodesSettingsFormConfigs, setNodesSettingsFormConfigs] = useState<
     Record<string, SettingFormConfig>
   >({
     button: [
@@ -76,7 +76,7 @@ export default () => {
   });
 
   return {
-    comsSettingsFormConfigs,
-    setComsSettingsFormConfigs,
+    nodesSettingsFormConfigs,
+    setNodesSettingsFormConfigs,
   };
 };

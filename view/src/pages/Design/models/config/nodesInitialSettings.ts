@@ -4,7 +4,7 @@ import { LineConfig } from '@ant-design/plots';
 import { useGetState } from 'ahooks';
 
 export default () => {
-  const [comsInitialSettings, setComsInitialSettings, getComsInitialSettings] =
+  const [nodesInitialSettings, setComsInitialSettings, getComsInitialSettings] =
     useGetState<
       {
         button: AtomButtonSettings;
@@ -23,7 +23,7 @@ export default () => {
     });
 
   return {
-    comsInitialSettings,
+    nodesInitialSettings,
     getComsInitialSettings,
     setComsInitialSettings,
   };

@@ -21,14 +21,14 @@ export default ({
   eventItem?: ComponentEvent;
   extendRelation?: ComStatRelation;
 }) => {
-  const { comsEventsConfigs } = useModel('Design.config.comsEventsConfigs', (model) => ({
-    comsEventsConfigs: model.comsEventsConfigs,
+  const { nodesEventsConfigs } = useModel('Design.config.nodesEventsConfigs', (model) => ({
+    nodesEventsConfigs: model.nodesEventsConfigs,
   }));
 
   const { stageSelectNode } = useSelectedNode();
 
   const selectedComsEventsConfigs = stageSelectNode?.type
-    ? comsEventsConfigs[stageSelectNode.type]
+    ? nodesEventsConfigs[stageSelectNode.type]
     : undefined;
 
   // const [form] = Form.useForm();

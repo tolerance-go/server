@@ -6,18 +6,18 @@ import consola from 'consola';
 export const useSelectedComStyleConfigs = () => {
   const { stageSelectNode } = useSelectedNode();
 
-  const { comsStylesConfigs } = useModel(
-    'Design.config.comsStyleConfigs',
+  const { nodesStylesConfigs } = useModel(
+    'Design.config.nodesStyleConfigs',
     (model) => {
       consola.info('准备返回渲染配置', stageSelectNode, model);
       return {
-        comsStylesConfigs: model.comsStylesConfigs,
+        nodesStylesConfigs: model.nodesStylesConfigs,
       };
     },
   );
 
   const configs = stageSelectNode?.type
-    ? comsStylesConfigs[stageSelectNode.type]
+    ? nodesStylesConfigs[stageSelectNode.type]
     : undefined;
 
   consola.info('渲染配置表单', configs);

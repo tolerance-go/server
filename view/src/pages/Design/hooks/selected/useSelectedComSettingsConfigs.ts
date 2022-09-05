@@ -7,8 +7,8 @@ import consola from 'consola';
 export const useSelectedComSettingsConfigs = () => {
   const { stageSelectNode } = useSelectedNode();
 
-  const { comsSettingsFormConfigs } = useModel(
-    'Design.config.comsSettingsConfigs',
+  const { nodesSettingsFormConfigs: comsSettingsFormConfigs } = useModel(
+    'Design.config.nodesSettingsConfigs',
     pickModel(['comsSettingsFormConfigs']),
   );
 

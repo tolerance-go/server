@@ -20,7 +20,7 @@ export const useHandleComGridItemClick = () => {
   );
 
   const { getComsInitialSettings } = useModel(
-    'Design.config.comsInitialSettings',
+    'Design.config.nodesInitialSettings',
     pickModel(['getComsInitialSettings']),
   );
 

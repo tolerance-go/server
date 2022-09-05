@@ -7,8 +7,8 @@ export type ComEventsConfig = {
   settingsConfigs?: SettingFormConfig;
 };
 
-const useComsEventsConfigs = () => {
-  const [comsEventsConfigs, setComsEventsConfigs] = useState<
+export default () => {
+  const [nodesEventsConfigs, setComsEventsConfigs] = useState<
     {
       button?: ComEventsConfig[];
       table?: ComEventsConfig[];
@@ -38,9 +38,7 @@ const useComsEventsConfigs = () => {
   });
 
   return {
-    comsEventsConfigs,
+    nodesEventsConfigs,
     setComsEventsConfigs,
   };
 };
-
-export default useComsEventsConfigs;

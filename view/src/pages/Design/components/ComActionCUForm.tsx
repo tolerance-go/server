@@ -25,15 +25,15 @@ export default ({
   actionItem?: NodeAction;
   extendRelation?: ComStatRelation;
 }) => {
-  const { comsActionsConfigs } = useModel(
-    'Design.config.comsActionsConfigs',
-    (model) => ({ comsActionsConfigs: model.comsActionsConfigs }),
+  const { nodesActionsConfigs } = useModel(
+    'Design.config.nodesActionsConfigs',
+    (model) => ({ nodesActionsConfigs: model.nodesActionsConfigs }),
   );
 
   const { stageSelectNode } = useSelectedNode();
 
   const selectedComsActionsConfigs = stageSelectNode?.type
-    ? comsActionsConfigs[stageSelectNode.type]
+    ? nodesActionsConfigs[stageSelectNode.type]
     : undefined;
 
   // const [form] = Form.useForm();

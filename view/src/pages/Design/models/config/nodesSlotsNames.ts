@@ -5,8 +5,8 @@ import { useState } from 'react';
  * 组件对应配置表单的描述信息
  * 及其组件对应初始化配置信息
  */
-const useComponentsSlots = () => {
-  const [comsSlotsNames, setComsSlotsNames] = useState<
+export default () => {
+  const [nodesSlotsNames, setNodesSlotsNames] = useState<
     Record<string, string[]>
   >({
     button: ['children', SLOTS_NAME.ADDON_AFTER, SLOTS_NAME.ADDON_BEFORE],
@@ -15,9 +15,7 @@ const useComponentsSlots = () => {
   });
 
   return {
-    comsSlotsNames,
-    setComsSlotsNames,
+    nodesSlotsNames,
+    setNodesSlotsNames,
   };
 };
-
-export default useComponentsSlots;
