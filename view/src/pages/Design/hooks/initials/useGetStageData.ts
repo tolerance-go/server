@@ -11,7 +11,7 @@ export const useGetStageData = () => {
     },
   );
 
-  const { getData: getStatusSettings } = useModel('Design.page.comsStatus', (model) => {
+  const { getData: getStatusSettings } = useModel('Design.page.nodesStatus', (model) => {
     return {
       getData: model.getData,
     };
@@ -64,7 +64,7 @@ export const useGetStageData = () => {
       comsStatusRelations: getStatusRelations(),
       comsTree: getComsTreeData(),
       // comsModel: getComsModelData(),
-      comsStatus: getStatusSettings(),
+      nodesStatus: getStatusSettings(),
       comsStatusDefaults: getStatusSettingsDefaults(),
       nodesActions: getComsActions(),
       nodesEvents: getComsEvents(),

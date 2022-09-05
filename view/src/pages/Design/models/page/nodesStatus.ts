@@ -1,31 +1,37 @@
-import { useModel } from '@umijs/max';
-import { useGetState, useMemoizedFn } from 'ahooks';
-import produce from 'immer';
 import { DEFAULT_COM_STATUS_NAME } from '@/pages/Design/constants';
+import { useModel } from '@umijs/max';
+import { useMemoizedFn } from 'ahooks';
 
 import { ComId, StatId } from '@/pages/Design/typings/keys';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import utl from 'lodash';
 
 /** 组件状态 */
-export type ComponentStat = {
+export type NodeStat = {
   id: string;
   name: string;
 };
 
 /** 组件的不同状态 */
-export type ComponentStatus = Record<StatId, ComponentStat>;
+export type NodeStatus = Record<StatId, NodeStat>;
 
 /** 所有组件的所有状态下的配置 */
-export type ComponentsStatus = Record<ComId, ComponentStatus>;
+export type NodesStatus = Record<ComId, NodeStatus>;
 
 const useStatusSettings = () => {
-  const [componentsStatus, setComponentsStatus, getComponentsStatus] =
-    useGetState<ComponentsStatus>({});
+  const [
+    nodesStatus,
+    setNodesStatus,
+    getNodesStatus,
+    initNodesStatus,
+    nodesStatusUpdateMode,
+    getNodesStatusUpdateMode,
+  ] = useUpdateModeState<NodesStatus>({});
 
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getActiveComStatId,
+      getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 
@@ -38,56 +44,48 @@ const useStatusSettings = () => {
 
   /** 删除组件的所有状态 */
   const deleteComStatus = useMemoizedFn((comId: string) => {
-    setComponentsStatus(
-      produce((draft) => {
-        delete draft[comId];
-      }),
-    );
+    setNodesStatus((draft) => {
+      delete draft[comId];
+    });
   });
 
   /** 删除组件的某个状态 */
   const deleteComStat = useMemoizedFn((comId: string, statId: string) => {
-    setComponentsStatus(
-      produce((draft) => {
-        delete draft[comId][statId];
-      }),
-    );
+    setNodesStatus((draft) => {
+      delete draft[comId][statId];
+    });
   });
 
   /** 从当前选中组件，创建新的配置状态 */
   const createSelectedComponentStat = useMemoizedFn(
     (newStatId: string, name: string) => {
-      setComponentsStatus(
-        produce((draft) => {
-          const stageSelectNodeId = getStageSelectNodeId();
+      setNodesStatus((draft) => {
+        const stageSelectNodeId = getStageSelectNodeId();
 
-          if (stageSelectNodeId) {
-            draft[stageSelectNodeId] = {
-              ...draft[stageSelectNodeId],
-              [newStatId]: {
-                id: newStatId,
-                name,
-              },
-            };
-          }
-        }),
-      );
+        if (stageSelectNodeId) {
+          draft[stageSelectNodeId] = {
+            ...draft[stageSelectNodeId],
+            [newStatId]: {
+              id: newStatId,
+              name,
+            },
+          };
+        }
+      });
     },
   );
 
   /** 初始化组件的默认状态 */
   const initComStatus = useMemoizedFn(
     ({ statusId, comId }: { statusId: string; comId: string }) => {
-      setComponentsStatus(
-        produce((draft) => {
-          draft[comId] = {
-            [statusId]: {
-              id: statusId,
-              name: DEFAULT_COM_STATUS_NAME,
-            },
-          };
-        }),
-      );
+      setNodesStatus((draft) => {
+        draft[comId] = {
+          [statusId]: {
+            id: statusId,
+            name: DEFAULT_COM_STATUS_NAME,
+          },
+        };
+      });
     },
   );
 
@@ -97,51 +95,50 @@ const useStatusSettings = () => {
     const stageSelectNodeId = getStageSelectNodeId();
 
     if (stageSelectNodeId && activeNodeStatId) {
-      setComponentsStatus(
-        produce((draft) => {
-          draft[stageSelectNodeId][activeNodeStatId].name = name;
-        }),
-      );
+      setNodesStatus((draft) => {
+        draft[stageSelectNodeId][activeNodeStatId].name = name;
+      });
     }
   });
 
   /** 获取指定组件的所有状态 */
   const getComStatus = useMemoizedFn((comId: string) => {
-    return componentsStatus[comId];
+    return nodesStatus[comId];
   });
 
   const deleteComStatuslByIds = useMemoizedFn((comIds: string[]) => {
-    setComponentsStatus(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setNodesStatus((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      componentsStatus,
+      componentsStatus: nodesStatus,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      componentsStatus: utl.pick(componentsStatus, comIds),
+      componentsStatus: utl.pick(nodesStatus, comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { componentsStatus: ComponentsStatus }) => {
-      setComponentsStatus(from?.componentsStatus ?? {});
+    (from?: { nodesStatus: NodesStatus }) => {
+      initNodesStatus(from?.nodesStatus ?? {});
     },
   );
 
   return {
-    componentsStatus,
+    nodesStatus,
+    nodesStatusUpdateMode,
+    initNodesStatus,
+    getNodesStatusUpdateMode,
     deleteComStatuslByIds,
     getSliceData,
     getComStatus,
@@ -150,9 +147,9 @@ const useStatusSettings = () => {
     deleteComStat,
     getData,
     initData,
-    getComponentsStatus,
+    getComponentsStatus: getNodesStatus,
     initComStatus,
-    setComponentsStatus,
+    setComponentsStatus: setNodesStatus,
     createSelectedComponentStat,
   };
 };

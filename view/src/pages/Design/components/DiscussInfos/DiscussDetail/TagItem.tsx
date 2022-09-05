@@ -2,8 +2,8 @@ import { useModel } from '@umijs/max';
 import { Tag } from 'antd';
 
 export const TagItem = () => {
-  const { componentsStatus } = useModel('Design.page.comsStatus', (model) => ({
-    componentsStatus: model.componentsStatus,
+  const { componentsStatus } = useModel('Design.page.nodesStatus', (model) => ({
+    componentsStatus: model.nodesStatus,
   }));
 
   const { stageComponentsModel } = useModel(

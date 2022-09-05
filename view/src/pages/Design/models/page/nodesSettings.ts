@@ -31,7 +31,7 @@ export default () => {
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getActiveComStatId,
+      getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 

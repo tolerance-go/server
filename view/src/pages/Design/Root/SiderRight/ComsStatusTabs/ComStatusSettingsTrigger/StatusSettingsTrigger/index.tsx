@@ -27,7 +27,7 @@ export default () => {
   );
 
   const { setSelectedComActiveStatName } = useModel(
-    'Design.page.comsStatus',
+    'Design.page.nodesStatus',
     (model) => ({
       setSelectedComActiveStatName: model.setSelectedComActiveStatName,
     }),

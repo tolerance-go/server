@@ -5,20 +5,24 @@ import { Badge, Tabs, Typography } from 'antd';
 import { useRef } from 'react';
 import ComStatusSettingsTrigger from './ComStatusSettingsTrigger';
 import CreateComStatus, { CreateComStatusAPI } from './CreateComStatus';
+import { pickModel } from '@/utils/pickModel';
 
 const { TabPane } = Tabs;
 
 export const ComsStatusTabs = () => {
   const createFormRef = useRef<CreateComStatusAPI>(null);
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    stageSelectNodeId: model?.stageSelectNodeId,
-  }));
+  const { stageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      stageSelectNodeId: model?.stageSelectNodeId,
+    }),
+  );
 
   const { componentsStatus, deleteComStat } = useModel(
-    'Design.page.comsStatus',
+    'Design.page.nodesStatus',
     (model) => ({
-      componentsStatus: model.componentsStatus,
+      componentsStatus: model.nodesStatus,
       deleteComStat: model.deleteComStat,
     }),
   );
@@ -36,12 +40,9 @@ export const ComsStatusTabs = () => {
   const { setNearSelectedComponentStatusId } =
     useSetNearSelectedComponentStatusId();
 
-  const { activeNodeStatId, setSelectedComponentStatusId } = useModel(
+  const { activeNodeStatId, setActiveNodeStatId } = useModel(
     'Design.stage.activeNodeStatId',
-    (model) => ({
-      activeNodeStatId: model.activeNodeStatId,
-      setSelectedComponentStatusId: model.setActiveComStatId,
-    }),
+    pickModel(['activeNodeStatId', 'setActiveNodeStatId']),
   );
 
   const { triggerPrepareSaveTimeChange } = useModel(
@@ -61,7 +62,7 @@ export const ComsStatusTabs = () => {
         right: <ComStatusSettingsTrigger />,
       }}
       onChange={(activeKey) => {
-        setSelectedComponentStatusId(activeKey);
+        setActiveNodeStatId(activeKey);
       }}
       onEdit={(event, type) => {
         if (type === 'remove') {

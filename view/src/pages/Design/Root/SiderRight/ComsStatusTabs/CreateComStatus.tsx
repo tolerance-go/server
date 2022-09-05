@@ -22,7 +22,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
     open: () => setVisible(true),
   }));
 
-  const { createSelectedComponentStat } = useModel('Design.page.comsStatus', (model) => ({
+  const { createSelectedComponentStat } = useModel('Design.page.nodesStatus', (model) => ({
     createSelectedComponentStat: model.createSelectedComponentStat,
   }));
 
@@ -65,7 +65,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   const { setSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      setSelectedComponentStatusId: model.setActiveComStatId,
+      setSelectedComponentStatusId: model.setActiveNodeStatId,
     }),
   );
 

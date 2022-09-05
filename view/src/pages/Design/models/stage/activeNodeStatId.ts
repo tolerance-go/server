@@ -2,12 +2,12 @@ import { useGetState } from 'ahooks';
 
 export default () => {
   /** 当前组件应用的状态 */
-  const [activeNodeStatId, setActiveComStatId, getActiveComStatId] =
+  const [activeNodeStatId, setActiveNodeStatId, getActiveNodeStatId] =
     useGetState<string>();
 
   return {
     activeNodeStatId,
-    setActiveComStatId,
-    getActiveComStatId,
+    setActiveNodeStatId,
+    getActiveNodeStatId,
   };
 };

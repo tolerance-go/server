@@ -19,7 +19,7 @@ export const useComStatusExtendProps = <P extends object>(options: {
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getActiveComStatId,
+      getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 

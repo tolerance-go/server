@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 export const useSetNearSelectedComponentStatusId = () => {
-  const { getLatestComponentsStatus } = useModel('Design.page.comsStatus', (model) => ({
+  const { getLatestComponentsStatus } = useModel('Design.page.nodesStatus', (model) => ({
     getLatestComponentsStatus: model.getComponentsStatus,
   }));
 
@@ -12,8 +12,8 @@ export const useSetNearSelectedComponentStatusId = () => {
 
   const { setSelectedComponentStatusId, getSelectedComponentStatusId } =
     useModel('Design.stage.activeNodeStatId', (model) => ({
-      setSelectedComponentStatusId: model.setActiveComStatId,
-      getSelectedComponentStatusId: model.getActiveComStatId,
+      setSelectedComponentStatusId: model.setActiveNodeStatId,
+      getSelectedComponentStatusId: model.getActiveNodeStatId,
     }));
 
   /** 将选中 id 设置为旁边的 id */

@@ -9,7 +9,7 @@ export const useInitSatgeData = () => {
     }),
   );
 
-  const { initData: initStatusSettings } = useModel('Design.page.comsStatus', (model) => ({
+  const { initData: initStatusSettings } = useModel('Design.page.nodesStatus', (model) => ({
     initData: model.initData,
   }));
 
@@ -57,7 +57,7 @@ export const useInitSatgeData = () => {
     async (stageData: Record<string, any>) => {
       initComsTreeData(stageData.comsTree);
       initComsSettings(stageData.nodesSettings);
-      initStatusSettings(stageData.comsStatus);
+      initStatusSettings(stageData.nodesStatus);
       initStatusSettingsDefaults(stageData.comsStatusDefaults);
       initStatusRelations(stageData.comsStatusRelations);
       initComsActions(stageData.nodesActions);

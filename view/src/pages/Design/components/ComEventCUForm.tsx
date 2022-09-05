@@ -61,12 +61,12 @@ export default ({
   const { getSelectedComponentStatusId, activeNodeStatId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getActiveComStatId,
+      getSelectedComponentStatusId: model.getActiveNodeStatId,
       activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  const { getComStatus } = useModel('Design.page.comsStatus', (model) => ({
+  const { getComStatus } = useModel('Design.page.nodesStatus', (model) => ({
     getComStatus: model.getComStatus,
   }));
 

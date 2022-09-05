@@ -1,4 +1,4 @@
-import { ComponentsStatus, ComponentStatus } from '@/pages/Design/models/comsStatus';
+import { ComponentsStatus, ComponentStatus } from '@/pages/Design/models/nodesStatus';
 import { ProFormColumnsType } from '@ant-design/pro-components';
 import { NamePath } from 'antd/lib/form/interface';
 import { RecordType } from './index';

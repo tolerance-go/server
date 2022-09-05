@@ -53,7 +53,7 @@ export default ({
     }),
   );
 
-  const { getComStatus } = useModel('Design.page.comsStatus', (model) => ({
+  const { getComStatus } = useModel('Design.page.nodesStatus', (model) => ({
     getComStatus: model.getComStatus,
   }));
 

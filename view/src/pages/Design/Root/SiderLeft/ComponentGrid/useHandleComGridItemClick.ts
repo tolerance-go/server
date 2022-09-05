@@ -30,12 +30,12 @@ export const useHandleComGridItemClick = () => {
     pickModel(['focusComId', 'focusSlotName', 'focusSlotPosition']),
   );
 
-  const { setActiveComStatId } = useModel(
+  const { setActiveNodeStatId: setActiveComStatId } = useModel(
     'Design.stage.activeNodeStatId',
     pickModel(['setActiveComStatId']),
   );
 
-  const { initComStatus } = useModel('Design.page.comsStatus', (model) => ({
+  const { initComStatus } = useModel('Design.page.nodesStatus', (model) => ({
     initComStatus: model.initComStatus,
   }));
 

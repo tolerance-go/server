@@ -12,7 +12,7 @@ export const useDeleteComsFromStage = () => {
     };
   });
 
-  const { deleteComStatuslByIds } = useModel('Design.page.comsStatus', (model) => {
+  const { deleteComStatuslByIds } = useModel('Design.page.nodesStatus', (model) => {
     return {
       deleteComStatuslByIds: model.deleteComStatuslByIds,
     };

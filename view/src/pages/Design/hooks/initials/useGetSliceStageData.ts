@@ -12,7 +12,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusSettings } = useModel(
-    'Design.page.comsStatus',
+    'Design.page.nodesStatus',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -71,7 +71,7 @@ export const useGetSliceStageData = () => {
     return {
       comsTree,
       comsStatusRelations: getStatusRelations(allComIds),
-      comsStatus: getStatusSettings(allComIds),
+      nodesStatus: getStatusSettings(allComIds),
       comsStatusDefaults: getStatusSettingsDefaults(allComIds),
       nodesActions: getComsActions(allComIds),
       nodesEvents: getComsEvents(allComIds),
