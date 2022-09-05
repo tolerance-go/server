@@ -34,7 +34,9 @@ export const layout: RunTimeLayoutConfig = (props) => {
    */
   // 注意 error 不会恢复，约定根据 user 存在来进行判断
   if (
-    [PATHS.DESIGN, PATHS.HOME, PATHS.LOGIN].includes(location.pathname) ||
+    [PATHS.DESIGN, PATHS.HOME, PATHS.LOGIN, PATHS.PLAYGROUND].includes(
+      location.pathname,
+    ) ||
     !initialState?.user
   ) {
     return {
@@ -53,7 +55,9 @@ export const layout: RunTimeLayoutConfig = (props) => {
       size: 'small',
       title: initialState?.user?.nickname ?? initialState?.user?.username,
     },
-    rightContentRender: false,
+    rightContentRender:
+      // false 才不会有额外的 div
+      false as unknown as ReturnType<RunTimeLayoutConfig>['rightContentRender'],
     actionsRender: (props) => {
       if (props.isMobile) return [];
       return [
