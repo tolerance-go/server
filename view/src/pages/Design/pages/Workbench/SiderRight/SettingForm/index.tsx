@@ -1,6 +1,5 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
-import { useComActiveStatSetting } from '@/pages/Design/hooks/useComActiveStatSetting';
 import { useComStatusExtendSettings } from '@/pages/Design/hooks/relations/useComStatusExtendSettings';
 import { useDebounceTriggerPrepareSaveTimeChange } from '@/pages/Design/hooks/actions/useDebounceTriggerPrepareSaveTimeChange';
 import { useComStatFormReset } from '@/pages/Design/hooks/useComStatFormReset';
@@ -10,18 +9,13 @@ import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { useModel } from '@umijs/max';
 import { Form } from 'antd';
 import consola from 'consola';
-
-// const SettingInputs: Record<string, React.ElementType<any>> = {
-//   string: Input,
-//   boolean: Switch,
-//   select: Select,
-// };
+import useNodeActiveStatSettings from '@/pages/Design/pages/Workbench/SiderRight/SettingForm/hooks/useNodeActiveStatSettings';
 
 export const SettingForm = () => {
   const { stageSelectNode } = useSelectedNode();
   const { configs } = useSelectedComSettingsConfigs();
 
-  const { settings } = useComActiveStatSetting(stageSelectNode?.id);
+  const activeStatSettings = useNodeActiveStatSettings(stageSelectNode!.id);
 
   const { setCurrentComSettingsExtendsSettings } = useComStatusExtendSettings();
 
@@ -51,9 +45,9 @@ export const SettingForm = () => {
   // useEffect(() => {
   //   form.resetFields();
   //   form.setFieldsValue(getSetting());
-  // }, [selectedComponentStatusId]);
+  // }, [activeNodeStatId]);
 
-  useComStatFormReset(form, settings);
+  useComStatFormReset(form, activeStatSettings);
 
   if (!stageSelectNode) {
     consola.info('本次渲染，未选中元素，返回空');
@@ -61,7 +55,7 @@ export const SettingForm = () => {
   }
 
   return (
-    <ConfigsForm
+    <ConfigurableForm
       configs={configs}
       labelCol={{
         span: 7,
@@ -120,6 +114,6 @@ export const SettingForm = () => {
           bordered: false,
         };
       }}
-    ></ConfigsForm>
+    ></ConfigurableForm>
   );
 };

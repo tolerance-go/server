@@ -1,13 +1,9 @@
-import { useComActiveStatSetting } from '@/pages/Design/hooks/useComActiveStatSetting';
-import { useComActiveStatStyle } from '@/pages/Design/hooks/useComActiveStatStyle';
-import { useComDefaultStatId } from '@/pages/Design/hooks/useComDefaultStatId';
-import { useComDefaultStatSetting } from '@/pages/Design/hooks/useComDefaultStatSetting';
-import { useComDefaultStatStyle } from '@/pages/Design/hooks/useComDefaultStatStyle';
-import { useComponentUsedSettings } from '@/pages/Design/hooks/useComponentUsedSettings';
 import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { usePickModel } from '@/utils/useModelTypes';
 import { useModel } from '@umijs/max';
-import consola from 'consola';
+import useNodeActiveMeta from './hooks/useNodeActiveStatMeta';
+import useNodeDefaultMeta from './hooks/useNodeDefaultStatMeta';
+import useNodeUsedMeta from './hooks/useNodeUsedStatMeta';
 import { AtomPlaygroundWrapper } from './wrappers/Playground';
 import { AtomWorkbenchWrapper } from './wrappers/Workbench';
 
@@ -34,20 +30,14 @@ export const Atom = (props: ComponentStructure) => {
     }),
   );
 
-  const { defaultStatId } = useComDefaultStatId(props.id);
-  const { settings: defaultSettings } = useComDefaultStatSetting(props.id);
-  const { styles: defaultStyles } = useComDefaultStatStyle(props.id);
-  const {
-    settings: usedSettings,
-    styles: usedStyles,
-    usedStatId,
-  } = useComponentUsedSettings(props.id);
-  const { settings: activeStatSettings } = useComActiveStatSetting(props.id);
-  const { styles: activeStatStyles } = useComActiveStatStyle(props.id);
+  const { defaultStatId, defaultStatSettings, defaultStatStyles } =
+    useNodeDefaultMeta(props.id);
+  const { usedStatSettings, usedStatStyles, usedStatId } = useNodeUsedMeta(
+    props.id,
+  );
+  const { activeStatStyles, activeStatSettings } = useNodeActiveMeta(props.id);
 
-  consola.info('渲染 atom 组件', props.id);
-
-  const statId = (usedStatId ?? defaultStatId) as string;
+  const statId = usedStatId ?? defaultStatId;
 
   /**
    * 选中状态 settings 优先级最高
@@ -62,12 +52,12 @@ export const Atom = (props: ComponentStructure) => {
         statId,
         settings:
           stageSelectNodeId === props.id
-            ? activeStatSettings ?? usedSettings ?? defaultSettings
-            : usedSettings ?? defaultSettings,
+            ? activeStatSettings ?? usedStatSettings ?? defaultStatSettings
+            : usedStatSettings ?? defaultStatSettings,
         styles:
           stageSelectNodeId === props.id
-            ? activeStatStyles ?? usedStyles ?? defaultStyles
-            : usedStyles ?? defaultStyles,
+            ? activeStatStyles ?? usedStatStyles ?? defaultStatStyles
+            : usedStatStyles ?? defaultStatStyles,
         slots,
       }}
     />

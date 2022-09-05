@@ -24,7 +24,7 @@ export default () => {
           value: 'layout',
         },
         {
-          label: '物料',
+          label: '模版',
           value: 'material',
         },
       ]}

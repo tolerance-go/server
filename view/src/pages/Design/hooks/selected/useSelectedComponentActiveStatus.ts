@@ -5,16 +5,16 @@ import { useSelectedComponentStatus } from './useSelectedComponentStatus';
 export const useSelectedComponentActiveStatus = () => {
   const { status } = useSelectedComponentStatus();
 
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  if (status && selectedComponentStatusId) {
+  if (status && activeNodeStatId) {
     return {
-      stat: status[selectedComponentStatusId],
+      stat: status[activeNodeStatId],
     };
   }
 

@@ -37,7 +37,7 @@ export interface PageModel
   // 所有节点的 - 默认状态
   nodesDefaultsStatus: CreationOptional<string>;
   // 舞台跟节点
-  stageRootNodes: CreationOptional<string>;
+  stageRootNodeIds: CreationOptional<string>;
 }
 
 export default (app: Application) => {
@@ -64,7 +64,7 @@ export default (app: Application) => {
     },
     /** 舞台节点结构 */
     nodesStructures: JSON,
-    stageRootNodes: JSON,
+    stageRootNodeIds: JSON,
     nodesStyles: JSON,
     nodesSettings: JSON,
     nodesEvents: JSON,

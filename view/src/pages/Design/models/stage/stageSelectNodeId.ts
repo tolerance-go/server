@@ -38,10 +38,10 @@ const useStageSelectNodeId = () => {
     }),
   );
 
-  const { selectedComponentStatusIdFromComDefaultStatus } = useModel(
+  const { activeNodeStatIdFromComDefaultStatus } = useModel(
     'Design.page.statusSettingsDefaults',
     (model) => ({
-      selectedComponentStatusIdFromComDefaultStatus:
+      activeNodeStatIdFromComDefaultStatus:
         model.selectRightPanelComStatusIdFromDefault,
     }),
   );
@@ -75,7 +75,7 @@ const useStageSelectNodeId = () => {
   /** 选中组件后，设置 right panel 选中状态 tab */
   useUpdateEffect(() => {
     if (stageSelectNodeId) {
-      selectedComponentStatusIdFromComDefaultStatus(stageSelectNodeId);
+      activeNodeStatIdFromComDefaultStatus(stageSelectNodeId);
     }
   }, [stageSelectNodeId]);
 

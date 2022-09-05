@@ -15,10 +15,10 @@ export default () => {
     stageSelectNodeId: model?.stageSelectNodeId,
   }));
 
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
@@ -31,8 +31,8 @@ export default () => {
   );
 
   const actions =
-    stageSelectNodeId && selectedComponentStatusId
-      ? comsEvents[stageSelectNodeId]?.[selectedComponentStatusId]
+    stageSelectNodeId && activeNodeStatId
+      ? comsEvents[stageSelectNodeId]?.[activeNodeStatId]
       : undefined;
 
   const { triggerPrepareSaveTimeChange } = useModel(
@@ -113,7 +113,7 @@ export default () => {
               isExtendReactionView(
                 extendRelation?.toId,
                 extendRelation?.eventUnsyncFields,
-                selectedComponentStatusId,
+                activeNodeStatId,
                 item.name,
               ) ? (
                 <ComEventViewForm
@@ -132,10 +132,10 @@ export default () => {
               <a
                 key="remove"
                 onClick={() => {
-                  if (stageSelectNodeId && selectedComponentStatusId) {
+                  if (stageSelectNodeId && activeNodeStatId) {
                     deleteComStatEvent(
                       stageSelectNodeId,
-                      selectedComponentStatusId,
+                      activeNodeStatId,
                       item.id,
                     );
                     triggerPrepareSaveTimeChange();

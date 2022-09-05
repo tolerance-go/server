@@ -20,12 +20,12 @@ export type ComponentsSettings = Record<ComId, ComponentStatusSettings>;
 
 /** 组件外观 */
 const useComsSettings = () => {
-  const [comsSettings, setComsSettings] = useState<ComponentsSettings>({});
+  const [nodesSettings, setNodesSettings] = useState<ComponentsSettings>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -36,9 +36,9 @@ const useComsSettings = () => {
     }),
   );
 
-  const setComStatSetting = useMemoizedFn(
+  const setNodeStatSettings = useMemoizedFn(
     (comId: string, statId: string, setting: ComponentSetting) => {
-      setComsSettings(
+      setNodesSettings(
         produce((draft) => {
           if (draft[comId] === undefined) {
             draft[comId] = {};
@@ -51,7 +51,7 @@ const useComsSettings = () => {
 
   const updateComStatSetting = useMemoizedFn(
     (comId: string, statId: string, setting: Partial<ComponentSetting>) => {
-      setComsSettings(
+      setNodesSettings(
         produce((draft) => {
           if (draft[comId] === undefined) {
             draft[comId] = {};
@@ -67,18 +67,22 @@ const useComsSettings = () => {
 
   /** 设置组件当前状态下的配置 */
   const setSelectedComSettings = useMemoizedFn((settings: object) => {
-    const selectedComponentStatusId = getSelectedComponentStatusId();
+    const activeNodeStatId = getSelectedComponentStatusId();
     const stageSelectNodeId = getStageSelectNodeId();
 
-    if (stageSelectNodeId && selectedComponentStatusId) {
-      setComStatSetting(stageSelectNodeId, selectedComponentStatusId, settings);
+    if (stageSelectNodeId && activeNodeStatId) {
+      setNodeStatSettings(
+        stageSelectNodeId,
+        activeNodeStatId,
+        settings,
+      );
     }
   });
 
   /** 拷贝组件 A 状态的配置到 B 状态 */
   const copyComSettingFromStatToOtherStat = useMemoizedFn(
     (comId: string, fromStatId: string, toStatId: string) => {
-      setComsSettings(
+      setNodesSettings(
         produce((draft) => {
           if (draft[comId] === undefined) {
             draft[comId] = {};
@@ -92,11 +96,11 @@ const useComsSettings = () => {
   const copySelectedComSettingFromActiveStatToOtherStat = useMemoizedFn(
     (toStatId: string) => {
       const stageSelectNodeId = getStageSelectNodeId();
-      const selectedComponentStatusId = getSelectedComponentStatusId();
-      if (stageSelectNodeId && selectedComponentStatusId) {
+      const activeNodeStatId = getSelectedComponentStatusId();
+      if (stageSelectNodeId && activeNodeStatId) {
         copyComSettingFromStatToOtherStat(
           stageSelectNodeId,
-          selectedComponentStatusId,
+          activeNodeStatId,
           toStatId,
         );
       }
@@ -106,25 +110,25 @@ const useComsSettings = () => {
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      comsSettings,
+      comsSettings: nodesSettings,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      comsSettings: utl.pick(comsSettings, comIds),
+      comsSettings: utl.pick(nodesSettings, comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
     (from?: { comsSettings: ComponentsSettings }) => {
-      setComsSettings(from?.comsSettings ?? {});
+      setNodesSettings(from?.comsSettings ?? {});
     },
   );
 
   const deleteComsSettingsByIds = useMemoizedFn((comIds: string[]) => {
-    setComsSettings(
+    setNodesSettings(
       produce((draft) => {
         comIds.forEach((comId) => {
           delete draft[comId];
@@ -134,7 +138,7 @@ const useComsSettings = () => {
   });
 
   return {
-    comsSettings,
+    nodesSettings,
     deleteComsSettingsByIds,
     getSliceData,
     copyComSettingFromStatToOtherStat,
@@ -142,7 +146,7 @@ const useComsSettings = () => {
     setSelectedComSettings,
     getData,
     initData,
-    setComStatSetting,
+    setNodeStatSettings,
     updateComStatSetting,
   };
 };

@@ -1,4 +1,4 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
 import { useComStatusExtendStyles } from '@/pages/Design/hooks/relations/useComStatusExtendStyles';
 import { useDebounceTriggerPrepareSaveTimeChange } from '@/pages/Design/hooks/actions/useDebounceTriggerPrepareSaveTimeChange';
@@ -46,7 +46,7 @@ export default () => {
   }
 
   return (
-    <ConfigsForm
+    <ConfigurableForm
       configs={configs}
       // className={styles.wrapper}
       labelCol={{
@@ -105,6 +105,6 @@ export default () => {
           bordered: false,
         };
       }}
-    ></ConfigsForm>
+    ></ConfigurableForm>
   );
 };

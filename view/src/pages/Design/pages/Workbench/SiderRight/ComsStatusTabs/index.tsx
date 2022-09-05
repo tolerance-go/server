@@ -36,11 +36,11 @@ export const ComsStatusTabs = () => {
   const { setNearSelectedComponentStatusId } =
     useSetNearSelectedComponentStatusId();
 
-  const { selectedComponentStatusId, setSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId, setSelectedComponentStatusId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
-      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
+      setSelectedComponentStatusId: model.setActiveComStatId,
     }),
   );
 
@@ -55,7 +55,7 @@ export const ComsStatusTabs = () => {
     <Tabs
       size="small"
       type="editable-card"
-      activeKey={selectedComponentStatusId}
+      activeKey={activeNodeStatId}
       addIcon={<CreateComStatus ref={createFormRef} />}
       tabBarExtraContent={{
         right: <ComStatusSettingsTrigger />,
@@ -69,7 +69,7 @@ export const ComsStatusTabs = () => {
 
           if (stageSelectNodeId) {
             /** 如果删除的是激活的 id，重新设置激活 id */
-            if (selectedComponentStatusId === statId) {
+            if (activeNodeStatId === statId) {
               setNearSelectedComponentStatusId();
             }
 
@@ -92,7 +92,7 @@ export const ComsStatusTabs = () => {
               tab={
                 selectedComDefaultStatId === statusId ? (
                   <Badge dot>
-                    {selectedComponentStatusId === statusId ? (
+                    {activeNodeStatId === statusId ? (
                       <Typography.Link>{componentStatus.name}</Typography.Link>
                     ) : (
                       componentStatus.name

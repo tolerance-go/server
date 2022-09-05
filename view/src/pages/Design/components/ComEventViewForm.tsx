@@ -1,4 +1,4 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { ComponentEvent } from '@/pages/Design/models/comsEvents';
 import { ComStatRelation } from '@/pages/Design/models/statusRelations';
@@ -46,10 +46,10 @@ export default ({
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
@@ -58,13 +58,13 @@ export default ({
   }));
 
   const eventData = useMemo(() => {
-    if (stageSelectNodeId && selectedComponentStatusId && eventItem?.id) {
-      return comsEvents[stageSelectNodeId][selectedComponentStatusId][
+    if (stageSelectNodeId && activeNodeStatId && eventItem?.id) {
+      return comsEvents[stageSelectNodeId][activeNodeStatId][
         eventItem.id
       ];
     }
     return undefined;
-  }, [comsEvents, eventItem?.id, stageSelectNodeId, selectedComponentStatusId]);
+  }, [comsEvents, eventItem?.id, stageSelectNodeId, activeNodeStatId]);
 
   return (
     <ModalForm
@@ -130,7 +130,7 @@ export default ({
             (item) => item.type === type?.value,
           );
           return (
-            <ConfigsForm
+            <ConfigurableForm
               onlyFormItem
               formItemNamePrefix="settings"
               configs={config?.settingsConfigs}

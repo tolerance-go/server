@@ -52,9 +52,9 @@ const useComsEvents = () => {
   }));
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -216,11 +216,11 @@ const useComsEvents = () => {
   const copySelectedComEventFromActiveStatToOtherStat = useMemoizedFn(
     (toStatId: string) => {
       const stageSelectNodeId = getStageSelectNodeId();
-      const selectedComponentStatusId = getSelectedComponentStatusId();
-      if (stageSelectNodeId && selectedComponentStatusId) {
+      const activeNodeStatId = getSelectedComponentStatusId();
+      if (stageSelectNodeId && activeNodeStatId) {
         copyComEventFromStatToOtherStat(
           stageSelectNodeId,
-          selectedComponentStatusId,
+          activeNodeStatId,
           toStatId,
         );
       }

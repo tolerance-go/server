@@ -1,4 +1,4 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { ComponentAction } from '@/pages/Design/models/page/comsActions';
 import { ComStatRelation } from '@/pages/Design/models/page/statusConnectRelations';
@@ -42,16 +42,16 @@ export default ({
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
   const actionData = useMemo(() => {
-    if (stageSelectNodeId && selectedComponentStatusId && actionItem?.id) {
-      return comsActions[stageSelectNodeId][selectedComponentStatusId][
+    if (stageSelectNodeId && activeNodeStatId && actionItem?.id) {
+      return comsActions[stageSelectNodeId][activeNodeStatId][
         actionItem?.id
       ];
     }
@@ -60,7 +60,7 @@ export default ({
     comsActions,
     actionItem?.id,
     stageSelectNodeId,
-    selectedComponentStatusId,
+    activeNodeStatId,
   ]);
 
   return (
@@ -124,7 +124,7 @@ export default ({
             (item) => item.type === type?.value,
           );
           return (
-            <ConfigsForm
+            <ConfigurableForm
               onlyFormItem
               formItemNamePrefix="settings"
               configs={config?.settingsConfigs}

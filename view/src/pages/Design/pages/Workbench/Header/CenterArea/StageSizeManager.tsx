@@ -1,4 +1,4 @@
-import BoxSizeInput from '@/pages/Design/components/ConfigsForm/inputs/BoxSizeInput';
+import BoxSizeInput from '@/pages/Design/components/ConfigurableForm/inputs/BoxSizeInput';
 import { CloseOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Popover, Space, Typography } from 'antd';

@@ -53,9 +53,9 @@ const useComsStyles = () => {
   const [comsStyles, setComsStyles] = useState<ComponentsStyles>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -127,11 +127,11 @@ const useComsStyles = () => {
   const copySelectedComStyleFromActiveStatToOtherStat = useMemoizedFn(
     (toStatId: string) => {
       const stageSelectNodeId = getStageSelectNodeId();
-      const selectedComponentStatusId = getSelectedComponentStatusId();
-      if (stageSelectNodeId && selectedComponentStatusId) {
+      const activeNodeStatId = getSelectedComponentStatusId();
+      if (stageSelectNodeId && activeNodeStatId) {
         copyComStyleFromStatToOtherStat(
           stageSelectNodeId,
-          selectedComponentStatusId,
+          activeNodeStatId,
           toStatId,
         );
       }

@@ -3,7 +3,7 @@ import { ProFormProps } from '@ant-design/pro-components';
 import React from 'react';
 import { ConfigInputProps } from './ConfigInputProps';
 
-export type ConfigsFormProps = {
+export type ConfigurableFormProps = {
   configs?: SettingFormConfig;
   renderLabel?: (config: SettingFormConfig[number]) => React.ReactNode;
   configInputProps?: (

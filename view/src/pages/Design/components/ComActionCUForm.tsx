@@ -1,4 +1,4 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useComStatusExtendActions } from '@/pages/Design/hooks/relations/useComStatusExtendActions';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { ComponentAction } from '@/pages/Design/models/comsActions';
@@ -54,11 +54,11 @@ export default ({
     }),
   );
 
-  const { getSelectedComponentStatusId, selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { getSelectedComponentStatusId, activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
@@ -96,10 +96,10 @@ export default ({
     if (
       mode === 'edit' &&
       stageSelectNodeId &&
-      selectedComponentStatusId &&
+      activeNodeStatId &&
       actionItem?.id
     ) {
-      return comsActions[stageSelectNodeId][selectedComponentStatusId][
+      return comsActions[stageSelectNodeId][activeNodeStatId][
         actionItem?.id
       ];
     }
@@ -109,7 +109,7 @@ export default ({
     comsActions,
     actionItem?.id,
     stageSelectNodeId,
-    selectedComponentStatusId,
+    activeNodeStatId,
   ]);
 
   if (disabled) {
@@ -199,7 +199,7 @@ export default ({
             (item) => item.type === type?.value,
           );
           return (
-            <ConfigsForm
+            <ConfigurableForm
               onlyFormItem
               formItemNamePrefix="settings"
               configs={config?.settingsConfigs}

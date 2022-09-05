@@ -11,9 +11,9 @@ export const useSetNearSelectedComponentStatusId = () => {
   }));
 
   const { setSelectedComponentStatusId, getSelectedComponentStatusId } =
-    useModel('Design.stage.selectedComponentStatusId', (model) => ({
-      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+    useModel('Design.stage.activeNodeStatId', (model) => ({
+      setSelectedComponentStatusId: model.setActiveComStatId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }));
 
   /** 将选中 id 设置为旁边的 id */
@@ -21,10 +21,10 @@ export const useSetNearSelectedComponentStatusId = () => {
     const stageSelectNodeId = getStageSelectNodeId();
     if (stageSelectNodeId) {
       const componentsStatus = getLatestComponentsStatus();
-      const selectedComponentStatusId = getSelectedComponentStatusId();
+      const activeNodeStatId = getSelectedComponentStatusId();
       const keys = Object.keys(componentsStatus[stageSelectNodeId]);
       const index = keys.findIndex(
-        (item) => item === selectedComponentStatusId,
+        (item) => item === activeNodeStatId,
       );
       if (index > 0) {
         setSelectedComponentStatusId(keys[index - 1]);

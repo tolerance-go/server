@@ -1,4 +1,4 @@
-import { ConfigsForm } from '@/pages/Design/components/ConfigsForm';
+import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useFormReset } from '@/pages/Design/hooks/useFormReset';
 import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
 import { useModel } from '@umijs/max';
@@ -64,7 +64,7 @@ export const ColumSettingsForm = () => {
   }
 
   return (
-    <ConfigsForm
+    <ConfigurableForm
       form={form}
       configs={dataColumnSettingsConfigs[colSettings.type]}
       onValuesChange={(changedValues, values) => {

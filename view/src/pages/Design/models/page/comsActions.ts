@@ -42,9 +42,9 @@ const useComsActions = () => {
   const [comsActions, setComsActions] = useState<ComponentsActions>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -191,11 +191,11 @@ const useComsActions = () => {
   const copySelectedComActionFromActiveStatToOtherStat = useMemoizedFn(
     (toStatId: string) => {
       const stageSelectNodeId = getStageSelectNodeId();
-      const selectedComponentStatusId = getSelectedComponentStatusId();
-      if (stageSelectNodeId && selectedComponentStatusId) {
+      const activeNodeStatId = getSelectedComponentStatusId();
+      if (stageSelectNodeId && activeNodeStatId) {
         copyComActionFromStatToOtherStat(
           stageSelectNodeId,
-          selectedComponentStatusId,
+          activeNodeStatId,
           toStatId,
         );
       }

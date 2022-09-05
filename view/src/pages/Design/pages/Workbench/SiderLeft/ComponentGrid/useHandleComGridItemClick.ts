@@ -1,3 +1,4 @@
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import consola from 'consola';
@@ -19,38 +20,28 @@ export const useHandleComGridItemClick = () => {
     }),
   );
 
-  const { getLatestComsInitalSettings } = useModel(
-    'Design.config.comsSettingsConfigs',
-    (model) => ({
-      getLatestComsInitalSettings: model.getLatestComsInitalSettings,
-    }),
+  const { getComsInitialSettings } = useModel(
+    'Design.config.comsInitialSettings',
+    pickModel(['getComsInitialSettings']),
   );
 
   const { focusComId, focusSlotName, focusSlotPosition } = useModel(
     'Design.stage.slotsInsert',
-    (model) => ({
-      focusComId: model.focusComId,
-      focusSlotName: model.focusSlotName,
-      focusSlotPosition: model.focusSlotPosition,
-    }),
+    pickModel(['focusComId', 'focusSlotName', 'focusSlotPosition']),
   );
 
-  const { setSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
-    (model) => ({
-      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
-    }),
+  const { setActiveComStatId } = useModel(
+    'Design.stage.activeNodeStatId',
+    pickModel(['setActiveComStatId']),
   );
 
   const { initComStatus } = useModel('Design.page.comsStatus', (model) => ({
     initComStatus: model.initComStatus,
   }));
 
-  const { setComStatSetting } = useModel(
+  const { setNodeStatSettings } = useModel(
     'Design.page.comsSettings',
-    (model) => ({
-      setComStatSetting: model.setComStatSetting,
-    }),
+    pickModel(['setNodeStatSettings']),
   );
 
   const { setComStatStyle } = useModel('Design.page.comsStyles', (model) => ({
@@ -109,17 +100,18 @@ export const useHandleComGridItemClick = () => {
       });
     }
 
+    // 初始化节点配置
+    setNodeStatSettings(
+      newComId,
+      statusId,
+      getComsInitialSettings()?.[widget.type] ?? {},
+    );
+
     // 初始化新组件的初始化状态
     initComStatus({
       comId: newComId,
       statusId,
     });
-
-    setComStatSetting(
-      newComId,
-      statusId,
-      getLatestComsInitalSettings()?.[widget.name] ?? {},
-    );
 
     setComStatStyle(newComId, statusId, {});
 
@@ -128,7 +120,7 @@ export const useHandleComGridItemClick = () => {
     setStageSelectNodeId(newComId);
 
     /** 设置选中组件的选中状态 */
-    setSelectedComponentStatusId(statusId);
+    setActiveComStatId(statusId);
 
     /** 设置组件默认状态 */
     setComStatusSettingsDefaults(newComId, statusId);

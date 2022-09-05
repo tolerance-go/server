@@ -6,12 +6,12 @@ export const useComStatFormReset = (
   form: FormInstance,
   data?: Record<string, any>,
 ) => {
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  useFormReset(form, selectedComponentStatusId, data);
+  useFormReset(form, activeNodeStatId, data);
 };

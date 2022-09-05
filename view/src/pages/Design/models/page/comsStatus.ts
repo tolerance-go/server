@@ -23,9 +23,9 @@ const useStatusSettings = () => {
     useGetState<ComponentsStatus>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -90,13 +90,13 @@ const useStatusSettings = () => {
 
   /** 设置当前选中组件的激活 tab 的名称 */
   const setSelectedComActiveStatName = useMemoizedFn((name: string) => {
-    const selectedComponentStatusId = getSelectedComponentStatusId();
+    const activeNodeStatId = getSelectedComponentStatusId();
     const stageSelectNodeId = getStageSelectNodeId();
 
-    if (stageSelectNodeId && selectedComponentStatusId) {
+    if (stageSelectNodeId && activeNodeStatId) {
       setComponentsStatus(
         produce((draft) => {
-          draft[stageSelectNodeId][selectedComponentStatusId].name = name;
+          draft[stageSelectNodeId][activeNodeStatId].name = name;
         }),
       );
     }

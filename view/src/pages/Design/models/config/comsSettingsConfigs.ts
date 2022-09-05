@@ -1,8 +1,4 @@
-import { AtomButtonSettings } from '@/pages/Design/components/atomComs/AtomButton';
-import { AtomTableSettings } from '@/pages/Design/components/atomComs/AtomTable';
 import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
-import { LineConfig } from '@ant-design/plots';
-import { useMemoizedFn } from 'ahooks';
 import { useState } from 'react';
 
 /**
@@ -10,23 +6,7 @@ import { useState } from 'react';
  * 及其组件对应初始化配置信息
  */
 const useComponentsSettingConfigs = () => {
-  const [comsInitalSettings, setComsInitalSettings] = useState<
-    {
-      button: AtomButtonSettings;
-      line: Partial<LineConfig>;
-      table: AtomTableSettings;
-    } & Record<string, Record<string, any>>
-  >({
-    button: {
-      text: '按钮',
-      type: 'primary',
-    },
-    line: {
-      smooth: false,
-    },
-    table: {},
-  });
-  const [componentsSettingsConfigs, setComponentsSettingsConfigs] = useState<
+  const [comsSettingsFormConfigs, setComsSettingsFormConfigs] = useState<
     Record<string, SettingFormConfig>
   >({
     button: [
@@ -95,16 +75,9 @@ const useComponentsSettingConfigs = () => {
     ],
   });
 
-  const getLatestComsInitalSettings = useMemoizedFn(() => {
-    return comsInitalSettings;
-  });
-
   return {
-    comsInitalSettings,
-    componentsConfigs: componentsSettingsConfigs,
-    getLatestComsInitalSettings,
-    setComsInitalSettings,
-    setComponentsConfigs: setComponentsSettingsConfigs,
+    comsSettingsFormConfigs,
+    setComsSettingsFormConfigs,
   };
 };
 

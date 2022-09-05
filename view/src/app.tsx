@@ -53,7 +53,7 @@ export const layout: RunTimeLayoutConfig = (props) => {
       size: 'small',
       title: initialState?.user?.nickname ?? initialState?.user?.username,
     },
-    rightContentRender: () => <></>,
+    rightContentRender: false,
     actionsRender: (props) => {
       if (props.isMobile) return [];
       return [

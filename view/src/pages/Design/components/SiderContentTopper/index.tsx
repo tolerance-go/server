@@ -24,9 +24,7 @@ export const SiderContentTopper = (props: {
         </Typography.Text>
       </Col>
       <Col>
-        <Space size={5} align="center">
-          {props.actions}
-        </Space>
+        <Space size={5}>{props.actions}</Space>
       </Col>
     </Row>
   );

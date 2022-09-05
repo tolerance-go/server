@@ -636,7 +636,7 @@ declare namespace API {
     nodesStatus?: string;
     nodesStatusRelations?: string;
     nodesDefaultsStatus?: string;
-    stageRootNodes?: string;
+    stageRootNodeIds?: string;
     id: string;
     createdAt: string;
     updatedAt: string;
@@ -675,7 +675,7 @@ declare namespace API {
     nodesStatus?: string;
     nodesStatusRelations?: string;
     nodesDefaultsStatus?: string;
-    stageRootNodes?: string;
+    stageRootNodeIds?: string;
   };
 
   type PageListAndCountRsp = {
@@ -720,7 +720,7 @@ declare namespace API {
     nodesStatus?: string;
     nodesStatusRelations?: string;
     nodesDefaultsStatus?: string;
-    stageRootNodes?: string;
+    stageRootNodeIds?: string;
     createdAt?: string;
     updatedAt?: string;
   };

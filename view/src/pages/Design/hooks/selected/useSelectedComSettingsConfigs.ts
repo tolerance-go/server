@@ -11,7 +11,7 @@ export const useSelectedComSettingsConfigs = () => {
     (model) => {
       consola.info('准备返回渲染配置', stageSelectNode, model);
       return {
-        componentsConfigs: model?.componentsConfigs,
+        componentsConfigs: model?.comsSettingsFormConfigs,
       };
     },
   );

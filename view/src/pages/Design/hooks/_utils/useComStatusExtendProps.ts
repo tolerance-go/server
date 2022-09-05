@@ -17,9 +17,9 @@ export const useComStatusExtendProps = <P extends object>(options: {
   }));
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      getSelectedComponentStatusId: model.getSelectedComponentStatusId,
+      getSelectedComponentStatusId: model.getActiveComStatId,
     }),
   );
 
@@ -55,16 +55,16 @@ export const useComStatusExtendProps = <P extends object>(options: {
   );
 
   const setCurrentComPropsExtendsProps = useMemoizedFn((props: P) => {
-    const selectedComponentStatusId = getSelectedComponentStatusId();
+    const activeNodeStatId = getSelectedComponentStatusId();
     const stageSelectNodeId = getStageSelectNodeId();
-    if (stageSelectNodeId && selectedComponentStatusId) {
+    if (stageSelectNodeId && activeNodeStatId) {
       options.setComStatProps(
         stageSelectNodeId,
-        selectedComponentStatusId,
+        activeNodeStatId,
         props,
       );
 
-      setComExtendsProps(stageSelectNodeId, selectedComponentStatusId, props);
+      setComExtendsProps(stageSelectNodeId, activeNodeStatId, props);
     }
   });
 

@@ -63,9 +63,9 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   }));
 
   const { setSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
+      setSelectedComponentStatusId: model.setActiveComStatId,
     }),
   );
 

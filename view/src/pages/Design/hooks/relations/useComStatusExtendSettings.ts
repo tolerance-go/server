@@ -6,7 +6,7 @@ export const useComStatusExtendSettings = () => {
   const { setComStatSetting, updateComStatSetting } = useModel(
     'Design.page.comsSettings',
     (model) => ({
-      setComStatSetting: model.setComStatSetting,
+      setComStatSetting: model.setNodeStatSettings,
       updateComStatSetting: model.updateComStatSetting,
     }),
   );

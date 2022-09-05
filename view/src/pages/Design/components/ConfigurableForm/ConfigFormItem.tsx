@@ -1,4 +1,4 @@
-import { ConfigsFormProps } from '@/pages/Design/components/ConfigsForm/typings/ConfigsFormProps';
+import { ConfigurableFormProps } from '@/pages/Design/components/ConfigurableForm/typings/ConfigsFormProps';
 import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
 import {
   BetaSchemaForm,
@@ -20,7 +20,7 @@ export const ConfigFormItem = ({
 }: {
   item: SettingFormConfig[number];
 } & Pick<
-  ConfigsFormProps,
+  ConfigurableFormProps,
   'renderLabel' | 'formItemNamePrefix' | 'configInputProps' | 'theme'
 >) => {
   const commonFormItemProps = {

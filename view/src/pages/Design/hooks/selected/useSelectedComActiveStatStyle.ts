@@ -7,15 +7,15 @@ export const useSelectedComActiveStatStyle = (comId?: string) => {
     };
   });
 
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  if (comId && selectedComponentStatusId) {
-    const style = comsStyles[comId]?.[selectedComponentStatusId];
+  if (comId && activeNodeStatId) {
+    const style = comsStyles[comId]?.[activeNodeStatId];
     return { style };
   }
 

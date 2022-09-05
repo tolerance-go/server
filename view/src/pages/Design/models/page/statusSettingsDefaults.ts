@@ -24,9 +24,9 @@ const useStatusSettingsDefaults = () => {
   );
 
   const { setSelectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      setSelectedComponentStatusId: model.setSelectedComponentStatusId,
+      setSelectedComponentStatusId: model.setActiveComStatId,
     }),
   );
 

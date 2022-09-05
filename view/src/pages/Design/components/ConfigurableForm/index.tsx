@@ -1,9 +1,9 @@
-import { ConfigsFormProps } from '@/pages/Design/components/ConfigsForm/typings/ConfigsFormProps';
+import { ConfigurableFormProps } from '@/pages/Design/components/ConfigurableForm/typings/ConfigsFormProps';
 import { ProForm, ProFormDependency } from '@ant-design/pro-components';
 import { ConfigFormItem } from './ConfigFormItem';
 import styles from './index.less';
 
-export const ConfigsForm = ({
+export const ConfigurableForm = ({
   configs,
   renderLabel,
   configInputProps,
@@ -12,7 +12,7 @@ export const ConfigsForm = ({
   renderFormItemWrapper,
   theme,
   ...formProps
-}: ConfigsFormProps) => {
+}: ConfigurableFormProps) => {
   const items = configs?.map((item) => {
     const renderInner = () => {
       const formControl = (

@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 
 /** 获取当前组件状态的继承状态对象 */
 export const useSelectedComActiveStatExtendRelation = () => {
-  const { selectedComponentStatusId } = useModel(
-    'Design.stage.selectedComponentStatusId',
+  const { activeNodeStatId } = useModel(
+    'Design.stage.activeNodeStatId',
     (model) => ({
-      selectedComponentStatusId: model.selectedComponentStatusId,
+      activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
@@ -25,13 +25,13 @@ export const useSelectedComActiveStatExtendRelation = () => {
       ).map((relationId) => comsStatusRelations[stageSelectNodeId][relationId]);
 
       const extendRelation = relations.find(
-        (relation) => relation.toId === selectedComponentStatusId,
+        (relation) => relation.toId === activeNodeStatId,
       );
 
       return extendRelation;
     }
     return undefined;
-  }, [stageSelectNodeId, comsStatusRelations, selectedComponentStatusId]);
+  }, [stageSelectNodeId, comsStatusRelations, activeNodeStatId]);
 
   return {
     extendRelation,

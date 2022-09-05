@@ -4,11 +4,11 @@ import { UnsyncFields } from '@/pages/Design/models/statusRelations';
 export const isExtendReactionView = (
   extendRelationToStatId: string | undefined,
   extendRelationLockFields: UnsyncFields | undefined,
-  selectedComponentStatusId: string | undefined,
+  activeNodeStatId: string | undefined,
   name: string,
 ) => {
   return (
-    extendRelationToStatId === selectedComponentStatusId &&
+    extendRelationToStatId === activeNodeStatId &&
     !extendRelationLockFields?.[name]
   );
 };
