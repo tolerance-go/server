@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   DrawerForm,
   ProFormInstance,
+  ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -22,56 +23,57 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
     open: () => setVisible(true),
   }));
 
-  const { createSelectedComponentStat } = useModel('Design.page.nodesStatus', (model) => ({
-    createSelectedComponentStat: model.createSelectedComponentStat,
+  const { selectedNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      selectedNodeId: model.stageSelectNodeId,
+    }),
+  );
+
+  const { createStat } = useModel('Design.page.nodesStatus', (model) => ({
+    createStat: model.createSelectedComponentStat,
   }));
 
-  const { copySelectedComSettingFromActiveStatToOtherStat } = useModel(
-    'Design.page.nodesSettings',
-    (model) => ({
-      copySelectedComSettingFromActiveStatToOtherStat:
-        model.copySelectedComSettingFromActiveStatToOtherStat,
-    }),
-  );
+  const { copySettings } = useModel('Design.page.nodesSettings', (model) => ({
+    copySettings: model.copySelectedComSettingFromActiveStatToOtherStat,
+  }));
 
-  const { copySelectedComActionFromActiveStatToOtherStat } = useModel(
-    'Design.page.nodesActions',
-    (model) => ({
-      copySelectedComActionFromActiveStatToOtherStat:
-        model.copySelectedComActionFromActiveStatToOtherStat,
-    }),
-  );
+  const { copyActions } = useModel('Design.page.nodesActions', (model) => ({
+    copyActions: model.copySelectedComActionFromActiveStatToOtherStat,
+  }));
 
-  const { copySelectedComEventFromActiveStatToOtherStat } = useModel(
-    'Design.page.nodesEvents',
-    (model) => ({
-      copySelectedComEventFromActiveStatToOtherStat:
-        model.copySelectedComEventFromActiveStatToOtherStat,
-    }),
-  );
+  const { copyEvents } = useModel('Design.page.nodesEvents', (model) => ({
+    copyEvents: model.copySelectedComEventFromActiveStatToOtherStat,
+  }));
 
-  const { copySelectedComStyleFromActiveStatToOtherStat } = useModel(
-    'Design.page.nodesStyles',
-    (model) => ({
-      copySelectedComStyleFromActiveStatToOtherStat:
-        model.copySelectedComStyleFromActiveStatToOtherStat,
-    }),
+  const { copyStyles } = useModel('Design.page.nodesStyles', (model) => ({
+    copyStyles: model.copySelectedComStyleFromActiveStatToOtherStat,
+  }));
+
+  const { setDefaultState } = useModel(
+    'Design.page.nodesDefaultsStatus',
+    (model) => {
+      return {
+        setDefaultState: model.setComStatusSettingsDefaults,
+      };
+    },
   );
 
   const { triggerSave } = useModel('Design.app.stageAutoSave', (model) => ({
     triggerSave: model.triggerPrepareSaveTimeChange,
   }));
 
-  const { setSelectedComponentStatusId } = useModel(
+  const { setActiveNodeStatId } = useModel(
     'Design.stage.activeNodeStatId',
     (model) => ({
-      setSelectedComponentStatusId: model.setActiveNodeStatId,
+      setActiveNodeStatId: model.setActiveNodeStatId,
     }),
   );
 
   return (
     <DrawerForm<{
       name: string;
+      isDefault: boolean;
     }>
       title="新建配置状态"
       formRef={formRef}
@@ -87,17 +89,21 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
       onFinish={async (values) => {
         const newStatId = nanoid();
 
-        createSelectedComponentStat(newStatId, values.name);
+        createStat(newStatId, values.name);
 
-        copySelectedComSettingFromActiveStatToOtherStat(newStatId);
+        copySettings(newStatId);
 
-        copySelectedComActionFromActiveStatToOtherStat(newStatId);
+        copyActions(newStatId);
 
-        copySelectedComEventFromActiveStatToOtherStat(newStatId);
+        copyEvents(newStatId);
 
-        copySelectedComStyleFromActiveStatToOtherStat(newStatId);
+        copyStyles(newStatId);
 
-        setSelectedComponentStatusId(newStatId);
+        setActiveNodeStatId(newStatId);
+
+        if (values.isDefault) {
+          setDefaultState(selectedNodeId!, newStatId);
+        }
 
         message.success('创建成功');
         triggerSave();
@@ -105,6 +111,11 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
       }}
     >
       <ProFormText name="name" label="名称" placeholder="请输入名称" />
+      <ProFormSwitch
+        initialValue={false}
+        name="isDefault"
+        label="是否设置为默认状态"
+      />
     </DrawerForm>
   );
 });
