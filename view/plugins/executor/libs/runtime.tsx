@@ -20,6 +20,10 @@ function ProviderWrapper(props: any) {
   );
 }
 
-export function dataflowProvider(container, opts) {
-  return <ProviderWrapper {...opts}>{container}</ProviderWrapper>;
+export function innerProvider(container, opts) {
+  return React.cloneElement(
+    container,
+    null,
+    <ProviderWrapper {...opts}>{container.props.children}</ProviderWrapper>,
+  );
 }

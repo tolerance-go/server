@@ -1,6 +1,6 @@
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
+import useInitPageData from '@/hooks/useInitPageData';
 import { PageControllerShow } from '@/services/server/PageController';
-import { parseJSON } from '@/utils/parseJSON';
 import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 
@@ -10,35 +10,7 @@ export default () => {
     pickModel(['selectedPageId']),
   );
 
-  const { initData: initNodesStructuresAndRootIds } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
-    pickModel(['initData']),
-  );
-
-  const { initData: initNodesSettings } = useModel(
-    'Design.page.nodesSettings',
-    pickModel(['initData']),
-  );
-
-  const { initData: initNodesDefaultsStatus } = useModel(
-    'Design.page.nodesDefaultsStatus',
-    pickModel(['initData']),
-  );
-
-  const { initData: initNodesStyles } = useModel(
-    'Design.page.nodesStyles',
-    pickModel(['initData']),
-  );
-
-  const { initData: initNodesEvents } = useModel(
-    'Design.page.nodesEvents',
-    pickModel(['initData']),
-  );
-
-  const { initData: initNodesActions } = useModel(
-    'Design.page.nodesActions',
-    pickModel(['initData']),
-  );
+  const initPageData = useInitPageData();
 
   useRequestReadyOnAuth(
     async () => {
@@ -51,31 +23,7 @@ export default () => {
       refreshDeps: [selectedPageId],
       onSuccess(data) {
         if (!data) return;
-
-        initNodesStructuresAndRootIds({
-          rootNodeIds: parseJSON(data.rootNodeIds),
-          nodesStructures: parseJSON(data.nodesStructures),
-        });
-
-        initNodesSettings({
-          nodesSettings: parseJSON(data.nodesSettings),
-        });
-
-        initNodesDefaultsStatus({
-          nodesDefaultsStatus: parseJSON(data.nodesDefaultsStatus),
-        });
-
-        initNodesStyles({
-          nodesStyles: parseJSON(data.nodesStyles),
-        });
-
-        initNodesEvents({
-          nodesEvents: parseJSON(data.nodesEvents),
-        });
-
-        initNodesActions({
-          nodesActions: parseJSON(data.nodesActions),
-        });
+        initPageData(data);
       },
     },
   );

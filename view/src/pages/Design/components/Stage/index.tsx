@@ -1,7 +1,6 @@
 import { Atom } from '@/pages/Design/components/Atom';
 import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
-import consola from 'consola';
 import { useMemo } from 'react';
 import { StagePlaygroundWrapper } from './wrappers/Playground';
 import { StageWorkbenchWrapper } from './wrappers/Workbench';
@@ -33,9 +32,7 @@ export default function Stage() {
     return null;
   }
 
-  consola.info('渲染跟节点组件', rootNodeIds, stageComponentsModel);
-
-  const el = (
+  const nodes = (
     <>
       {rootNodeModels.map((model) => (
         <Atom key={model?.id} {...model} />
@@ -44,8 +41,8 @@ export default function Stage() {
   );
 
   if (stageMode === 'playground') {
-    return <StagePlaygroundWrapper id="stage">{el}</StagePlaygroundWrapper>;
+    return <StagePlaygroundWrapper id="stage">{nodes}</StagePlaygroundWrapper>;
   }
 
-  return <StageWorkbenchWrapper id="stage">{el}</StageWorkbenchWrapper>;
+  return <StageWorkbenchWrapper id="stage">{nodes}</StageWorkbenchWrapper>;
 }
