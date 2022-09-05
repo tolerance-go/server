@@ -27,7 +27,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   }));
 
   const { copySelectedComSettingFromActiveStatToOtherStat } = useModel(
-    'Design.page.comsSettings',
+    'Design.page.nodesSettings',
     (model) => ({
       copySelectedComSettingFromActiveStatToOtherStat:
         model.copySelectedComSettingFromActiveStatToOtherStat,

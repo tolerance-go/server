@@ -18,7 +18,7 @@ export const useGetStageData = () => {
   });
 
   const { getData: getStatusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => {
       return {
         getData: model.getData,
@@ -53,7 +53,7 @@ export const useGetStageData = () => {
     };
   });
 
-  const { getData: getComsSettings } = useModel('Design.page.comsSettings', (model) => {
+  const { getData: getComsSettings } = useModel('Design.page.nodesSettings', (model) => {
     return {
       getData: model.getData,
     };

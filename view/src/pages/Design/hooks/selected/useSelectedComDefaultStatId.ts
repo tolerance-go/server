@@ -5,15 +5,15 @@ export const useSelectedComDefaultStatId = () => {
     stageSelectNodeId: model?.stageSelectNodeId,
   }));
 
-  const { statusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+  const { nodesDefaultsStatus } = useModel(
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
-      statusSettingsDefaults: model.statusSettingsDefaults,
+      nodesDefaultsStatus: model.nodesDefaultsStatus,
     }),
   );
 
   const selectedComDefaultStatId = stageSelectNodeId
-    ? statusSettingsDefaults[stageSelectNodeId]
+    ? nodesDefaultsStatus[stageSelectNodeId]
     : undefined;
 
   return {

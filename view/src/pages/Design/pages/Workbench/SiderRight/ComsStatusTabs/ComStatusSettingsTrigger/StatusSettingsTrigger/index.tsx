@@ -20,7 +20,7 @@ export default () => {
   const { selectedComDefaultStatId } = useSelectedComDefaultStatId();
 
   const { setComStatusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
       setComStatusSettingsDefaults: model.setComStatusSettingsDefaults,
     }),

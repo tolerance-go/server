@@ -35,8 +35,8 @@ const DiscussItem = (
     usedStatId: model.statusSettingsUsed[props.belongsToComId],
   }));
 
-  const { defaultStatId } = useModel('Design.page.statusSettingsDefaults', (model) => ({
-    defaultStatId: model.statusSettingsDefaults[props.belongsToComId],
+  const { defaultStatId } = useModel('Design.page.nodesDefaultsStatus', (model) => ({
+    defaultStatId: model.nodesDefaultsStatus[props.belongsToComId],
   }));
 
   if ((usedStatId || defaultStatId) !== props.belongsToComStatId) {

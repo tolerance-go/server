@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 
 /** 组件通过事件切换了的状态 */
 export default (comId: string) => {
-  const { comsSettings } = useModel('Design.page.comsSettings', (model) => {
+  const { comsSettings } = useModel('Design.page.nodesSettings', (model) => {
     return {
       comsSettings: model.nodesSettings,
     };

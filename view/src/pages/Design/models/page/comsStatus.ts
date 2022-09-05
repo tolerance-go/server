@@ -29,9 +29,12 @@ const useStatusSettings = () => {
     }),
   );
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    getStageSelectNodeId: model.getStageSelectNodeId,
-  }));
+  const { getStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getStageSelectNodeId: model.getStageSelectNodeId,
+    }),
+  );
 
   /** 删除组件的所有状态 */
   const deleteComStatus = useMemoizedFn((comId: string) => {

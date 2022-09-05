@@ -39,7 +39,7 @@ const useStageSelectNodeId = () => {
   );
 
   const { activeNodeStatIdFromComDefaultStatus } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
       activeNodeStatIdFromComDefaultStatus:
         model.selectRightPanelComStatusIdFromDefault,

@@ -11,7 +11,14 @@ export type UpdateData<T> = {
 
 export function useUpdateModeState<T>(
   initialState: (() => T) | T,
-): [T, Updater<T>, () => T, Updater<T>, () => UpdateData<T>['updateMode']] {
+): [
+  T,
+  Updater<T>,
+  () => T,
+  Updater<T>,
+  UpdateData<T>['updateMode'],
+  () => UpdateData<T>['updateMode'],
+] {
   const [stateMeta, setStateMeta, getStateMeta] = useGetImmer<UpdateData<T>>(
     () => {
       return {
@@ -31,9 +38,9 @@ export function useUpdateModeState<T>(
   ) => {
     if (typeof next === 'function') {
       // 类型上是 void 但是允许返回值，并且 useImmer 是允许这样做的
-      const results = (next as DraftFunction<T>)(draft.currentData) as
-        | Draft<T>
-        | void;
+      const results = (next as DraftFunction<T>)(
+        draft.currentData,
+      ) as Draft<T> | void;
       if (results !== undefined) {
         draft.currentData = results;
       }
@@ -66,6 +73,7 @@ export function useUpdateModeState<T>(
     setStateData,
     getStateData,
     initStateData,
+    stateMeta.updateMode,
     getUpdateMode,
   ];
 }

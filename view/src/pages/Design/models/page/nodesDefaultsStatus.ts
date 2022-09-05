@@ -1,25 +1,28 @@
 import { ComId } from '@/pages/Design/typings/keys';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import { produce } from 'immer';
 import utl from 'lodash';
-import { useState } from 'react';
 
 export type StatusSettingsDefaults = Record<ComId, string>;
 
 /** 每个组件的默认应用状态 */
-const useStatusSettingsDefaults = () => {
-  const [statusSettingsDefaults, setStatusSettingsDefaults] =
-    useState<StatusSettingsDefaults>({});
+export default () => {
+  const [
+    nodesDefaultsStatus,
+    setStatusSettingsDefaults,
+    getNodesDefaultsStatus,
+    initNodesDefaultsStatus,
+    nodesDefaultsStatusUpdateMode,
+    getNodesDefaultsStatusUpdateMode,
+  ] = useUpdateModeState<StatusSettingsDefaults>({});
 
   /** 设置组件的默认状态 */
   const setComStatusSettingsDefaults = useMemoizedFn(
     (comId: string, defaultStatId: string) => {
-      setStatusSettingsDefaults(
-        produce((draft) => {
-          draft[comId] = defaultStatId;
-        }),
-      );
+      setStatusSettingsDefaults((draft) => {
+        draft[comId] = defaultStatId;
+      });
     },
   );
 
@@ -33,56 +36,56 @@ const useStatusSettingsDefaults = () => {
   /** 设置组件的默认状态为全局右侧面板选中状态 */
   const selectRightPanelComStatusIdFromDefault = useMemoizedFn(
     (comId: string) => {
-      const defaultStatId = statusSettingsDefaults[comId];
+      const defaultStatId = nodesDefaultsStatus[comId];
       setSelectedComponentStatusId(defaultStatId);
     },
   );
 
   const deleteComSettingsDefaultslByIds = useMemoizedFn((comIds: string[]) => {
-    setStatusSettingsDefaults(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setStatusSettingsDefaults((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      statusSettingsDefaults,
+      nodesDefaultsStatus,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      statusSettingsDefaults: utl.pick(statusSettingsDefaults, comIds),
+      nodesDefaultsStatus: utl.pick(nodesDefaultsStatus, comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { statusSettingsDefaults: StatusSettingsDefaults }) => {
-      setStatusSettingsDefaults(from?.statusSettingsDefaults ?? {});
+    (from?: { nodesDefaultsStatus: StatusSettingsDefaults }) => {
+      setStatusSettingsDefaults(from?.nodesDefaultsStatus ?? {});
     },
   );
 
   /** 清空组件的默认配置 */
   const cleanComDefautStat = useMemoizedFn((comId: string) => {
-    setStatusSettingsDefaults(
-      produce((draft) => {
-        delete draft[comId];
-      }),
-    );
+    setStatusSettingsDefaults((draft) => {
+      delete draft[comId];
+    });
   });
 
   const getComDefaultStatId = useMemoizedFn((comId: string) => {
-    return statusSettingsDefaults[comId];
+    return nodesDefaultsStatus[comId];
   });
 
   return {
-    statusSettingsDefaults,
+    getNodesDefaultsStatus,
+    initNodesDefaultsStatus,
+    nodesDefaultsStatusUpdateMode,
+    getNodesDefaultsStatusUpdateMode,
+    nodesDefaultsStatus,
     deleteComSettingsDefaultslByIds,
     getSliceData,
     getComDefaultStatId,
@@ -93,5 +96,3 @@ const useStatusSettingsDefaults = () => {
     selectRightPanelComStatusIdFromDefault,
   };
 };
-
-export default useStatusSettingsDefaults;

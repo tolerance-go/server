@@ -21,7 +21,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -57,7 +57,7 @@ export const useGetSliceStageData = () => {
   });
 
   const { getSliceData: getComsSettings } = useModel(
-    'Design.page.comsSettings',
+    'Design.page.nodesSettings',
     (model) => {
       return {
         getSliceData: model.getSliceData,

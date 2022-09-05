@@ -14,7 +14,7 @@ export const useInitSatgeData = () => {
   }));
 
   const { initData: initStatusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
       initData: model.initData,
     }),
@@ -47,7 +47,7 @@ export const useInitSatgeData = () => {
     };
   });
 
-  const { initData: initComsSettings } = useModel('Design.page.comsSettings', (model) => {
+  const { initData: initComsSettings } = useModel('Design.page.nodesSettings', (model) => {
     return {
       initData: model.initData,
     };
@@ -56,7 +56,7 @@ export const useInitSatgeData = () => {
   const initStageData = useMemoizedFn(
     async (stageData: Record<string, any>) => {
       initComsTreeData(stageData.comsTree);
-      initComsSettings(stageData.comsSettings);
+      initComsSettings(stageData.nodesSettings);
       initStatusSettings(stageData.comsStatus);
       initStatusSettingsDefaults(stageData.comsStatusDefaults);
       initStatusRelations(stageData.comsStatusRelations);

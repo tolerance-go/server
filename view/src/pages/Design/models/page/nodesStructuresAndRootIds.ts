@@ -28,13 +28,20 @@ export type NodesStructures = Record<ComId, ComponentStructure>;
 export type RootIds = string[];
 
 const useStageComponentsModel = () => {
-  const [rootIds, setRootIds, getRootIds, initRootIds, getRootIdsUpdateMode] =
-    useUpdateModeState<RootIds>([]);
+  const [
+    rootIds,
+    setRootIds,
+    getRootIds,
+    initRootIds,
+    rootIdsUpdateMode,
+    getRootIdsUpdateMode,
+  ] = useUpdateModeState<RootIds>([]);
   const [
     nodesStructures,
     setNodesStructures,
     getNodesStructures,
     initNodesStructures,
+    nodesStructuresUpdateMode,
     getNodesStructuresUpdateMode,
   ] = useUpdateModeState<NodesStructures | undefined>(undefined);
 
@@ -465,9 +472,11 @@ const useStageComponentsModel = () => {
   );
 
   return {
+    nodesStructuresUpdateMode,
     getNodesStructuresUpdateMode,
     getRootIds,
     getRootIdsUpdateMode,
+    rootIdsUpdateMode,
     rootIds,
     nodesStructures,
     markNodeFromComponent,

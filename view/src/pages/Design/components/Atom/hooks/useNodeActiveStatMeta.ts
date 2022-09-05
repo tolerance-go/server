@@ -2,7 +2,7 @@
 import { useModel } from '@umijs/max';
 
 export default (comId: string) => {
-  const { comsSettings } = useModel('Design.page.comsSettings', (model) => {
+  const { comsSettings } = useModel('Design.page.nodesSettings', (model) => {
     return {
       comsSettings: model.nodesSettings,
     };

@@ -1,17 +1,28 @@
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { PageControllerShow } from '@/services/server/PageController';
 import { parseJSON } from '@/utils/parseJSON';
-import { usePickModelSafeInModel } from '@/utils/useModelTypes';
+import { pickModel } from '@/utils/pickModel';
+import { useModel } from '@umijs/max';
 
 export default () => {
-  const { selectedPageId } = usePickModelSafeInModel(
+  const { selectedPageId } = useModel(
     'Design.page.selectedPageId',
-    ['selectedPageId'],
+    pickModel(['selectedPageId']),
   );
 
-  const { initData } = usePickModelSafeInModel(
+  const { initData: initNodesStructuresAndRootIds } = useModel(
     'Design.page.nodesStructuresAndRootIds',
-    ['initData'],
+    pickModel(['initData']),
+  );
+
+  const { initData: initNodesSettings } = useModel(
+    'Design.page.nodesSettings',
+    pickModel(['initData']),
+  );
+
+  const { initData: initNodesDefaultsStatus } = useModel(
+    'Design.page.nodesDefaultsStatus',
+    pickModel(['initData']),
   );
 
   useRequestReadyOnAuth(
@@ -26,9 +37,17 @@ export default () => {
       onSuccess(data) {
         if (!data) return;
 
-        initData?.({
+        initNodesStructuresAndRootIds({
           rootIds: parseJSON(data.stageRootNodeIds),
           nodesStructures: parseJSON(data.nodesStructures),
+        });
+
+        initNodesSettings({
+          nodesSettings: parseJSON(data.nodesSettings),
+        });
+
+        initNodesDefaultsStatus({
+          nodesDefaultsStatus: parseJSON(data.nodesDefaultsStatus),
         });
       },
     },

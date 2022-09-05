@@ -1,14 +1,14 @@
 import { useModel } from '@/.umi/plugin-model';
 
 export default (comId: string) => {
-  const { statusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+  const { nodesDefaultsStatus } = useModel(
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
-      statusSettingsDefaults: model.statusSettingsDefaults,
+      nodesDefaultsStatus: model.nodesDefaultsStatus,
     }),
   );
 
-  const { comsSettings } = useModel('Design.page.comsSettings', (model) => {
+  const { comsSettings } = useModel('Design.page.nodesSettings', (model) => {
     return {
       comsSettings: model.nodesSettings,
     };
@@ -20,7 +20,7 @@ export default (comId: string) => {
     };
   });
 
-  const defaultStatId = statusSettingsDefaults[comId];
+  const defaultStatId = nodesDefaultsStatus[comId];
   const defaultStatSettings = comsSettings[comId]?.[defaultStatId];
   const defaultStatStyles = comsStyles[comId]?.[defaultStatId];
 

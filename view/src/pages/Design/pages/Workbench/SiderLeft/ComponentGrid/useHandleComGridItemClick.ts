@@ -40,7 +40,7 @@ export const useHandleComGridItemClick = () => {
   }));
 
   const { setNodeStatSettings } = useModel(
-    'Design.page.comsSettings',
+    'Design.page.nodesSettings',
     pickModel(['setNodeStatSettings']),
   );
 
@@ -49,7 +49,7 @@ export const useHandleComGridItemClick = () => {
   }));
 
   const { setComStatusSettingsDefaults } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => ({
       setComStatusSettingsDefaults: model.setComStatusSettingsDefaults,
     }),
@@ -107,6 +107,9 @@ export const useHandleComGridItemClick = () => {
       getComsInitialSettings()?.[widget.type] ?? {},
     );
 
+    /** 设置组件默认状态 */
+    setComStatusSettingsDefaults(newComId, statusId);
+
     // 初始化新组件的初始化状态
     initComStatus({
       comId: newComId,
@@ -115,15 +118,11 @@ export const useHandleComGridItemClick = () => {
 
     setComStatStyle(newComId, statusId, {});
 
-    consola.info('选中组件和默认状态');
     /** 设置选中组件 */
     setStageSelectNodeId(newComId);
 
     /** 设置选中组件的选中状态 */
     setActiveComStatId(statusId);
-
-    /** 设置组件默认状态 */
-    setComStatusSettingsDefaults(newComId, statusId);
 
     triggerSaveTimeChange();
   });

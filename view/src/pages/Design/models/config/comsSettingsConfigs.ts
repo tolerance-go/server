@@ -5,7 +5,7 @@ import { useState } from 'react';
  * 组件对应配置表单的描述信息
  * 及其组件对应初始化配置信息
  */
-const useComponentsSettingConfigs = () => {
+export default () => {
   const [comsSettingsFormConfigs, setComsSettingsFormConfigs] = useState<
     Record<string, SettingFormConfig>
   >({
@@ -80,5 +80,3 @@ const useComponentsSettingConfigs = () => {
     setComsSettingsFormConfigs,
   };
 };
-
-export default useComponentsSettingConfigs;

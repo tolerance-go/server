@@ -1,4 +1,5 @@
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
 
@@ -6,18 +7,13 @@ import consola from 'consola';
 export const useSelectedComSettingsConfigs = () => {
   const { stageSelectNode } = useSelectedNode();
 
-  const { componentsConfigs } = useModel(
+  const { comsSettingsFormConfigs } = useModel(
     'Design.config.comsSettingsConfigs',
-    (model) => {
-      consola.info('准备返回渲染配置', stageSelectNode, model);
-      return {
-        componentsConfigs: model?.comsSettingsFormConfigs,
-      };
-    },
+    pickModel(['comsSettingsFormConfigs']),
   );
 
   const configs = stageSelectNode?.type
-    ? componentsConfigs[stageSelectNode.type]
+    ? comsSettingsFormConfigs[stageSelectNode.type]
     : undefined;
 
   consola.info('渲染配置表单', configs);

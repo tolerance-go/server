@@ -15,7 +15,7 @@ export const SettingForm = () => {
   const { stageSelectNode } = useSelectedNode();
   const { configs } = useSelectedComSettingsConfigs();
 
-  const activeStatSettings = useNodeActiveStatSettings(stageSelectNode!.id);
+  const activeStatSettings = useNodeActiveStatSettings(stageSelectNode?.id);
 
   const { setCurrentComSettingsExtendsSettings } = useComStatusExtendSettings();
 

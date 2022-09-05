@@ -1,26 +1,32 @@
 import { ComId, StatId } from '@/pages/Design/typings/keys';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
 import utl from 'lodash';
-import { useState } from 'react';
 
-export type ComponentSetting = Record<string, any>;
+export type NodeSetting = Record<string, any>;
 
 /**
  * 组件的不同状态
  * key: statId
  */
-export type ComponentStatusSettings = Record<StatId, ComponentSetting>;
+export type NodeStatusSettings = Record<StatId, NodeSetting>;
 
 /** 所有组件的所有状态下的配置
  * key: comId
  */
-export type ComponentsSettings = Record<ComId, ComponentStatusSettings>;
+export type NodesSettings = Record<ComId, NodeStatusSettings>;
 
 /** 组件外观 */
-const useComsSettings = () => {
-  const [nodesSettings, setNodesSettings] = useState<ComponentsSettings>({});
+export default () => {
+  const [
+    nodesSettings,
+    setNodesSettings,
+    getNodesSettings,
+    initNodesSettings,
+    nodesSettingsUpdateMode,
+    getNodesSettingsUpdateMode,
+  ] = useUpdateModeState<NodesSettings>({});
 
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
@@ -37,31 +43,27 @@ const useComsSettings = () => {
   );
 
   const setNodeStatSettings = useMemoizedFn(
-    (comId: string, statId: string, setting: ComponentSetting) => {
-      setNodesSettings(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][statId] = setting;
-        }),
-      );
+    (comId: string, statId: string, setting: NodeSetting) => {
+      setNodesSettings((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][statId] = setting;
+      });
     },
   );
 
   const updateComStatSetting = useMemoizedFn(
-    (comId: string, statId: string, setting: Partial<ComponentSetting>) => {
-      setNodesSettings(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][statId] = {
-            ...draft[comId][statId],
-            ...setting,
-          };
-        }),
-      );
+    (comId: string, statId: string, setting: Partial<NodeSetting>) => {
+      setNodesSettings((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][statId] = {
+          ...draft[comId][statId],
+          ...setting,
+        };
+      });
     },
   );
 
@@ -71,25 +73,19 @@ const useComsSettings = () => {
     const stageSelectNodeId = getStageSelectNodeId();
 
     if (stageSelectNodeId && activeNodeStatId) {
-      setNodeStatSettings(
-        stageSelectNodeId,
-        activeNodeStatId,
-        settings,
-      );
+      setNodeStatSettings(stageSelectNodeId, activeNodeStatId, settings);
     }
   });
 
   /** 拷贝组件 A 状态的配置到 B 状态 */
   const copyComSettingFromStatToOtherStat = useMemoizedFn(
     (comId: string, fromStatId: string, toStatId: string) => {
-      setNodesSettings(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][toStatId] = draft[comId][fromStatId];
-        }),
-      );
+      setNodesSettings((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][toStatId] = draft[comId][fromStatId];
+      });
     },
   );
 
@@ -121,24 +117,23 @@ const useComsSettings = () => {
   });
 
   /** 初始化 */
-  const initData = useMemoizedFn(
-    (from?: { comsSettings: ComponentsSettings }) => {
-      setNodesSettings(from?.comsSettings ?? {});
-    },
-  );
+  const initData = useMemoizedFn((from?: { nodesSettings: NodesSettings }) => {
+    initNodesSettings(from?.nodesSettings ?? {});
+  });
 
   const deleteComsSettingsByIds = useMemoizedFn((comIds: string[]) => {
-    setNodesSettings(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setNodesSettings((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   return {
     nodesSettings,
+    nodesSettingsUpdateMode,
+    getNodesSettingsUpdateMode,
+    getNodesSettings,
     deleteComsSettingsByIds,
     getSliceData,
     copyComSettingFromStatToOtherStat,
@@ -150,5 +145,3 @@ const useComsSettings = () => {
     updateComStatSetting,
   };
 };
-
-export default useComsSettings;

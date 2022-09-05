@@ -19,7 +19,7 @@ export const useDeleteComsFromStage = () => {
   });
 
   const { deleteComSettingsDefaultslByIds } = useModel(
-    'Design.page.statusSettingsDefaults',
+    'Design.page.nodesDefaultsStatus',
     (model) => {
       return {
         deleteComSettingsDefaultslByIds: model.deleteComSettingsDefaultslByIds,
@@ -54,7 +54,7 @@ export const useDeleteComsFromStage = () => {
     };
   });
 
-  const { deleteComsSettingsByIds } = useModel('Design.page.comsSettings', (model) => {
+  const { deleteComsSettingsByIds } = useModel('Design.page.nodesSettings', (model) => {
     return {
       deleteComsSettingsByIds: model.deleteComsSettingsByIds,
     };
