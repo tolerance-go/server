@@ -14,15 +14,15 @@ export default (comId: string) => {
     };
   });
 
-  const { comsStyles } = useModel('Design.page.comsStyles', (model) => {
+  const { nodesStyles } = useModel('Design.page.nodesStyles', (model) => {
     return {
-      comsStyles: model.comsStyles,
+      nodesStyles: model.nodesStyles,
     };
   });
 
   const defaultStatId = nodesDefaultsStatus[comId];
   const defaultStatSettings = comsSettings[comId]?.[defaultStatId];
-  const defaultStatStyles = comsStyles[comId]?.[defaultStatId];
+  const defaultStatStyles = nodesStyles[comId]?.[defaultStatId];
 
   return {
     defaultStatId,

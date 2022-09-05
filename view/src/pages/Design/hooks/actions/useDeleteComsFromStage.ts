@@ -48,7 +48,7 @@ export const useDeleteComsFromStage = () => {
     };
   });
 
-  const { deleteComsStylesByIds } = useModel('Design.page.comsStyles', (model) => {
+  const { deleteComsStylesByIds } = useModel('Design.page.nodesStyles', (model) => {
     return {
       deleteComsStylesByIds: model.deleteComsStylesByIds,
     };

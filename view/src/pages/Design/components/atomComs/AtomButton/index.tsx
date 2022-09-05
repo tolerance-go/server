@@ -1,6 +1,6 @@
 import { SLOTS_NAME } from '@/pages/Design/constants';
 import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentCommonStyle } from '@/pages/Design/models/page/comsStyles';
+import { ComponentCommonStyle } from '@/pages/Design/models/page/nodesStyles';
 import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
 import { useModel } from '@umijs/max';
 import { Button, ButtonProps } from 'antd';

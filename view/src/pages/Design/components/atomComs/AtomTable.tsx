@@ -1,7 +1,7 @@
 import { SLOTS_NAME } from '@/pages/Design/constants';
 import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
 import { ComponentAction } from '@/pages/Design/models/comsActions';
-import { ComponentCommonStyle } from '@/pages/Design/models/comsStyles';
+import { ComponentCommonStyle } from '@/pages/Design/models/nodesStyles';
 import { RecordType } from '@/pages/Design/typings';
 import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
 import { useModel } from '@umijs/max';

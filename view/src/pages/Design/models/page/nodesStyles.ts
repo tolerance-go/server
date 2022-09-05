@@ -1,9 +1,9 @@
 import { ComId, StatId } from '@/pages/Design/typings/keys';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
 import utl from 'lodash';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties } from 'react';
 
 /** 单位数字 */
 export type UnitNumber = {
@@ -49,8 +49,15 @@ export type ComponentStatusStyles = Record<StatId, ComponentCommonStyle>;
 export type ComponentsStyles = Record<ComId, ComponentStatusStyles>;
 
 /** 组件外观 */
-const useComsStyles = () => {
-  const [comsStyles, setComsStyles] = useState<ComponentsStyles>({});
+export default () => {
+  const [
+    nodesStyles,
+    setNodesStyles,
+    getNodesStyles,
+    initNodesStyles,
+    nodesStylesUpdateMode,
+    setNodesStylesUpdateMode,
+  ] = useUpdateModeState<ComponentsStyles>({});
 
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
@@ -59,68 +66,65 @@ const useComsStyles = () => {
     }),
   );
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    getStageSelectNodeId: model.getStageSelectNodeId,
-  }));
+  const { getStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getStageSelectNodeId: model.getStageSelectNodeId,
+    }),
+  );
 
   const setComStatStyle = useMemoizedFn(
     (comId: string, statId: string, style: ComponentCommonStyle) => {
-      setComsStyles(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][statId] = style;
-        }),
-      );
+      setNodesStyles((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][statId] = style;
+      });
     },
   );
 
   const updateComStatStyle = useMemoizedFn(
     (comId: string, statId: string, style: ComponentCommonStyle) => {
-      setComsStyles(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][statId] = {
-            ...draft[comId][statId],
-            ...style,
-          };
-        }),
-      );
+      setNodesStyles((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][statId] = {
+          ...draft[comId][statId],
+          ...style,
+        };
+      });
     },
   );
 
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      comsStyles,
+      nodesStyles,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      comsStyles: utl.pick(comsStyles, comIds),
+      nodesStyles: utl.pick(nodesStyles, comIds),
     };
   });
 
   /** 初始化 */
-  const initData = useMemoizedFn((from?: { comsStyles: ComponentsStyles }) => {
-    setComsStyles(from?.comsStyles ?? {});
+  const initData = useMemoizedFn((from?: { nodesStyles: ComponentsStyles }) => {
+    initNodesStyles(from?.nodesStyles ?? {});
   });
 
   /** 拷贝组件 A 状态的配置到 B 状态 */
   const copyComStyleFromStatToOtherStat = useMemoizedFn(
     (comId: string, fromStatId: string, toStatId: string) => {
-      setComsStyles(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][toStatId] = draft[comId][fromStatId];
-        }),
-      );
+      setNodesStyles((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][toStatId] = draft[comId][fromStatId];
+      });
     },
   );
 
@@ -139,17 +143,19 @@ const useComsStyles = () => {
   );
 
   const deleteComsStylesByIds = useMemoizedFn((comIds: string[]) => {
-    setComsStyles(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setNodesStyles((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   return {
-    comsStyles,
+    nodesStyles,
+    nodesStylesUpdateMode,
+    getNodesStyles,
+    initNodesStyles,
+    setNodesStylesUpdateMode,
     deleteComsStylesByIds,
     getSliceData,
     getData,
@@ -160,5 +166,3 @@ const useComsStyles = () => {
     copySelectedComStyleFromActiveStatToOtherStat,
   };
 };
-
-export default useComsStyles;

@@ -4,7 +4,7 @@ import { useComStatusExtendProps } from '../_utils/useComStatusExtendProps';
 /** 组件继承状态修改 */
 export const useComStatusExtendStyles = () => {
   const { setComStatStyle, updateComStatStyle } = useModel(
-    'Design.page.comsStyles',
+    'Design.page.nodesStyles',
     (model) => ({
       setComStatStyle: model.setComStatStyle,
       updateComStatStyle: model.updateComStatStyle,

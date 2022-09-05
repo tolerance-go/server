@@ -44,7 +44,7 @@ export const useHandleComGridItemClick = () => {
     pickModel(['setNodeStatSettings']),
   );
 
-  const { setComStatStyle } = useModel('Design.page.comsStyles', (model) => ({
+  const { setComStatStyle } = useModel('Design.page.nodesStyles', (model) => ({
     setComStatStyle: model.setComStatStyle,
   }));
 
@@ -110,13 +110,11 @@ export const useHandleComGridItemClick = () => {
     /** 设置组件默认状态 */
     setComStatusSettingsDefaults(newComId, statusId);
 
-    // 初始化新组件的初始化状态
-    initComStatus({
-      comId: newComId,
-      statusId,
-    });
-
+    /** 设置组件初始化样式 */
     setComStatStyle(newComId, statusId, {});
+
+    // 初始化新组件的初始化状态
+    initComStatus({ comId: newComId, statusId });
 
     /** 设置选中组件 */
     setStageSelectNodeId(newComId);

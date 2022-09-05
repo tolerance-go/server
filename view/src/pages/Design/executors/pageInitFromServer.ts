@@ -25,6 +25,11 @@ export default () => {
     pickModel(['initData']),
   );
 
+  const { initData: initNodesStyles } = useModel(
+    'Design.page.nodesStyles',
+    pickModel(['initData']),
+  );
+
   useRequestReadyOnAuth(
     async () => {
       if (selectedPageId) {
@@ -48,6 +53,10 @@ export default () => {
 
         initNodesDefaultsStatus({
           nodesDefaultsStatus: parseJSON(data.nodesDefaultsStatus),
+        });
+
+        initNodesStyles({
+          nodesStyles: parseJSON(data.nodesStyles),
         });
       },
     },

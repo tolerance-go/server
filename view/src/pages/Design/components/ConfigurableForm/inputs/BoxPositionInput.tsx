@@ -1,4 +1,4 @@
-import { BoxPosition, UnitNumber } from '@/pages/Design/models/comsStyles';
+import { BoxPosition, UnitNumber } from '@/pages/Design/models/nodesStyles';
 import { useMemoizedFn } from 'ahooks';
 import { InputNumber, Row } from 'antd';
 import { UnitSelect } from '../../UnitSelect';

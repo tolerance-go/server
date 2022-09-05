@@ -8,9 +8,9 @@ export default (comId: string) => {
     };
   });
 
-  const { comsStyles } = useModel('Design.page.comsStyles', (model) => {
+  const { nodesStyles } = useModel('Design.page.nodesStyles', (model) => {
     return {
-      comsStyles: model.comsStyles,
+      nodesStyles: model.nodesStyles,
     };
   });
 
@@ -23,7 +23,7 @@ export default (comId: string) => {
 
   const usedStatId = statusSettingsUsed[comId];
   const usedStatSettings = comsSettings[comId]?.[usedStatId];
-  const usedStatStyles = comsStyles[comId]?.[usedStatId];
+  const usedStatStyles = nodesStyles[comId]?.[usedStatId];
 
   return { usedStatSettings, usedStatStyles, usedStatId };
 };

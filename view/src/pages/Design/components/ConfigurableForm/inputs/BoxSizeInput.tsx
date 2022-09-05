@@ -1,4 +1,4 @@
-import { UnitNumber } from '@/pages/Design/models/comsStyles';
+import { UnitNumber } from '@/pages/Design/models/nodesStyles';
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { useMemoizedFn } from 'ahooks';
 import { Col, InputNumber, Row, Space } from 'antd';

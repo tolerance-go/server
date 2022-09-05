@@ -51,7 +51,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   );
 
   const { copySelectedComStyleFromActiveStatToOtherStat } = useModel(
-    'Design.page.comsStyles',
+    'Design.page.nodesStyles',
     (model) => ({
       copySelectedComStyleFromActiveStatToOtherStat:
         model.copySelectedComStyleFromActiveStatToOtherStat,

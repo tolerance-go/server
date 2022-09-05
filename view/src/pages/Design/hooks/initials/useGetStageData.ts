@@ -47,7 +47,7 @@ export const useGetStageData = () => {
     };
   });
 
-  const { getData: getComsStyles } = useModel('Design.page.comsStyles', (model) => {
+  const { getData: getComsStyles } = useModel('Design.page.nodesStyles', (model) => {
     return {
       getData: model.getData,
     };
@@ -68,7 +68,7 @@ export const useGetStageData = () => {
       comsStatusDefaults: getStatusSettingsDefaults(),
       comsActions: getComsActions(),
       comsEvents: getComsEvents(),
-      comsStyles: getComsStyles(),
+      nodesStyles: getComsStyles(),
       comsSettings: getComsSettings(),
     };
   });

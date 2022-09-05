@@ -41,7 +41,7 @@ export const useInitSatgeData = () => {
     };
   });
 
-  const { initData: initComsStyles } = useModel('Design.page.comsStyles', (model) => {
+  const { initData: initComsStyles } = useModel('Design.page.nodesStyles', (model) => {
     return {
       initData: model.initData,
     };
@@ -62,7 +62,7 @@ export const useInitSatgeData = () => {
       initStatusRelations(stageData.comsStatusRelations);
       initComsActions(stageData.comsActions);
       initComsEvents(stageData.comsEvents);
-      initComsStyles(stageData.comsStyles);
+      initComsStyles(stageData.nodesStyles);
     },
   );
 

@@ -50,7 +50,7 @@ export const useGetSliceStageData = () => {
     };
   });
 
-  const { getSliceData: getComsStyles } = useModel('Design.page.comsStyles', (model) => {
+  const { getSliceData: getComsStyles } = useModel('Design.page.nodesStyles', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
@@ -75,7 +75,7 @@ export const useGetSliceStageData = () => {
       comsStatusDefaults: getStatusSettingsDefaults(allComIds),
       comsActions: getComsActions(allComIds),
       comsEvents: getComsEvents(allComIds),
-      comsStyles: getComsStyles(allComIds),
+      nodesStyles: getComsStyles(allComIds),
       comsSettings: getComsSettings(allComIds),
     };
   });

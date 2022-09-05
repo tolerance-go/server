@@ -1,7 +1,7 @@
 import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
 import { useMemoizedFn } from 'ahooks';
 import { useState } from 'react';
-import { ComponentCommonStyle } from '../page/comsStyles';
+import { ComponentCommonStyle } from '../page/nodesStyles';
 
 export type DefaultStylesValue = ComponentCommonStyle;
 
