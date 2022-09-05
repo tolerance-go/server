@@ -1,4 +1,5 @@
 import { DiscussInfos } from '@/pages/Design/components/DiscussInfos';
+import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { Col, Layout, Row, Tabs } from 'antd';
 import { useState } from 'react';
@@ -15,12 +16,17 @@ const { TabPane } = Tabs;
 const { Sider } = Layout;
 
 export default function App() {
-  const { siderRightMode } = useModel('Design.workbench.siderRightMode', (model) => ({
-    siderRightMode: model.mode,
-  }));
+  const { siderRightMode } = useModel(
+    'Design.workbench.siderRightMode',
+    (model) => ({
+      siderRightMode: model.mode,
+    }),
+  );
   const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
+
+  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId');
 
   const [activeKey, setActiveKey] = useState('settings');
 
@@ -40,84 +46,86 @@ export default function App() {
       );
     }
 
-    return siderRightMode === 'normal' ? null : (
-      <>
-        <Row
+    if (siderRightMode === 'normal' || !stageSelectNodeId) {
+      return null;
+    }
+
+    return (
+      <Row
+        style={{
+          flexDirection: 'column',
+          height: '100%',
+          alignItems: 'stretch',
+        }}
+        wrap={false}
+      >
+        <Col flex={'none'}>
+          <ComInfo />
+        </Col>
+        <Col flex={'none'}>
+          <ComsStatusTabs />
+        </Col>
+
+        <Col flex={'none'}>
+          <Tabs size="small" onChange={setActiveKey} activeKey={activeKey}>
+            <TabPane tab="配置" key="settings"></TabPane>
+            <TabPane tab="外观" key="styles"></TabPane>
+            <TabPane tab="动作" key="actions"></TabPane>
+            <TabPane tab="事件" key="events"></TabPane>
+          </Tabs>
+        </Col>
+
+        <Col
+          flex={'auto'}
           style={{
-            flexDirection: 'column',
-            height: '100%',
-            alignItems: 'stretch',
+            overflowY: 'auto',
           }}
-          wrap={false}
         >
-          <Col flex={'none'}>
-            <ComInfo />
-          </Col>
-          <Col flex={'none'}>
-            <ComsStatusTabs />
-          </Col>
-
-          <Col flex={'none'}>
-            <Tabs size="small" onChange={setActiveKey} activeKey={activeKey}>
-              <TabPane tab="配置" key="settings"></TabPane>
-              <TabPane tab="外观" key="styles"></TabPane>
-              <TabPane tab="动作" key="actions"></TabPane>
-              <TabPane tab="事件" key="events"></TabPane>
-            </Tabs>
-          </Col>
-
-          <Col
-            flex={'auto'}
-            style={{
-              overflowY: 'auto',
-            }}
-          >
-            {(() => {
-              if (activeKey === 'settings') {
-                return <SettingForm />;
-              }
-              if (activeKey === 'actions') {
-                return (
-                  <Row
+          {(() => {
+            if (activeKey === 'settings') {
+              return <SettingForm />;
+            }
+            if (activeKey === 'actions') {
+              return (
+                <Row
+                  style={{
+                    flexDirection: 'column',
+                    height: '100%',
+                    alignItems: 'stretch',
+                  }}
+                  wrap={false}
+                >
+                  <Col
+                    flex={'none'}
                     style={{
-                      flexDirection: 'column',
-                      height: '100%',
-                      alignItems: 'stretch',
+                      marginBottom: 10,
                     }}
-                    wrap={false}
                   >
-                    <Col
-                      flex={'none'}
-                      style={{
-                        marginBottom: 10,
-                      }}
-                    >
-                      <StatActionsCreator />
-                    </Col>
-                    <Col
-                      flex={'auto'}
-                      style={{
-                        overflowY: 'auto',
-                        position: 'relative',
-                      }}
-                    >
-                      <StatActionsList />
-                    </Col>
-                  </Row>
-                );
-              }
-              if (activeKey === 'events') {
-                return <ComStatEvents />;
-              }
+                    <StatActionsCreator />
+                  </Col>
+                  <Col
+                    flex={'auto'}
+                    style={{
+                      overflowY: 'auto',
+                      position: 'relative',
+                    }}
+                  >
+                    <StatActionsList />
+                  </Col>
+                </Row>
+              );
+            }
+            if (activeKey === 'events') {
+              return <ComStatEvents />;
+            }
 
-              if (activeKey === 'styles') {
-                return <ComStatStyle />;
-              }
-              return <></>;
-            })()}
-          </Col>
-        </Row>
-      </>
+            if (activeKey === 'styles') {
+              return <ComStatStyle />;
+            }
+            return <></>;
+          })()}
+        </Col>
+      </Row>
     );
   };
 

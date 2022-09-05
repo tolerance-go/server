@@ -3,10 +3,13 @@ import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { useState } from 'react';
 
-/** 事件处理中心 */
+/**
+ * 事件处理中心
+ * 目前所有组件公用一个事件中心
+ */
 const useEventManager = () => {
   const [eventManager] = useState(
-    new EventManager(location.pathname !== '/playground'),
+    () => new EventManager(location.pathname !== '/playground'),
   );
   const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,

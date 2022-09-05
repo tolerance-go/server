@@ -410,6 +410,11 @@ const useStageComponentsModel = () => {
     },
   );
 
+  const resetData = useMemoizedFn(() => {
+    initRootIds([]);
+    initNodesStructures(undefined);
+  });
+
   /**
    * 从舞台上删除指定组件，但是相关配置依旧保留
    * 用在删除并在物料中保存索引
@@ -476,6 +481,7 @@ const useStageComponentsModel = () => {
     getNodesStructuresUpdateMode,
     getRootIds,
     getRootIdsUpdateMode,
+    resetData,
     rootIdsUpdateMode,
     rootNodeIds,
     nodesStructures,

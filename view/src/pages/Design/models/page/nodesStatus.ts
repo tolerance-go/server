@@ -128,15 +128,18 @@ const useStatusSettings = () => {
   });
 
   /** 初始化 */
-  const initData = useMemoizedFn(
-    (from?: { nodesStatus: NodesStatus }) => {
-      initNodesStatus(from?.nodesStatus ?? {});
-    },
-  );
+  const initData = useMemoizedFn((from?: { nodesStatus: NodesStatus }) => {
+    initNodesStatus(from?.nodesStatus ?? {});
+  });
+
+  const resetData = useMemoizedFn(() => {
+    initNodesStatus({});
+  });
 
   return {
     nodesStatus,
     nodesStatusUpdateMode,
+    resetData,
     initNodesStatus,
     getNodesStatusUpdateMode,
     deleteComStatuslByIds,

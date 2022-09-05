@@ -116,6 +116,10 @@ export default () => {
     initNodesStyles(from?.nodesStyles ?? {});
   });
 
+  const resetData = useMemoizedFn(() => {
+    initNodesStyles({});
+  });
+
   /** 拷贝组件 A 状态的配置到 B 状态 */
   const copyComStyleFromStatToOtherStat = useMemoizedFn(
     (comId: string, fromStatId: string, toStatId: string) => {
@@ -153,6 +157,7 @@ export default () => {
   return {
     nodesStyles,
     nodesStylesUpdateMode,
+    resetData,
     getNodesStyles,
     initNodesStyles,
     setNodesStylesUpdateMode,

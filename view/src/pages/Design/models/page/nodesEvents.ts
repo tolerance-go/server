@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { ComId, EventId, StatId } from '@/pages/Design/typings/keys';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -13,7 +14,7 @@ import { useUpdateModeState } from '@/utils/useUpdateModeState';
  * 1. 按钮发送请求
  * 2. 切换其他状态
  */
-export type ComponentEvent = {
+export type NodeEvent = {
   id: string;
   type: string;
   settings: object;
@@ -29,18 +30,18 @@ export type ComponentEvent = {
 };
 
 /** key: EventId */
-export type ComponentEvents = Record<EventId, ComponentEvent>;
+export type NodeEvents = Record<EventId, NodeEvent>;
 
 /**
  * 组件的不同状态
  * key: statId
  */
-export type ComponentStatusEvents = Record<StatId, ComponentEvents>;
+export type NodeStatusEvents = Record<StatId, NodeEvents>;
 
 /** 所有组件的所有状态下的配置
  * key: comId
  */
-export type ComponentsEvents = Record<ComId, ComponentStatusEvents>;
+export type NodesEvents = Record<ComId, NodeStatusEvents>;
 
 /** 组件的事件管理 */
 const useComsEvents = () => {
@@ -51,7 +52,10 @@ const useComsEvents = () => {
     initNodesEvents,
     nodesEventsUpdateMode,
     getNodesEventsUpdateMode,
-  ] = useUpdateModeState<ComponentsEvents>({});
+  ] = useUpdateModeState<NodesEvents>({});
+
+  /** 卸载当前页面所有事件注册的函数 */
+  const uninstallAllRef = useRef<() => void>();
 
   const { eventManager } = useModel('Design.stage.eventManager', (model) => ({
     eventManager: model.eventManager,
@@ -73,7 +77,7 @@ const useComsEvents = () => {
 
   /** 创建新的事件 */
   const createComStatEvent = useMemoizedFn(
-    (comId: string, statId: string, event: Omit<ComponentEvent, 'id'>) => {
+    (comId: string, statId: string, event: Omit<NodeEvent, 'id'>) => {
       const newId = nanoid();
 
       setNodesEvents((draft) => {
@@ -108,7 +112,7 @@ const useComsEvents = () => {
       comId: string,
       statId: string,
       eventWithName: {
-        [actionName: string]: ComponentEvent;
+        [actionName: string]: NodeEvent;
       },
     ) => {
       setNodesEvents((draft) => {
@@ -123,7 +127,7 @@ const useComsEvents = () => {
       comId: string,
       statId: string,
       eventWithName: Partial<{
-        [actionName: string]: ComponentEvent;
+        [actionName: string]: NodeEvent;
       }>,
     ) => {
       setNodesEvents((draft) => {
@@ -137,7 +141,7 @@ const useComsEvents = () => {
     (
       comId: string,
       statId: string,
-      event: Partial<ComponentEvent> & Pick<ComponentEvent, 'id'>,
+      event: Partial<NodeEvent> & Pick<NodeEvent, 'id'>,
     ) => {
       setNodesEvents((draft) => {
         draft[comId][statId][event.id] = {
@@ -184,17 +188,21 @@ const useComsEvents = () => {
   });
 
   /** 初始化 */
-  const initData = useMemoizedFn((from?: { nodesEvents: ComponentsEvents }) => {
+  const initData = useMemoizedFn((from?: { nodesEvents: NodesEvents }) => {
     initNodesEvents(from?.nodesEvents ?? {});
 
     /** 初始化注册事件管理 */
     if (from?.nodesEvents) {
+      uninstallAllRef.current?.();
+
+      const uninstalls: (() => void)[] = [];
+
       Object.keys(from.nodesEvents).forEach((comId) => {
         Object.keys(from.nodesEvents[comId]).forEach((statId) => {
           const events = from.nodesEvents[comId][statId];
           Object.keys(events).forEach((eventId) => {
             const event = events[eventId];
-            eventManager.register(comId, statId, {
+            const uninstall = eventManager.register(comId, statId, {
               id: event.id,
               type: event.type,
               settings: event.settings,
@@ -202,10 +210,18 @@ const useComsEvents = () => {
               execComStatId: event.execComStatId,
               execComStatActionId: event.execComStatActionId,
             });
+            uninstalls.push(uninstall);
           });
         });
       });
+
+      uninstallAllRef.current = () => uninstalls.forEach((fn) => fn());
     }
+  });
+
+  const resetData = useMemoizedFn(() => {
+    uninstallAllRef.current?.();
+    initNodesEvents({});
   });
 
   /** 拷贝组件 A 状态的配置到 B 状态 */
@@ -252,6 +268,7 @@ const useComsEvents = () => {
     getData,
     initData,
     getSliceData,
+    resetData,
   };
 };
 

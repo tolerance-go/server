@@ -52,6 +52,10 @@ export class EventManager {
         [event.id]: event,
       };
     }
+
+    return () => {
+      this.uninstalled(comId, statId, event.id);
+    };
   }
 
   /** 更新注册事件 */
@@ -192,5 +196,10 @@ export class EventManager {
 
   public enable() {
     this.disabled = false;
+  }
+
+  public reset() {
+    this.eventCenter = {};
+    this.handlerCenter = {};
   }
 }

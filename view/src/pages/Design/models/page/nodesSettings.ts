@@ -121,6 +121,10 @@ export default () => {
     initNodesSettings(from?.nodesSettings ?? {});
   });
 
+  const resetData = useMemoizedFn(() => {
+    initNodesSettings({});
+  });
+
   const deleteComsSettingsByIds = useMemoizedFn((comIds: string[]) => {
     setNodesSettings((draft) => {
       comIds.forEach((comId) => {
@@ -132,6 +136,7 @@ export default () => {
   return {
     nodesSettings,
     nodesSettingsUpdateMode,
+    resetData,
     getNodesSettingsUpdateMode,
     getNodesSettings,
     deleteComsSettingsByIds,

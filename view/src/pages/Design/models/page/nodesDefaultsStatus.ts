@@ -69,6 +69,10 @@ export default () => {
     },
   );
 
+  const resetData = useMemoizedFn(() => {
+    initNodesDefaultsStatus({});
+  });
+
   /** 清空组件的默认配置 */
   const cleanComDefautStat = useMemoizedFn((comId: string) => {
     setStatusSettingsDefaults((draft) => {
@@ -83,6 +87,7 @@ export default () => {
   return {
     getNodesDefaultsStatus,
     initNodesDefaultsStatus,
+    resetData,
     nodesDefaultsStatusUpdateMode,
     getNodesDefaultsStatusUpdateMode,
     nodesDefaultsStatus,

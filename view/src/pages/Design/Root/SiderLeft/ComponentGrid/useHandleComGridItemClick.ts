@@ -1,7 +1,6 @@
 import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import consola from 'consola';
 import { nanoid } from 'nanoid';
 
 export const useHandleComGridItemClick = () => {
@@ -30,9 +29,9 @@ export const useHandleComGridItemClick = () => {
     pickModel(['focusComId', 'focusSlotName', 'focusSlotPosition']),
   );
 
-  const { setActiveNodeStatId: setActiveComStatId } = useModel(
+  const { setActiveNodeStatId } = useModel(
     'Design.stage.activeNodeStatId',
-    pickModel(['setActiveComStatId']),
+    pickModel(['setActiveNodeStatId']),
   );
 
   const { initComStatus } = useModel('Design.page.nodesStatus', (model) => ({
@@ -120,7 +119,7 @@ export const useHandleComGridItemClick = () => {
     setStageSelectNodeId(newComId);
 
     /** 设置选中组件的选中状态 */
-    setActiveComStatId(statusId);
+    setActiveNodeStatId(statusId);
 
     triggerSaveTimeChange();
   });

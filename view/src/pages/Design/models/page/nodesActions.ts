@@ -169,6 +169,10 @@ const useComsActions = () => {
     },
   );
 
+  const resetData = useMemoizedFn(() => {
+    initNodesActions({});
+  });
+
   /** 获取指定组件的状态下的动作 */
   const getComStatActions = useMemoizedFn((comId: string, statId: string) => {
     return nodesActions[comId]?.[statId];
@@ -210,6 +214,7 @@ const useComsActions = () => {
   return {
     nodesActions,
     nodesActionsUpdateMode,
+    resetData,
     getNodesActions,
     initNodesActions,
     getNodesActionsUpdateMode,
