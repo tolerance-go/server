@@ -28,7 +28,7 @@ export const ComsStatusTabs = () => {
   );
 
   const { deleteComStatRelationFromToStatId } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => ({
       deleteComStatRelationFromToStatId:
         model.deleteComStatRelationFromToStatId,

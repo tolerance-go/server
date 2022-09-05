@@ -10,7 +10,7 @@ export type Relation = {
 export type Relations = Record<RelationId, Relation>;
 
 export type RelationTreeItem<T> = T & {
-  parentId?: string | number;
+  parentId?: string;
   children?: RelationTreeItem<T>[];
   relationId?: string;
 };
@@ -18,7 +18,7 @@ export type RelationTreeItem<T> = T & {
 /** 使用关系和列表构建一棵树结构 */
 export const makeTreeWithRelation = <
   I extends {
-    id: string | number;
+    id: string;
     [key: string]: any;
   },
 >(

@@ -34,7 +34,7 @@ export const SettingForm = () => {
   );
 
   const { lockComExtendField, unlockComExtendField } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => ({
       lockComExtendField: model.lockComExtendSettingField,
       unlockComExtendField: model.unlockComExtendSettingField,

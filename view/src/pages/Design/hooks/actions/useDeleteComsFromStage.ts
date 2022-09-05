@@ -27,11 +27,11 @@ export const useDeleteComsFromStage = () => {
     },
   );
 
-  const { deleteComsStatusRelationslByIds } = useModel(
-    'Design.page.statusConnectRelations',
+  const { deleteComsStatusRelationsByIds } = useModel(
+    'Design.page.nodesStatusRelations',
     (model) => {
       return {
-        deleteComsStatusRelationslByIds: model.deleteComsStatusRelationslByIds,
+        deleteComsStatusRelationsByIds: model.deleteComsStatusRelationsByIds,
       };
     },
   );
@@ -64,7 +64,7 @@ export const useDeleteComsFromStage = () => {
     deleteComModelByIds(comIds);
     deleteComStatuslByIds(comIds);
     deleteComSettingsDefaultslByIds(comIds);
-    deleteComsStatusRelationslByIds(comIds);
+    deleteComsStatusRelationsByIds(comIds);
     deleteComsActionsByIds(comIds);
     deleteComsEventsByIds(comIds);
     deleteComsStylesByIds(comIds);

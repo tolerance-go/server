@@ -7,9 +7,12 @@ export const useSelectedDataListItem = () => {
     dataList: model.dataList,
   }));
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
-    selectedDataId: model.selectedDataId,
-  }));
+  const { selectedDataId } = useModel(
+    'Design.database.selectedDataId',
+    (model) => ({
+      selectedDataId: model.selectedDataId,
+    }),
+  );
 
   const selectedDataListItem = useMemo(() => {
     return dataList.find((item) => item.id === selectedDataId);

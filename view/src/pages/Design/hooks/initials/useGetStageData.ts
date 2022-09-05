@@ -27,7 +27,7 @@ export const useGetStageData = () => {
   );
 
   const { getData: getStatusRelations } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => {
       return {
         getData: model.getData,
@@ -61,7 +61,7 @@ export const useGetStageData = () => {
 
   const getStageData = useMemoizedFn(() => {
     return {
-      comsStatusRelations: getStatusRelations(),
+      nodesStatusRelations: getStatusRelations(),
       comsTree: getComsTreeData(),
       // comsModel: getComsModelData(),
       nodesStatus: getStatusSettings(),

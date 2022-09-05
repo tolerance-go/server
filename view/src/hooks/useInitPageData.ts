@@ -39,6 +39,11 @@ export default () => {
     pickModel(['initData']),
   );
 
+  const { initNodesStatusRelations } = useModel(
+    'Design.page.nodesStatusRelations',
+    (model) => ({ initNodesStatusRelations: model.initData }),
+  );
+
   const initPageData = useMemoizedFn((data: API.Page) => {
     initNodesStructuresAndRootIds({
       rootNodeIds: parseJSON(data.rootNodeIds),
@@ -67,6 +72,10 @@ export default () => {
 
     initNodesStatus({
       nodesStatus: parseJSON(data.nodesStatus),
+    });
+
+    initNodesStatusRelations({
+      nodesStatusRelations: parseJSON(data.nodesStatusRelations),
     });
   });
 

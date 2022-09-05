@@ -45,7 +45,7 @@ export default () => {
   const { stageSelectNode } = useSelectedNode();
 
   const { lockComExtendActionField, unlockComExtendActionField } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => ({
       lockComExtendActionField: model.lockComExtendActionField,
       unlockComExtendActionField: model.unlockComExtendActionField,

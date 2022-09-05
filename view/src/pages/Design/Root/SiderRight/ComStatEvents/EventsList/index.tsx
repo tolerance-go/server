@@ -45,7 +45,7 @@ export default () => {
   const { extendRelation } = useSelectedComActiveStatExtendRelation();
 
   const { lockComExtendEventField, unlockComExtendEventField } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => ({
       lockComExtendEventField: model.lockComExtendEventField,
       unlockComExtendEventField: model.unlockComExtendEventField,

@@ -16,26 +16,32 @@ export const ComStatusTreeMap = () => {
 
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>();
 
-  const { comsStatusRelations, createComStatRelation, deleteComStatRelation } =
-    useModel('Design.page.statusConnectRelations', (model) => ({
-      comsStatusRelations: model.comsStatusRelations,
+  const { nodesStatusRelations, createComStatRelation, deleteComStatRelation } =
+    useModel('Design.page.nodesStatusRelations', (model) => ({
+      nodesStatusRelations: model.nodesStatusRelations,
       createComStatRelation: model.createComStatRelation,
       deleteComStatRelation: model.deleteComStatRelation,
     }));
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    stageSelectNodeId: model.stageSelectNodeId,
-  }));
+  const { stageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      stageSelectNodeId: model.stageSelectNodeId,
+    }),
+  );
 
-  const { triggerSaveTimeChange } = useModel('Design.app.stageAutoSave', (model) => {
-    return {
-      triggerSaveTimeChange: model?.triggerPrepareSaveTimeChange,
-    };
-  });
+  const { triggerSaveTimeChange } = useModel(
+    'Design.app.stageAutoSave',
+    (model) => {
+      return {
+        triggerSaveTimeChange: model?.triggerPrepareSaveTimeChange,
+      };
+    },
+  );
 
   /** 用 relations 和 maps 构建 tree */
   const treeData = useMemo(() => {
     if (stageSelectNodeId && status) {
-      const comStatusRelations = comsStatusRelations[stageSelectNodeId] ?? {};
+      const comStatusRelations = nodesStatusRelations[stageSelectNodeId] ?? {};
 
       const tree = makeTreeWithRelation(status, comStatusRelations);
 
@@ -52,7 +58,7 @@ export const ComStatusTreeMap = () => {
       return next;
     }
     return [];
-  }, [status, comsStatusRelations]);
+  }, [status, nodesStatusRelations]);
 
   const handleDrop: TreeProps<ComStatusTreeNode>['onDrop'] = (info) => {
     const dropNode = info.node;
@@ -77,6 +83,7 @@ export const ComStatusTreeMap = () => {
       } else {
         /** 拖拽组件到同级组件后，此时 dropNode 是同级别的 */
         /** 拖拽组件到第一级别，解除继承关系 */
+        // eslint-disable-next-line no-empty
         if (dropNode.parentStatId === undefined) {
         } else {
           createComStatRelation(stageSelectNodeId, {

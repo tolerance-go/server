@@ -1,71 +1,71 @@
-import { useUpdateEffect } from 'ahooks';
-import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
+import { useUpdateEffect } from 'ahooks';
 
 export default () => {
   const { selectedPageId } = useModel(
     'Design.page.selectedPageId',
-    pickModel(['selectedPageId']),
+    (model) => ({ selectedPageId: model.selectedPageId }),
   );
 
-  const { resetData: resetNodesStructuresAndRootIds } = useModel(
+  const { resetNodesStructuresAndRootIds } = useModel(
     'Design.page.nodesStructuresAndRootIds',
-    pickModel(['resetData']),
+    (model) => ({ resetNodesStructuresAndRootIds: model.resetData }),
   );
 
-  const { resetData: resetNodesSettings } = useModel(
+  const { resetNodesSettings } = useModel(
     'Design.page.nodesSettings',
-    pickModel(['resetData']),
+    (model) => ({ resetNodesSettings: model.resetData }),
   );
 
-  const { resetData: resetNodesDefaultsStatus } = useModel(
+  const { resetNodesDefaultsStatus } = useModel(
     'Design.page.nodesDefaultsStatus',
-    pickModel(['resetData']),
+    (model) => ({ resetNodesDefaultsStatus: model.resetData }),
   );
 
-  const { resetData: resetNodesStyles } = useModel(
-    'Design.page.nodesStyles',
-    pickModel(['resetData']),
-  );
+  const { resetNodesStyles } = useModel('Design.page.nodesStyles', (model) => ({
+    resetNodesStyles: model.resetData,
+  }));
 
-  const { resetData: resetNodesEvents } = useModel(
-    'Design.page.nodesEvents',
-    pickModel(['resetData']),
-  );
+  const { resetNodesEvents } = useModel('Design.page.nodesEvents', (model) => ({
+    resetNodesEvents: model.resetData,
+  }));
 
-  const { resetData: resetNodesActions } = useModel(
+  const { resetNodesActions } = useModel(
     'Design.page.nodesActions',
-    pickModel(['resetData']),
+    (model) => ({ resetNodesActions: model.resetData }),
   );
 
-  const { resetData: resetNodesStatus } = useModel(
-    'Design.page.nodesStatus',
-    pickModel(['resetData']),
+  const { resetNodesStatusRelations } = useModel(
+    'Design.page.nodesStatusRelations',
+    (model) => ({ resetNodesStatusRelations: model.resetData }),
   );
+
+  const { resetNodesStatus } = useModel('Design.page.nodesStatus', (model) => ({
+    resetNodesStatus: model.resetData,
+  }));
 
   const { setStageSelectNodeId } = useModel(
     'Design.stage.stageSelectNodeId',
-    pickModel(['setStageSelectNodeId']),
+    (model) => ({ setStageSelectNodeId: model.setStageSelectNodeId }),
   );
 
   const { setStageSelectSlotGroupId } = useModel(
     'Design.stage.stageSelectSlotGroupId',
-    pickModel(['setStageSelectSlotGroupId']),
+    (model) => ({ setStageSelectSlotGroupId: model.setStageSelectSlotGroupId }),
   );
 
-  const { setHoverNodeId } = useModel(
-    'Design.stage.hoverNodeId',
-    pickModel(['setHoverNodeId']),
-  );
+  const { setHoverNodeId } = useModel('Design.stage.hoverNodeId', (model) => ({
+    setHoverNodeId: model.setHoverNodeId,
+  }));
 
   const { setActiveNodeStatId } = useModel(
     'Design.stage.activeNodeStatId',
-    pickModel(['setActiveNodeStatId']),
+    (model) => ({ setActiveNodeStatId: model.setActiveNodeStatId }),
   );
 
   const { cleanFocusSlotsInert } = useModel(
     'Design.stage.slotsInsert',
-    pickModel(['cleanFocusSlotsInert']),
+    (model) => ({ cleanFocusSlotsInert: model.cleanFocusSlotsInert }),
   );
 
   /** 清空选中页面后，同时清空相关数据 */
@@ -78,6 +78,7 @@ export default () => {
       resetNodesEvents();
       resetNodesActions();
       resetNodesStatus();
+      resetNodesStatusRelations();
 
       // 舞台，右侧面板
       setStageSelectNodeId(undefined);

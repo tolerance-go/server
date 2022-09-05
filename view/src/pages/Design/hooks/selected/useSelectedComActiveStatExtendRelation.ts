@@ -14,15 +14,15 @@ export const useSelectedComActiveStatExtendRelation = () => {
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
-  const { comsStatusRelations } = useModel('Design.page.statusConnectRelations', (model) => ({
-    comsStatusRelations: model.comsStatusRelations,
+  const { nodesStatusRelations } = useModel('Design.page.nodesStatusRelations', (model) => ({
+    nodesStatusRelations: model.nodesStatusRelations,
   }));
 
   const extendRelation = useMemo(() => {
     if (stageSelectNodeId) {
       const relations = Object.keys(
-        comsStatusRelations[stageSelectNodeId] ?? {},
-      ).map((relationId) => comsStatusRelations[stageSelectNodeId][relationId]);
+        nodesStatusRelations[stageSelectNodeId] ?? {},
+      ).map((relationId) => nodesStatusRelations[stageSelectNodeId][relationId]);
 
       const extendRelation = relations.find(
         (relation) => relation.toId === activeNodeStatId,
@@ -31,7 +31,7 @@ export const useSelectedComActiveStatExtendRelation = () => {
       return extendRelation;
     }
     return undefined;
-  }, [stageSelectNodeId, comsStatusRelations, activeNodeStatId]);
+  }, [stageSelectNodeId, nodesStatusRelations, activeNodeStatId]);
 
   return {
     extendRelation,

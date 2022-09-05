@@ -11,7 +11,7 @@ export const useComStatusExtendEvents = () => {
     }),
   );
 
-  const { getStatLockEventFields } = useModel('Design.page.statusConnectRelations', (model) => ({
+  const { getStatLockEventFields } = useModel('Design.page.nodesStatusRelations', (model) => ({
     getStatLockEventFields: model.getStatLockEventFields,
   }));
 

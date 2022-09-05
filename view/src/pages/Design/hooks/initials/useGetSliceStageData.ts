@@ -30,7 +30,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusRelations } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -70,7 +70,7 @@ export const useGetSliceStageData = () => {
     const allComIds = Object.keys(comsTree.stageComponentsModel ?? {});
     return {
       comsTree,
-      comsStatusRelations: getStatusRelations(allComIds),
+      nodesStatusRelations: getStatusRelations(allComIds),
       nodesStatus: getStatusSettings(allComIds),
       comsStatusDefaults: getStatusSettingsDefaults(allComIds),
       nodesActions: getComsActions(allComIds),

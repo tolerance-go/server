@@ -13,7 +13,7 @@ import { useModel } from '@umijs/max';
 import { Button } from 'antd';
 import { useMemo, useRef } from 'react';
 import { NodeAction } from '../models/page/nodesActions';
-import { ComStatRelation } from '../models/page/statusConnectRelations';
+import { NodeStatRelation } from '../models/page/nodesStatusRelations';
 
 /** 组件的动作编辑和创建表单 */
 export default ({
@@ -23,7 +23,7 @@ export default ({
 }: {
   mode: 'edit' | 'create';
   actionItem?: NodeAction;
-  extendRelation?: ComStatRelation;
+  extendRelation?: NodeStatRelation;
 }) => {
   const { nodesActionsConfigs } = useModel(
     'Design.config.nodesActionsConfigs',

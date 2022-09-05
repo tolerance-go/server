@@ -1,7 +1,7 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
 import { NodeAction } from '@/pages/Design/models/page/nodesActions';
-import { ComStatRelation } from '@/pages/Design/models/page/statusConnectRelations';
+import { NodeStatRelation } from '@/pages/Design/models/page/nodesStatusRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -19,7 +19,7 @@ export default ({
   extendRelation,
 }: {
   actionItem?: NodeAction;
-  extendRelation?: ComStatRelation;
+  extendRelation?: NodeStatRelation;
 }) => {
   const { nodesActionsConfigs } = useModel('Design.config.nodesActionsConfigs', (model) => ({
     nodesActionsConfigs: model.nodesActionsConfigs,

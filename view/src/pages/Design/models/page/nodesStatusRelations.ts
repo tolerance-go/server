@@ -1,14 +1,13 @@
 import { ComId, RelationId } from '@/pages/Design/typings/keys';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useMemoizedFn } from 'ahooks';
-import { produce } from 'immer';
 import utl from 'lodash';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 
 export type UnsyncFields = Record<string, boolean>;
 
 /** from 是被继承的，to 是继承者 */
-export type ComStatRelation = {
+export type NodeStatRelation = {
   id: string;
   toId: string;
   fromId: string;
@@ -25,60 +24,62 @@ export type ComStatRelation = {
 /**
  * key: relationId
  */
-export type ComStatusRelations = Record<RelationId, ComStatRelation>;
+export type NodeStatusRelations = Record<RelationId, NodeStatRelation>;
 
 /**
  * 所有组件的所有状态下配置之间的关系
  * key: comId
  */
-export type ComsStatusRelations = Record<ComId, ComStatusRelations>;
+export type NodesStatusRelations = Record<ComId, NodeStatusRelations>;
 
-const useStatusRelations = () => {
-  const [comsStatusRelations, setComsStatusRelations] =
-    useState<ComsStatusRelations>({});
+export default () => {
+  const [
+    nodesStatusRelations,
+    setNodesStatusRelations,
+    getNodesStatusRelations,
+    initNodesStatusRelations,
+    nodesStatusRelationsUpdateMode,
+    getNodesStatusRelationsUpdateMode,
+  ] = useUpdateModeState<NodesStatusRelations>({});
 
   /** 创建组件状态关系 */
   const createComStatRelation = useMemoizedFn(
-    (comId: string, data: Omit<ComStatRelation, 'id'>) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          const relationId = nanoid();
-          if (draft[comId]) {
-            draft[comId][relationId] = {
+    (comId: string, data: Omit<NodeStatRelation, 'id'>) => {
+      setNodesStatusRelations((draft) => {
+        const relationId = nanoid();
+        if (draft[comId]) {
+          draft[comId][relationId] = {
+            ...data,
+            id: relationId,
+          };
+        } else {
+          draft[comId] = {
+            [relationId]: {
               ...data,
               id: relationId,
-            };
-          } else {
-            draft[comId] = {
-              [relationId]: {
-                ...data,
-                id: relationId,
-              },
-            };
-          }
-        }),
-      );
+            },
+          };
+        }
+      });
     },
   );
 
   /** 删除组件的状态关系 */
   const deleteComStatRelation = useMemoizedFn(
     (comId: string, relationId: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          if (draft[comId]) {
-            delete draft[comId][relationId];
-          }
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        if (draft[comId]) {
+          delete draft[comId][relationId];
+        }
+      });
     },
   );
 
   /** 根据 toStatId 删除关系 */
   const deleteComStatRelationFromToStatId = useMemoizedFn(
     (comId: string, toStatId: string) => {
-      Object.keys(comsStatusRelations[comId]).forEach((relationId) => {
-        const relation = comsStatusRelations[comId][relationId];
+      Object.keys(nodesStatusRelations[comId]).forEach((relationId) => {
+        const relation = nodesStatusRelations[comId][relationId];
         if (relation.toId === toStatId) {
           deleteComStatRelation(comId, relation.id);
         }
@@ -86,161 +87,151 @@ const useStatusRelations = () => {
     },
   );
 
-
-  const deleteComsStatusRelationslByIds = useMemoizedFn((comIds: string[]) => {
-    setComsStatusRelations(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+  const deleteComsStatusRelationsByIds = useMemoizedFn((comIds: string[]) => {
+    setNodesStatusRelations((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      comsStatusRelations,
+      nodesStatusRelations,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      comsStatusRelations: utl.pick(comsStatusRelations, comIds),
+      nodesStatusRelations: utl.pick(nodesStatusRelations, comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { comsStatusRelations: ComsStatusRelations }) => {
-      setComsStatusRelations(from?.comsStatusRelations ?? {});
+    (from?: { nodesStatusRelations: NodesStatusRelations }) => {
+      initNodesStatusRelations(from?.nodesStatusRelations ?? {});
     },
   );
+
+  const resetData = useMemoizedFn(() => {
+    initNodesStatusRelations({});
+  });
 
   /** 找到所有继承该组件状态的状态 */
   const getComExtendRelationsFromStat = useMemoizedFn(
     (comId: string, fromStatId: string) => {
-      return Object.keys(comsStatusRelations[comId] ?? {})
+      return Object.keys(nodesStatusRelations[comId] ?? {})
         .filter((relationId) => {
-          const relation = comsStatusRelations[comId][relationId];
+          const relation = nodesStatusRelations[comId][relationId];
           return relation.fromId === fromStatId;
         })
-        .map((relationId) => comsStatusRelations[comId][relationId]);
+        .map((relationId) => nodesStatusRelations[comId][relationId]);
     },
   );
 
   /** 获取组件状态的继承锁定字段（不同步修改） */
   const getStatLockSettingFields = useMemoizedFn(
     (comId: string, relationId: string) => {
-      return comsStatusRelations[comId]?.[relationId].settingUnsyncFields;
+      return nodesStatusRelations[comId]?.[relationId].settingUnsyncFields;
     },
   );
 
   const getStatLockStyleFields = useMemoizedFn(
     (comId: string, relationId: string) => {
-      return comsStatusRelations[comId]?.[relationId].styleUnsyncFields;
+      return nodesStatusRelations[comId]?.[relationId].styleUnsyncFields;
     },
   );
 
   const getStatLockActionFields = useMemoizedFn(
     (comId: string, relationId: string) => {
-      return comsStatusRelations[comId]?.[relationId].actionUnsyncFields;
+      return nodesStatusRelations[comId]?.[relationId].actionUnsyncFields;
     },
   );
 
   const getStatLockEventFields = useMemoizedFn(
     (comId: string, relationId: string) => {
-      return comsStatusRelations[comId]?.[relationId].eventUnsyncFields;
+      return nodesStatusRelations[comId]?.[relationId].eventUnsyncFields;
     },
   );
 
   /** 将组件的继承字段锁起来 */
   const lockComExtendSettingField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].settingUnsyncFields[fieldName] = true;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].settingUnsyncFields[fieldName] = true;
+      });
     },
   );
 
   /** 将组件的继承字段解锁 */
   const unlockComExtendSettingField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].settingUnsyncFields[fieldName] = false;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].settingUnsyncFields[fieldName] = false;
+      });
     },
   );
 
   /** 将组件的继承字段锁起来 */
   const lockComExtendStyleField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].styleUnsyncFields[fieldName] = true;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].styleUnsyncFields[fieldName] = true;
+      });
     },
   );
 
   /** 将组件的继承字段解锁 */
   const unlockComExtendStyleField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].styleUnsyncFields[fieldName] = false;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].styleUnsyncFields[fieldName] = false;
+      });
     },
   );
 
   const lockComExtendActionField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].actionUnsyncFields[fieldName] = true;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].actionUnsyncFields[fieldName] = true;
+      });
     },
   );
 
   const unlockComExtendActionField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].actionUnsyncFields[fieldName] = false;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].actionUnsyncFields[fieldName] = false;
+      });
     },
   );
 
   const lockComExtendEventField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].eventUnsyncFields[fieldName] = true;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].eventUnsyncFields[fieldName] = true;
+      });
     },
   );
 
   const unlockComExtendEventField = useMemoizedFn(
     (comId: string, relationId: string, fieldName: string) => {
-      setComsStatusRelations(
-        produce((draft) => {
-          draft[comId][relationId].eventUnsyncFields[fieldName] = false;
-        }),
-      );
+      setNodesStatusRelations((draft) => {
+        draft[comId][relationId].eventUnsyncFields[fieldName] = false;
+      });
     },
   );
 
   return {
-    comsStatusRelations,
-    deleteComsStatusRelationslByIds,
+    initNodesStatusRelations,
+    resetData,
+    nodesStatusRelationsUpdateMode,
+    getNodesStatusRelationsUpdateMode,
+    nodesStatusRelations,
+    getNodesStatusRelations,
+    deleteComsStatusRelationsByIds,
     getSliceData,
     getStatLockEventFields,
     getStatLockActionFields,
@@ -260,8 +251,6 @@ const useStatusRelations = () => {
     getData,
     deleteComStatRelation,
     createComStatRelation,
-    setComsStatusRelations,
+    setNodesStatusRelations,
   };
 };
-
-export default useStatusRelations;

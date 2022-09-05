@@ -21,7 +21,7 @@ export const useInitSatgeData = () => {
   );
 
   const { initData: initStatusRelations } = useModel(
-    'Design.page.statusConnectRelations',
+    'Design.page.nodesStatusRelations',
     (model) => {
       return {
         initData: model.initData,
@@ -59,7 +59,7 @@ export const useInitSatgeData = () => {
       initComsSettings(stageData.nodesSettings);
       initStatusSettings(stageData.nodesStatus);
       initStatusSettingsDefaults(stageData.comsStatusDefaults);
-      initStatusRelations(stageData.comsStatusRelations);
+      initStatusRelations(stageData.nodesStatusRelations);
       initComsActions(stageData.nodesActions);
       initComsEvents(stageData.nodesEvents);
       initComsStyles(stageData.nodesStyles);
