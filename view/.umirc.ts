@@ -64,7 +64,7 @@ export default defineConfig({
       footerRender: false,
       menuRender: false,
       hideInMenu: true,
-      wrappers: ['@/wrappers/auth', '@/pages/Design/wrappers/appId'],
+      wrappers: ['@/wrappers/auth', '@/wrappers/appId'],
     },
     {
       name: '工作台',

@@ -16,7 +16,7 @@ export default () => {
     <Result
       status="403"
       title="403"
-      subTitle="抱歉，你访问该页面前丢失了必要的应用标示信息，请返回应用列表重新进入"
+      subTitle="抱歉，你访问该页面前丢失了必要的应用标识信息，请返回应用列表重新进入"
       extra={
         <Space>
           <Button
