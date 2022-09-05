@@ -22,7 +22,7 @@ export default () => {
       return await PageControllerUpdate(
         { id },
         {
-          stageRootNodeIds: rootIds ? JSON.stringify(rootIds) : '{}',
+          rootNodeIds: rootIds ? JSON.stringify(rootIds) : '{}',
         },
       );
     },

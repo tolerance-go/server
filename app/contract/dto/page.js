@@ -17,7 +17,7 @@ module.exports = {
     nodesStatus: { type: 'string', required: false },
     nodesStatusRelations: { type: 'string', required: false },
     nodesDefaultsStatus: { type: 'string', required: false },
-    stageRootNodeIds: { type: 'string', required: false },
+    rootNodeIds: { type: 'string', required: false },
     ...Identity,
     ...Timestamp,
   },

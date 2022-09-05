@@ -43,7 +43,7 @@ export default () => {
         if (!data) return;
 
         initNodesStructuresAndRootIds({
-          rootIds: parseJSON(data.stageRootNodeIds),
+          rootIds: parseJSON(data.rootNodeIds),
           nodesStructures: parseJSON(data.nodesStructures),
         });
 
