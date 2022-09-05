@@ -1,6 +1,9 @@
 import { RequestButton } from '@/pages/Design/components/RequestButton';
 import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
-import { DataItem, DataTableColumn } from '@/pages/Design/models/dataList';
+import {
+  DataTableColumn,
+  DataItem,
+} from '@/pages/Design/models/database/dataList';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import type { ActionType, ProTableProps } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
@@ -43,13 +46,19 @@ export default () => {
     }),
   );
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
-    selectedDataId: model.selectedDataId,
-  }));
+  const { selectedDataId } = useModel(
+    'Design.database.selectedDataId',
+    (model) => ({
+      selectedDataId: model.selectedDataId,
+    }),
+  );
 
-  const { removeDataListItemDataSource } = useModel('Design.database.dataList', (model) => ({
-    removeDataListItemDataSource: model.removeDataListItemDataSource,
-  }));
+  const { removeDataListItemDataSource } = useModel(
+    'Design.database.dataList',
+    (model) => ({
+      removeDataListItemDataSource: model.removeDataListItemDataSource,
+    }),
+  );
 
   const addColumn = useMemoizedFn(async (newCol: DataTableColumn) => {
     if (!selectedDataId) return;
@@ -75,8 +84,8 @@ export default () => {
         >['columns'][number] => {
           return {
             ...col,
-            title: (__, type) =>
-              type === 'table' ? (
+            title: (__, type) => {
+              return type === 'table' ? (
                 <Dropdown
                   overlay={
                     <Menu
@@ -146,7 +155,8 @@ export default () => {
                 </Dropdown>
               ) : (
                 columnsSettings?.[col.key].title ?? col.title
-              ),
+              );
+            },
           };
         },
       )

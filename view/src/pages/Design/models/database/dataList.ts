@@ -1,5 +1,4 @@
 import { PATHS } from '@/constants/path';
-import { useLocation } from '@/.umi/exports';
 import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
 import { RecoverParams } from '@/pages/Design/domains/HistoryManager';
 import {
