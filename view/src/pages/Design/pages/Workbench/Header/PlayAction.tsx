@@ -1,20 +1,27 @@
-import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
+import { useModel } from '@/.umi/plugin-model';
+import { PATHS } from '@/constants/path';
+import useAppId from '@/pages/Design/hooks/useAppId';
+import { pickModel } from '@/utils/pickModel';
 import { PlayCircleTwoTone } from '@ant-design/icons';
-import { useSearchParams } from '@umijs/max';
 import { Button } from 'antd';
 
 export const PlayAction = () => {
-  const [searchParams] = useSearchParams();
+  const appId = useAppId();
+
+  const { selectedPageId } = useModel(
+    'Design.page.selectedPageId',
+    pickModel(['selectedPageId']),
+  );
+
   return (
     <Button
+      disabled={!selectedPageId}
       type="text"
       icon={<PlayCircleTwoTone />}
       onClick={() => {
-        const pageId = getPageIdOrThrow();
-        const appId = getAppIdOrThrow();
-
-        window.open(`/playground?appId=${appId}&pageId=${pageId}`);
+        window.open(
+          `${PATHS.PLAYGROUND}?appId=${appId}&pageId=${selectedPageId}`,
+        );
       }}
     >
       演示

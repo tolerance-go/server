@@ -64,7 +64,16 @@ export default defineConfig({
       footerRender: false,
       menuRender: false,
       hideInMenu: true,
-      wrappers: ['@/wrappers/auth', '@/wrappers/appId'],
+      wrappers: ['@/wrappers/appId', '@/wrappers/auth'],
+    },
+    {
+      path: PATHS.PLAYGROUND,
+      component: '@/pages/Playground',
+      headerRender: false,
+      footerRender: false,
+      menuRender: false,
+      hideInMenu: true,
+      wrappers: ['@/wrappers/pageId', '@/wrappers/appId', '@/wrappers/auth'],
     },
     {
       name: '工作台',
