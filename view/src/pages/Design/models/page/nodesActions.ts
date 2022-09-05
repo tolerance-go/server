@@ -1,13 +1,12 @@
 import { ActionId, ComId, StatId } from '@/pages/Design/typings/keys';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 import { setComStatTypeWithName } from '@/pages/Design/helps/setComStatTypeWithName';
 import { updateComStatTypeWithName } from '@/pages/Design/helps/updateComStatTypeWithName';
 import { useCopyComPropsFromStatToOtherStat } from '@/pages/Design/helps/useCopyComPropsFromStatToOtherStat';
 import utl from 'lodash';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 
 /**
  * eg：
@@ -39,7 +38,14 @@ export type ComponentsActions = Record<ComId, ComponentStatusActions>;
 
 /** 组件的动作 */
 const useComsActions = () => {
-  const [comsActions, setComsActions] = useState<ComponentsActions>({});
+  const [
+    nodesActions,
+    setComsActions,
+    getNodesActions,
+    initNodesActions,
+    nodesActionsUpdateMode,
+    getNodesActionsUpdateMode,
+  ] = useUpdateModeState<ComponentsActions>({});
 
   const { getSelectedComponentStatusId } = useModel(
     'Design.stage.activeNodeStatId',
@@ -48,44 +54,43 @@ const useComsActions = () => {
     }),
   );
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    getStageSelectNodeId: model.getStageSelectNodeId,
-  }));
+  const { getStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getStageSelectNodeId: model.getStageSelectNodeId,
+    }),
+  );
 
   /** 创建新的动作 */
   const createComStatAction = useMemoizedFn(
     (comId: string, statId: string, action: Omit<ComponentAction, 'id'>) => {
-      setComsActions(
-        produce((draft) => {
-          const newId = nanoid();
+      setComsActions((draft) => {
+        const newId = nanoid();
 
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
 
-          if (draft[comId][statId] === undefined) {
-            draft[comId][statId] = {};
-          }
+        if (draft[comId][statId] === undefined) {
+          draft[comId][statId] = {};
+        }
 
-          draft[comId][statId][newId] = {
-            id: newId,
-            ...action,
-          };
-        }),
-      );
+        draft[comId][statId][newId] = {
+          id: newId,
+          ...action,
+        };
+      });
     },
   );
 
   const setComStatAction = useMemoizedFn(
     (comId: string, statId: string, action: ComponentAction) => {
-      setComsActions(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
-          draft[comId][statId][action.id] = action;
-        }),
-      );
+      setComsActions((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
+        draft[comId][statId][action.id] = action;
+      });
     },
   );
 
@@ -97,11 +102,9 @@ const useComsActions = () => {
         [actionName: string]: ComponentAction;
       },
     ) => {
-      setComsActions(
-        produce((draft) => {
-          setComStatTypeWithName(comId, statId, actionWithName, draft);
-        }),
-      );
+      setComsActions((draft) => {
+        setComStatTypeWithName(comId, statId, actionWithName, draft);
+      });
     },
   );
 
@@ -114,11 +117,9 @@ const useComsActions = () => {
         [actionName: string]: ComponentAction;
       }>,
     ) => {
-      setComsActions(
-        produce((draft) => {
-          updateComStatTypeWithName(comId, statId, actionWithName, draft);
-        }),
-      );
+      setComsActions((draft) => {
+        updateComStatTypeWithName(comId, statId, actionWithName, draft);
+      });
     },
   );
 
@@ -130,57 +131,53 @@ const useComsActions = () => {
       action: Omit<Partial<ComponentAction>, 'id'> &
         Pick<ComponentAction, 'id'>,
     ) => {
-      setComsActions(
-        produce((draft) => {
-          draft[comId][statId][action.id] = {
-            ...draft[comId][statId][action.id],
-            ...action,
-          };
-        }),
-      );
+      setComsActions((draft) => {
+        draft[comId][statId][action.id] = {
+          ...draft[comId][statId][action.id],
+          ...action,
+        };
+      });
     },
   );
 
   /** 删除动作 */
   const deleteComStatAction = useMemoizedFn(
     (comId: string, statId: string, actionId: string) => {
-      setComsActions(
-        produce((draft) => {
-          delete draft[comId][statId][actionId];
-        }),
-      );
+      setComsActions((draft) => {
+        delete draft[comId][statId][actionId];
+      });
     },
   );
 
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      comsActions,
+      nodesActions,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      comsActions: utl.pick(comsActions, comIds),
+      nodesActions: utl.pick(nodesActions, comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { comsActions: ComponentsActions }) => {
-      setComsActions(from?.comsActions ?? {});
+    (from?: { nodesActions: ComponentsActions }) => {
+      initNodesActions(from?.nodesActions ?? {});
     },
   );
 
   /** 获取指定组件的状态下的动作 */
   const getComStatActions = useMemoizedFn((comId: string, statId: string) => {
-    return comsActions[comId]?.[statId];
+    return nodesActions[comId]?.[statId];
   });
 
   /** 获取指定组件的状态下的动作 */
   const getComStatAction = useMemoizedFn(
     (comId: string, statId: string, actionId: string) => {
-      return comsActions[comId]?.[statId]?.[actionId];
+      return nodesActions[comId]?.[statId]?.[actionId];
     },
   );
 
@@ -202,19 +199,20 @@ const useComsActions = () => {
     },
   );
 
-
   const deleteComsActionsByIds = useMemoizedFn((comIds: string[]) => {
-    setComsActions(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setComsActions((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   return {
-    comsActions,
+    nodesActions,
+    nodesActionsUpdateMode,
+    getNodesActions,
+    initNodesActions,
+    getNodesActionsUpdateMode,
     deleteComsActionsByIds,
     getSliceData,
     setComStatAction,

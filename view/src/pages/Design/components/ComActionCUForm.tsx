@@ -1,7 +1,7 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useComStatusExtendActions } from '@/pages/Design/hooks/relations/useComStatusExtendActions';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/comsActions';
+import { ComponentAction } from '@/pages/Design/models/nodesActions';
 import { ComStatRelation } from '@/pages/Design/models/statusRelations';
 import { EditOutlined } from '@ant-design/icons';
 import {
@@ -38,11 +38,11 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { createComStatAction, comsActions } = useModel(
-    'Design.page.comsActions',
+  const { createComStatAction, nodesActions } = useModel(
+    'Design.page.nodesActions',
     (model) => ({
       createComStatAction: model.createComStatAction,
-      comsActions: model.comsActions,
+      nodesActions: model.nodesActions,
     }),
   );
 
@@ -99,14 +99,14 @@ export default ({
       activeNodeStatId &&
       actionItem?.id
     ) {
-      return comsActions[stageSelectNodeId][activeNodeStatId][
+      return nodesActions[stageSelectNodeId][activeNodeStatId][
         actionItem?.id
       ];
     }
     return undefined;
   }, [
     mode,
-    comsActions,
+    nodesActions,
     actionItem?.id,
     stageSelectNodeId,
     activeNodeStatId,

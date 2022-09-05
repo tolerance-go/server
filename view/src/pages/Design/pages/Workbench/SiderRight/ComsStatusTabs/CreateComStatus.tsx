@@ -35,7 +35,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   );
 
   const { copySelectedComActionFromActiveStatToOtherStat } = useModel(
-    'Design.page.comsActions',
+    'Design.page.nodesActions',
     (model) => ({
       copySelectedComActionFromActiveStatToOtherStat:
         model.copySelectedComActionFromActiveStatToOtherStat,
@@ -43,7 +43,7 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   );
 
   const { copySelectedComEventFromActiveStatToOtherStat } = useModel(
-    'Design.page.comsEvents',
+    'Design.page.nodesEvents',
     (model) => ({
       copySelectedComEventFromActiveStatToOtherStat:
         model.copySelectedComEventFromActiveStatToOtherStat,

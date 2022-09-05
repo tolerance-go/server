@@ -1,6 +1,6 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentEvent } from '@/pages/Design/models/comsEvents';
+import { ComponentEvent } from '@/pages/Design/models/nodesEvents';
 import { ComStatRelation } from '@/pages/Design/models/statusRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
@@ -34,12 +34,12 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { getComStatActions } = useModel('Design.page.comsActions', (model) => ({
+  const { getComStatActions } = useModel('Design.page.nodesActions', (model) => ({
     getComStatActions: model.getComStatActions,
   }));
 
-  const { comsEvents } = useModel('Design.page.comsEvents', (model) => ({
-    comsEvents: model.comsEvents,
+  const { nodesEvents } = useModel('Design.page.nodesEvents', (model) => ({
+    nodesEvents: model.nodesEvents,
   }));
 
   const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
@@ -59,12 +59,12 @@ export default ({
 
   const eventData = useMemo(() => {
     if (stageSelectNodeId && activeNodeStatId && eventItem?.id) {
-      return comsEvents[stageSelectNodeId][activeNodeStatId][
+      return nodesEvents[stageSelectNodeId][activeNodeStatId][
         eventItem.id
       ];
     }
     return undefined;
-  }, [comsEvents, eventItem?.id, stageSelectNodeId, activeNodeStatId]);
+  }, [nodesEvents, eventItem?.id, stageSelectNodeId, activeNodeStatId]);
 
   return (
     <ModalForm

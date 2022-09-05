@@ -1,8 +1,8 @@
 import { useMemoizedFn } from 'ahooks';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
-import { ComponentsActions } from '../comsActions';
-import { ComponentsEvents } from '../comsEvents';
+import { ComponentsActions } from '../nodesActions';
+import { ComponentsEvents } from '../nodesEvents';
 
 /** 拷贝组件 A 状态的配置到 B 状态 */
 export const useCopyComPropsFromStatToOtherStat = (

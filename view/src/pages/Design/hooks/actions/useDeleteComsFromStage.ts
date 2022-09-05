@@ -36,13 +36,13 @@ export const useDeleteComsFromStage = () => {
     },
   );
 
-  const { deleteComsActionsByIds } = useModel('Design.page.comsActions', (model) => {
+  const { deleteComsActionsByIds } = useModel('Design.page.nodesActions', (model) => {
     return {
       deleteComsActionsByIds: model.deleteComsActionsByIds,
     };
   });
 
-  const { deleteComsEventsByIds } = useModel('Design.page.comsEvents', (model) => {
+  const { deleteComsEventsByIds } = useModel('Design.page.nodesEvents', (model) => {
     return {
       deleteComsEventsByIds: model.deleteComsEventsByIds,
     };

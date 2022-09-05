@@ -35,13 +35,13 @@ export const useGetStageData = () => {
     },
   );
 
-  const { getData: getComsActions } = useModel('Design.page.comsActions', (model) => {
+  const { getData: getComsActions } = useModel('Design.page.nodesActions', (model) => {
     return {
       getData: model.getData,
     };
   });
 
-  const { getData: getComsEvents } = useModel('Design.page.comsEvents', (model) => {
+  const { getData: getComsEvents } = useModel('Design.page.nodesEvents', (model) => {
     return {
       getData: model.getData,
     };
@@ -66,8 +66,8 @@ export const useGetStageData = () => {
       // comsModel: getComsModelData(),
       comsStatus: getStatusSettings(),
       comsStatusDefaults: getStatusSettingsDefaults(),
-      comsActions: getComsActions(),
-      comsEvents: getComsEvents(),
+      nodesActions: getComsActions(),
+      nodesEvents: getComsEvents(),
       nodesStyles: getComsStyles(),
       comsSettings: getComsSettings(),
     };

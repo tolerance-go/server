@@ -8,11 +8,11 @@ import TreeActions from './TreeActions';
 import TreeItemMenu from './TreeItemMenu';
 
 export default () => {
-  const { stageComponentsModel, rootIds, moveComFromTree } = useModel(
+  const { stageComponentsModel, rootNodeIds, moveComFromTree } = useModel(
     'Design.page.nodesStructuresAndRootIds',
     (model) => ({
       stageComponentsModel: model?.nodesStructures,
-      rootIds: model?.rootIds,
+      rootNodeIds: model?.rootNodeIds,
       moveComFromTree: model?.moveComFromTree,
     }),
   );
@@ -148,8 +148,8 @@ export default () => {
         };
       });
     };
-    return getTree(rootIds, 'root', 'root');
-  }, [stageComponentsModel, showAllSlots, rootIds]);
+    return getTree(rootNodeIds, 'root', 'root');
+  }, [stageComponentsModel, showAllSlots, rootNodeIds]);
 
   const handleDrop: TreeProps<SelfTreeDataNode>['onDrop'] = (info) => {
     if (!info.dropToGap) {

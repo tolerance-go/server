@@ -1,6 +1,6 @@
 export type StageData = {
   comsTree: {
-    rootIds: string[];
+    rootNodeIds: string[];
     stageComponentsModel: Record<string, object>;
   };
   comsModel: {

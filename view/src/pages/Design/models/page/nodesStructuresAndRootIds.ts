@@ -29,7 +29,7 @@ export type RootIds = string[];
 
 const useStageComponentsModel = () => {
   const [
-    rootIds,
+    rootNodeIds,
     setRootIds,
     getRootIds,
     initRootIds,
@@ -367,7 +367,7 @@ const useStageComponentsModel = () => {
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      rootIds,
+      rootNodeIds,
       stageComponentsModel: nodesStructures,
     };
   });
@@ -397,15 +397,15 @@ const useStageComponentsModel = () => {
     };
 
     return {
-      rootIds: comIds,
+      rootNodeIds: comIds,
       stageComponentsModel: getSliceStageComponentsModel(comIds),
     };
   });
 
   /** 初始化 */
   const initData = useMemoizedFn(
-    (from?: { rootIds: string[]; nodesStructures: NodesStructures }) => {
-      initRootIds(from?.rootIds ?? []);
+    (from?: { rootNodeIds: string[]; nodesStructures: NodesStructures }) => {
+      initRootIds(from?.rootNodeIds ?? []);
       initNodesStructures(from?.nodesStructures);
     },
   );
@@ -420,7 +420,7 @@ const useStageComponentsModel = () => {
       const notInRootIds: string[] = [];
 
       comIds.forEach((comId) => {
-        const index = rootIds.findIndex((item) => item === comId);
+        const index = rootNodeIds.findIndex((item) => item === comId);
         if (index > -1) {
           inRootIds.push({
             id: comId,
@@ -477,7 +477,7 @@ const useStageComponentsModel = () => {
     getRootIds,
     getRootIdsUpdateMode,
     rootIdsUpdateMode,
-    rootIds,
+    rootNodeIds,
     nodesStructures,
     markNodeFromComponent,
     getNodesStructures,

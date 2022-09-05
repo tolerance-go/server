@@ -3,7 +3,7 @@ import ComEventViewForm from '@/pages/Design/components/ComEventViewForm';
 import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
 import { useSelectedComActiveStatExtendRelation } from '@/pages/Design/hooks/selected/useSelectedComActiveStatExtendRelation';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentEvent } from '@/pages/Design/models/comsEvents';
+import { ComponentEvent } from '@/pages/Design/models/nodesEvents';
 import { isExtendReactionView } from '@/pages/Design/utils/isExtendReactionView';
 import { DeleteOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
@@ -22,17 +22,17 @@ export default () => {
     }),
   );
 
-  const { comsEvents, deleteComStatEvent } = useModel(
-    'Design.page.comsEvents',
+  const { nodesEvents, deleteComStatEvent } = useModel(
+    'Design.page.nodesEvents',
     (model) => ({
-      comsEvents: model.comsEvents,
+      nodesEvents: model.nodesEvents,
       deleteComStatEvent: model.deleteComStatEvent,
     }),
   );
 
   const actions =
     stageSelectNodeId && activeNodeStatId
-      ? comsEvents[stageSelectNodeId]?.[activeNodeStatId]
+      ? nodesEvents[stageSelectNodeId]?.[activeNodeStatId]
       : undefined;
 
   const { triggerPrepareSaveTimeChange } = useModel(

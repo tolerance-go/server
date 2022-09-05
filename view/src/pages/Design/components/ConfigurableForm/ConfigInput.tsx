@@ -117,7 +117,6 @@ export const ConfigInput = ({
           }
         >
           {(depends) => {
-            debugger;
             return renderInput(depends);
           }}
         </ProFormDependency>

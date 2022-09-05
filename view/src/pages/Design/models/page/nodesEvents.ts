@@ -1,13 +1,12 @@
 import { ComId, EventId, StatId } from '@/pages/Design/typings/keys';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
 import utl from 'lodash';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 import { setComStatTypeWithName } from '@/pages/Design/helps/setComStatTypeWithName';
 import { updateComStatTypeWithName } from '@/pages/Design/helps/updateComStatTypeWithName';
 import { useCopyComPropsFromStatToOtherStat } from '@/pages/Design/helps/useCopyComPropsFromStatToOtherStat';
+import { useUpdateModeState } from '@/utils/useUpdateModeState';
 
 /**
  * eg：
@@ -45,7 +44,14 @@ export type ComponentsEvents = Record<ComId, ComponentStatusEvents>;
 
 /** 组件的事件管理 */
 const useComsEvents = () => {
-  const [comsEvents, setComsEvents] = useState<ComponentsEvents>({});
+  const [
+    nodesEvents,
+    setNodesEvents,
+    getNodesEvents,
+    initNodesEvents,
+    nodesEventsUpdateMode,
+    getNodesEventsUpdateMode,
+  ] = useUpdateModeState<ComponentsEvents>({});
 
   const { eventManager } = useModel('Design.stage.eventManager', (model) => ({
     eventManager: model.eventManager,
@@ -58,31 +64,32 @@ const useComsEvents = () => {
     }),
   );
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
-    getStageSelectNodeId: model.getStageSelectNodeId,
-  }));
+  const { getStageSelectNodeId } = useModel(
+    'Design.stage.stageSelectNodeId',
+    (model) => ({
+      getStageSelectNodeId: model.getStageSelectNodeId,
+    }),
+  );
 
   /** 创建新的事件 */
   const createComStatEvent = useMemoizedFn(
     (comId: string, statId: string, event: Omit<ComponentEvent, 'id'>) => {
       const newId = nanoid();
 
-      setComsEvents(
-        produce((draft) => {
-          if (draft[comId] === undefined) {
-            draft[comId] = {};
-          }
+      setNodesEvents((draft) => {
+        if (draft[comId] === undefined) {
+          draft[comId] = {};
+        }
 
-          if (draft[comId][statId] === undefined) {
-            draft[comId][statId] = {};
-          }
+        if (draft[comId][statId] === undefined) {
+          draft[comId][statId] = {};
+        }
 
-          draft[comId][statId][newId] = {
-            id: newId,
-            ...event,
-          };
-        }),
-      );
+        draft[comId][statId][newId] = {
+          id: newId,
+          ...event,
+        };
+      });
 
       /** 注册事件 */
       eventManager.register(comId, statId, {
@@ -104,11 +111,9 @@ const useComsEvents = () => {
         [actionName: string]: ComponentEvent;
       },
     ) => {
-      setComsEvents(
-        produce((draft) => {
-          setComStatTypeWithName(comId, statId, eventWithName, draft);
-        }),
-      );
+      setNodesEvents((draft) => {
+        setComStatTypeWithName(comId, statId, eventWithName, draft);
+      });
     },
   );
 
@@ -121,11 +126,9 @@ const useComsEvents = () => {
         [actionName: string]: ComponentEvent;
       }>,
     ) => {
-      setComsEvents(
-        produce((draft) => {
-          updateComStatTypeWithName(comId, statId, eventWithName, draft);
-        }),
-      );
+      setNodesEvents((draft) => {
+        updateComStatTypeWithName(comId, statId, eventWithName, draft);
+      });
     },
   );
 
@@ -136,14 +139,12 @@ const useComsEvents = () => {
       statId: string,
       event: Partial<ComponentEvent> & Pick<ComponentEvent, 'id'>,
     ) => {
-      setComsEvents(
-        produce((draft) => {
-          draft[comId][statId][event.id] = {
-            ...draft[comId][statId][event.id],
-            ...event,
-          };
-        }),
-      );
+      setNodesEvents((draft) => {
+        draft[comId][statId][event.id] = {
+          ...draft[comId][statId][event.id],
+          ...event,
+        };
+      });
 
       /** 更新注册 */
       eventManager.update(comId, statId, {
@@ -160,11 +161,9 @@ const useComsEvents = () => {
   /** 删除动作 */
   const deleteComStatEvent = useMemoizedFn(
     (comId: string, statId: string, eventId: string) => {
-      setComsEvents(
-        produce((draft) => {
-          delete draft[comId][statId][eventId];
-        }),
-      );
+      setNodesEvents((draft) => {
+        delete draft[comId][statId][eventId];
+      });
 
       /** 卸载注册 */
       eventManager.uninstalled(comId, statId, eventId);
@@ -174,25 +173,25 @@ const useComsEvents = () => {
   /** 获取数据，准备持久化 */
   const getData = useMemoizedFn(() => {
     return {
-      comsEvents,
+      nodesEvents,
     };
   });
 
   const getSliceData = useMemoizedFn((comIds: string[]) => {
     return {
-      comsEvents: utl.pick(comsEvents, comIds),
+      nodesEvents: utl.pick(nodesEvents, comIds),
     };
   });
 
   /** 初始化 */
-  const initData = useMemoizedFn((from?: { comsEvents: ComponentsEvents }) => {
-    setComsEvents(from?.comsEvents ?? {});
+  const initData = useMemoizedFn((from?: { nodesEvents: ComponentsEvents }) => {
+    initNodesEvents(from?.nodesEvents ?? {});
 
     /** 初始化注册事件管理 */
-    if (from?.comsEvents) {
-      Object.keys(from.comsEvents).forEach((comId) => {
-        Object.keys(from.comsEvents[comId]).forEach((statId) => {
-          const events = from.comsEvents[comId][statId];
+    if (from?.nodesEvents) {
+      Object.keys(from.nodesEvents).forEach((comId) => {
+        Object.keys(from.nodesEvents[comId]).forEach((statId) => {
+          const events = from.nodesEvents[comId][statId];
           Object.keys(events).forEach((eventId) => {
             const event = events[eventId];
             eventManager.register(comId, statId, {
@@ -211,7 +210,7 @@ const useComsEvents = () => {
 
   /** 拷贝组件 A 状态的配置到 B 状态 */
   const { copyComPropsFromStatToOtherStat: copyComEventFromStatToOtherStat } =
-    useCopyComPropsFromStatToOtherStat(setComsEvents);
+    useCopyComPropsFromStatToOtherStat(setNodesEvents);
 
   const copySelectedComEventFromActiveStatToOtherStat = useMemoizedFn(
     (toStatId: string) => {
@@ -228,24 +227,26 @@ const useComsEvents = () => {
   );
 
   const deleteComsEventsByIds = useMemoizedFn((comIds: string[]) => {
-    setComsEvents(
-      produce((draft) => {
-        comIds.forEach((comId) => {
-          delete draft[comId];
-        });
-      }),
-    );
+    setNodesEvents((draft) => {
+      comIds.forEach((comId) => {
+        delete draft[comId];
+      });
+    });
   });
 
   return {
-    comsEvents,
+    nodesEvents,
+    nodesEventsUpdateMode,
+    getNodesEvents,
+    initNodesEvents,
+    getNodesEventsUpdateMode,
     deleteComsEventsByIds,
     setComStatEventWithName,
     updateComStatEventWithName,
     copySelectedComEventFromActiveStatToOtherStat,
     copyComEventFromStatToOtherStat,
     createComStatEvent,
-    setComsEvents,
+    setComsEvents: setNodesEvents,
     updateComStatEvent,
     deleteComStatEvent,
     getData,

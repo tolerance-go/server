@@ -1,6 +1,6 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/page/comsActions';
+import { ComponentAction } from '@/pages/Design/models/page/nodesActions';
 import { ComStatRelation } from '@/pages/Design/models/page/statusConnectRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
@@ -34,8 +34,8 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { comsActions } = useModel('Design.page.comsActions', (model) => ({
-    comsActions: model.comsActions,
+  const { nodesActions } = useModel('Design.page.nodesActions', (model) => ({
+    nodesActions: model.nodesActions,
   }));
 
   const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
@@ -51,13 +51,13 @@ export default ({
 
   const actionData = useMemo(() => {
     if (stageSelectNodeId && activeNodeStatId && actionItem?.id) {
-      return comsActions[stageSelectNodeId][activeNodeStatId][
+      return nodesActions[stageSelectNodeId][activeNodeStatId][
         actionItem?.id
       ];
     }
     return undefined;
   }, [
-    comsActions,
+    nodesActions,
     actionItem?.id,
     stageSelectNodeId,
     activeNodeStatId,

@@ -65,7 +65,7 @@ export default () => {
   /** 初始化 */
   const initData = useMemoizedFn(
     (from?: { nodesDefaultsStatus: StatusSettingsDefaults }) => {
-      setStatusSettingsDefaults(from?.nodesDefaultsStatus ?? {});
+      initNodesDefaultsStatus(from?.nodesDefaultsStatus ?? {});
     },
   );
 

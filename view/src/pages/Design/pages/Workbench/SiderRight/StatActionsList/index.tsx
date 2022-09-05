@@ -3,7 +3,7 @@ import ComActionViewForm from '@/pages/Design/components/ComActionViewForm';
 import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
 import { useSelectedComActiveStatExtendRelation } from '@/pages/Design/hooks/selected/useSelectedComActiveStatExtendRelation';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentAction } from '@/pages/Design/models/page/comsActions';
+import { ComponentAction } from '@/pages/Design/models/page/nodesActions';
 import { isExtendReactionView } from '@/pages/Design/utils/isExtendReactionView';
 import { DeleteOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
@@ -22,17 +22,17 @@ export default () => {
     }),
   );
 
-  const { comsActions, deleteComStatAction } = useModel(
-    'Design.page.comsActions',
+  const { nodesActions, deleteComStatAction } = useModel(
+    'Design.page.nodesActions',
     (model) => ({
-      comsActions: model.comsActions,
+      nodesActions: model.nodesActions,
       deleteComStatAction: model.deleteComStatAction,
     }),
   );
 
   const actions =
     stageSelectNodeId && activeNodeStatId
-      ? comsActions[stageSelectNodeId]?.[activeNodeStatId]
+      ? nodesActions[stageSelectNodeId]?.[activeNodeStatId]
       : undefined;
 
   const { triggerPrepareSaveTimeChange } = useModel(

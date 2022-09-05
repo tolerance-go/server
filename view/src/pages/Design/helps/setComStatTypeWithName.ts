@@ -1,6 +1,6 @@
 import { WritableDraft } from 'immer/dist/internal';
-import { ComponentAction, ComponentsActions } from '../comsActions';
-import { ComponentEvent, ComponentsEvents } from '../comsEvents';
+import { ComponentAction, ComponentsActions } from '../nodesActions';
+import { ComponentEvent, ComponentsEvents } from '../nodesEvents';
 
 export const setComStatTypeWithName = (
   comId: string,

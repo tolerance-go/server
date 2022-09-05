@@ -1,4 +1,4 @@
-import { ComponentAction } from '@/pages/Design/models/comsActions';
+import { ComponentAction } from '@/pages/Design/models/nodesActions';
 
 export interface SwitchStatusAction extends ComponentAction {
   settings: {

@@ -1,11 +1,11 @@
 import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentAction } from '@/pages/Design/models/comsActions';
+import { ComponentAction } from '@/pages/Design/models/nodesActions';
 import { SwitchStatusAction } from '@/pages/Design/typings/actions';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 export const useCommonActionHandler = () => {
-  const { getComStatAction } = useModel('Design.page.comsActions', (model) => ({
+  const { getComStatAction } = useModel('Design.page.nodesActions', (model) => ({
     getComStatAction: model.getComStatAction,
   }));
 

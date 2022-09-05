@@ -29,13 +29,13 @@ export const useInitSatgeData = () => {
     },
   );
 
-  const { initData: initComsActions } = useModel('Design.page.comsActions', (model) => {
+  const { initData: initComsActions } = useModel('Design.page.nodesActions', (model) => {
     return {
       initData: model.initData,
     };
   });
 
-  const { initData: initComsEvents } = useModel('Design.page.comsEvents', (model) => {
+  const { initData: initComsEvents } = useModel('Design.page.nodesEvents', (model) => {
     return {
       initData: model.initData,
     };
@@ -60,8 +60,8 @@ export const useInitSatgeData = () => {
       initStatusSettings(stageData.comsStatus);
       initStatusSettingsDefaults(stageData.comsStatusDefaults);
       initStatusRelations(stageData.comsStatusRelations);
-      initComsActions(stageData.comsActions);
-      initComsEvents(stageData.comsEvents);
+      initComsActions(stageData.nodesActions);
+      initComsEvents(stageData.nodesEvents);
       initComsStyles(stageData.nodesStyles);
     },
   );

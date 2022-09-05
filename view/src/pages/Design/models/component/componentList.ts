@@ -34,7 +34,7 @@ const useComsMaterialList = () => {
         draft?.push(newComMaterial);
       }),
     );
-    // removeTargetComsAndSaveTheirSettings(rootIds);
+    // removeTargetComsAndSaveTheirSettings(rootNodeIds);
   });
 
   const removeComMaterial = useMemoizedFn((id: number) => {

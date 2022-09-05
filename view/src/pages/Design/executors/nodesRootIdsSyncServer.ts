@@ -6,9 +6,9 @@ import { useUpdateEffect } from 'ahooks';
 import { RootIds } from '../models/page/nodesStructuresAndRootIds';
 
 export default () => {
-  const { rootIds, getRootIdsUpdateMode } = useModel(
+  const { rootNodeIds, getRootIdsUpdateMode } = useModel(
     'Design.page.nodesStructuresAndRootIds',
-    pickModel(['rootIds', 'getRootIdsUpdateMode']),
+    pickModel(['rootNodeIds', 'getRootIdsUpdateMode']),
   );
 
   const { getSelectedPageId } = useModel(
@@ -18,11 +18,11 @@ export default () => {
 
   /** 当数据修改后同步服务 */
   const { run: requestSyncRootIds } = useRequestReadyOnAuth(
-    async (id: string, rootIds?: RootIds) => {
+    async (id: string, rootNodeIds?: RootIds) => {
       return await PageControllerUpdate(
         { id },
         {
-          rootNodeIds: rootIds ? JSON.stringify(rootIds) : '{}',
+          rootNodeIds: rootNodeIds ? JSON.stringify(rootNodeIds) : '{}',
         },
       );
     },
@@ -34,7 +34,7 @@ export default () => {
   useUpdateEffect(() => {
     const selectedPageId = getSelectedPageId();
     if (selectedPageId && getRootIdsUpdateMode() === 'update') {
-      requestSyncRootIds(selectedPageId, rootIds);
+      requestSyncRootIds(selectedPageId, rootNodeIds);
     }
-  }, [rootIds]);
+  }, [rootNodeIds]);
 };

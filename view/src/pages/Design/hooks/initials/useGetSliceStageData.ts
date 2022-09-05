@@ -38,13 +38,13 @@ export const useGetSliceStageData = () => {
     },
   );
 
-  const { getSliceData: getComsActions } = useModel('Design.page.comsActions', (model) => {
+  const { getSliceData: getComsActions } = useModel('Design.page.nodesActions', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
   });
 
-  const { getSliceData: getComsEvents } = useModel('Design.page.comsEvents', (model) => {
+  const { getSliceData: getComsEvents } = useModel('Design.page.nodesEvents', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
@@ -73,8 +73,8 @@ export const useGetSliceStageData = () => {
       comsStatusRelations: getStatusRelations(allComIds),
       comsStatus: getStatusSettings(allComIds),
       comsStatusDefaults: getStatusSettingsDefaults(allComIds),
-      comsActions: getComsActions(allComIds),
-      comsEvents: getComsEvents(allComIds),
+      nodesActions: getComsActions(allComIds),
+      nodesEvents: getComsEvents(allComIds),
       nodesStyles: getComsStyles(allComIds),
       comsSettings: getComsSettings(allComIds),
     };

@@ -4,7 +4,7 @@ import { useComStatusExtendProps } from '../_utils/useComStatusExtendProps';
 /** 组件继承状态修改 */
 export const useComStatusExtendEvents = () => {
   const { setComStatEventWithName, updateComStatEventWithName } = useModel(
-    'Design.page.comsEvents',
+    'Design.page.nodesEvents',
     (model) => ({
       setComStatEventWithName: model.setComStatEventWithName,
       updateComStatEventWithName: model.updateComStatEventWithName,

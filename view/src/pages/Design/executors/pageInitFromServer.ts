@@ -30,6 +30,16 @@ export default () => {
     pickModel(['initData']),
   );
 
+  const { initData: initNodesEvents } = useModel(
+    'Design.page.nodesEvents',
+    pickModel(['initData']),
+  );
+
+  const { initData: initNodesActions } = useModel(
+    'Design.page.nodesActions',
+    pickModel(['initData']),
+  );
+
   useRequestReadyOnAuth(
     async () => {
       if (selectedPageId) {
@@ -43,7 +53,7 @@ export default () => {
         if (!data) return;
 
         initNodesStructuresAndRootIds({
-          rootIds: parseJSON(data.rootNodeIds),
+          rootNodeIds: parseJSON(data.rootNodeIds),
           nodesStructures: parseJSON(data.nodesStructures),
         });
 
@@ -57,6 +67,14 @@ export default () => {
 
         initNodesStyles({
           nodesStyles: parseJSON(data.nodesStyles),
+        });
+
+        initNodesEvents({
+          nodesEvents: parseJSON(data.nodesEvents),
+        });
+
+        initNodesActions({
+          nodesActions: parseJSON(data.nodesActions),
         });
       },
     },

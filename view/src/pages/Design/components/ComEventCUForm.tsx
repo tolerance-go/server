@@ -1,7 +1,7 @@
 import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
 import { useComStatusExtendEvents } from '@/pages/Design/hooks/relations/useComStatusExtendEvents';
 import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentEvent } from '@/pages/Design/models/comsEvents';
+import { ComponentEvent } from '@/pages/Design/models/nodesEvents';
 import { ComStatRelation } from '@/pages/Design/models/statusRelations';
 import { EditOutlined } from '@ant-design/icons';
 import {
@@ -38,15 +38,15 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { getComStatActions } = useModel('Design.page.comsActions', (model) => ({
+  const { getComStatActions } = useModel('Design.page.nodesActions', (model) => ({
     getComStatActions: model.getComStatActions,
   }));
 
-  const { createComStatEvent, comsEvents } = useModel(
-    'Design.page.comsEvents',
+  const { createComStatEvent, nodesEvents } = useModel(
+    'Design.page.nodesEvents',
     (model) => ({
       createComStatEvent: model.createComStatEvent,
-      comsEvents: model.comsEvents,
+      nodesEvents: model.nodesEvents,
     }),
   );
 
@@ -86,14 +86,14 @@ export default ({
       activeNodeStatId &&
       eventItem?.id
     ) {
-      return comsEvents[stageSelectNodeId][activeNodeStatId][
+      return nodesEvents[stageSelectNodeId][activeNodeStatId][
         eventItem.id
       ];
     }
     return undefined;
   }, [
     mode,
-    comsEvents,
+    nodesEvents,
     eventItem?.id,
     stageSelectNodeId,
     activeNodeStatId,

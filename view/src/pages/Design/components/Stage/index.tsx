@@ -9,21 +9,21 @@ import { StageWorkbenchWrapper } from './wrappers/Workbench';
 /** 根据 type 静态注册组件对象 */
 
 export default function Stage() {
-  const { rootIds, stageComponentsModel } = useModel(
+  const { rootNodeIds, stageComponentsModel } = useModel(
     'Design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         stageComponentsModel: model.nodesStructures,
-        rootIds: model.rootIds,
+        rootNodeIds: model.rootNodeIds,
       };
     },
   );
 
   const rootNodeModels = useMemo(() => {
-    return rootIds
+    return rootNodeIds
       .map((id) => stageComponentsModel?.[id])
       .filter((item): item is ComponentStructure => item !== undefined);
-  }, [rootIds, stageComponentsModel]);
+  }, [rootNodeIds, stageComponentsModel]);
 
   const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
@@ -33,7 +33,7 @@ export default function Stage() {
     return null;
   }
 
-  consola.info('渲染跟节点组件', rootIds, stageComponentsModel);
+  consola.info('渲染跟节点组件', rootNodeIds, stageComponentsModel);
 
   const el = (
     <>
