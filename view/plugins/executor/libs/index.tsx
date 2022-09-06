@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default (Component: React.ElementType, Executor: React.ElementType) =>
-  () => {
+export const withExecutor =
+  (Component: React.ElementType, Executor: React.ElementType) => () => {
     return (
       <>
         <Executor />

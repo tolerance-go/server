@@ -35,18 +35,12 @@ export const layout: RunTimeLayoutConfig = (props) => {
   const { initialState, setInitialState } = props;
   const location = useLocation();
   /**
-   * 登录页和首页刷新，避免闪烁
-   * 避免闪烁，增加 design 页面
-   * @@initialState model 可能为空：在 其他 model 中的进行 use
-   * initialState 可能为空，getInitialState 内部抛出异常
-   * initialState.user 可能为空，登录页和首页首次进入不拉用户数据
+   * 避免页面闪烁，提前判断而不是在 routes 中隐藏导航
    */
-  // 注意 error 不会恢复，约定根据 user 存在来进行判断
   if (
     [PATHS.DESIGN, PATHS.HOME, PATHS.LOGIN, PATHS.PLAYGROUND].includes(
       location.pathname,
-    ) ||
-    !initialState?.user
+    )
   ) {
     return {
       menuRender: false,
@@ -54,6 +48,7 @@ export const layout: RunTimeLayoutConfig = (props) => {
       headerRender: false,
     };
   }
+
   return {
     logo: `${PUBLIC_PATH}logo.svg`,
     menu: {
@@ -61,85 +56,55 @@ export const layout: RunTimeLayoutConfig = (props) => {
     },
     route: {
       path: '/',
-      routes: [
-        {
-          path: PATHS.HOME,
-          // 不展示顶栏
-          headerRender: false,
-          // 不展示页脚
-          footerRender: false,
-          // 不展示菜单
-          menuRender: false,
-          // 隐藏自己和子菜单
-          hideInMenu: true,
-        },
-        {
-          path: PATHS.LOGIN,
-          headerRender: false,
-          footerRender: false,
-          menuRender: false,
-          hideInMenu: true,
-        },
-        {
-          path: PATHS.DESIGN,
-          headerRender: false,
-          footerRender: false,
-          menuRender: false,
-          hideInMenu: true,
-        },
-        {
-          path: PATHS.PLAYGROUND,
-          headerRender: false,
-          footerRender: false,
-          menuRender: false,
-          hideInMenu: true,
-        },
-        {
-          name: '工作台',
-          path: PATHS.DASHBOARD,
-          icon: <CarryOutOutlined />,
-        },
-        {
-          name: '需求管理',
-          path: '/demands',
-          icon: <CompassOutlined />,
-        },
-        {
-          name: '应用管理',
-          path: PATHS.APP_LIST,
-          icon: <PartitionOutlined />,
-        },
-        {
-          name: '讨论管理',
-          path: '/discuss',
-          icon: <MessageOutlined />,
-        },
-        {
-          name: '版本管理',
-          path: '/versions',
-          icon: <BranchesOutlined />,
-        },
-        {
-          name: '团队管理',
-          path: '/teams',
-          icon: <TeamOutlined />,
-        },
-        {
-          name: '组件管理',
-          path: '/widgets',
-          icon: <AppstoreAddOutlined />,
-          routes: [
+      routes: initialState?.user
+        ? [
             {
-              name: '我的安装',
-              path: '/widgets/install',
+              name: '工作台',
+              path: PATHS.DASHBOARD,
+              icon: <CarryOutOutlined />,
             },
             {
-              name: '我的发布',
-              path: '/widgets/publish',
+              name: '需求管理',
+              path: '/demands',
+              icon: <CompassOutlined />,
             },
-          ],
-        },
-      ],
+            {
+              name: '应用管理',
+              path: PATHS.APP_LIST,
+              icon: <PartitionOutlined />,
+            },
+            {
+              name: '讨论管理',
+              path: '/discuss',
+              icon: <MessageOutlined />,
+            },
+            {
+              name: '版本管理',
+              path: '/versions',
+              icon: <BranchesOutlined />,
+            },
+            {
+              name: '团队管理',
+              path: '/teams',
+              icon: <TeamOutlined />,
+            },
+            {
+              name: '组件管理',
+              path: '/widgets',
+              icon: <AppstoreAddOutlined />,
+              routes: [
+                {
+                  name: '我的安装',
+                  path: '/widgets/install',
+                },
+                {
+                  name: '我的发布',
+                  path: '/widgets/publish',
+                },
+              ],
+            },
+          ]
+        : [],
     },
     bgLayoutImgList: [
       {

@@ -6,7 +6,7 @@ import withAuth from '@/wrappers/withAuth';
 import withPageId from '@/wrappers/withPageId';
 import { DiscussDrawer } from './DiscussDrawer';
 import Executor from '@@/plugin-executor/routes/playground';
-import withExecutor from '@/wrappers/withExecutor';
+import { withExecutor } from '@/.umi/plugin-executor';
 
 export default withPageId(
   withAppId(

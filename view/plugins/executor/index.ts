@@ -1,10 +1,9 @@
 import * as t from '@umijs/bundler-utils/compiled/babel/types';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { IApi } from '@umijs/max';
-import { ExecutorUtils } from './utils/executorUtils';
-// import { withTmpPath } from './utils/withTmpPath';
+import { readFileSync } from 'fs';
 import { groupBy } from 'lodash';
+import { join } from 'path';
+import { ExecutorUtils } from './utils/executorUtils';
 
 export default (api: IApi) => {
   api.describe({
@@ -28,7 +27,17 @@ export default (api: IApi) => {
       (item) => item.pathname,
     );
 
+    // index.tsx
     const indexContent = readFileSync(
+      join(__dirname, './libs/index.tsx'),
+      'utf-8',
+    );
+    api.writeTmpFile({
+      path: 'index.tsx',
+      content: indexContent,
+    });
+
+    const executorContent = readFileSync(
       join(__dirname, './libs/Executor.tsx'),
       'utf-8',
     );
@@ -47,7 +56,7 @@ export default (api: IApi) => {
       // index.tsx
       api.writeTmpFile({
         path: join(dir, 'index.tsx'),
-        content: indexContent,
+        content: executorContent,
       });
     });
   });
