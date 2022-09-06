@@ -1,10 +1,10 @@
-import BoxSizeInput from '@/pages/Design/components/ConfigurableForm/inputs/BoxSizeInput';
+import BoxSizeInput from '@/pages/design/components/ConfigurableForm/inputs/BoxSizeInput';
 import { CloseOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Popover, Space, Typography } from 'antd';
 
 export const StageSizeManager = () => {
-  const { stageSize, setStageSize } = useModel('Design.stage.stageSize', (model) => ({
+  const { stageSize, setStageSize } = useModel('design.stage.stageSize', (model) => ({
     stageSize: model.stageSize,
     setStageSize: model.changeStageSize,
   }));

@@ -7,7 +7,7 @@ import { DiscussListActions } from '../DiscussListActions';
 
 export default () => {
   const { filterDiscusses, setSelectedDiscussId, setDetailMode } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       filterDiscusses: model.filterDiscusses,
       setSelectedDiscussId: model.setSelectedDiscussId,
@@ -16,7 +16,7 @@ export default () => {
   );
 
   const { allDiscussCommentsCount } = useModel(
-    'Design.discuss.allDiscussCommentsCount',
+    'design.discuss.allDiscussCommentsCount',
     (model) => ({
       allDiscussCommentsCount: model.allDiscussCommentsCount,
     }),

@@ -1,6 +1,6 @@
-import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
-import useGetImmer from '@/pages/Design/utils/useGetImmer';
+import { getURLQuery } from '@/pages/design/helps/getURLQuery';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
+import useGetImmer from '@/pages/design/utils/useGetImmer';
 import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';
 

@@ -1,6 +1,6 @@
-import { SLOTS_NAME } from '@/pages/Design/constants';
-import { joinSlotGroupId } from '@/pages/Design/helps';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
+import { SLOTS_NAME } from '@/pages/design/constants';
+import { joinSlotGroupId } from '@/pages/design/helps';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
 import { useMemo } from 'react';
 import { Atom } from '../Atom';
@@ -17,7 +17,7 @@ export const AddSlotProxy = ({
   slots?: Record<string, string[]>;
 }) => {
   const { stageComponentsModel } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         stageComponentsModel: model?.nodesStructures,

@@ -3,12 +3,12 @@ import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';
 
 export const useSelectedDataListItem = () => {
-  const { dataList } = useModel('Design.database.dataList', (model) => ({
+  const { dataList } = useModel('design.database.dataList', (model) => ({
     dataList: model.dataList,
   }));
 
   const { selectedDataId } = useModel(
-    'Design.database.selectedDataId',
+    'design.database.selectedDataId',
     (model) => ({
       selectedDataId: model.selectedDataId,
     }),

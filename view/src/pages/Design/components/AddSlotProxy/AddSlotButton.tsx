@@ -14,11 +14,11 @@ export default ({
   nodeId: string;
   slotName: string;
 }) => {
-  const { setMode } = useModel('Design.workbench.siderLeftMode', (model) => ({
+  const { setMode } = useModel('design.workbench.siderLeftMode', (model) => ({
     setMode: model.setSiderLeftMode,
   }));
 
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 
@@ -30,7 +30,7 @@ export default ({
     focusComId,
     focusSlotName,
   } = useModel(
-    'Design.stage.slotsInsert',
+    'design.stage.slotsInsert',
     pickModel([
       'setFocusComId',
       'setFocusSlotName',

@@ -1,4 +1,4 @@
-import { UnsyncFields } from '@/pages/Design/models/statusRelations';
+import { UnsyncFields } from '@/pages/design/models/statusRelations';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import utl from 'lodash';
@@ -12,19 +12,19 @@ export const useComStatusExtendProps = <P extends object>(options: {
   ) => void;
   setComStatProps: (comId: string, statId: string, props: P) => void;
 }) => {
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { getStageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     getStageSelectNodeId: model.getStageSelectNodeId,
   }));
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 
   const { getComExtendStatusFromStat } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({
       getComExtendStatusFromStat: model.getComExtendRelationsFromStat,
     }),

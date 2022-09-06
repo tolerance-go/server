@@ -4,7 +4,7 @@ import { useModel } from '@umijs/max';
 
 export const useDebounceTriggerPrepareSaveTimeChange = () => {
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),

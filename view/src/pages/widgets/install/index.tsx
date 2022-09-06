@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Installed from './Installed';
 import Markets from './Markets';
 import useUrlState from '@ahooksjs/use-url-state';
+import withAuth from '@/wrappers/withAuth';
 
 const TableList: React.FC<unknown> = () => {
   const [query, setQuery] = useUrlState({ activeTabKey: 'markets' });
@@ -37,4 +38,4 @@ const TableList: React.FC<unknown> = () => {
   );
 };
 
-export default TableList;
+export default withAuth(TableList);

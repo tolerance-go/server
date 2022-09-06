@@ -1,9 +1,9 @@
-import { SLOTS_NAME } from '@/pages/Design/constants';
-import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentAction } from '@/pages/Design/models/nodesActions';
-import { ComponentCommonStyle } from '@/pages/Design/models/nodesStyles';
-import { RecordType } from '@/pages/Design/typings';
-import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
+import { SLOTS_NAME } from '@/pages/design/constants';
+import { EventHandlerParams } from '@/pages/design/domains/StageEventManager';
+import { ComponentAction } from '@/pages/design/models/nodesActions';
+import { ComponentCommonStyle } from '@/pages/design/models/nodesStyles';
+import { RecordType } from '@/pages/design/typings';
+import { AtomComponentProps } from '@/pages/design/typings/ElementCenter';
 import { useModel } from '@umijs/max';
 import { Table, TableProps } from 'antd';
 import { CSSProperties, useEffect } from 'react';
@@ -33,15 +33,15 @@ export const AtomTable = (
 ) => {
   const { ...rest } = props.settings ?? {};
 
-  const { eventManager } = useModel('Design.stage.eventManager', (model) => ({
+  const { eventManager } = useModel('design.stage.eventManager', (model) => ({
     eventManager: model.eventManager,
   }));
 
-  const { getTableDataSourceByDataId } = useModel('Design.database.dataList', (model) => ({
+  const { getTableDataSourceByDataId } = useModel('design.database.dataList', (model) => ({
     getTableDataSourceByDataId: model.getTableDataSourceByDataId,
   }));
 
-  const { updateComStatSetting } = useModel('Design.page.nodesSettings', (model) => ({
+  const { updateComStatSetting } = useModel('design.page.nodesSettings', (model) => ({
     updateComStatSetting: model.updateComStatSetting,
   }));
 

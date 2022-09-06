@@ -1,6 +1,6 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { useFormReset } from '@/pages/Design/hooks/useFormReset';
-import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { useFormReset } from '@/pages/design/hooks/useFormReset';
+import { useSelectedData } from '@/pages/design/hooks/selected/useSelectedData';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { Empty, Form, Result } from 'antd';
@@ -16,18 +16,18 @@ export const ColumSettingsForm = () => {
     dataColumnSettingsConfigs,
     updateDataListItemColumn,
     getColumnDataMetaAfterUpdateColumnSettings,
-  } = useModel('Design.database.dataList', (model) => ({
+  } = useModel('design.database.dataList', (model) => ({
     dataColumnSettingsConfigs: model.dataColumnSettingsConfigs,
     getColumnDataMetaAfterUpdateColumnSettings:
       model.getColumnDataMetaAfterUpdateColumnSettings,
     updateDataListItemColumn: model.updateDataListItemColumn,
   }));
 
-  const { selectedColumnFieldId } = useModel('Design.database.dataFieldsConfig', (model) => ({
+  const { selectedColumnFieldId } = useModel('design.database.dataFieldsConfig', (model) => ({
     selectedColumnFieldId: model.selectedColumnFieldId,
   }));
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
+  const { selectedDataId } = useModel('design.database.selectedDataId', (model) => ({
     selectedDataId: model.selectedDataId,
   }));
 

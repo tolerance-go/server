@@ -1,5 +1,5 @@
-import { AtomButtonSettings } from '@/pages/Design/components/atomComs/AtomButton';
-import { AtomTableSettings } from '@/pages/Design/components/atomComs/AtomTable';
+import { AtomButtonSettings } from '@/pages/design/components/atomComs/AtomButton';
+import { AtomTableSettings } from '@/pages/design/components/atomComs/AtomTable';
 import { LineConfig } from '@ant-design/plots';
 import { useGetState } from 'ahooks';
 

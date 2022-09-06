@@ -3,7 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 
 export const useGetStageData = () => {
   const { getData: getComsTreeData } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         getData: model.getData,
@@ -11,14 +11,14 @@ export const useGetStageData = () => {
     },
   );
 
-  const { getData: getStatusSettings } = useModel('Design.page.nodesStatus', (model) => {
+  const { getData: getStatusSettings } = useModel('design.page.nodesStatus', (model) => {
     return {
       getData: model.getData,
     };
   });
 
   const { getData: getStatusSettingsDefaults } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => {
       return {
         getData: model.getData,
@@ -27,7 +27,7 @@ export const useGetStageData = () => {
   );
 
   const { getData: getStatusRelations } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => {
       return {
         getData: model.getData,
@@ -35,25 +35,25 @@ export const useGetStageData = () => {
     },
   );
 
-  const { getData: getComsActions } = useModel('Design.page.nodesActions', (model) => {
+  const { getData: getComsActions } = useModel('design.page.nodesActions', (model) => {
     return {
       getData: model.getData,
     };
   });
 
-  const { getData: getComsEvents } = useModel('Design.page.nodesEvents', (model) => {
+  const { getData: getComsEvents } = useModel('design.page.nodesEvents', (model) => {
     return {
       getData: model.getData,
     };
   });
 
-  const { getData: getComsStyles } = useModel('Design.page.nodesStyles', (model) => {
+  const { getData: getComsStyles } = useModel('design.page.nodesStyles', (model) => {
     return {
       getData: model.getData,
     };
   });
 
-  const { getData: getComsSettings } = useModel('Design.page.nodesSettings', (model) => {
+  const { getData: getComsSettings } = useModel('design.page.nodesSettings', (model) => {
     return {
       getData: model.getData,
     };

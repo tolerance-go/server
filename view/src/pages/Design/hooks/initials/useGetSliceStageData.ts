@@ -3,7 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 
 export const useGetSliceStageData = () => {
   const { getSliceData: getComsTreeData } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -12,7 +12,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusSettings } = useModel(
-    'Design.page.nodesStatus',
+    'design.page.nodesStatus',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -21,7 +21,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusSettingsDefaults } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -30,7 +30,7 @@ export const useGetSliceStageData = () => {
   );
 
   const { getSliceData: getStatusRelations } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => {
       return {
         getSliceData: model.getSliceData,
@@ -38,26 +38,26 @@ export const useGetSliceStageData = () => {
     },
   );
 
-  const { getSliceData: getComsActions } = useModel('Design.page.nodesActions', (model) => {
+  const { getSliceData: getComsActions } = useModel('design.page.nodesActions', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
   });
 
-  const { getSliceData: getComsEvents } = useModel('Design.page.nodesEvents', (model) => {
+  const { getSliceData: getComsEvents } = useModel('design.page.nodesEvents', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
   });
 
-  const { getSliceData: getComsStyles } = useModel('Design.page.nodesStyles', (model) => {
+  const { getSliceData: getComsStyles } = useModel('design.page.nodesStyles', (model) => {
     return {
       getSliceData: model.getSliceData,
     };
   });
 
   const { getSliceData: getComsSettings } = useModel(
-    'Design.page.nodesSettings',
+    'design.page.nodesSettings',
     (model) => {
       return {
         getSliceData: model.getSliceData,

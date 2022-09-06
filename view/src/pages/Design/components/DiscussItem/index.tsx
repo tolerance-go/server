@@ -1,4 +1,4 @@
-import { DiscussTag } from '@/pages/Design/components/DiscussTag';
+import { DiscussTag } from '@/pages/design/components/DiscussTag';
 import { useModel } from '@umijs/max';
 import { pick } from 'lodash';
 import { memo } from 'react';
@@ -10,7 +10,7 @@ const DiscussItem = (
   },
 ) => {
   const { setSelectedDiscussId, setDetailMode, selectedDiscussId } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       setSelectedDiscussId: model.setSelectedDiscussId,
       selectedDiscussId: model.selectedDiscussId,
@@ -31,11 +31,11 @@ const DiscussItem = (
   });
 
   /** 监听组件状态，判断显示 */
-  const { usedStatId } = useModel('Design.page.statusSettingsUsed', (model) => ({
+  const { usedStatId } = useModel('design.page.statusSettingsUsed', (model) => ({
     usedStatId: model.statusSettingsUsed[props.belongsToComId],
   }));
 
-  const { defaultStatId } = useModel('Design.page.nodesDefaultsStatus', (model) => ({
+  const { defaultStatId } = useModel('design.page.nodesDefaultsStatus', (model) => ({
     defaultStatId: model.nodesDefaultsStatus[props.belongsToComId],
   }));
 

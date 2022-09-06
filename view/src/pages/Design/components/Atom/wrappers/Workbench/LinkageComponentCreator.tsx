@@ -1,7 +1,7 @@
-import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
-import { useGetSliceStageData } from '@/pages/Design/hooks/initials/useGetSliceStageData';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
+import { getAppIdOrThrow } from '@/pages/design/helps/getAppIdOrThrow';
+import { getPageIdOrThrow } from '@/pages/design/helps/getPageIdOrThrow';
+import { useGetSliceStageData } from '@/pages/design/hooks/initials/useGetSliceStageData';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
 import { ComponentControllerCreate } from '@/services/server/ComponentController';
 import { useModel } from '@umijs/max';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
@@ -13,33 +13,33 @@ export const LinkageComponentCreator = (props: {
 }) => {
   const { getSliceStageData } = useGetSliceStageData();
 
-  const { addComMaterial } = useModel('Design.component.componentList', (model) => ({
+  const { addComMaterial } = useModel('design.component.componentList', (model) => ({
     addComMaterial: model.addComMaterial,
   }));
 
   const { setPagesSiderMode } = useModel(
-    'Design.workbench.normalModeSubMode',
+    'design.workbench.normalModeSubMode',
     (model) => ({
       setPagesSiderMode: model.setPagesSiderMode,
     }),
   );
 
   const { setHighlightId } = useModel(
-    'Design.component.listHighlightItemId',
+    'design.component.listHighlightItemId',
     (model) => ({
       setHighlightId: model.setHighlightId,
     }),
   );
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),
   );
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),

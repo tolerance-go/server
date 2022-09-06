@@ -1,7 +1,7 @@
 /** 根据默认的一些样式配置的值，转换成 react 组件可以接受的值 */
 
-import { DefaultStylesValue } from '@/pages/Design/models/nodesStyleConfigs';
-import { joinUnitNumber } from '@/pages/Design/utils/joinUnitNumber';
+import { DefaultStylesValue } from '@/pages/design/models/nodesStyleConfigs';
+import { joinUnitNumber } from '@/pages/design/utils/joinUnitNumber';
 import { CSSProperties } from 'react';
 
 export const getStyleFromDefaultStyle = (defaultStyle?: DefaultStylesValue) => {

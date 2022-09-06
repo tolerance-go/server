@@ -1,5 +1,5 @@
 import { useModel } from '@umijs/max';
-import { useAutoSave } from '@/pages/Design/hooks/initials/useAutoSave';
+import { useAutoSave } from '@/pages/design/hooks/initials/useAutoSave';
 import { CloudOutlined } from '@ant-design/icons';
 import { useSearchParams } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
@@ -25,18 +25,18 @@ const Text = (props: PropsWithChildren<TextProps>) => {
 };
 
 export const AutoSaveTag = () => {
-  const { autoSaveLastTime } = useModel('Design.app.stageAutoSave');
+  const { autoSaveLastTime } = useModel('design.app.stageAutoSave');
 
   const { loading } = useAutoSave();
 
-  const { setPageListByVersionId } = useModel('Design.page.pageList', (model) => ({
+  const { setPageListByVersionId } = useModel('design.page.pageList', (model) => ({
     setPageListByVersionId: model?.setPageListByVersionId,
   }));
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { activeVersionId, setActiveVersionId } = useModel(
-    'Design.app.versionList',
+    'design.app.versionList',
     (model) => ({
       activeVersionId: model?.activeVersionId,
       setActiveVersionId: model?.setActiveVersionId,

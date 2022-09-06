@@ -1,4 +1,4 @@
-import ComActionCUForm from '@/pages/Design/components/ComActionCUForm';
+import ComActionCUForm from '@/pages/design/components/ComActionCUForm';
 
 export default () => {
   return <ComActionCUForm mode="create" />;

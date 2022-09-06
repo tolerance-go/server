@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 
 export default ({ item }: { item: API.ShownPage }) => {
   const { setTempInputValueByTarget } = useModel(
-    'Design.page.pageCreatingMeta',
+    'design.page.pageCreatingMeta',
     (model) => ({
       setTempInputValueByTarget: model.setTempInputValueByTarget,
     }),

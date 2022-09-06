@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 
 export const ParagraphItem = () => {
   const { selectedDiscuss, updateSelectedDiscussContent } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       selectedDiscuss: model.selectedDiscuss,
       updateSelectedDiscussContent: model.updateSelectedDiscussContent,

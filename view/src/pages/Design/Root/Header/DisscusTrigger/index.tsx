@@ -3,11 +3,11 @@ import { useModel } from '@umijs/max';
 import { Button } from 'antd';
 
 export const DisscusTrigger = () => {
-  const { setMode, stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { setMode, stageMode } = useModel('design.stage.stageMode', (model) => ({
     setMode: model.setStageMode,
     stageMode: model.stageMode,
   }));
-  const { setPlaygroundMode } = useModel('Design.playground', (model) => ({
+  const { setPlaygroundMode } = useModel('design.playground', (model) => ({
     setPlaygroundMode: model.setMode,
   }));
   return (

@@ -1,6 +1,6 @@
-import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
-import { useGetSliceStageData } from '@/pages/Design/hooks/initials/useGetSliceStageData';
+import { getAppIdOrThrow } from '@/pages/design/helps/getAppIdOrThrow';
+import { getPageIdOrThrow } from '@/pages/design/helps/getPageIdOrThrow';
+import { useGetSliceStageData } from '@/pages/design/hooks/initials/useGetSliceStageData';
 import { ComponentControllerCreate } from '@/services/server/ComponentController';
 import { PlusOutlined } from '@ant-design/icons';
 import {
@@ -21,12 +21,12 @@ type FormValues = {
 };
 
 export default () => {
-  const { addComMaterial } = useModel('Design.component.componentList', (model) => ({
+  const { addComMaterial } = useModel('design.component.componentList', (model) => ({
     addComMaterial: model.addComMaterial,
   }));
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),
@@ -35,7 +35,7 @@ export default () => {
   const { getSliceStageData } = useGetSliceStageData();
 
   const { markNodeFromComponent } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       markNodeFromComponent: model.markNodeFromComponent,
     }),

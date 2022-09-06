@@ -4,17 +4,17 @@ import { useMemo } from 'react';
 /** 获取当前组件状态的继承状态对象 */
 export const useSelectedComActiveStatExtendRelation = () => {
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
-  const { nodesStatusRelations } = useModel('Design.page.nodesStatusRelations', (model) => ({
+  const { nodesStatusRelations } = useModel('design.page.nodesStatusRelations', (model) => ({
     nodesStatusRelations: model.nodesStatusRelations,
   }));
 

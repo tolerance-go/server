@@ -1,4 +1,4 @@
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
 
 export type ConfigInputProps = {
   disabled?: boolean;

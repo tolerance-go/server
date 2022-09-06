@@ -1,4 +1,4 @@
-import { NestDiscussComment } from '@/pages/Design/models/discussComments';
+import { NestDiscussComment } from '@/pages/design/models/discussComments';
 import {
   DislikeFilled,
   DislikeOutlined,
@@ -62,13 +62,13 @@ const ReplyItem = (props: {
   onReplaySuccess: () => void;
 }) => {
   const { requestCreateDiscussComments, requestCreateDiscussCommentsLoading } =
-    useModel('Design.discuss.discussComments', (model) => ({
+    useModel('design.discuss.discussComments', (model) => ({
       requestCreateDiscussComments: model.requestCreateDiscussComments,
       requestCreateDiscussCommentsLoading:
         model.requestCreateDiscussCommentsLoading,
     }));
 
-  const { getSelectedDiscussId } = useModel('Design.playground', (model) => ({
+  const { getSelectedDiscussId } = useModel('design.playground', (model) => ({
     getSelectedDiscussId: model.getSelectedDiscussId,
   }));
 
@@ -121,7 +121,7 @@ const CommnetItem = (props: NestDiscussComment) => {
     replyingCommentId,
     setReplyingCommentId,
     requestDeleteDiscussComments,
-  } = useModel('Design.discuss.discussComments', (model) => ({
+  } = useModel('design.discuss.discussComments', (model) => ({
     requestUpdateDiscussComments: model.requestUpdateDiscussComments,
     requestDeleteDiscussComments: model.requestDeleteDiscussComments,
     replyingCommentId: model.replyingCommentId,
@@ -248,7 +248,7 @@ const App = (props: { discussId: number }) => {
     requestIndexDiscussComments,
     requestCreateDiscussComments,
     requestCreateDiscussCommentsLoading,
-  } = useModel('Design.discuss.discussComments', (model) => ({
+  } = useModel('design.discuss.discussComments', (model) => ({
     requestIndexDiscussComments: model.requestIndexDiscussComments,
     requestCreateDiscussComments: model.requestCreateDiscussComments,
     requestCreateDiscussCommentsLoading:

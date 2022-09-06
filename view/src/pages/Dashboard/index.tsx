@@ -1,9 +1,10 @@
+import withAuth from '@/wrappers/withAuth';
 import { PageContainer } from '@ant-design/pro-components';
 // import { useModel } from '@umijs/max';
 import CoreIndicator from './CoreIndicator';
 import styles from './index.less';
 
-const HomePage: React.FC = () => {
+export default withAuth(() => {
   // const { name } = useModel('global');
   return (
     <PageContainer ghost>
@@ -13,6 +14,4 @@ const HomePage: React.FC = () => {
       </div>
     </PageContainer>
   );
-};
-
-export default HomePage;
+});

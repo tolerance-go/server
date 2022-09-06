@@ -2,24 +2,24 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 export const useDeleteComsFromStage = () => {
-  const { setStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { setStageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     setStageSelectNodeId: model.setStageSelectNodeId,
   }));
 
-  const { deleteComModelByIds } = useModel('Design.page.nodesStructuresAndRootIds', (model) => {
+  const { deleteComModelByIds } = useModel('design.page.nodesStructuresAndRootIds', (model) => {
     return {
       deleteComModelByIds: model.deleteComModelByIds,
     };
   });
 
-  const { deleteComStatuslByIds } = useModel('Design.page.nodesStatus', (model) => {
+  const { deleteComStatuslByIds } = useModel('design.page.nodesStatus', (model) => {
     return {
       deleteComStatuslByIds: model.deleteComStatuslByIds,
     };
   });
 
   const { deleteComSettingsDefaultslByIds } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => {
       return {
         deleteComSettingsDefaultslByIds: model.deleteComSettingsDefaultslByIds,
@@ -28,7 +28,7 @@ export const useDeleteComsFromStage = () => {
   );
 
   const { deleteComsStatusRelationsByIds } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => {
       return {
         deleteComsStatusRelationsByIds: model.deleteComsStatusRelationsByIds,
@@ -36,25 +36,25 @@ export const useDeleteComsFromStage = () => {
     },
   );
 
-  const { deleteComsActionsByIds } = useModel('Design.page.nodesActions', (model) => {
+  const { deleteComsActionsByIds } = useModel('design.page.nodesActions', (model) => {
     return {
       deleteComsActionsByIds: model.deleteComsActionsByIds,
     };
   });
 
-  const { deleteComsEventsByIds } = useModel('Design.page.nodesEvents', (model) => {
+  const { deleteComsEventsByIds } = useModel('design.page.nodesEvents', (model) => {
     return {
       deleteComsEventsByIds: model.deleteComsEventsByIds,
     };
   });
 
-  const { deleteComsStylesByIds } = useModel('Design.page.nodesStyles', (model) => {
+  const { deleteComsStylesByIds } = useModel('design.page.nodesStyles', (model) => {
     return {
       deleteComsStylesByIds: model.deleteComsStylesByIds,
     };
   });
 
-  const { deleteComsSettingsByIds } = useModel('Design.page.nodesSettings', (model) => {
+  const { deleteComsSettingsByIds } = useModel('design.page.nodesSettings', (model) => {
     return {
       deleteComsSettingsByIds: model.deleteComsSettingsByIds,
     };

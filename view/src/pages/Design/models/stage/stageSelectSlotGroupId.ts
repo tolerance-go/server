@@ -25,19 +25,19 @@ const useStageSelectSlotGroup = () => {
     useState<string>();
 
   const { openTargetFromTreeMenu } = useModel(
-    'Design.workbench.comsLayout',
+    'design.workbench.comsLayout',
     (model) => ({
       openTargetFromTreeMenu: model?.openTargetFromTreeMenu,
     }),
   );
 
   const { setSiderLeftMode } = useModel(
-    'Design.workbench.siderLeftMode',
+    'design.workbench.siderLeftMode',
     pickModel(['setSiderLeftMode']),
   );
 
   const { setPagesSiderMode } = useModel(
-    'Design.workbench.normalModeSubMode',
+    'design.workbench.normalModeSubMode',
     pickModel(['setPagesSiderMode']),
   );
 

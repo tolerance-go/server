@@ -1,29 +1,29 @@
-import ComActionCUForm from '@/pages/Design/components/ComActionCUForm';
-import ComActionViewForm from '@/pages/Design/components/ComActionViewForm';
-import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
-import { useSelectedComActiveStatExtendRelation } from '@/pages/Design/hooks/selected/useSelectedComActiveStatExtendRelation';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { NodeAction } from '@/pages/Design/models/page/nodesActions';
-import { isExtendReactionView } from '@/pages/Design/utils/isExtendReactionView';
+import ComActionCUForm from '@/pages/design/components/ComActionCUForm';
+import ComActionViewForm from '@/pages/design/components/ComActionViewForm';
+import { FormItemExtendLabel } from '@/pages/design/components/FormItemExtendLabel';
+import { useSelectedComActiveStatExtendRelation } from '@/pages/design/hooks/selected/useSelectedComActiveStatExtendRelation';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
+import { NodeAction } from '@/pages/design/models/page/nodesActions';
+import { isExtendReactionView } from '@/pages/design/utils/isExtendReactionView';
 import { DeleteOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import './index.less';
 
 export default () => {
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     stageSelectNodeId: model?.stageSelectNodeId,
   }));
 
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
   const { nodesActions, deleteComStatAction } = useModel(
-    'Design.page.nodesActions',
+    'design.page.nodesActions',
     (model) => ({
       nodesActions: model.nodesActions,
       deleteComStatAction: model.deleteComStatAction,
@@ -36,7 +36,7 @@ export default () => {
       : undefined;
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),
@@ -45,7 +45,7 @@ export default () => {
   const { stageSelectNode } = useSelectedNode();
 
   const { lockComExtendActionField, unlockComExtendActionField } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({
       lockComExtendActionField: model.lockComExtendActionField,
       unlockComExtendActionField: model.unlockComExtendActionField,

@@ -1,4 +1,4 @@
-import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
+import { useSelectedData } from '@/pages/design/hooks/selected/useSelectedData';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   BetaSchemaForm,
@@ -18,12 +18,12 @@ export default () => {
 
   const { columns } = selectedData?.data ?? {};
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
+  const { selectedDataId } = useModel('design.database.selectedDataId', (model) => ({
     selectedDataId: model.selectedDataId,
   }));
 
   const { getColumnDataMetaAfterPushDataSource, pushDataListItemDataSource } =
-    useModel('Design.database.dataList', (model) => ({
+    useModel('design.database.dataList', (model) => ({
       getColumnDataMetaAfterPushDataSource:
         model.getColumnDataMetaAfterPushDataSource,
       pushDataListItemDataSource: model.pushDataListItemDataSource,

@@ -1,4 +1,4 @@
-import { UnitNumber } from '@/pages/Design/models/nodesStyles';
+import { UnitNumber } from '@/pages/design/models/nodesStyles';
 
 export const joinUnitNumber = (count?: UnitNumber, defaultUnit?: string) => {
   const unit = count?.unit ?? defaultUnit;

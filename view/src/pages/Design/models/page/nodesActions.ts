@@ -1,10 +1,10 @@
-import { ActionId, ComId, StatId } from '@/pages/Design/typings/keys';
+import { ActionId, ComId, StatId } from '@/pages/design/typings/keys';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { nanoid } from 'nanoid';
-import { setComStatTypeWithName } from '@/pages/Design/helps/setComStatTypeWithName';
-import { updateComStatTypeWithName } from '@/pages/Design/helps/updateComStatTypeWithName';
-import { useCopyComPropsFromStatToOtherStat } from '@/pages/Design/helps/useCopyComPropsFromStatToOtherStat';
+import { setComStatTypeWithName } from '@/pages/design/helps/setComStatTypeWithName';
+import { updateComStatTypeWithName } from '@/pages/design/helps/updateComStatTypeWithName';
+import { useCopyComPropsFromStatToOtherStat } from '@/pages/design/helps/useCopyComPropsFromStatToOtherStat';
 import utl from 'lodash';
 import { useUpdateModeState } from '@/utils/useUpdateModeState';
 
@@ -48,14 +48,14 @@ const useComsActions = () => {
   ] = useUpdateModeState<NodesActions>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 
   const { getStageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       getStageSelectNodeId: model.getStageSelectNodeId,
     }),

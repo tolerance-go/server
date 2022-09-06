@@ -1,3 +1,4 @@
+import withAuth from '@/wrappers/withAuth';
 import { PageContainer } from '@ant-design/pro-components';
 import React from 'react';
 import List from './List';
@@ -14,4 +15,4 @@ const TableList: React.FC<unknown> = () => {
   );
 };
 
-export default TableList;
+export default withAuth(TableList);

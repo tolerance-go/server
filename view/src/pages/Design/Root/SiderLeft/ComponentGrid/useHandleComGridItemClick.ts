@@ -5,14 +5,14 @@ import { nanoid } from 'nanoid';
 
 export const useHandleComGridItemClick = () => {
   const { mode: siderLeftMode } = useModel(
-    'Design.workbench.siderLeftMode',
+    'design.workbench.siderLeftMode',
     (model) => ({
       mode: model.siderLeftMode,
     }),
   );
 
   const { addComponentToStage, addComToStageSlot } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       addComponentToStage: model.addComponentToStage,
       addComToStageSlot: model.addComToStageSlot,
@@ -20,49 +20,49 @@ export const useHandleComGridItemClick = () => {
   );
 
   const { getComsInitialSettings } = useModel(
-    'Design.config.nodesInitialSettings',
+    'design.config.nodesInitialSettings',
     pickModel(['getComsInitialSettings']),
   );
 
   const { focusComId, focusSlotName, focusSlotPosition } = useModel(
-    'Design.stage.slotsInsert',
+    'design.stage.slotsInsert',
     pickModel(['focusComId', 'focusSlotName', 'focusSlotPosition']),
   );
 
   const { setActiveNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     pickModel(['setActiveNodeStatId']),
   );
 
-  const { initComStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { initComStatus } = useModel('design.page.nodesStatus', (model) => ({
     initComStatus: model.initComStatus,
   }));
 
   const { setNodeStatSettings } = useModel(
-    'Design.page.nodesSettings',
+    'design.page.nodesSettings',
     pickModel(['setNodeStatSettings']),
   );
 
-  const { setComStatStyle } = useModel('Design.page.nodesStyles', (model) => ({
+  const { setComStatStyle } = useModel('design.page.nodesStyles', (model) => ({
     setComStatStyle: model.setComStatStyle,
   }));
 
   const { setComStatusSettingsDefaults } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => ({
       setComStatusSettingsDefaults: model.setComStatusSettingsDefaults,
     }),
   );
 
   const { setStageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       setStageSelectNodeId: model.setStageSelectNodeId,
     }),
   );
 
   const { triggerSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => {
       return {
         triggerSaveTimeChange: model.triggerPrepareSaveTimeChange,

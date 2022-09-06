@@ -1,6 +1,6 @@
 import { useModel } from '@/.umi/plugin-model';
-import { ConfigurableFormProps } from '@/pages/Design/components/ConfigurableForm/typings/ConfigsFormProps';
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
+import { ConfigurableFormProps } from '@/pages/design/components/ConfigurableForm/typings/ConfigsFormProps';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
 import {
   BetaSchemaForm,
   ProCard,
@@ -25,7 +25,7 @@ export const ConfigFormItem = ({
   'renderLabel' | 'formItemNamePrefix' | 'configInputProps' | 'theme'
 >) => {
   const { getSelectedNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       getSelectedNodeId: model.getStageSelectNodeId,
     }),

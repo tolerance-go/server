@@ -20,7 +20,7 @@ const useSiderLeftMode = () => {
   const prevMode = usePrevious(siderLeftMode);
 
   const { cleanFocusSlotsInert } = useModel(
-    'Design.stage.slotsInsert',
+    'design.stage.slotsInsert',
     (model) => {
       return {
         cleanFocusSlotsInert: model.cleanFocusSlotsInert,

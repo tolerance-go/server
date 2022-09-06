@@ -2,16 +2,16 @@ import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 export const useSetNearSelectedComponentStatusId = () => {
-  const { getLatestComponentsStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { getLatestComponentsStatus } = useModel('design.page.nodesStatus', (model) => ({
     getLatestComponentsStatus: model.getComponentsStatus,
   }));
 
-  const { getStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { getStageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     getStageSelectNodeId: model.getStageSelectNodeId,
   }));
 
   const { setSelectedComponentStatusId, getSelectedComponentStatusId } =
-    useModel('Design.stage.activeNodeStatId', (model) => ({
+    useModel('design.stage.activeNodeStatId', (model) => ({
       setSelectedComponentStatusId: model.setActiveNodeStatId,
       getSelectedComponentStatusId: model.getActiveNodeStatId,
     }));

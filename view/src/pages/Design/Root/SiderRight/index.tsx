@@ -1,4 +1,4 @@
-import { DiscussInfos } from '@/pages/Design/components/DiscussInfos';
+import { DiscussInfos } from '@/pages/design/components/DiscussInfos';
 import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { Col, Layout, Row, Tabs } from 'antd';
@@ -17,16 +17,16 @@ const { Sider } = Layout;
 
 export default function App() {
   const { siderRightMode } = useModel(
-    'Design.workbench.siderRightMode',
+    'design.workbench.siderRightMode',
     (model) => ({
       siderRightMode: model.mode,
     }),
   );
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId');
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId');
 
   const [activeKey, setActiveKey] = useState('settings');
 

@@ -1,9 +1,9 @@
-import { RequestButton } from '@/pages/Design/components/RequestButton';
-import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
+import { RequestButton } from '@/pages/design/components/RequestButton';
+import { useSelectedData } from '@/pages/design/hooks/selected/useSelectedData';
 import {
   DataTableColumn,
   DataItem,
-} from '@/pages/Design/models/database/dataList';
+} from '@/pages/design/models/database/dataList';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import type { ActionType, ProTableProps } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
@@ -30,7 +30,7 @@ export default () => {
     moveLeftDataListItemColumn,
     moveRightDataListItemColumn,
     deleteDataListItemColumn,
-  } = useModel('Design.database.dataList', (model) => ({
+  } = useModel('design.database.dataList', (model) => ({
     addDataListItemColumn: model.addDataListItemColumn,
     deleteDataListItemColumn: model.deleteDataListItemColumn,
     moveLeftDataListItemColumn: model.moveLeftDataListItemColumn,
@@ -39,7 +39,7 @@ export default () => {
   }));
 
   const { openModal, setSelectedColumnFieldId } = useModel(
-    'Design.database.dataFieldsConfig',
+    'design.database.dataFieldsConfig',
     (model) => ({
       openModal: model.openModal,
       setSelectedColumnFieldId: model.setSelectedColumnFieldId,
@@ -47,14 +47,14 @@ export default () => {
   );
 
   const { selectedDataId } = useModel(
-    'Design.database.selectedDataId',
+    'design.database.selectedDataId',
     (model) => ({
       selectedDataId: model.selectedDataId,
     }),
   );
 
   const { removeDataListItemDataSource } = useModel(
-    'Design.database.dataList',
+    'design.database.dataList',
     (model) => ({
       removeDataListItemDataSource: model.removeDataListItemDataSource,
     }),

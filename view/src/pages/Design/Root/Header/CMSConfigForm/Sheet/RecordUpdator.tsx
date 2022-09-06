@@ -1,5 +1,5 @@
-import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
-import { DataItem } from '@/pages/Design/models/dataList';
+import { useSelectedData } from '@/pages/design/hooks/selected/useSelectedData';
+import { DataItem } from '@/pages/design/models/dataList';
 import {
   BetaSchemaForm,
   DrawerForm,
@@ -17,14 +17,14 @@ export default (props: { record: DataItem }) => {
 
   const { columns } = selectedData?.data ?? {};
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
+  const { selectedDataId } = useModel('design.database.selectedDataId', (model) => ({
     selectedDataId: model.selectedDataId,
   }));
 
   const {
     getColumnDataMetaAfterUpdateDataSource,
     updateDataListItemDataSource,
-  } = useModel('Design.database.dataList', (model) => ({
+  } = useModel('design.database.dataList', (model) => ({
     getColumnDataMetaAfterUpdateDataSource:
       model.getColumnDataMetaAfterUpdateDataSource,
     updateDataListItemDataSource: model.updateDataListItemDataSource,

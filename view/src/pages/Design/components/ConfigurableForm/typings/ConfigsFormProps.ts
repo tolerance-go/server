@@ -1,4 +1,4 @@
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
 import { ProFormProps } from '@ant-design/pro-components';
 import React from 'react';
 import { ConfigInputProps } from './ConfigInputProps';

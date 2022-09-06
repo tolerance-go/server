@@ -19,7 +19,7 @@ import remarkGfm from 'remark-gfm';
 const markdown = 'Just a link: https://reactjs.com.';
 
 export default () => {
-  const { widget } = usePickModel('WidgetsInstall.selectedWidgetMeta', [
+  const { widget } = usePickModel('widgets.install.marketListOrderMeta', [
     'widget',
   ]);
   return (

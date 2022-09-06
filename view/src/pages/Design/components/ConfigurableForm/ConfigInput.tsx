@@ -1,7 +1,7 @@
-import { SegmentedSwitch } from '@/pages/Design/components/SegmentedSwitch';
-import { useSelectedComponentStatus } from '@/pages/Design/hooks/selected/useSelectedComponentStatus';
-import { RecordType } from '@/pages/Design/typings';
-import { WithDependencies } from '@/pages/Design/typings/SettingFormConfig';
+import { SegmentedSwitch } from '@/pages/design/components/SegmentedSwitch';
+import { useSelectedComponentStatus } from '@/pages/design/hooks/selected/useSelectedComponentStatus';
+import { RecordType } from '@/pages/design/typings';
+import { WithDependencies } from '@/pages/design/typings/SettingFormConfig';
 import { ProFormDependency } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Input, Select } from 'antd';
@@ -33,7 +33,7 @@ export const ConfigInput = ({
   const { getSelectedComStatus } = useSelectedComponentStatus();
 
   const { getComponentsStatus } = useModel(
-    'Design.page.nodesStatus',
+    'design.page.nodesStatus',
     (model) => {
       return {
         getComponentsStatus: model.getComponentsStatus,

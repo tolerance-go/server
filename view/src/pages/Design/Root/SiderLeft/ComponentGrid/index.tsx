@@ -20,7 +20,7 @@ const App = ({ siderRef }: { siderRef: React.RefObject<HTMLDivElement> }) => {
 
   const { widgetsData } = useGridData();
 
-  const { widgetElements } = usePickModel('Design.widgetElements', [
+  const { widgetElements } = usePickModel('design.widgetElements', [
     'widgetElements',
   ]);
 

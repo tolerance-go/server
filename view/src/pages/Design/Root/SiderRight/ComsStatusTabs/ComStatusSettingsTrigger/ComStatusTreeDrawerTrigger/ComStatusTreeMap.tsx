@@ -1,6 +1,6 @@
-import { useSelectedComponentStatus } from '@/pages/Design/hooks/selected/useSelectedComponentStatus';
-import { makeTreeWithRelation } from '@/pages/Design/utils/treeUtils/makeTreeWithRelation';
-import { mapTree } from '@/pages/Design/utils/treeUtils/mapTree';
+import { useSelectedComponentStatus } from '@/pages/design/hooks/selected/useSelectedComponentStatus';
+import { makeTreeWithRelation } from '@/pages/design/utils/treeUtils/makeTreeWithRelation';
+import { mapTree } from '@/pages/design/utils/treeUtils/mapTree';
 import { useModel } from '@umijs/max';
 import { Tree } from 'antd';
 import { DataNode, TreeProps } from 'antd/lib/tree';
@@ -17,20 +17,20 @@ export const ComStatusTreeMap = () => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>();
 
   const { nodesStatusRelations, createComStatRelation, deleteComStatRelation } =
-    useModel('Design.page.nodesStatusRelations', (model) => ({
+    useModel('design.page.nodesStatusRelations', (model) => ({
       nodesStatusRelations: model.nodesStatusRelations,
       createComStatRelation: model.createComStatRelation,
       deleteComStatRelation: model.deleteComStatRelation,
     }));
   const { stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       stageSelectNodeId: model.stageSelectNodeId,
     }),
   );
 
   const { triggerSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => {
       return {
         triggerSaveTimeChange: model?.triggerPrepareSaveTimeChange,

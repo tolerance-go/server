@@ -1,4 +1,4 @@
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
 import { Dropdown, Menu } from 'antd';
 import clsx from 'clsx';
@@ -21,14 +21,14 @@ export const AtomWorkbenchWrapper = (
   >,
 ) => {
   const { setStageSelectNodeId, stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       setStageSelectNodeId: model.setStageSelectNodeId,
       stageSelectNodeId: model.stageSelectNodeId,
     }),
   );
   const { hoverNodeId, setHoverNodeId } = useModel(
-    'Design.stage.hoverNodeId',
+    'design.stage.hoverNodeId',
     (model) => ({
       hoverNodeId: model.hoverNodeId,
       setHoverNodeId: model.setHoverNodeId,

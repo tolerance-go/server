@@ -1,6 +1,6 @@
 import { useModel } from '@/.umi/plugin-model';
 import { PATHS } from '@/constants/path';
-import useAppId from '@/pages/Design/hooks/useAppId';
+import useAppId from '@/pages/design/hooks/useAppId';
 import { pickModel } from '@/utils/pickModel';
 import { PlayCircleTwoTone } from '@ant-design/icons';
 import { Button } from 'antd';
@@ -9,7 +9,7 @@ export const PlayAction = () => {
   const appId = useAppId();
 
   const { selectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     pickModel(['selectedPageId']),
   );
 

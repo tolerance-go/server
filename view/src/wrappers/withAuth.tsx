@@ -1,7 +1,8 @@
 import { PATHS } from '@/constants/path';
 import useAuth from '@/hooks/useAuth';
-import { Outlet, useNavigate } from '@umijs/max';
+import { useNavigate } from '@umijs/max';
 import { Button, Result, Space } from 'antd';
+import React from 'react';
 
 /**
  * 刷新进入页面，会在 getInitialState 的地方根据 401 判断跳转登录页面
@@ -11,13 +12,13 @@ import { Button, Result, Space } from 'antd';
  * 我们不希望这样，所以渲染一个更有意义的页面让用户知道并选择下一步怎么做
  */
 
-export default () => {
+export default (Component: React.ElementType) => () => {
   const { isLogin, user } = useAuth();
 
   const navigate = useNavigate();
 
   if (isLogin) {
-    return <Outlet key={user?.id} />;
+    return <Component key={user?.id} />;
   }
   return (
     <Result

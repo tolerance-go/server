@@ -4,14 +4,14 @@ import { useComStatusExtendProps } from '../_utils/useComStatusExtendProps';
 /** 组件继承状态修改 */
 export const useComStatusExtendEvents = () => {
   const { setComStatEventWithName, updateComStatEventWithName } = useModel(
-    'Design.page.nodesEvents',
+    'design.page.nodesEvents',
     (model) => ({
       setComStatEventWithName: model.setComStatEventWithName,
       updateComStatEventWithName: model.updateComStatEventWithName,
     }),
   );
 
-  const { getStatLockEventFields } = useModel('Design.page.nodesStatusRelations', (model) => ({
+  const { getStatLockEventFields } = useModel('design.page.nodesStatusRelations', (model) => ({
     getStatLockEventFields: model.getStatLockEventFields,
   }));
 

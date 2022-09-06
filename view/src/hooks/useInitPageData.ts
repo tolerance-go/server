@@ -5,42 +5,42 @@ import { parseJSON } from '@/utils/parseJSON';
 
 export default () => {
   const { initData: initNodesStructuresAndRootIds } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     pickModel(['initData']),
   );
 
   const { initData: initNodesSettings } = useModel(
-    'Design.page.nodesSettings',
+    'design.page.nodesSettings',
     pickModel(['initData']),
   );
 
   const { initData: initNodesDefaultsStatus } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     pickModel(['initData']),
   );
 
   const { initData: initNodesStyles } = useModel(
-    'Design.page.nodesStyles',
+    'design.page.nodesStyles',
     pickModel(['initData']),
   );
 
   const { initData: initNodesEvents } = useModel(
-    'Design.page.nodesEvents',
+    'design.page.nodesEvents',
     pickModel(['initData']),
   );
 
   const { initData: initNodesActions } = useModel(
-    'Design.page.nodesActions',
+    'design.page.nodesActions',
     pickModel(['initData']),
   );
 
   const { initData: initNodesStatus } = useModel(
-    'Design.page.nodesStatus',
+    'design.page.nodesStatus',
     pickModel(['initData']),
   );
 
   const { initNodesStatusRelations } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({ initNodesStatusRelations: model.initData }),
   );
 

@@ -1,4 +1,4 @@
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
 
@@ -7,7 +7,7 @@ export const useSelectedComSettingsConfigs = () => {
   const { stageSelectNode } = useSelectedNode();
 
   const { nodesSettingsFormConfigs } = useModel(
-    'Design.config.nodesSettingsConfigs',
+    'design.config.nodesSettingsConfigs',
     (model) => ({
       nodesSettingsFormConfigs: model.nodesSettingsFormConfigs,
     }),

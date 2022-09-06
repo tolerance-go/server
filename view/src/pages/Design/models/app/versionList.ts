@@ -19,7 +19,7 @@ const useVersionList = () => {
 
   const [activeVersionId, setActiveVersionId] = useState<number>();
 
-  const { setSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { setSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     setSelectNodeId: model?.setStageSelectNodeId,
   }));
 

@@ -1,11 +1,11 @@
 import { useSearchParams } from '@/.umi/exports';
 import { PATHS, QUERY_KEYS } from '@/constants/path';
-import useAppId from '@/pages/Design/hooks/useAppId';
-import { Outlet, useNavigate } from '@umijs/max';
+import useAppId from '@/pages/design/hooks/useAppId';
+import { useNavigate } from '@umijs/max';
 import { Button, Result, Space } from 'antd';
 import qs from 'qs';
 
-export default () => {
+export default (Component: React.ElementType) => () => {
   const [searchParams] = useSearchParams();
   const pageId = searchParams.get(QUERY_KEYS.PAGE_ID);
 
@@ -14,7 +14,7 @@ export default () => {
   const navigate = useNavigate();
 
   if (pageId) {
-    return <Outlet key={pageId} />;
+    return <Component key={pageId} />;
   }
   return (
     <Result

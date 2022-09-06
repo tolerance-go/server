@@ -1,10 +1,10 @@
-import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
+import { getURLQuery } from '@/pages/design/helps/getURLQuery';
 import {
   ComponentControllerCreate,
   ComponentControllerDestroy,
   ComponentControllerIndex,
 } from '@/services/server/ComponentController';
-import { convertListToMap } from '@/pages/Design/utils/listUtils/convertListToMap';
+import { convertListToMap } from '@/pages/design/utils/listUtils/convertListToMap';
 import { useMemoizedFn } from 'ahooks';
 import { produce } from 'immer';
 import { useMemo, useState } from 'react';

@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 
 export default ({ item }: { item: API.ShownPage }) => {
   const { selectPageToUpdating } = useModel(
-    'Design.page.pageUpdatingMeta',
+    'design.page.pageUpdatingMeta',
     (model) => ({
       selectPageToUpdating: model.selectPageToUpdating,
     }),

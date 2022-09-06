@@ -1,11 +1,11 @@
-import { PagesSiderMode } from '@/pages/Design/models/workbench/normalModeSubMode';
+import { PagesSiderMode } from '@/pages/design/models/workbench/normalModeSubMode';
 import { pickModel } from '@/utils/pickModel';
 import { useModel } from '@umijs/max';
 import { Segmented } from 'antd';
 
 export default () => {
   const { pagesSiderMode, setPagesSiderMode } = useModel(
-    'Design.workbench.normalModeSubMode',
+    'design.workbench.normalModeSubMode',
     pickModel(['pagesSiderMode', 'setPagesSiderMode']),
   );
 

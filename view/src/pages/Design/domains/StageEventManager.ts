@@ -4,7 +4,7 @@
  * 组件可以向他发送事件，触发相关逻辑
  */
 
-import { ComId, EventId, StatId } from '@/pages/Design/typings/keys';
+import { ComId, EventId, StatId } from '@/pages/design/typings/keys';
 import { nanoid } from 'nanoid';
 
 export type EventHandlerParams = { event: Event; data: any };

@@ -1,17 +1,17 @@
-import { splitSlotGroupId } from '@/pages/Design/helps';
+import { splitSlotGroupId } from '@/pages/design/helps';
 import { useModel } from '@umijs/max';
 import { useMemo } from 'react';
 
 const useStageSelectSlotGroup = () => {
   const { stageSelectSlotGroupId } = useModel(
-    'Design.stage.stageSelectSlotGroupId',
+    'design.stage.stageSelectSlotGroupId',
     (model) => ({
       stageSelectSlotGroupId: model.stageSelectSlotGroupId,
     }),
   );
 
   const { stageComponentsModel } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       stageComponentsModel: model.nodesStructures,
     }),

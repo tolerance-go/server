@@ -1,5 +1,5 @@
-import { isSlotGroupId, joinSlotGroupId } from '@/pages/Design/helps';
-import { SelfTreeDataNode } from '@/pages/Design/models/comsLayout';
+import { isSlotGroupId, joinSlotGroupId } from '@/pages/design/helps';
+import { SelfTreeDataNode } from '@/pages/design/models/comsLayout';
 import { useModel } from '@umijs/max';
 import { Col, Row, Tag, Tree, TreeProps } from 'antd';
 import utl from 'lodash';
@@ -9,7 +9,7 @@ import TreeItemMenu from './TreeItemMenu';
 
 export default () => {
   const { stageComponentsModel, rootNodeIds, moveComFromTree } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       stageComponentsModel: model?.nodesStructures,
       rootNodeIds: model?.rootNodeIds,
@@ -24,7 +24,7 @@ export default () => {
     setExpanedKeys,
     setSelectedKeys,
     showAllSlots,
-  } = useModel('Design.workbench.comsLayout', (model) => ({
+  } = useModel('design.workbench.comsLayout', (model) => ({
     expanedKeys: model?.expanedKeys,
     setExpanedKeys: model?.setExpanedKeys,
     selectedKeys: model?.selectedKeys,
@@ -34,26 +34,26 @@ export default () => {
     showAllSlots: model.showAllSlots,
   }));
 
-  const { nodesSlotsNames } = useModel('Design.config.nodesSlotsNames', (model) => ({
+  const { nodesSlotsNames } = useModel('design.config.nodesSlotsNames', (model) => ({
     nodesSlotsNames: model.nodesSlotsNames,
   }));
 
-  const { setHoverNodeId } = useModel('Design.stage.hoverNodeId', (model) => ({
+  const { setHoverNodeId } = useModel('design.stage.hoverNodeId', (model) => ({
     setHoverNodeId: model?.setHoverNodeId,
   }));
 
-  const { setStageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { setStageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     setStageSelectNodeId: model?.setStageSelectNodeId,
   }));
 
   const { setStageSelectSlotGroupId } = useModel(
-    'Design.stage.stageSelectSlotGroupId',
+    'design.stage.stageSelectSlotGroupId',
     (model) => ({
       setStageSelectSlotGroupId: model?.setStageSelectSlotGroupId,
     }),
   );
 
-  const { triggerSaveTimeChange } = useModel('Design.app.stageAutoSave', (model) => {
+  const { triggerSaveTimeChange } = useModel('design.app.stageAutoSave', (model) => {
     return {
       triggerSaveTimeChange: model?.triggerPrepareSaveTimeChange,
     };

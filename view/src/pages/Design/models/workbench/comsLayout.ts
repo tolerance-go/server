@@ -1,10 +1,10 @@
-import { isSlotGroupId, joinSlotGroupId } from '@/pages/Design/helps';
+import { isSlotGroupId, joinSlotGroupId } from '@/pages/design/helps';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { TreeDataNode } from 'antd';
 import utl from 'lodash';
 import { useState } from 'react';
-import { splitSlotGroupId } from '@/pages/Design/helps';
+import { splitSlotGroupId } from '@/pages/design/helps';
 
 export type SelfTreeDataNode = TreeDataNode & {
   data: {
@@ -23,7 +23,7 @@ const useComsLayout = () => {
   const [showAllSlots, setShowAllSlots] = useState<boolean>(false);
 
   const { getNodesStructures } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         getNodesStructures: model?.getNodesStructures,

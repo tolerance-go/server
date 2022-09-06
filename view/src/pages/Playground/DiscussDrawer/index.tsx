@@ -1,6 +1,6 @@
-import { DiscussCountInfo } from '@/pages/Design/components/DiscussInfos/DiscussCountInfo';
-import { DiscussDetialActions } from '@/pages/Design/components/DiscussInfos/DiscussDetialActions';
-import { DiscussListActions } from '@/pages/Design/components/DiscussInfos/DiscussListActions';
+import { DiscussCountInfo } from '@/pages/design/components/DiscussInfos/DiscussCountInfo';
+import { DiscussDetialActions } from '@/pages/design/components/DiscussInfos/DiscussDetialActions';
+import { DiscussListActions } from '@/pages/design/components/DiscussInfos/DiscussListActions';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Drawer } from 'antd';
@@ -9,7 +9,7 @@ import styles from './index.less';
 
 export const DiscussDrawer = (props: PropsWithChildren<{}>) => {
   const { detailVisible, setDetailVisible, detailMode } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       detailVisible: model.detailVisible,
       setDetailVisible: model.setDetailVisible,

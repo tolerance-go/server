@@ -1,11 +1,11 @@
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
 import {
   HistoryManager,
   HistoryUpdateDataType,
   SnapshotsNode,
-} from '@/pages/Design/domains/HistoryManager';
-import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
+} from '@/pages/design/domains/HistoryManager';
+import { getURLQuery } from '@/pages/design/helps/getURLQuery';
 import {
   AppControllerShow,
   AppControllerUpdateHistory,

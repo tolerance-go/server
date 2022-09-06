@@ -1,4 +1,4 @@
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
+import { getPageIdOrThrow } from '@/pages/design/helps/getPageIdOrThrow';
 import {
   DiscussControllerCreate,
   DiscussControllerDestroy,

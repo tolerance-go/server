@@ -14,7 +14,7 @@ import useSearchReq from '../../_hooks/useSearchReq';
 
 export default () => {
   const { orderBy, orderValueEnum, orderType, setOrderBy, setOrderType } =
-    usePickModel('WidgetsInstall.marketListOrderMeta', [
+    usePickModel('widgets.install.marketListOrderMeta', [
       'orderBy',
       'orderValueEnum',
       'setOrderBy',

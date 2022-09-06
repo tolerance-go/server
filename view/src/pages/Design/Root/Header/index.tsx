@@ -18,7 +18,7 @@ const App = () => {
   // const navigate = useNavigate();
 
   const { headerHeight } = useModel(
-    'Design.workbench.workbenchIDESettings',
+    'design.workbench.workbenchIDESettings',
     (model) => ({
       headerHeight: model.headerHeight,
     }),

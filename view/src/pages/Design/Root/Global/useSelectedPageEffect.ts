@@ -3,15 +3,15 @@ import { useUpdateEffect } from 'ahooks';
 import { useMemo } from 'react';
 
 export default () => {
-  const { initData } = useModel('Design.page.nodesStructuresAndRootIds', (model) => ({
+  const { initData } = useModel('design.page.nodesStructuresAndRootIds', (model) => ({
     initData: model.initData,
   }));
 
-  const { pageList } = useModel('Design.page.pageList', (model) => ({
+  const { pageList } = useModel('design.page.pageList', (model) => ({
     pageList: model.pageList,
   }));
 
-  const { selectedPageId } = useModel('Design.page.selectedPageId', (model) => ({
+  const { selectedPageId } = useModel('design.page.selectedPageId', (model) => ({
     selectedPageId: model.selectedPageId,
   }));
 

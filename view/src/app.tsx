@@ -8,6 +8,15 @@ import { UserSettings } from './components/UserSettings';
 import { PUBLIC_PATH } from './constants/base';
 import { PATHS } from './constants/path';
 import { currentPageIsHome, currentPageIsLogin } from './helpers/currentPageIs';
+import {
+  CarryOutOutlined,
+  CompassOutlined,
+  PartitionOutlined,
+  MessageOutlined,
+  BranchesOutlined,
+  TeamOutlined,
+  AppstoreAddOutlined,
+} from '@ant-design/icons';
 
 // umi getInitialState 不反回，页面不会渲染
 export async function getInitialState(): Promise<{
@@ -49,6 +58,88 @@ export const layout: RunTimeLayoutConfig = (props) => {
     logo: `${PUBLIC_PATH}logo.svg`,
     menu: {
       locale: false,
+    },
+    route: {
+      path: '/',
+      routes: [
+        {
+          path: PATHS.HOME,
+          // 不展示顶栏
+          headerRender: false,
+          // 不展示页脚
+          footerRender: false,
+          // 不展示菜单
+          menuRender: false,
+          // 隐藏自己和子菜单
+          hideInMenu: true,
+        },
+        {
+          path: PATHS.LOGIN,
+          headerRender: false,
+          footerRender: false,
+          menuRender: false,
+          hideInMenu: true,
+        },
+        {
+          path: PATHS.DESIGN,
+          headerRender: false,
+          footerRender: false,
+          menuRender: false,
+          hideInMenu: true,
+        },
+        {
+          path: PATHS.PLAYGROUND,
+          headerRender: false,
+          footerRender: false,
+          menuRender: false,
+          hideInMenu: true,
+        },
+        {
+          name: '工作台',
+          path: PATHS.DASHBOARD,
+          icon: <CarryOutOutlined />,
+        },
+        {
+          name: '需求管理',
+          path: '/demands',
+          icon: <CompassOutlined />,
+        },
+        {
+          name: '应用管理',
+          path: PATHS.APP_LIST,
+          icon: <PartitionOutlined />,
+        },
+        {
+          name: '讨论管理',
+          path: '/discuss',
+          icon: <MessageOutlined />,
+        },
+        {
+          name: '版本管理',
+          path: '/versions',
+          icon: <BranchesOutlined />,
+        },
+        {
+          name: '团队管理',
+          path: '/teams',
+          icon: <TeamOutlined />,
+        },
+        {
+          name: '组件管理',
+          path: '/widgets',
+          icon: <AppstoreAddOutlined />,
+          routes: [
+            {
+              name: '我的安装',
+              path: '/widgets/install',
+            },
+            {
+              name: '我的发布',
+              path: '/widgets/publish',
+            },
+          ],
+        },
+      ],
     },
     avatarProps: {
       src: initialState?.user?.avatar,

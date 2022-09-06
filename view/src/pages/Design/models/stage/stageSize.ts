@@ -1,5 +1,5 @@
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
-import { getURLQuery } from '@/pages/Design/helps/getURLQuery';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
+import { getURLQuery } from '@/pages/design/helps/getURLQuery';
 import {
   AppControllerShow,
   AppControllerUpdateStageSize,
@@ -14,7 +14,7 @@ import { BoxSize } from '../page/nodesStyles';
 /** 舞台插槽组的选择 */
 const useStageSize = () => {
   const [stageSize, setStageSize, getStageSize] = useGetState<BoxSize>();
-  const { historyManager } = useModel('Design.app.appStateHistory', (model) => ({
+  const { historyManager } = useModel('design.app.appStateHistory', (model) => ({
     historyManager: model.historyManager,
   }));
 

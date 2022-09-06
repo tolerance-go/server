@@ -1,5 +1,5 @@
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
-import { RecoverParams } from '@/pages/Design/domains/HistoryManager';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
+import { RecoverParams } from '@/pages/design/domains/HistoryManager';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ const defaultVisible = false;
 const useDataMaskVisible = () => {
   const [visible, setVisible] = useState(defaultVisible);
 
-  const { historyManager } = useModel('Design.app.appStateHistory', (model) => ({
+  const { historyManager } = useModel('design.app.appStateHistory', (model) => ({
     historyManager: model.historyManager,
   }));
 

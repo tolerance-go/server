@@ -6,7 +6,7 @@ import PagePanel from './PagePanel';
 import Segmented from './Segmented';
 
 export default () => {
-  const { pagesSiderMode } = useModel('Design.workbench.normalModeSubMode', (model) => ({
+  const { pagesSiderMode } = useModel('design.workbench.normalModeSubMode', (model) => ({
     pagesSiderMode: model.pagesSiderMode,
   }));
 

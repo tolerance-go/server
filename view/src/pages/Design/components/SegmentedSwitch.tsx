@@ -1,4 +1,4 @@
-import { SegmentedPropsPicked } from '@/pages/Design/typings/SegmentedProps';
+import { SegmentedPropsPicked } from '@/pages/design/typings/SegmentedProps';
 import { Segmented } from 'antd';
 
 export const SegmentedSwitch = ({

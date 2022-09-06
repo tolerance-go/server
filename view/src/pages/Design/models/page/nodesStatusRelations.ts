@@ -1,4 +1,4 @@
-import { ComId, RelationId } from '@/pages/Design/typings/keys';
+import { ComId, RelationId } from '@/pages/design/typings/keys';
 import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useMemoizedFn } from 'ahooks';
 import utl from 'lodash';

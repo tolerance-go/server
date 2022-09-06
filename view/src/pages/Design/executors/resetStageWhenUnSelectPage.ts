@@ -1,70 +1,74 @@
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 
+// export const executorConfigs = {
+//   pathScopes: [PATHS.APP_LIST],
+// };
+
 export default () => {
   const { selectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     (model) => ({ selectedPageId: model.selectedPageId }),
   );
 
   const { resetNodesStructuresAndRootIds } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({ resetNodesStructuresAndRootIds: model.resetData }),
   );
 
   const { resetNodesSettings } = useModel(
-    'Design.page.nodesSettings',
+    'design.page.nodesSettings',
     (model) => ({ resetNodesSettings: model.resetData }),
   );
 
   const { resetNodesDefaultsStatus } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => ({ resetNodesDefaultsStatus: model.resetData }),
   );
 
-  const { resetNodesStyles } = useModel('Design.page.nodesStyles', (model) => ({
+  const { resetNodesStyles } = useModel('design.page.nodesStyles', (model) => ({
     resetNodesStyles: model.resetData,
   }));
 
-  const { resetNodesEvents } = useModel('Design.page.nodesEvents', (model) => ({
+  const { resetNodesEvents } = useModel('design.page.nodesEvents', (model) => ({
     resetNodesEvents: model.resetData,
   }));
 
   const { resetNodesActions } = useModel(
-    'Design.page.nodesActions',
+    'design.page.nodesActions',
     (model) => ({ resetNodesActions: model.resetData }),
   );
 
   const { resetNodesStatusRelations } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({ resetNodesStatusRelations: model.resetData }),
   );
 
-  const { resetNodesStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { resetNodesStatus } = useModel('design.page.nodesStatus', (model) => ({
     resetNodesStatus: model.resetData,
   }));
 
   const { setStageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({ setStageSelectNodeId: model.setStageSelectNodeId }),
   );
 
   const { setStageSelectSlotGroupId } = useModel(
-    'Design.stage.stageSelectSlotGroupId',
+    'design.stage.stageSelectSlotGroupId',
     (model) => ({ setStageSelectSlotGroupId: model.setStageSelectSlotGroupId }),
   );
 
-  const { setHoverNodeId } = useModel('Design.stage.hoverNodeId', (model) => ({
+  const { setHoverNodeId } = useModel('design.stage.hoverNodeId', (model) => ({
     setHoverNodeId: model.setHoverNodeId,
   }));
 
   const { setActiveNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({ setActiveNodeStatId: model.setActiveNodeStatId }),
   );
 
   const { cleanFocusSlotsInert } = useModel(
-    'Design.stage.slotsInsert',
+    'design.stage.slotsInsert',
     (model) => ({ cleanFocusSlotsInert: model.cleanFocusSlotsInert }),
   );
 

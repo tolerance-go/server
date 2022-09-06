@@ -4,7 +4,7 @@ import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Spin } from 'antd';
 
 export default ({ item }: { item: API.ShownPage }) => {
-  const { deletePath } = useModel('Design.page.pageList', (model) => ({
+  const { deletePath } = useModel('design.page.pageList', (model) => ({
     deletePath: model.deletePath,
   }));
 

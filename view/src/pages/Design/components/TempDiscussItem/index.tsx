@@ -1,4 +1,4 @@
-import { DiscussTag } from '@/pages/Design/components/DiscussTag';
+import { DiscussTag } from '@/pages/design/components/DiscussTag';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export const TempDiscussItem = () => {
   const { tempDiscuss, setTempDiscuss, requestCreateDiscuss } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       tempDiscuss: model.tempDiscuss,
       setTempDiscuss: model.setTempDiscuss,

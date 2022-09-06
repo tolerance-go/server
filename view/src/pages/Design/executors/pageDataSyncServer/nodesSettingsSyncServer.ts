@@ -5,12 +5,12 @@ import { pickModel } from '@/utils/pickModel';
 
 export default () => {
   const { nodesSettings, nodesSettingsUpdateMode } = useModel(
-    'Design.page.nodesSettings',
+    'design.page.nodesSettings',
     pickModel(['nodesSettings', 'nodesSettingsUpdateMode']),
   );
 
   const { selectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     pickModel(['selectedPageId']),
   );
 

@@ -1,4 +1,4 @@
-import { EventManager } from '@/pages/Design/domains/StageEventManager';
+import { EventManager } from '@/pages/design/domains/StageEventManager';
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ const useEventManager = () => {
   const [eventManager] = useState(
     () => new EventManager(location.pathname !== '/playground'),
   );
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 

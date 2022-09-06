@@ -1,6 +1,6 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { useComStatusExtendActions } from '@/pages/Design/hooks/relations/useComStatusExtendActions';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { useComStatusExtendActions } from '@/pages/design/hooks/relations/useComStatusExtendActions';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
 import { EditOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -26,7 +26,7 @@ export default ({
   extendRelation?: NodeStatRelation;
 }) => {
   const { nodesActionsConfigs } = useModel(
-    'Design.config.nodesActionsConfigs',
+    'design.config.nodesActionsConfigs',
     (model) => ({ nodesActionsConfigs: model.nodesActionsConfigs }),
   );
 
@@ -40,7 +40,7 @@ export default ({
   const formRef = useRef<ProFormInstance>();
 
   const { createComStatAction, nodesActions } = useModel(
-    'Design.page.nodesActions',
+    'design.page.nodesActions',
     (model) => ({
       createComStatAction: model.createComStatAction,
       nodesActions: model.nodesActions,
@@ -48,7 +48,7 @@ export default ({
   );
 
   const { getStageSelectNodeId, stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       getStageSelectNodeId: model.getStageSelectNodeId,
       stageSelectNodeId: model.stageSelectNodeId,
@@ -56,7 +56,7 @@ export default ({
   );
 
   const { getSelectedComponentStatusId, activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       getSelectedComponentStatusId: model.getActiveNodeStatId,
       activeNodeStatId: model.activeNodeStatId,
@@ -64,7 +64,7 @@ export default ({
   );
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),

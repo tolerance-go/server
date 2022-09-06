@@ -1,4 +1,4 @@
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
 import { useModel } from '@umijs/max';
 import consola from 'consola';
 
@@ -7,7 +7,7 @@ export const useSelectedComStyleConfigs = () => {
   const { stageSelectNode } = useSelectedNode();
 
   const { nodesStylesConfigs } = useModel(
-    'Design.config.nodesStyleConfigs',
+    'design.config.nodesStyleConfigs',
     (model) => {
       consola.info('准备返回渲染配置', stageSelectNode, model);
       return {

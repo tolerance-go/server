@@ -1,23 +1,23 @@
-import { useInitialState } from '@/pages/Design/hooks/useInitialState';
+import { useInitialState } from '@/pages/design/hooks/useInitialState';
 import { PageControllerCreate } from '@/services/server/PageController';
 import { useModel } from '@umijs/max';
 import { useClickAway, useEventTarget } from 'ahooks';
 import { Input, Spin } from 'antd';
 import { useRef } from 'react';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
-import useAppId from '@/pages/Design/hooks/useAppId';
+import useAppId from '@/pages/design/hooks/useAppId';
 
 export const TempInput = () => {
-  const { pushPath } = useModel('Design.page.pageList', (model) => ({
+  const { pushPath } = useModel('design.page.pageList', (model) => ({
     pushPath: model.pushPath,
   }));
 
-  const { choosePageId } = useModel('Design.page.selectedPageId', (model) => ({
+  const { choosePageId } = useModel('design.page.selectedPageId', (model) => ({
     choosePageId: model.choosePageId,
   }));
 
   const { creatingMeta, stopTempInput } = useModel(
-    'Design.page.pageCreatingMeta',
+    'design.page.pageCreatingMeta',
     (model) => ({
       creatingMeta: model.creatingMeta,
       stopTempInput: model.stopTempInput,

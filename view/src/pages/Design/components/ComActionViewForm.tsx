@@ -1,7 +1,7 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { NodeAction } from '@/pages/Design/models/page/nodesActions';
-import { NodeStatRelation } from '@/pages/Design/models/page/nodesStatusRelations';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
+import { NodeAction } from '@/pages/design/models/page/nodesActions';
+import { NodeStatRelation } from '@/pages/design/models/page/nodesStatusRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -21,7 +21,7 @@ export default ({
   actionItem?: NodeAction;
   extendRelation?: NodeStatRelation;
 }) => {
-  const { nodesActionsConfigs } = useModel('Design.config.nodesActionsConfigs', (model) => ({
+  const { nodesActionsConfigs } = useModel('design.config.nodesActionsConfigs', (model) => ({
     nodesActionsConfigs: model.nodesActionsConfigs,
   }));
 
@@ -34,16 +34,16 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { nodesActions } = useModel('Design.page.nodesActions', (model) => ({
+  const { nodesActions } = useModel('design.page.nodesActions', (model) => ({
     nodesActions: model.nodesActions,
   }));
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),

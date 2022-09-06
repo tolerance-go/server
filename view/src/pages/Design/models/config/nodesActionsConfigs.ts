@@ -1,4 +1,4 @@
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
 import { useState } from 'react';
 
 export type ComActionsConfig = {

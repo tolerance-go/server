@@ -12,7 +12,7 @@ export default () => {
     getSearchVal: model.getSearchVal,
   }));
 
-  const { getOrderMeta } = usePickModel('WidgetsInstall.marketListOrderMeta', [
+  const { getOrderMeta } = usePickModel('widgets.install.marketListOrderMeta', [
     'getOrderMeta',
   ]);
 

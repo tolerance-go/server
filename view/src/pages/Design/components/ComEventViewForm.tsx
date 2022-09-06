@@ -1,7 +1,7 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentEvent } from '@/pages/Design/models/nodesEvents';
-import { ComStatRelation } from '@/pages/Design/models/statusRelations';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
+import { ComponentEvent } from '@/pages/design/models/nodesEvents';
+import { ComStatRelation } from '@/pages/design/models/statusRelations';
 import { EyeOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -21,7 +21,7 @@ export default ({
   eventItem?: ComponentEvent;
   extendRelation?: ComStatRelation;
 }) => {
-  const { nodesEventsConfigs } = useModel('Design.config.nodesEventsConfigs', (model) => ({
+  const { nodesEventsConfigs } = useModel('design.config.nodesEventsConfigs', (model) => ({
     nodesEventsConfigs: model.nodesEventsConfigs,
   }));
 
@@ -34,26 +34,26 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { getComStatActions } = useModel('Design.page.nodesActions', (model) => ({
+  const { getComStatActions } = useModel('design.page.nodesActions', (model) => ({
     getComStatActions: model.getComStatActions,
   }));
 
-  const { nodesEvents } = useModel('Design.page.nodesEvents', (model) => ({
+  const { nodesEvents } = useModel('design.page.nodesEvents', (model) => ({
     nodesEvents: model.nodesEvents,
   }));
 
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     stageSelectNodeId: model.stageSelectNodeId,
   }));
 
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  const { getComStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { getComStatus } = useModel('design.page.nodesStatus', (model) => ({
     getComStatus: model.getComStatus,
   }));
 

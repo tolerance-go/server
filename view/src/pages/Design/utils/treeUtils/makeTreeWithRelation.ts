@@ -1,4 +1,4 @@
-import { RelationId } from '@/pages/Design/typings/keys';
+import { RelationId } from '@/pages/design/typings/keys';
 import utl from 'lodash';
 
 export type Relation = {

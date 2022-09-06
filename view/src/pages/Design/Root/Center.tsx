@@ -1,16 +1,16 @@
-import { PlaygroundHandlerBar } from '@/pages/Design/components/PlaygroundHandlerBar';
-import Stage from '@/pages/Design/components/Stage';
+import { PlaygroundHandlerBar } from '@/pages/design/components/PlaygroundHandlerBar';
+import Stage from '@/pages/design/components/Stage';
 import { useModel } from '@umijs/max';
 import { Layout } from 'antd';
 
 const { Content } = Layout;
 
 export default () => {
-  const { setMode } = useModel('Design.workbench.siderLeftMode', (model) => ({
+  const { setMode } = useModel('design.workbench.siderLeftMode', (model) => ({
     setMode: model.setSiderLeftMode,
   }));
 
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 

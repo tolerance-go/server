@@ -1,4 +1,4 @@
-import { SLOTS_NAME } from '@/pages/Design/constants';
+import { SLOTS_NAME } from '@/pages/design/constants';
 import { useState } from 'react';
 
 /**

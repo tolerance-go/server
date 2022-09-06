@@ -7,12 +7,12 @@ import { RootIds } from '../models/page/nodesStructuresAndRootIds';
 
 export default () => {
   const { rootNodeIds, getRootIdsUpdateMode } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     pickModel(['rootNodeIds', 'getRootIdsUpdateMode']),
   );
 
   const { getSelectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     pickModel(['getSelectedPageId']),
   );
 

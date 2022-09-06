@@ -1,4 +1,4 @@
-import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
+import { AtomComponentProps } from '@/pages/design/typings/ElementCenter';
 import { Line, LineConfig } from '@ant-design/plots';
 
 export const AtomLine = (props: AtomComponentProps<Partial<LineConfig>>) => {

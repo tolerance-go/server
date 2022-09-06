@@ -1,4 +1,4 @@
-import { HistoryManager } from '@/pages/Design/domains/HistoryManager';
+import { HistoryManager } from '@/pages/design/domains/HistoryManager';
 import '@umijs/max/typings';
 import consola from 'consola';
 import { original } from 'immer';

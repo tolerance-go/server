@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from '@/constants/path';
-import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { useGetImmer } from '@/pages/design/utils/useGetImmer';
 import { getInitialStateFromURL } from '@/utils/getInitialStateFromURL';
 import { useMemoizedFn } from 'ahooks';
 

@@ -1,8 +1,8 @@
-import { DEFAULT_COM_STATUS_NAME } from '@/pages/Design/constants';
+import { DEFAULT_COM_STATUS_NAME } from '@/pages/design/constants';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
-import { ComId, StatId } from '@/pages/Design/typings/keys';
+import { ComId, StatId } from '@/pages/design/typings/keys';
 import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import utl from 'lodash';
 
@@ -29,14 +29,14 @@ const useStatusSettings = () => {
   ] = useUpdateModeState<NodesStatus>({});
 
   const { getSelectedComponentStatusId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       getSelectedComponentStatusId: model.getActiveNodeStatId,
     }),
   );
 
   const { getStageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       getStageSelectNodeId: model.getStageSelectNodeId,
     }),

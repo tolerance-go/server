@@ -1,4 +1,4 @@
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
 import { useMemoizedFn } from 'ahooks';
 import { useState } from 'react';
 import { ComponentCommonStyle } from '../page/nodesStyles';

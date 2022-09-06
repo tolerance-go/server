@@ -3,25 +3,25 @@ import { useMemoizedFn } from 'ahooks';
 
 export const useInitSatgeData = () => {
   const { initData: initComsTreeData } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       initData: model.initData,
     }),
   );
 
-  const { initData: initStatusSettings } = useModel('Design.page.nodesStatus', (model) => ({
+  const { initData: initStatusSettings } = useModel('design.page.nodesStatus', (model) => ({
     initData: model.initData,
   }));
 
   const { initData: initStatusSettingsDefaults } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => ({
       initData: model.initData,
     }),
   );
 
   const { initData: initStatusRelations } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => {
       return {
         initData: model.initData,
@@ -29,25 +29,25 @@ export const useInitSatgeData = () => {
     },
   );
 
-  const { initData: initComsActions } = useModel('Design.page.nodesActions', (model) => {
+  const { initData: initComsActions } = useModel('design.page.nodesActions', (model) => {
     return {
       initData: model.initData,
     };
   });
 
-  const { initData: initComsEvents } = useModel('Design.page.nodesEvents', (model) => {
+  const { initData: initComsEvents } = useModel('design.page.nodesEvents', (model) => {
     return {
       initData: model.initData,
     };
   });
 
-  const { initData: initComsStyles } = useModel('Design.page.nodesStyles', (model) => {
+  const { initData: initComsStyles } = useModel('design.page.nodesStyles', (model) => {
     return {
       initData: model.initData,
     };
   });
 
-  const { initData: initComsSettings } = useModel('Design.page.nodesSettings', (model) => {
+  const { initData: initComsSettings } = useModel('design.page.nodesSettings', (model) => {
     return {
       initData: model.initData,
     };

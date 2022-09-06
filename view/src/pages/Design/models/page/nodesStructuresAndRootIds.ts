@@ -1,5 +1,5 @@
-import { SlotPosition } from '@/pages/Design/models/stage/slotsInsert';
-import { ComId, SlotName } from '@/pages/Design/typings/keys';
+import { SlotPosition } from '@/pages/design/models/stage/slotsInsert';
+import { ComId, SlotName } from '@/pages/design/typings/keys';
 import { Server } from '@/typings/Server';
 // import { useModel } from '@umijs/max';
 import { useUpdateModeState } from '@/utils/useUpdateModeState';

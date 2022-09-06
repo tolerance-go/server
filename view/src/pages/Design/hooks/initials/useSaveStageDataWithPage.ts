@@ -7,7 +7,7 @@ import { useGetStageData } from './useGetStageData';
 export const useSaveStageDataWithPage = () => {
   const { getStageData } = useGetStageData();
 
-  const { activePageId } = useModel('Design.page.pageList', (model) => {
+  const { activePageId } = useModel('design.page.pageList', (model) => {
     return {
       activePageId: model?.selectedPageId,
     };

@@ -1,4 +1,4 @@
-import { ComponentCommonStyle } from '@/pages/Design/models/nodesStyles';
+import { ComponentCommonStyle } from '@/pages/design/models/nodesStyles';
 import { PropsWithChildren } from 'react';
 
 /** 可以自行转换外观表单的参数 */

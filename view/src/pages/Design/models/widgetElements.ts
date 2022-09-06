@@ -1,5 +1,5 @@
-import { AtomButton } from '@/pages/Design/components/atomComs/AtomButton';
-import { ElementCenter } from '@/pages/Design/typings/ElementCenter';
+import { AtomButton } from '@/pages/design/components/atomComs/AtomButton';
+import { ElementCenter } from '@/pages/design/typings/ElementCenter';
 import { AtomLine } from '../components/atomComs/AtomLine';
 import { AtomTable } from '../components/atomComs/AtomTable';
 

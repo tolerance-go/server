@@ -12,7 +12,7 @@ export const DiscussListActions = (props: { size?: ButtonProps['size'] }) => {
     setDetailListFilterMode,
     setSelectedDiscussId,
     selectedNextItem,
-  } = useModel('Design.playground', (model) => ({
+  } = useModel('design.playground', (model) => ({
     requestDeleteDiscuss: model.requestDeleteDiscuss,
     requestResolvedDiscuss: model.requestResolvedDiscuss,
     requestResolvedDiscussLoading: model.requestResolvedDiscussLoading,

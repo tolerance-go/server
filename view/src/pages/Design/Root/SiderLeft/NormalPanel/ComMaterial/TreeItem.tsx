@@ -1,6 +1,6 @@
-import { getAppIdOrThrow } from '@/pages/Design/helps/getAppIdOrThrow';
+import { getAppIdOrThrow } from '@/pages/design/helps/getAppIdOrThrow';
 import { ComponentControllerCreateWithRelation } from '@/services/server/ComponentController';
-import { RelationTreeItem } from '@/pages/Design/utils/treeUtils/makeTreeWithRelation';
+import { RelationTreeItem } from '@/pages/design/utils/treeUtils/makeTreeWithRelation';
 import { useModel } from '@umijs/max';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { Dropdown, Menu, Row, Tag, Tooltip, Typography } from 'antd';
@@ -11,7 +11,7 @@ export const TreeItem = ({
   record: RelationTreeItem<API.Component>;
 }) => {
   const { requestRemove, addComMaterial } = useModel(
-    'Design.component.componentList',
+    'design.component.componentList',
     (model) => ({
       requestRemove: model.requestRemove,
       addComMaterial: model.addComMaterial,
@@ -19,14 +19,14 @@ export const TreeItem = ({
   );
 
   const { highlightId } = useModel(
-    'Design.component.listHighlightItemId',
+    'design.component.listHighlightItemId',
     (model) => ({
       highlightId: model.highlightId,
     }),
   );
 
   const { addMaterialInheritConnection } = useModel(
-    'Design.component.componentInheritRelation',
+    'design.component.componentInheritRelation',
     (model) => ({
       addMaterialInheritConnection: model.addMaterialInheritConnection,
     }),

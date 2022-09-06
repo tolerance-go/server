@@ -1,5 +1,5 @@
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
-import { RecoverParams } from '@/pages/Design/domains/HistoryManager';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
+import { RecoverParams } from '@/pages/design/domains/HistoryManager';
 import { useModel } from '@umijs/max';
 import { useGetState, useMemoizedFn } from 'ahooks';
 import { useEffect } from 'react';
@@ -9,7 +9,7 @@ const useSelectedDataId = () => {
   const [selectedDataId, setSelectedDataId, getSelectedDataId] =
     useGetState<number>();
 
-  const { historyManager } = useModel('Design.app.appStateHistory', (model) => ({
+  const { historyManager } = useModel('design.app.appStateHistory', (model) => ({
     historyManager: model.historyManager,
   }));
 

@@ -1,5 +1,5 @@
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
+import { getPageIdOrThrow } from '@/pages/design/helps/getPageIdOrThrow';
 import { DiscussControllerCountComments } from '@/services/server/DiscussController';
 import { useMemoizedFn } from 'ahooks';
 import { useState } from 'react';

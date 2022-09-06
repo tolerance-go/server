@@ -8,38 +8,38 @@ const useStageSelectNodeId = () => {
     useGetState<string>();
 
   const { openTargetFromTreeMenu } = useModel(
-    'Design.workbench.comsLayout',
+    'design.workbench.comsLayout',
     (model) => ({
       openTargetFromTreeMenu: model?.openTargetFromTreeMenu,
     }),
   );
 
   const { setPagesSiderMode } = useModel(
-    'Design.workbench.normalModeSubMode',
+    'design.workbench.normalModeSubMode',
     pickModel(['setPagesSiderMode']),
   );
 
   const { setSiderLeftMode } = useModel(
-    'Design.workbench.siderLeftMode',
+    'design.workbench.siderLeftMode',
     pickModel(['setSiderLeftMode']),
   );
 
   const { setStageSelectSlotGroupId } = useModel(
-    'Design.stage.stageSelectSlotGroupId',
+    'design.stage.stageSelectSlotGroupId',
     (model) => ({
       setStageSelectSlotGroupId: model?.setStageSelectSlotGroupId,
     }),
   );
 
   const { setSelectedKeys } = useModel(
-    'Design.workbench.comsLayout',
+    'design.workbench.comsLayout',
     (model) => ({
       setSelectedKeys: model?.setSelectedKeys,
     }),
   );
 
   const { activeNodeStatIdFromComDefaultStatus } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => ({
       activeNodeStatIdFromComDefaultStatus:
         model.selectRightPanelComStatusIdFromDefault,
@@ -47,7 +47,7 @@ const useStageSelectNodeId = () => {
   );
 
   const { setMode: setRightBarMode } = useModel(
-    'Design.workbench.siderRightMode',
+    'design.workbench.siderRightMode',
     pickModel(['setMode']),
   );
 

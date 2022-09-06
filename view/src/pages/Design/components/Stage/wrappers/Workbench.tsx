@@ -1,4 +1,4 @@
-import { joinUnitNumber } from '@/pages/Design/utils/joinUnitNumber';
+import { joinUnitNumber } from '@/pages/design/utils/joinUnitNumber';
 import { useModel } from '@umijs/max';
 import { PropsWithChildren } from 'react';
 
@@ -7,7 +7,7 @@ export const StageWorkbenchWrapper = (
     id: string;
   }>,
 ) => {
-  const { stageSize } = useModel('Design.stage.stageSize', (model) => ({
+  const { stageSize } = useModel('design.stage.stageSize', (model) => ({
     stageSize: model.stageSize,
   }));
 

@@ -8,7 +8,7 @@ import { ColumSettingsForm } from './ColumSettingsForm';
 // };
 
 export const ColumnsConfigModal = () => {
-  const { visible, setVisible } = useModel('Design.database.dataFieldsConfig', (model) => ({
+  const { visible, setVisible } = useModel('design.database.dataFieldsConfig', (model) => ({
     visible: model.visible,
     setVisible: model.setVisible,
   }));

@@ -4,7 +4,7 @@ import {
   CommentControllerIndex,
   CommentControllerUpdate,
 } from '@/services/server/CommentController';
-import { findTreeNode } from '@/pages/Design/utils/treeUtils/findTreeNode';
+import { findTreeNode } from '@/pages/design/utils/treeUtils/findTreeNode';
 import { useModel } from '@umijs/max';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 import { produce } from 'immer';
@@ -25,14 +25,14 @@ const useDiscussComments = () => {
   const [replyingCommentId, setReplyingCommentId] = useState<number>();
 
   const { increaseDiscussCommentsCount, reduceDiscussCommentsCount } = useModel(
-    'Design.discuss.allDiscussCommentsCount',
+    'design.discuss.allDiscussCommentsCount',
     (model) => ({
       increaseDiscussCommentsCount: model.increaseDiscussCommentsCount,
       reduceDiscussCommentsCount: model.reduceDiscussCommentsCount,
     }),
   );
 
-  const { getSelectedDiscussId } = useModel('Design.playground', (model) => ({
+  const { getSelectedDiscussId } = useModel('design.playground', (model) => ({
     getSelectedDiscussId: model.getSelectedDiscussId,
   }));
 

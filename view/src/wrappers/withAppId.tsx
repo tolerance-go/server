@@ -1,16 +1,16 @@
 import { useSearchParams } from '@/.umi/exports';
 import { PATHS, QUERY_KEYS } from '@/constants/path';
-import { Outlet, useNavigate } from '@umijs/max';
+import { useNavigate } from '@umijs/max';
 import { Button, Result, Space } from 'antd';
 
-export default () => {
+export default (Component: React.ElementType) => () => {
   const [searchParams] = useSearchParams();
   const appId = searchParams.get(QUERY_KEYS.APP_ID);
 
   const navigate = useNavigate();
 
   if (appId) {
-    return <Outlet key={appId} />;
+    return <Component key={appId} />;
   }
   return (
     <Result

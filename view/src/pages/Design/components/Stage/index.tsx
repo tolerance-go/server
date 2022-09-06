@@ -1,5 +1,5 @@
-import { Atom } from '@/pages/Design/components/Atom';
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
+import { Atom } from '@/pages/design/components/Atom';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
 import { useModel } from '@umijs/max';
 import { useMemo } from 'react';
 import { StagePlaygroundWrapper } from './wrappers/Playground';
@@ -9,7 +9,7 @@ import { StageWorkbenchWrapper } from './wrappers/Workbench';
 
 export default function Stage() {
   const { rootNodeIds, stageComponentsModel } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => {
       return {
         stageComponentsModel: model.nodesStructures,
@@ -24,7 +24,7 @@ export default function Stage() {
       .filter((item): item is ComponentStructure => item !== undefined);
   }, [rootNodeIds, stageComponentsModel]);
 
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 

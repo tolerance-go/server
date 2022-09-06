@@ -1,11 +1,11 @@
-import { QuestionTooltip } from '@/pages/Design/components/QuestionTooltip';
-import { PlaygroundMode } from '@/pages/Design/models/playground';
+import { QuestionTooltip } from '@/pages/design/components/QuestionTooltip';
+import { PlaygroundMode } from '@/pages/design/models/playground';
 import { useModel } from '@umijs/max';
 import { Segmented, Space } from 'antd';
 import styles from './index.less';
 
 export const PlaygroundHandlerBar = () => {
-  const { mode, setMode, setDetailMode } = useModel('Design.playground', (model) => ({
+  const { mode, setMode, setDetailMode } = useModel('design.playground', (model) => ({
     mode: model.mode,
     setMode: model.setMode,
     setDetailMode: model.setDetailMode,

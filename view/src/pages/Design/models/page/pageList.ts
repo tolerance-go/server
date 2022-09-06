@@ -1,5 +1,5 @@
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
-import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { useGetImmer } from '@/pages/design/utils/useGetImmer';
 import { PageControllerFindAll } from '@/services/server/PageController';
 import { useModel, request } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -8,7 +8,7 @@ import { useMemoizedFn } from 'ahooks';
 const usePageList = () => {
   const [list, setList, getList] = useGetImmer<API.ShownPage[]>();
   const { selectedPageId, choosePageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     (model) => ({
       selectedPageId: model.selectedPageId,
       choosePageId: model.choosePageId,

@@ -1,5 +1,5 @@
-import { useSelectedData } from '@/pages/Design/hooks/selected/useSelectedData';
-import { DataTableColumn } from '@/pages/Design/models/dataList';
+import { useSelectedData } from '@/pages/design/hooks/selected/useSelectedData';
+import { DataTableColumn } from '@/pages/design/models/dataList';
 import { useModel } from '@umijs/max';
 import { Tree } from 'antd';
 import { DataNode, TreeProps } from 'antd/lib/tree';
@@ -15,7 +15,7 @@ export const ColumnsTree = () => {
   const { columns } = selectedData?.data ?? {};
 
   const { selectedFieldId, setSelectedColumnFieldId } = useModel(
-    'Design.database.dataFieldsConfig',
+    'design.database.dataFieldsConfig',
     (model) => ({
       selectedFieldId: model.selectedColumnFieldId,
       setSelectedColumnFieldId: model.setSelectedColumnFieldId,

@@ -1,8 +1,8 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { useComStatusExtendEvents } from '@/pages/Design/hooks/relations/useComStatusExtendEvents';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
-import { ComponentEvent } from '@/pages/Design/models/nodesEvents';
-import { ComStatRelation } from '@/pages/Design/models/statusRelations';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { useComStatusExtendEvents } from '@/pages/design/hooks/relations/useComStatusExtendEvents';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
+import { ComponentEvent } from '@/pages/design/models/nodesEvents';
+import { ComStatRelation } from '@/pages/design/models/statusRelations';
 import { EditOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -25,7 +25,7 @@ export default ({
   eventItem?: ComponentEvent;
   extendRelation?: ComStatRelation;
 }) => {
-  const { nodesEventsConfigs } = useModel('Design.config.nodesEventsConfigs', (model) => ({
+  const { nodesEventsConfigs } = useModel('design.config.nodesEventsConfigs', (model) => ({
     nodesEventsConfigs: model.nodesEventsConfigs,
   }));
 
@@ -38,12 +38,12 @@ export default ({
   // const [form] = Form.useForm();
   const formRef = useRef<ProFormInstance>();
 
-  const { getComStatActions } = useModel('Design.page.nodesActions', (model) => ({
+  const { getComStatActions } = useModel('design.page.nodesActions', (model) => ({
     getComStatActions: model.getComStatActions,
   }));
 
   const { createComStatEvent, nodesEvents } = useModel(
-    'Design.page.nodesEvents',
+    'design.page.nodesEvents',
     (model) => ({
       createComStatEvent: model.createComStatEvent,
       nodesEvents: model.nodesEvents,
@@ -51,7 +51,7 @@ export default ({
   );
 
   const { getStageSelectNodeId, stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       getStageSelectNodeId: model.getStageSelectNodeId,
       stageSelectNodeId: model.stageSelectNodeId,
@@ -59,19 +59,19 @@ export default ({
   );
 
   const { getSelectedComponentStatusId, activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       getSelectedComponentStatusId: model.getActiveNodeStatId,
       activeNodeStatId: model.activeNodeStatId,
     }),
   );
 
-  const { getComStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { getComStatus } = useModel('design.page.nodesStatus', (model) => ({
     getComStatus: model.getComStatus,
   }));
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),

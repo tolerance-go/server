@@ -1,4 +1,5 @@
 import services from '@/services/demo';
+import withAuth from '@/wrappers/withAuth';
 import {
   ActionType,
   FooterToolbar,
@@ -269,4 +270,4 @@ const TableList: React.FC<unknown> = () => {
   );
 };
 
-export default TableList;
+export default withAuth(TableList);

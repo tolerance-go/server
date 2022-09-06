@@ -1,14 +1,14 @@
 import { useModel } from '@umijs/max';
 
 export const useSelectedComActiveStatStyle = (comId?: string) => {
-  const { nodesStyles } = useModel('Design.page.nodesStyles', (model) => {
+  const { nodesStyles } = useModel('design.page.nodesStyles', (model) => {
     return {
       nodesStyles: model.nodesStyles,
     };
   });
 
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),

@@ -9,7 +9,7 @@ import TempUpdateInput from './TempUpdateInput';
 export const MenuItem = ({ item }: { item: API.ShownPage }) => {
   const [hovering, setHovering] = useState(false);
 
-  const { updatingPageId } = useModel('Design.page.pageUpdatingMeta', (model) => ({
+  const { updatingPageId } = useModel('design.page.pageUpdatingMeta', (model) => ({
     updatingPageId: model.updatingPageId,
   }));
 

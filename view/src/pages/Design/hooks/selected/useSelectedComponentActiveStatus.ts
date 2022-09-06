@@ -6,7 +6,7 @@ export const useSelectedComponentActiveStatus = () => {
   const { status } = useSelectedComponentStatus();
 
   const { activeNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       activeNodeStatId: model.activeNodeStatId,
     }),

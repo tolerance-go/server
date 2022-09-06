@@ -1,5 +1,5 @@
-import { RequestButton } from '@/pages/Design/components/RequestButton';
-import { DataListItem } from '@/pages/Design/models/dataList';
+import { RequestButton } from '@/pages/design/components/RequestButton';
+import { DataListItem } from '@/pages/design/models/dataList';
 import { DatabaseControllerDestroy } from '@/services/server/DatabaseController';
 import { ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -7,13 +7,13 @@ import { message } from 'antd';
 import Creator from './Creator';
 
 export default () => {
-  const { dataList, deleteData } = useModel('Design.database.dataList', (model) => ({
+  const { dataList, deleteData } = useModel('design.database.dataList', (model) => ({
     dataList: model.dataList,
     deleteData: model.deleteData,
   }));
 
   const { selectWithDataId, selectedDataId } = useModel(
-    'Design.database.selectedDataId',
+    'design.database.selectedDataId',
     (model) => ({
       selectWithDataId: model.selectWithDataId,
       selectedDataId: model.selectedDataId,

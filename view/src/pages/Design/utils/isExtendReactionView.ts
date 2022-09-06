@@ -1,4 +1,4 @@
-import { UnsyncFields } from '@/pages/Design/models/statusRelations';
+import { UnsyncFields } from '@/pages/design/models/statusRelations';
 
 /** 是否显示动作行为展示，而非编辑 */
 export const isExtendReactionView = (

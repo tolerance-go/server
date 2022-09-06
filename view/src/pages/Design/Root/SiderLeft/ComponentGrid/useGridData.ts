@@ -18,7 +18,7 @@ export type DesignInstalledWidgetGroup = API.WidgetGroup & {
 
 export const useGridData = () => {
   const { mode: siderLeftMode } = useModel(
-    'Design.workbench.siderLeftMode',
+    'design.workbench.siderLeftMode',
     (model) => ({
       mode: model?.siderLeftMode,
     }),

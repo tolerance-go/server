@@ -1,11 +1,11 @@
-import { ConfigurableForm } from '@/pages/Design/components/ConfigurableForm';
-import { FormItemExtendLabel } from '@/pages/Design/components/FormItemExtendLabel';
-import { useComStatusExtendSettings } from '@/pages/Design/hooks/relations/useComStatusExtendSettings';
-import { useDebounceTriggerPrepareSaveTimeChange } from '@/pages/Design/hooks/actions/useDebounceTriggerPrepareSaveTimeChange';
-import { useComStatFormReset } from '@/pages/Design/hooks/useComStatFormReset';
-import { useSelectedComActiveStatExtendRelation } from '@/pages/Design/hooks/selected/useSelectedComActiveStatExtendRelation';
-import { useSelectedComSettingsConfigs } from '@/pages/Design/hooks/selected/useSelectedComSettingsConfigs';
-import { useSelectedNode } from '@/pages/Design/hooks/selected/useSelectedNode';
+import { ConfigurableForm } from '@/pages/design/components/ConfigurableForm';
+import { FormItemExtendLabel } from '@/pages/design/components/FormItemExtendLabel';
+import { useComStatusExtendSettings } from '@/pages/design/hooks/relations/useComStatusExtendSettings';
+import { useDebounceTriggerPrepareSaveTimeChange } from '@/pages/design/hooks/actions/useDebounceTriggerPrepareSaveTimeChange';
+import { useComStatFormReset } from '@/pages/design/hooks/useComStatFormReset';
+import { useSelectedComActiveStatExtendRelation } from '@/pages/design/hooks/selected/useSelectedComActiveStatExtendRelation';
+import { useSelectedComSettingsConfigs } from '@/pages/design/hooks/selected/useSelectedComSettingsConfigs';
+import { useSelectedNode } from '@/pages/design/hooks/selected/useSelectedNode';
 import { useModel } from '@umijs/max';
 import { Form } from 'antd';
 import consola from 'consola';
@@ -27,14 +27,14 @@ export const SettingForm = () => {
     useDebounceTriggerPrepareSaveTimeChange();
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),
   );
 
   const { lockComExtendField, unlockComExtendField } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({
       lockComExtendField: model.lockComExtendSettingField,
       unlockComExtendField: model.unlockComExtendSettingField,

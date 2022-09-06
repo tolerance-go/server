@@ -1,8 +1,8 @@
-import DiscussItem from '@/pages/Design/components/DiscussItem';
-import { TempDiscussItem } from '@/pages/Design/components/TempDiscussItem';
-import { PLAYGROUND_ATOM_WRAPPER_CLASS_NAME } from '@/pages/Design/constants/atoms';
-import { getPageIdOrThrow } from '@/pages/Design/helps/getPageIdOrThrow';
-import { findClosestParentHTMLElement } from '@/pages/Design/utils/findClosestParentHTMLElement';
+import DiscussItem from '@/pages/design/components/DiscussItem';
+import { TempDiscussItem } from '@/pages/design/components/TempDiscussItem';
+import { PLAYGROUND_ATOM_WRAPPER_CLASS_NAME } from '@/pages/design/constants/atoms';
+import { getPageIdOrThrow } from '@/pages/design/helps/getPageIdOrThrow';
+import { findClosestParentHTMLElement } from '@/pages/design/utils/findClosestParentHTMLElement';
 import { useModel } from '@umijs/max';
 import { PropsWithChildren } from 'react';
 
@@ -12,7 +12,7 @@ export const StagePlaygroundWrapper = (
   }>,
 ) => {
   const { mode, tempDiscuss, filterDiscusses, setTempDiscuss, setDetailMode } =
-    useModel('Design.playground', (model) => ({
+    useModel('design.playground', (model) => ({
       mode: model.mode,
       tempDiscuss: model.tempDiscuss,
       filterDiscusses: model.filterDiscusses,
@@ -21,7 +21,7 @@ export const StagePlaygroundWrapper = (
     }));
 
   const { siderLeftWidth, headerHeight } = useModel(
-    'Design.workbench.workbenchIDESettings',
+    'design.workbench.workbenchIDESettings',
     (model) => ({
       siderLeftWidth: model.siderLeftWidth,
       headerHeight: model.headerHeight,

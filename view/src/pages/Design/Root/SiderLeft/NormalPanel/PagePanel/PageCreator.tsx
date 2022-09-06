@@ -1,10 +1,10 @@
-import IconTrigger from '@/pages/Design/components/IconTrigger';
+import IconTrigger from '@/pages/design/components/IconTrigger';
 import { PlusOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 
 export const PageCreator = () => {
   const { setTempInputValueByIndex } = useModel(
-    'Design.page.pageCreatingMeta',
+    'design.page.pageCreatingMeta',
     (model) => ({
       setTempInputValueByIndex: model.setTempInputValueByIndex,
     }),

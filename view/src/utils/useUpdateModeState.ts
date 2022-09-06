@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks';
 import { Draft } from 'immer';
 import { WritableDraft } from 'immer/dist/internal';
 import { DraftFunction, Updater } from 'use-immer';
-import useGetImmer from '../pages/Design/utils/useGetImmer';
+import useGetImmer from '../pages/design/utils/useGetImmer';
 
 export type UpdateData<T> = {
   updateMode: 'init' | 'update';

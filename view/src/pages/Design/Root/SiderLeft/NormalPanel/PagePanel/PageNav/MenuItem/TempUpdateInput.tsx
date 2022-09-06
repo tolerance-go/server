@@ -6,12 +6,12 @@ import { useRef } from 'react';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
 
 export default ({ item }: { item: API.ShownPage }) => {
-  const { updatePath } = useModel('Design.page.pageList', (model) => ({
+  const { updatePath } = useModel('design.page.pageList', (model) => ({
     updatePath: model.updatePath,
   }));
 
   const { stopUpdating } = useModel(
-    'Design.page.pageUpdatingMeta',
+    'design.page.pageUpdatingMeta',
     (model) => ({
       stopUpdating: model.stopUpdating,
     }),

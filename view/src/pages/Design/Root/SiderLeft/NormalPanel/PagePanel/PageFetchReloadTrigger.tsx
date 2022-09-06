@@ -1,10 +1,10 @@
-import IconTrigger from '@/pages/Design/components/IconTrigger';
-import useAppId from '@/pages/Design/hooks/useAppId';
+import IconTrigger from '@/pages/design/components/IconTrigger';
+import useAppId from '@/pages/design/hooks/useAppId';
 import { usePickModel } from '@/utils/useModelTypes';
 import { ReloadOutlined } from '@ant-design/icons';
 
 export default () => {
-  const { request } = usePickModel('Design.page.pageList', ['request']);
+  const { request } = usePickModel('design.page.pageList', ['request']);
   const appId = useAppId();
 
   return (

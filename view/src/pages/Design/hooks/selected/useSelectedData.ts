@@ -2,13 +2,13 @@ import { useModel } from '@umijs/max';
 import { useMemo } from 'react';
 
 export const useSelectedData = () => {
-  const { dataList } = useModel('Design.database.dataList', (model) => {
+  const { dataList } = useModel('design.database.dataList', (model) => {
     return {
       dataList: model.dataList,
     };
   });
 
-  const { selectedDataId } = useModel('Design.database.selectedDataId', (model) => ({
+  const { selectedDataId } = useModel('design.database.selectedDataId', (model) => ({
     selectedDataId: model.selectedDataId,
   }));
 

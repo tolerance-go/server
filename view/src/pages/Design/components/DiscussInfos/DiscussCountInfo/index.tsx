@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import { CSSProperties } from 'react';
 
 export const DiscussCountInfo = (props: { style?: CSSProperties }) => {
-  const { filterDiscusses } = useModel('Design.playground', (model) => ({
+  const { filterDiscusses } = useModel('design.playground', (model) => ({
     filterDiscusses: model.filterDiscusses,
   }));
 

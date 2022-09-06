@@ -1,4 +1,4 @@
-import { useSaveStageDataWithPage } from '@/pages/Design/hooks/initials/useSaveStageDataWithPage';
+import { useSaveStageDataWithPage } from '@/pages/design/hooks/initials/useSaveStageDataWithPage';
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';
@@ -8,7 +8,7 @@ export const useAutoSave = () => {
     useSaveStageDataWithPage();
 
   const { prepareSaveTime, updateAutoSaveTime } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
   );
 
   const { loading, run } = useRequestReadyOnAuth(

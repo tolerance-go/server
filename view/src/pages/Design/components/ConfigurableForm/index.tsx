@@ -1,4 +1,4 @@
-import { ConfigurableFormProps } from '@/pages/Design/components/ConfigurableForm/typings/ConfigsFormProps';
+import { ConfigurableFormProps } from '@/pages/design/components/ConfigurableForm/typings/ConfigsFormProps';
 import { ProForm, ProFormDependency } from '@ant-design/pro-components';
 import { ConfigFormItem } from './ConfigFormItem';
 import styles from './index.less';

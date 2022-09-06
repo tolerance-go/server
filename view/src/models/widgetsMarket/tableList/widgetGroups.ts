@@ -1,4 +1,4 @@
-import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { useGetImmer } from '@/pages/design/utils/useGetImmer';
 import { WidgetGroupControllerFindAll } from '@/services/server/WidgetGroupController';
 import { WidgetGroupIncludeLibAndUserAndWidgetsAndLicense } from '@/typings/includes';
 import { useRequestReadyOnAuth } from '@/helpers/useRequestInternal';

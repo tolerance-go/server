@@ -2,18 +2,18 @@ import { useModel } from '@umijs/max';
 import { Tag } from 'antd';
 
 export const TagItem = () => {
-  const { componentsStatus } = useModel('Design.page.nodesStatus', (model) => ({
+  const { componentsStatus } = useModel('design.page.nodesStatus', (model) => ({
     componentsStatus: model.nodesStatus,
   }));
 
   const { stageComponentsModel } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       stageComponentsModel: model.nodesStructures,
     }),
   );
 
-  const { selectedDiscuss } = useModel('Design.playground', (model) => ({
+  const { selectedDiscuss } = useModel('design.playground', (model) => ({
     selectedDiscuss: model.selectedDiscuss,
   }));
 

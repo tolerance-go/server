@@ -1,4 +1,4 @@
-import { SiderContentTopper } from '@/pages/Design/components/SiderContentTopper';
+import { SiderContentTopper } from '@/pages/design/components/SiderContentTopper';
 import { Col, Row } from 'antd';
 import { PageCreator } from './PageCreator';
 import PageNav from './PageNav';

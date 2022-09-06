@@ -1,4 +1,4 @@
-import useAppId from '@/pages/Design/hooks/useAppId';
+import useAppId from '@/pages/design/hooks/useAppId';
 import { usePickModel } from '@/utils/useModelTypes';
 import useUrlState from '@ahooksjs/use-url-state';
 import { useModel } from '@umijs/max';
@@ -18,12 +18,12 @@ const PageNav = () => {
   const appId = useAppId();
 
   const { pageList, request, setList, requestLoading } = usePickModel(
-    'Design.page.pageList',
+    'design.page.pageList',
     ['pageList', 'getList', 'request', 'setList', 'requestLoading'],
   );
 
   const { selectedPageId, choosePageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     (model) => ({
       selectedPageId: model.selectedPageId,
       choosePageId: model.choosePageId,
@@ -31,7 +31,7 @@ const PageNav = () => {
   );
 
   const { creatingMeta } = useModel(
-    'Design.page.pageCreatingMeta',
+    'design.page.pageCreatingMeta',
     (model) => ({
       creatingMeta: model.creatingMeta,
     }),

@@ -15,14 +15,14 @@ export default ({
   type: 'slots' | 'component';
 }>) => {
   const { removeComFromTree, removeSlotFromTree } = useModel(
-    'Design.page.nodesStructuresAndRootIds',
+    'design.page.nodesStructuresAndRootIds',
     (model) => ({
       removeComFromTree: model?.removeComFromTree,
       removeSlotFromTree: model?.removeSlotFromTree,
     }),
   );
 
-  const { refreshLastAutoSaveTime } = useModel('Design.app.stageAutoSave', (model) => {
+  const { refreshLastAutoSaveTime } = useModel('design.app.stageAutoSave', (model) => {
     return {
       refreshLastAutoSaveTime: model?.triggerPrepareSaveTimeChange,
     };

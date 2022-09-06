@@ -1,4 +1,4 @@
-import { ComId } from '@/pages/Design/typings/keys';
+import { ComId } from '@/pages/design/typings/keys';
 import { useUpdateModeState } from '@/utils/useUpdateModeState';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -27,7 +27,7 @@ export default () => {
   );
 
   const { setSelectedComponentStatusId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       setSelectedComponentStatusId: model.setActiveNodeStatId,
     }),

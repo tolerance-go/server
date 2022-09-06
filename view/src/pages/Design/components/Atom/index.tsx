@@ -1,4 +1,4 @@
-import { ComponentStructure } from '@/pages/Design/models/page/nodesStructuresAndRootIds';
+import { ComponentStructure } from '@/pages/design/models/page/nodesStructuresAndRootIds';
 import { usePickModel } from '@/utils/useModelTypes';
 import { useModel } from '@umijs/max';
 import useNodeActiveMeta from './hooks/useNodeActiveStatMeta';
@@ -12,11 +12,11 @@ import { AtomWorkbenchWrapper } from './wrappers/Workbench';
  * 舞台上的组件
  */
 export const Atom = (props: ComponentStructure) => {
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 
-  const { widgetElements } = usePickModel('Design.widgetElements', [
+  const { widgetElements } = usePickModel('design.widgetElements', [
     'widgetElements',
   ]);
 
@@ -24,7 +24,7 @@ export const Atom = (props: ComponentStructure) => {
   const { slots } = props;
 
   const { stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       stageSelectNodeId: model.stageSelectNodeId,
     }),

@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 /** 注意该组件处理 tempDiscuss 存在与否的两种逻辑 */
 export const TitleItem = () => {
   const { selectedDiscuss, updateSelectedDiscussContent } = useModel(
-    'Design.playground',
+    'design.playground',
     (model) => ({
       selectedDiscuss: model.selectedDiscuss,
       updateSelectedDiscussContent: model.updateSelectedDiscussContent,

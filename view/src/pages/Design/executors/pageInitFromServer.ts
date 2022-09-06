@@ -6,7 +6,7 @@ import { useModel } from '@umijs/max';
 
 export default () => {
   const { selectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     pickModel(['selectedPageId']),
   );
 

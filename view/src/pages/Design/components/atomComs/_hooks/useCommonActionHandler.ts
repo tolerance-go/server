@@ -1,19 +1,19 @@
-import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { NodeAction } from '@/pages/Design/models/page/nodesActions';
-import { SwitchStatusAction } from '@/pages/Design/typings/actions';
+import { EventHandlerParams } from '@/pages/design/domains/StageEventManager';
+import { NodeAction } from '@/pages/design/models/page/nodesActions';
+import { SwitchStatusAction } from '@/pages/design/typings/actions';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
 
 export const useCommonActionHandler = () => {
   const { getComStatAction } = useModel(
-    'Design.page.nodesActions',
+    'design.page.nodesActions',
     (model) => ({
       getComStatAction: model.getComStatAction,
     }),
   );
 
   const { setComStatusSettingsUsed } = useModel(
-    'Design.page.statusSettingsUsed',
+    'design.page.statusSettingsUsed',
     (model) => ({
       setComStatusSettingsUsed: model.setComStatusSettingsUsed,
     }),

@@ -24,34 +24,34 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
   }));
 
   const { selectedNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       selectedNodeId: model.stageSelectNodeId,
     }),
   );
 
-  const { createStat } = useModel('Design.page.nodesStatus', (model) => ({
+  const { createStat } = useModel('design.page.nodesStatus', (model) => ({
     createStat: model.createSelectedComponentStat,
   }));
 
-  const { copySettings } = useModel('Design.page.nodesSettings', (model) => ({
+  const { copySettings } = useModel('design.page.nodesSettings', (model) => ({
     copySettings: model.copySelectedComSettingFromActiveStatToOtherStat,
   }));
 
-  const { copyActions } = useModel('Design.page.nodesActions', (model) => ({
+  const { copyActions } = useModel('design.page.nodesActions', (model) => ({
     copyActions: model.copySelectedComActionFromActiveStatToOtherStat,
   }));
 
-  const { copyEvents } = useModel('Design.page.nodesEvents', (model) => ({
+  const { copyEvents } = useModel('design.page.nodesEvents', (model) => ({
     copyEvents: model.copySelectedComEventFromActiveStatToOtherStat,
   }));
 
-  const { copyStyles } = useModel('Design.page.nodesStyles', (model) => ({
+  const { copyStyles } = useModel('design.page.nodesStyles', (model) => ({
     copyStyles: model.copySelectedComStyleFromActiveStatToOtherStat,
   }));
 
   const { setDefaultState } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => {
       return {
         setDefaultState: model.setComStatusSettingsDefaults,
@@ -59,12 +59,12 @@ export default React.forwardRef<CreateComStatusAPI>((props, ref) => {
     },
   );
 
-  const { triggerSave } = useModel('Design.app.stageAutoSave', (model) => ({
+  const { triggerSave } = useModel('design.app.stageAutoSave', (model) => ({
     triggerSave: model.triggerPrepareSaveTimeChange,
   }));
 
   const { setActiveNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     (model) => ({
       setActiveNodeStatId: model.setActiveNodeStatId,
     }),

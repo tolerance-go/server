@@ -14,7 +14,7 @@ export const DiscussDetialActions = (props: { size?: ButtonProps['size'] }) => {
     setSelectedDiscussId,
     selectedNextItem,
     setDetailMode,
-  } = useModel('Design.playground', (model) => ({
+  } = useModel('design.playground', (model) => ({
     requestDeleteDiscuss: model.requestDeleteDiscuss,
     requestResolvedDiscuss: model.requestResolvedDiscuss,
     requestResolvedDiscussLoading: model.requestResolvedDiscussLoading,

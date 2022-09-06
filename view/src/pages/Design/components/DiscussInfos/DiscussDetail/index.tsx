@@ -7,11 +7,11 @@ import { TagItem } from './TagItem';
 import { TitleItem } from './TitleItem';
 
 export const DiscussContent = () => {
-  const { discussComments } = useModel('Design.discuss.discussComments', (model) => ({
+  const { discussComments } = useModel('design.discuss.discussComments', (model) => ({
     discussComments: model.discussComments,
   }));
 
-  const { selectedDiscuss } = useModel('Design.playground', (model) => ({
+  const { selectedDiscuss } = useModel('design.playground', (model) => ({
     selectedDiscuss: model.selectedDiscuss,
   }));
 

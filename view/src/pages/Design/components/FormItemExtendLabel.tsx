@@ -1,4 +1,4 @@
-import { UnsyncFields } from '@/pages/Design/models/statusRelations';
+import { UnsyncFields } from '@/pages/design/models/statusRelations';
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 

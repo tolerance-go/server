@@ -1,5 +1,5 @@
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
-import { DataListItem } from '@/pages/Design/models/dataList';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
+import { DataListItem } from '@/pages/design/models/dataList';
 import { DatabaseControllerUpdate } from '@/services/server/DatabaseController';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn, usePrevious, useUpdateEffect } from 'ahooks';
@@ -11,7 +11,7 @@ export const useDataListUpdate = () => {
   const { selectedDataListItem, selectedDataId } = useSelectedDataListItem();
 
   const { historyManager } = useModel(
-    'Design.app.appStateHistory',
+    'design.app.appStateHistory',
     (model) => ({
       historyManager: model.historyManager,
     }),
@@ -20,7 +20,7 @@ export const useDataListUpdate = () => {
   const prevSelectedDataId = usePrevious(selectedDataId, () => true);
 
   const { getDataList, tagWithTriggerUpdateByRecoverUpdateDataListItemRef } =
-    useModel('Design.database.dataList', (model) => ({
+    useModel('design.database.dataList', (model) => ({
       getDataList: model.getDataList,
       tagWithTriggerUpdateByRecoverUpdateDataListItemRef:
         model.tagWithTriggerUpdateByRecoverUpdateDataListItemRef,

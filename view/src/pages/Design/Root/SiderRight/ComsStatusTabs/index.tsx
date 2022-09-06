@@ -1,5 +1,5 @@
-import { useSelectedComDefaultStatId } from '@/pages/Design/hooks/selected/useSelectedComDefaultStatId';
-import { useSetNearSelectedComponentStatusId } from '@/pages/Design/hooks/actions/useSetNearSelectedComponentStatusId';
+import { useSelectedComDefaultStatId } from '@/pages/design/hooks/selected/useSelectedComDefaultStatId';
+import { useSetNearSelectedComponentStatusId } from '@/pages/design/hooks/actions/useSetNearSelectedComponentStatusId';
 import { useModel } from '@umijs/max';
 import { Badge, Tabs, Typography } from 'antd';
 import { useRef } from 'react';
@@ -13,14 +13,14 @@ export const ComsStatusTabs = () => {
   const createFormRef = useRef<CreateComStatusAPI>(null);
 
   const { stageSelectNodeId } = useModel(
-    'Design.stage.stageSelectNodeId',
+    'design.stage.stageSelectNodeId',
     (model) => ({
       stageSelectNodeId: model?.stageSelectNodeId,
     }),
   );
 
   const { componentsStatus, deleteComStat } = useModel(
-    'Design.page.nodesStatus',
+    'design.page.nodesStatus',
     (model) => ({
       componentsStatus: model.nodesStatus,
       deleteComStat: model.deleteComStat,
@@ -28,7 +28,7 @@ export const ComsStatusTabs = () => {
   );
 
   const { deleteComStatRelationFromToStatId } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({
       deleteComStatRelationFromToStatId:
         model.deleteComStatRelationFromToStatId,
@@ -41,12 +41,12 @@ export const ComsStatusTabs = () => {
     useSetNearSelectedComponentStatusId();
 
   const { activeNodeStatId, setActiveNodeStatId } = useModel(
-    'Design.stage.activeNodeStatId',
+    'design.stage.activeNodeStatId',
     pickModel(['activeNodeStatId', 'setActiveNodeStatId']),
   );
 
   const { triggerPrepareSaveTimeChange } = useModel(
-    'Design.app.stageAutoSave',
+    'design.app.stageAutoSave',
     (model) => ({
       triggerPrepareSaveTimeChange: model.triggerPrepareSaveTimeChange,
     }),

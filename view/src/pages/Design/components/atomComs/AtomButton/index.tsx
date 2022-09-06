@@ -1,7 +1,7 @@
-import { SLOTS_NAME } from '@/pages/Design/constants';
-import { EventHandlerParams } from '@/pages/Design/domains/StageEventManager';
-import { ComponentCommonStyle } from '@/pages/Design/models/page/nodesStyles';
-import { AtomComponentProps } from '@/pages/Design/typings/ElementCenter';
+import { SLOTS_NAME } from '@/pages/design/constants';
+import { EventHandlerParams } from '@/pages/design/domains/StageEventManager';
+import { ComponentCommonStyle } from '@/pages/design/models/page/nodesStyles';
+import { AtomComponentProps } from '@/pages/design/typings/ElementCenter';
 import { useModel } from '@umijs/max';
 import { Button, ButtonProps } from 'antd';
 import { CSSProperties, useEffect } from 'react';
@@ -25,7 +25,7 @@ export const AtomButton = (
 ) => {
   const { text, ...rest } = props.settings ?? {};
 
-  const { eventManager } = useModel('Design.stage.eventManager', (model) => ({
+  const { eventManager } = useModel('design.stage.eventManager', (model) => ({
     eventManager: model.eventManager,
   }));
 

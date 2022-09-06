@@ -5,7 +5,7 @@ import { pickModel } from '@/utils/pickModel';
 
 export default () => {
   const { nodesData, updateMode } = useModel(
-    'Design.page.nodesStatusRelations',
+    'design.page.nodesStatusRelations',
     (model) => ({
       nodesData: model.nodesStatusRelations,
       updateMode: model.nodesStatusRelationsUpdateMode,
@@ -13,7 +13,7 @@ export default () => {
   );
 
   const { selectedPageId } = useModel(
-    'Design.page.selectedPageId',
+    'design.page.selectedPageId',
     pickModel(['selectedPageId']),
   );
 

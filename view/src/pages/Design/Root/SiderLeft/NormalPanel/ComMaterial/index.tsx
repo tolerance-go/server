@@ -1,6 +1,6 @@
-import { SiderContentTopper } from '@/pages/Design/components/SiderContentTopper';
-import { makeTreeWithRelation } from '@/pages/Design/utils/treeUtils/makeTreeWithRelation';
-import { mapTree } from '@/pages/Design/utils/treeUtils/mapTree';
+import { SiderContentTopper } from '@/pages/design/components/SiderContentTopper';
+import { makeTreeWithRelation } from '@/pages/design/utils/treeUtils/makeTreeWithRelation';
+import { mapTree } from '@/pages/design/utils/treeUtils/mapTree';
 import { useModel } from '@umijs/max';
 import { Tree } from 'antd';
 import { DataNode } from 'antd/lib/tree';
@@ -19,7 +19,7 @@ export default () => {
     comsMaterialListLoading,
     comsMaterialMap,
     removeComMaterial,
-  } = useModel('Design.component.componentList', (model) => ({
+  } = useModel('design.component.componentList', (model) => ({
     comsMaterials: model.comsMaterialList,
     comsMaterialListLoading: model.comsMaterialListLoading,
     removeComMaterial: model.removeComMaterial,
@@ -27,14 +27,14 @@ export default () => {
   }));
 
   const { materialInheritConnectionMap } = useModel(
-    'Design.component.componentInheritRelation',
+    'design.component.componentInheritRelation',
     (model) => ({
       materialInheritConnectionMap: model.materialInheritConnectionMap,
     }),
   );
 
   const { setComActiveMaterialId, comActiveMaterialId } = useModel(
-    'Design.component.activeId',
+    'design.component.activeId',
     (model) => {
       return {
         setComActiveMaterialId: model.setComActiveMaterialId,

@@ -1,4 +1,4 @@
-import { HistoryManager } from '@/pages/Design/domains/HistoryManager';
+import { HistoryManager } from '@/pages/design/domains/HistoryManager';
 import { useModel } from '@umijs/max';
 import { Button, Empty, Timeline } from 'antd';
 import dayjs from 'dayjs';
@@ -8,7 +8,7 @@ export const HistoryCommitLine = () => {
     snapshotsStack,
     index: current,
     cleanHistory,
-  } = useModel('Design.app.appStateHistory', (model) => ({
+  } = useModel('design.app.appStateHistory', (model) => ({
     snapshotsStack: model.snapshotsStack,
     index: model.index,
     cleanHistory: model.cleanHistory,

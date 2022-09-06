@@ -3,7 +3,7 @@ import { DiscussContent } from './DiscussDetail';
 import DiscussList from './DiscussList';
 
 export const DiscussInfos = () => {
-  const { detailMode } = useModel('Design.playground', (model) => ({
+  const { detailMode } = useModel('design.playground', (model) => ({
     detailMode: model.detailMode,
   }));
 

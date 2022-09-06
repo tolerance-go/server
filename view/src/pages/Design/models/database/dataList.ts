@@ -1,13 +1,13 @@
 import { PATHS } from '@/constants/path';
-import { HISTORY_AREA_NAMES } from '@/pages/Design/constants/HistoryAreaNames';
-import { RecoverParams } from '@/pages/Design/domains/HistoryManager';
+import { HISTORY_AREA_NAMES } from '@/pages/design/constants/HistoryAreaNames';
+import { RecoverParams } from '@/pages/design/domains/HistoryManager';
 import {
   DatabaseControllerCreate,
   DatabaseControllerDestroy,
   DatabaseControllerIndex,
 } from '@/services/server/DatabaseController';
-import { SettingFormConfig } from '@/pages/Design/typings/SettingFormConfig';
-import { moveOffsetArrayItem } from '@/pages/Design/utils/moveOffsetArrayItem';
+import { SettingFormConfig } from '@/pages/design/typings/SettingFormConfig';
+import { moveOffsetArrayItem } from '@/pages/design/utils/moveOffsetArrayItem';
 import { ProColumns, ProFieldValueType } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { useMemoizedFn } from 'ahooks';
@@ -83,7 +83,7 @@ const useDataList = () => {
   });
 
   const { historyManager } = useModel(
-    'Design.app.appStateHistory',
+    'design.app.appStateHistory',
     (model) => ({
       historyManager: model.historyManager,
     }),

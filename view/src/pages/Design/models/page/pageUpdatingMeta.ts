@@ -1,4 +1,4 @@
-import { useGetImmer } from '@/pages/Design/utils/useGetImmer';
+import { useGetImmer } from '@/pages/design/utils/useGetImmer';
 import { useMemoizedFn } from 'ahooks';
 
 export default () => {

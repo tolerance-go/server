@@ -11,24 +11,24 @@ export default ({
   hasSlotsDom: React.ReactNode;
   slotGroupId: string;
 }>) => {
-  const { hoverNodeId, setHoverNodeId } = useModel('Design.stage.hoverNodeId', (model) => ({
+  const { hoverNodeId, setHoverNodeId } = useModel('design.stage.hoverNodeId', (model) => ({
     hoverNodeId: model?.hoverNodeId,
     setHoverNodeId: model?.setHoverNodeId,
   }));
 
-  const { stageMode } = useModel('Design.stage.stageMode', (model) => ({
+  const { stageMode } = useModel('design.stage.stageMode', (model) => ({
     stageMode: model.stageMode,
   }));
 
   const { stageSelectSlotGroupId, setStageSelectSlotGroupId } = useModel(
-    'Design.stage.stageSelectSlotGroupId',
+    'design.stage.stageSelectSlotGroupId',
     (model) => ({
       stageSelectSlotGroupId: model?.stageSelectSlotGroupId,
       setStageSelectSlotGroupId: model?.setStageSelectSlotGroupId,
     }),
   );
 
-  const { setSelectedKeys } = useModel('Design.workbench.comsLayout', (model) => ({
+  const { setSelectedKeys } = useModel('design.workbench.comsLayout', (model) => ({
     setSelectedKeys: model?.setSelectedKeys,
   }));
 

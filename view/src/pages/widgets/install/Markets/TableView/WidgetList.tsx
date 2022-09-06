@@ -28,7 +28,7 @@ export default () => {
     }),
   );
 
-  const { setWidget } = usePickModel('WidgetsInstall.selectedWidgetMeta', [
+  const { setWidget } = usePickModel('widgets.install.selectedWidgetMeta', [
     'setWidget',
   ]);
 

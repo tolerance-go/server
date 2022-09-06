@@ -12,7 +12,7 @@ import useWidgetMeta, { InstallWidget } from './useWidgetMeta';
 export default () => {
   const [searchVal, setSearchVal] = useState('');
   const { activeKey, setActiveKey } = usePickModel(
-    'WidgetsInstall.Installed.activeKey',
+    'widgets.install.Installed.activeKey',
     ['activeKey', 'setActiveKey'],
   );
 

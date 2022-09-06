@@ -1,12 +1,12 @@
 import { useModel } from '@umijs/max';
 
 export const useSelectedComDefaultStatId = () => {
-  const { stageSelectNodeId } = useModel('Design.stage.stageSelectNodeId', (model) => ({
+  const { stageSelectNodeId } = useModel('design.stage.stageSelectNodeId', (model) => ({
     stageSelectNodeId: model?.stageSelectNodeId,
   }));
 
   const { nodesDefaultsStatus } = useModel(
-    'Design.page.nodesDefaultsStatus',
+    'design.page.nodesDefaultsStatus',
     (model) => ({
       nodesDefaultsStatus: model.nodesDefaultsStatus,
     }),

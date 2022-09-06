@@ -1,4 +1,4 @@
-import { ElementTypeEnums, URL_STATE } from '@/pages/Design/constants/urlState';
+import { ElementTypeEnums, URL_STATE } from '@/pages/design/constants/urlState';
 import { useModel, useSearchParams } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
@@ -8,7 +8,7 @@ export const useComActiveMaterialIdEffect = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { comActiveMaterialId, setComActiveMaterialId } = useModel(
-    'Design.component.activeId',
+    'design.component.activeId',
     (model) => {
       return {
         comActiveMaterialId: model.comActiveMaterialId,
