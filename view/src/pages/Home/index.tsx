@@ -13,7 +13,7 @@ import {
   Feature00DataSource,
   Footer00DataSource,
   Pricing10DataSource,
-} from './data.source';
+} from './assets/data.source';
 import Feature0 from './Feature0';
 import Footer0 from './Footer0';
 import './less/antMotionStyle.less';

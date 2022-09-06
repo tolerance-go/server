@@ -3,7 +3,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { IApi } from '@umijs/max';
 import { ExecutorUtils } from './utils/executorUtils';
-import { withTmpPath } from './utils/withTmpPath';
+// import { withTmpPath } from './utils/withTmpPath';
+import { groupBy } from 'lodash';
 
 export default (api: IApi) => {
   api.describe({
@@ -22,22 +23,32 @@ export default (api: IApi) => {
   api.onGenerateFiles(async () => {
     const executors = await getAllExecutors(api);
 
-    // executors.ts
-    api.writeTmpFile({
-      path: 'executors.ts',
-      content: ExecutorUtils.getExecutorsContent(executors),
-    });
+    const executorsGroupByPathname = groupBy(
+      executors,
+      (item) => item.pathname,
+    );
 
-    // index.tsx
-    const runtimeContent = readFileSync(
-      join(__dirname, './libs/runtime.tsx'),
+    const indexContent = readFileSync(
+      join(__dirname, './libs/Executor.tsx'),
       'utf-8',
     );
 
-    // runtime.tsx
-    api.writeTmpFile({
-      path: 'runtime.tsx',
-      content: runtimeContent,
+    Object.keys(executorsGroupByPathname).forEach((pathname) => {
+      const dir = join('routes', pathname);
+
+      // executors.ts
+      api.writeTmpFile({
+        path: join(dir, 'executors.ts'),
+        content: ExecutorUtils.getExecutorsContent(
+          executorsGroupByPathname[pathname],
+        ),
+      });
+
+      // index.tsx
+      api.writeTmpFile({
+        path: join(dir, 'index.tsx'),
+        content: indexContent,
+      });
     });
   });
 
@@ -45,13 +56,13 @@ export default (api: IApi) => {
     return [join(api.paths.absSrcPath, 'executors')];
   });
 
-  api.addRuntimePlugin({
-    fn: () => {
-      return [withTmpPath({ api, path: 'runtime.tsx' })];
-    },
-    // 保证在 model 之前执行，然后再被 model 包裹
-    before: 'model',
-  });
+  // api.addRuntimePlugin({
+  //   fn: () => {
+  //     return [withTmpPath({ api, path: 'runtime.tsx' })];
+  //   },
+  //   // 保证在 model 之前执行，然后再被 model 包裹
+  //   before: 'model',
+  // });
 };
 
 async function getAllExecutors(api: IApi) {

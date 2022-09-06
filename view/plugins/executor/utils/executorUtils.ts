@@ -32,18 +32,23 @@ export function getNamespace(absFilePath: string, absSrcPath: string) {
   return [...validDirs, normalizedFile].join('.');
 }
 
+export function getPathname(absFilePath: string, absSrcPath: string) {
+  const relPath = winPath(relative(winPath(absSrcPath), winPath(absFilePath)));
+  const parts = relPath.split('/');
+  const folderIndex = parts.findIndex((item) => item === 'executors');
+  // pages/design/executors/cleanStageSelectNodeIdWhenSwitchPage.ts -> design
+  const dirs = parts.slice(0, folderIndex).filter((dir) => dir !== 'pages');
+
+  return `/${dirs.join('/')}`;
+}
+
 export class Executor {
   file: string;
   namespace: string;
   id: string;
   exportName: string;
-  exportConfigs: boolean;
-  constructor(
-    file: string,
-    absSrcPath: string,
-    id: number,
-    exportConfigs: boolean,
-  ) {
+  pathname: string;
+  constructor(file: string, absSrcPath: string, id: number) {
     let namespace;
     let exportName;
     const [_file, meta] = file.split('#');
@@ -56,7 +61,7 @@ export class Executor {
     this.id = `executor_${id}`;
     this.namespace = namespace || getNamespace(_file, absSrcPath);
     this.exportName = exportName || 'default';
-    this.exportConfigs = exportConfigs;
+    this.pathname = getPathname(_file, absSrcPath);
   }
 }
 
@@ -85,16 +90,9 @@ export class ExecutorUtils {
         base: join(this.api.paths.absPagesPath),
         pattern: '**/executors.{ts,tsx,js,jsx}',
       }),
-    ].map(
-      ({ file, exportConfigs }: { file: string; exportConfigs: boolean }) => {
-        return new Executor(
-          file,
-          this.api.paths.absSrcPath,
-          this.count++,
-          exportConfigs,
-        );
-      },
-    );
+    ].map((file: string) => {
+      return new Executor(file, this.api.paths.absSrcPath, this.count++);
+    });
     // check duplicate
     const namespaces = executors.map((executor) => executor.namespace);
     if (new Set(namespaces).size !== namespaces.length) {
@@ -107,8 +105,6 @@ export class ExecutorUtils {
   }
 
   getExecutors(opts: { base: string; pattern?: string }) {
-    const contentMaps: Record<string, string> = {};
-
     return glob
       .sync(opts.pattern || '**/*.{ts,js}', {
         cwd: opts.base,
@@ -119,17 +115,7 @@ export class ExecutorUtils {
         if (/\.d.ts$/.test(file)) return false;
         if (/\.(test|e2e|spec).([jt])sx?$/.test(file)) return false;
         const content = readFileSync(file, 'utf-8');
-        contentMaps[file] = content;
         return this.isExecutorValid({ content, file });
-      })
-      .map((file) => {
-        const content = contentMaps[file]
-          ? contentMaps[file]
-          : readFileSync(file, 'utf-8');
-        return {
-          file,
-          exportConfigs: !!content.match(/\nexport const executorConfigs/),
-        };
       });
   }
 
@@ -189,18 +175,8 @@ export class ExecutorUtils {
         imports.push(`import ${executor.id} from '${fileWithoutExt}';`);
       }
 
-      if (executor.exportConfigs) {
-        imports.push(
-          `import { executorConfigs as ${executor.id}_configs } from '${fileWithoutExt}';`,
-        );
-      }
-
       executorProps.push(
-        `{ id: '${executor.id}', namespace: '${
-          executor.namespace
-        }', executor: ${executor.id},${
-          executor.exportConfigs ? ` configs: ${executor.id}_configs` : ''
-        } },`,
+        `{ id: '${executor.id}', namespace: '${executor.namespace}', executor: ${executor.id}, pathname: '${executor.pathname}', },`,
       );
     });
     return `

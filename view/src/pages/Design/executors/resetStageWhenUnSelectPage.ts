@@ -1,9 +1,6 @@
 import { useModel } from '@umijs/max';
 import { useUpdateEffect } from 'ahooks';
 
-// export const executorConfigs = {
-//   pathScopes: [PATHS.APP_LIST],
-// };
 
 export default () => {
   const { selectedPageId } = useModel(
