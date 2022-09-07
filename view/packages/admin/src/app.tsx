@@ -1,6 +1,3 @@
-// 运行时配置
-
-import { UserControllerShowWithSession } from '@fenxing/common/services/server/UserController';
 import {
   AppstoreAddOutlined,
   BranchesOutlined,
@@ -10,30 +7,70 @@ import {
   PartitionOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
-import { HOST_ORIGINS } from '@fenxing/common/constants/hosts';
+import { PATHS } from '@fenxing/common/constants/path';
+import { UserControllerShowWithSession } from '@fenxing/common/services/server/UserController';
 import { RunTimeLayoutConfig } from '@umijs/max';
-import { useLocation } from './.umi/exports';
+import { RuntimeConfig, useLocation } from './.umi/exports';
 import QuitAdminBtn from './components/QuitAdminBtn';
 import { UserSettings } from './components/UserSettings';
 import { PUBLIC_PATH } from './constants/base';
-import { PATHS } from '@fenxing/common/constants/path';
 
 // umi getInitialState 不反回，页面不会渲染
-export async function getInitialState(): Promise<{
-  user: API.ShownUser;
-}> {
-  try {
-    // 失败会抛出异常
-    const user = await UserControllerShowWithSession();
+export const getInitialState = async (): Promise<{
+  user: API.User;
+}> => {
+  // 失败会抛出异常
+  const user = await UserControllerShowWithSession();
 
-    return { user };
-  } catch {
-    window.location.href = `${HOST_ORIGINS.HOME}${PATHS.LOGIN}`;
-    throw Error('never to this');
-  }
+  return { user };
+};
+
+/** layout 插件约定的额外 clientRoute 信息 */
+type LayoutPluginExtendClientRoute = {
+  access?: string;
+};
+
+// 文件约定式路由增加配置
+// 通过和 patchClientRoutes 配合，如果需要异步支持，需要封装插件
+const routerMeta: Record<string, LayoutPluginExtendClientRoute> = {
+  [PATHS.DASHBOARD]: {
+    access: 'canSeeAdmin',
+  },
+  '/demands': {},
+  [PATHS.APP_LIST]: {},
+  '/discuss': {},
+  '/versions': {},
+  '/teams': {},
+  '/widgets': {},
+  '/widgets/install': {},
+  '/widgets/publish': {},
+};
+
+// TODO: 从 umi 里面获取类型
+export interface IClientRoute {
+  id: string;
+  element: React.ReactNode;
+  children?: IClientRoute[];
+  // compatible with @ant-design/pro-layout
+  routes?: IClientRoute[];
+  path?: string;
+  index?: boolean;
+  parentId?: string;
+  clientLoader?: () => Promise<any>;
 }
 
-export const layout: RunTimeLayoutConfig = (props) => {
+export const patchClientRoutes: RuntimeConfig['patchClientRoutes'] = ({
+  routes,
+}: {
+  routes: (IClientRoute & LayoutPluginExtendClientRoute)[];
+}) => {
+  // [pro-layout:[global-layout:[...routes]], openapi]
+  routes[0]?.routes?.[0]?.routes?.forEach((route) => {
+    Object.assign(route, routerMeta[`/${route.path}`]);
+  });
+};
+
+export const layout: RuntimeConfig['layout'] = (props) => {
   const { initialState, setInitialState } = props;
   const location = useLocation();
   /**
@@ -49,60 +86,55 @@ export const layout: RunTimeLayoutConfig = (props) => {
 
   return {
     logo: `${PUBLIC_PATH}logo.svg`,
-    menu: {
-      locale: false,
-    },
     route: {
       path: '/',
-      routes: initialState?.user
-        ? [
+      routes: [
+        {
+          name: '工作台',
+          path: PATHS.DASHBOARD,
+          icon: <CarryOutOutlined />,
+        },
+        {
+          name: '需求管理',
+          path: '/demands',
+          icon: <CompassOutlined />,
+        },
+        {
+          name: '应用管理',
+          path: PATHS.APP_LIST,
+          icon: <PartitionOutlined />,
+        },
+        {
+          name: '讨论管理',
+          path: '/discuss',
+          icon: <MessageOutlined />,
+        },
+        {
+          name: '版本管理',
+          path: '/versions',
+          icon: <BranchesOutlined />,
+        },
+        {
+          name: '团队管理',
+          path: '/teams',
+          icon: <TeamOutlined />,
+        },
+        {
+          name: '组件管理',
+          path: '/widgets',
+          icon: <AppstoreAddOutlined />,
+          routes: [
             {
-              name: '工作台',
-              path: PATHS.DASHBOARD,
-              icon: <CarryOutOutlined />,
+              name: '我的安装',
+              path: '/widgets/install',
             },
             {
-              name: '需求管理',
-              path: '/demands',
-              icon: <CompassOutlined />,
+              name: '我的发布',
+              path: '/widgets/publish',
             },
-            {
-              name: '应用管理',
-              path: PATHS.APP_LIST,
-              icon: <PartitionOutlined />,
-            },
-            {
-              name: '讨论管理',
-              path: '/discuss',
-              icon: <MessageOutlined />,
-            },
-            {
-              name: '版本管理',
-              path: '/versions',
-              icon: <BranchesOutlined />,
-            },
-            {
-              name: '团队管理',
-              path: '/teams',
-              icon: <TeamOutlined />,
-            },
-            {
-              name: '组件管理',
-              path: '/widgets',
-              icon: <AppstoreAddOutlined />,
-              routes: [
-                {
-                  name: '我的安装',
-                  path: '/widgets/install',
-                },
-                {
-                  name: '我的发布',
-                  path: '/widgets/publish',
-                },
-              ],
-            },
-          ]
-        : [],
+          ],
+        },
+      ],
     },
     bgLayoutImgList: [
       {
@@ -125,9 +157,9 @@ export const layout: RunTimeLayoutConfig = (props) => {
       },
     ],
     avatarProps: {
-      src: initialState?.user?.avatar,
+      src: initialState?.user.avatar,
       size: 'small',
-      title: initialState?.user?.nickname ?? initialState?.user?.username,
+      title: initialState?.user.nickname ?? initialState?.user.username,
     },
     rightContentRender:
       // false 才不会有额外的 div

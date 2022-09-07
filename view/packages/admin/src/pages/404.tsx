@@ -1,26 +1,26 @@
 import { PATHS } from '@/constants/path';
 import { useNavigate } from '@umijs/max';
-import { Button, Result } from 'antd';
+import { Button, Result, Space } from 'antd';
 
-const App = () => {
+export default () => {
   const navigate = useNavigate();
+
   return (
     <Result
       status="404"
       title="404"
       subTitle="抱歉，您访问的页面不存在"
       extra={
-        <Button
-          type="primary"
-          onClick={() => {
-            navigate(PATHS.DASHBOARD);
-          }}
-        >
-          返回系统首页
-        </Button>
+        <Space>
+          <Button
+            onClick={() => {
+              navigate(PATHS.DASHBOARD);
+            }}
+          >
+            返回系统首页
+          </Button>
+        </Space>
       }
     />
   );
 };
-
-export default App;

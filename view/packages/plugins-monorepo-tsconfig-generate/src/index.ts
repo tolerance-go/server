@@ -13,45 +13,19 @@ export default (api: IApi) => {
           }),
         );
       },
+      /**
+       * api.ConfigChangeType.reload 表示在 dev 模式下，配置项被修改时会重启 dev 进程。
+       * 你也可以修改为 api.ConfigChangeType.regenerateTmpFiles, 表示只重新生成临时文件
+       */
+      onChange: api.ConfigChangeType.regenerateTmpFiles,
     },
     // 注册启用
     enableBy: api.EnableBy.config,
   });
 
-  // api.onCheck(async () => {
-  //   console.log('onCheck');
-  // });
-  // api.onCheckCode(async () => {
-  //   console.log('onCheckCode');
-  // });
-  // api.onCheckConfig(async () => {
-  //   console.log('onCheckConfig');
-  // });
-  // api.onCheckPkgJSON(async () => {
-  //   console.log('onCheckPkgJSON');
-  // });
-  // api.onDevCompileDone(async () => {
-  //   console.log('onDevCompileDone');
-  // });
-  // api.onGenerateFiles(async () => {
-  //   console.log('onGenerateFiles');
-  // });
-  // api.onPatchRoute(async () => {
-  //   console.log('onPatchRoute');
-  // });
-  // api.onPkgJSONChanged(async () => {
-  //   console.log('onPkgJSONChanged');
-  // });
-  // api.onStart(async () => {
-  //   console.log('onStart');
-  // });
-
   api.onGenerateFiles(async () => {
     const umiTsconfig = JSON.parse(
-      readFileSync(
-        join(api.paths.absSrcPath, '.umi', 'tsconfig.json'),
-        'utf-8',
-      ),
+      readFileSync(join(api.paths.absTmpPath, 'tsconfig.json'), 'utf-8'),
     );
 
     const oldTsconfig = JSON.parse(
@@ -60,7 +34,6 @@ export default (api: IApi) => {
 
     const next = {
       ...oldTsconfig,
-      extends: './src/.umi/tsconfig.json',
       compilerOptions: {
         ...oldTsconfig.compilerOptions,
         paths: {

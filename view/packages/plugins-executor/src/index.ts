@@ -64,14 +64,6 @@ export default (api: IApi) => {
   api.addTmpGenerateWatcherPaths(() => {
     return [join(api.paths.absSrcPath, 'executors')];
   });
-
-  // api.addRuntimePlugin({
-  //   fn: () => {
-  //     return [withTmpPath({ api, path: 'runtime.tsx' })];
-  //   },
-  //   // 保证在 model 之前执行，然后再被 model 包裹
-  //   before: 'model',
-  // });
 };
 
 async function getAllExecutors(api: IApi) {
