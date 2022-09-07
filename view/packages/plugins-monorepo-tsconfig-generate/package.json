@@ -1,0 +1,19 @@
+{
+  "name": "@fenxing/plugins-monorepo-tsconfig-generate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@umijs/bundler-utils": "^4.0.17",
+    "@umijs/max": "^4.0.17"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.18"
+  }
+}

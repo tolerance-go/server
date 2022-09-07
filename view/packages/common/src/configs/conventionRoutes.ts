@@ -1,0 +1,23 @@
+export const conventionRoutes = {
+  exclude: [
+    /\/components\/?/,
+    /\/models\/?/,
+    /\/constants\/?/,
+    /\/configs\/?/,
+    /\/assets\/?/,
+    /\/domains\/?/,
+    /\/executors\/?/,
+    /\/effects\/?/,
+    /\/helps\/?/,
+    /\/helpers\/?/,
+    /\/hooks\/?/,
+    /\/layouts\/?/,
+    /\/typings\/?/,
+    /\/utils\/?/,
+    /\/wrappers\/?/,
+    /\/services\/?/,
+    /\.md$/,
+    /_/,
+    /[A-Z]/,
+  ],
+};
