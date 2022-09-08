@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@umijs/bundler-utils": "^4.0.18",
-    "@umijs/max": "^4.0.18"
+    "@umijs/bundler-utils": "^4.0.19",
+    "@umijs/max": "^4.0.19"
   },
   "devDependencies": {
     "@types/react": "^18.0.18",

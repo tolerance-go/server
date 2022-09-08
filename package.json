@@ -48,6 +48,7 @@
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "@types/node-rsa": "^1.1.1",
+    "@types/parameter": "^3.6.2",
     "@types/qs": "^6.9.7",
     "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
