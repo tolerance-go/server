@@ -3,10 +3,10 @@ import * as parser from '@umijs/bundler-utils/compiled/babel/parser';
 import traverse from '@umijs/bundler-utils/compiled/babel/traverse';
 import * as t from '@umijs/bundler-utils/compiled/babel/types';
 import { Loader, transformSync } from '@umijs/bundler-utils/compiled/esbuild';
-import { readFileSync } from 'fs';
-import { basename, dirname, extname, format, join, relative } from 'path';
 import { IApi } from '@umijs/max';
 import { glob, winPath } from '@umijs/max/plugin-utils';
+import { readFileSync } from 'fs';
+import { basename, extname, join, relative } from 'path';
 import { getIdentifierDeclaration } from './astUtils';
 
 interface IOpts {
@@ -177,34 +177,5 @@ export class ExecutorUtils {
     });
 
     return ret;
-  }
-
-  static getExecutorsContent(executors: Executor[]) {
-    const imports: string[] = [];
-    const executorProps: string[] = [];
-    executors.forEach((executor) => {
-      const fileWithoutExt = winPath(
-        format({
-          dir: dirname(executor.file),
-          base: basename(executor.file, extname(executor.file)),
-        }),
-      );
-      if (executor.exportName !== 'default') {
-        imports.push(
-          `import { ${executor.exportName} as ${executor.id} } from '${fileWithoutExt}';`,
-        );
-      } else {
-        imports.push(`import ${executor.id} from '${fileWithoutExt}';`);
-      }
-
-      executorProps.push(
-        `{ id: '${executor.id}', namespace: '${executor.namespace}', executor: ${executor.id}, pathname: '${executor.pathname}', },`,
-      );
-    });
-    return `
-${imports.join('\n')}
-export const executors = [
-${executorProps.join('\n')}
-] as const`;
   }
 }

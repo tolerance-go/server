@@ -18,7 +18,7 @@ const Exec = React.memo(
 export type IExecutor = {
   id: string;
   namespace: string;
-  executor: () => any;
+  hook: () => any;
   pathname: string;
 };
 
@@ -29,7 +29,7 @@ export const Executor = React.memo(
         {executors.map((item) => (
           <Exec
             key={item.namespace}
-            hook={item.executor}
+            hook={item.hook}
             namespace={item.namespace}
           />
         ))}
@@ -38,11 +38,11 @@ export const Executor = React.memo(
   },
 );
 
-export const withExecutor =
-  (Component: React.ElementType, executors: IExecutor[]) => () => {
+export const withExecutorComponent =
+  (Component: React.ElementType, Executors: React.ElementType) => () => {
     return (
       <>
-        <Executor executors={executors} />
+        <Executors />
         <Component />
       </>
     );

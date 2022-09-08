@@ -1,7 +1,9 @@
 import * as t from '@umijs/bundler-utils/compiled/babel/types';
 import { IApi } from '@umijs/max';
+import { Mustache, winPath } from '@umijs/max/plugin-utils';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { groupBy } from 'lodash';
+import { basename, dirname, extname, format, join } from 'path';
 import { ExecutorUtils } from './utils/executorUtils';
 import { withTmpPath } from './utils/withTmpPath';
 
@@ -15,6 +17,34 @@ export default (api: IApi) => {
   api.onGenerateFiles(async () => {
     const executors = await getAllExecutors(api);
 
+    const groups = groupBy(executors, (item) => item.pathname);
+
+    const genFiles = Object.keys(groups).map((pathname, index) => {
+      const filePath = `${join(
+        'executors',
+        pathname.split('/').join('_'),
+      )}.tsx`;
+
+      return {
+        pathname,
+        absFilePath: join(api.paths.absTmpPath, 'plugin-executor', filePath),
+        filePath,
+        index,
+        executors: groups[pathname].map((executor) => {
+          const fileWithoutExt = winPath(
+            format({
+              dir: dirname(executor.file),
+              base: basename(executor.file, extname(executor.file)),
+            }),
+          );
+          return {
+            ...executor,
+            fileWithoutExt,
+          };
+        }),
+      };
+    });
+
     // index.tsx
     const indexContent = readFileSync(
       join(__dirname, './lib/index.tsx'),
@@ -26,19 +56,35 @@ export default (api: IApi) => {
     });
 
     // runtime.ts
-    const runtimeContent = readFileSync(
-      join(__dirname, './lib/runtime.ts'),
+    const runtimeTpl = readFileSync(
+      join(__dirname, './lib/runtime.ts.tpl'),
       'utf-8',
     );
     api.writeTmpFile({
       path: 'runtime.ts',
-      content: runtimeContent,
+      content: Mustache.render(runtimeTpl, {
+        files: genFiles,
+        ifElse() {
+          if (this.index === 0) {
+            return 'if';
+          }
+          return 'else if';
+        },
+      }),
     });
 
-    // executors.ts
-    api.writeTmpFile({
-      path: 'executors.ts',
-      content: ExecutorUtils.getExecutorsContent(executors),
+    const executorTpl = readFileSync(
+      join(__dirname, './lib/executors/path.tsx.tpl'),
+      'utf-8',
+    );
+    genFiles.forEach(({ filePath, executors }) => {
+      // executors.ts
+      api.writeTmpFile({
+        path: filePath,
+        content: Mustache.render(executorTpl, {
+          executors,
+        }),
+      });
     });
   });
 
