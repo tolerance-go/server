@@ -19,27 +19,49 @@ export function getNamespace(absFilePath: string, absSrcPath: string) {
   const parts = relPath.split('/');
   const dirs = parts.slice(0, -1);
   const file = parts[parts.length - 1];
+  // src/pages/foo.executors/bar > foo/bar
   // src/pages/foo/executors/bar > foo/bar
-  const validDirs = dirs.filter(
-    (dir) => !['src', 'pages', 'executors'].includes(dir),
-  );
+  const validDirs = dirs
+    .map((dir) => (dir.endsWith('.executors') ? dir.split('.')[0] : dir))
+    .filter((dir) => !['src', 'pages', 'executors'].includes(dir));
+
   let normalizedFile = file;
   normalizedFile = basename(file, extname(file));
-  // foo.executor > foo
-  if (normalizedFile.endsWith('.executor')) {
-    normalizedFile = normalizedFile.split('.').slice(0, -1).join('.');
-  }
+
   return [...validDirs, normalizedFile].join('.');
 }
 
 export function getPathname(absFilePath: string, absSrcPath: string) {
   const relPath = winPath(relative(winPath(absSrcPath), winPath(absFilePath)));
   const parts = relPath.split('/');
-  const folderIndex = parts.findIndex((item) => item === 'executors');
-  // pages/design/executors/cleanStageSelectNodeIdWhenSwitchPage.ts -> design
-  const dirs = parts.slice(0, folderIndex).filter((dir) => dir !== 'pages');
+  // executors 的使用方式：
+  // executors 需要建在对应约定路由的边上
+  // page/index.tsx = page/executors => page/index
+  // page.tsx = page.executors => page
+  const executorsIndex = parts.findIndex((item) => item.endsWith('executors'));
 
-  return `/${dirs.join('/')}`;
+  const folderName = parts[executorsIndex];
+
+  // executors -> @@/global-layout
+  // pages/index.executor -> index
+  // pages/pageA/pageSub.executor -> pageA/pageSub
+  // pages/design/executors/cleanStageSelectNodeIdWhenSwitchPage.ts -> design
+  let dirs = parts.slice(0, executorsIndex);
+
+  if (dirs.length === 0) {
+    return '@@/global-layout';
+  }
+
+  // 删除最前面的 pages
+  dirs = dirs.slice(1);
+
+  const exeParts = folderName.split('.');
+
+  if (exeParts.length === 2) {
+    return dirs.concat(exeParts[0]).join('/');
+  }
+
+  return dirs.concat('index').join('/');
 }
 
 export class Executor {
@@ -88,7 +110,7 @@ export class ExecutorUtils {
       }),
       ...this.getExecutors({
         base: join(this.api.paths.absPagesPath),
-        pattern: '**/executors.{ts,tsx,js,jsx}',
+        pattern: '**/*.executors/**/*.{ts,tsx,js,jsx}',
       }),
     ].map((file: string) => {
       return new Executor(file, this.api.paths.absSrcPath, this.count++);

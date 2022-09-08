@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@umijs/max": "^4.0.17",
+    "@umijs/max": "^4.0.18",
     "ahooks": "^3.7.0",
-    "antd": "^4.22.8",
+    "antd": "^4.23.0",
     "axios": "^0.27.2",
     "node-rsa": "^1.1.1",
     "nprogress": "^0.2.0",
@@ -23,9 +23,9 @@
   "devDependencies": {
     "@types/nprogress": "^0.2.0",
     "@types/qs": "^6.9.7",
-    "@types/react": "^18",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
     "@umijs/max-plugin-openapi": "^1.0.5",
-    "typescript": "^4",
-    "@types/react-dom": "^18"
+    "typescript": "^4.8.2"
   }
 }

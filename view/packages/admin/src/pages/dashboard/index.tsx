@@ -1,10 +1,9 @@
-import withAuth from '@/wrappers/withAuth';
 import { PageContainer } from '@ant-design/pro-components';
 // import { useModel } from '@umijs/max';
 import CoreIndicator from './CoreIndicator';
 import styles from './index.less';
 
-export default withAuth(() => {
+export default () => {
   // const { name } = useModel('global');
   return (
     <PageContainer ghost>
@@ -14,4 +13,4 @@ export default withAuth(() => {
       </div>
     </PageContainer>
   );
-});
+};

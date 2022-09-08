@@ -9,11 +9,7 @@ export default defineConfig({
     require.resolve('@fenxing/plugins-executor'),
     require.resolve('@fenxing/plugins-monorepo-tsconfig-generate'),
   ],
-  monorepoTsConfigGenerate: {
-    paths: {
-      '@fenxing/common/*': ['../common/src/*'],
-    },
-  },
+  monorepoTsConfigGenerate: {},
   openAPI: [
     {
       requestLibPath: "import { request } from '@/helpers/request'",

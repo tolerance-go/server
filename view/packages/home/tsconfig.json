@@ -9,7 +9,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "/Users/yarnb/30/server/view/node_modules/.pnpm/umi@4.0.17_4oupmaim3hloqyn55y7tmygzsi/node_modules/umi"
+        "/Users/yarnb/30/server/view/node_modules/.pnpm/umi@4.0.18_4oupmaim3hloqyn55y7tmygzsi/node_modules/umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"
@@ -17,8 +17,8 @@
       "@fenxing/common/*": [
         "../common/src/*"
       ],
-      "@fenxing/common/*2": [
-        "../common/src/*"
+      "@fenxing/plugins-monorepo-tsconfig-generate/*": [
+        "../plugins-monorepo-tsconfig-generate/src/*"
       ]
     }
   }

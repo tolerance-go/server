@@ -1,10 +1,8 @@
-import { useSearchParams } from '@umijs/max';
+import useUrlState from '@ahooksjs/use-url-state';
 import { PageContainer } from '@ant-design/pro-components';
-import React, { useState } from 'react';
+import React from 'react';
 import Installed from './Installed';
 import Markets from './Markets';
-import useUrlState from '@ahooksjs/use-url-state';
-import withAuth from '@/wrappers/withAuth';
 
 const TableList: React.FC<unknown> = () => {
   const [query, setQuery] = useUrlState({ activeTabKey: 'markets' });
@@ -38,4 +36,4 @@ const TableList: React.FC<unknown> = () => {
   );
 };
 
-export default withAuth(TableList);
+export default TableList;

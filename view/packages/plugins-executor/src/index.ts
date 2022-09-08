@@ -1,31 +1,19 @@
 import * as t from '@umijs/bundler-utils/compiled/babel/types';
 import { IApi } from '@umijs/max';
 import { readFileSync } from 'fs';
-import { groupBy } from 'lodash';
 import { join } from 'path';
 import { ExecutorUtils } from './utils/executorUtils';
+import { withTmpPath } from './utils/withTmpPath';
 
 export default (api: IApi) => {
   api.describe({
     key: 'executor',
-    // config: {
-    //   schema(Joi) {
-    //     return Joi.object({
-    //        ... 暴露配置项
-    //     });
-    //   },
-    // },
     // 注册启用
     enableBy: api.EnableBy.register,
   });
 
   api.onGenerateFiles(async () => {
     const executors = await getAllExecutors(api);
-
-    const executorsGroupByPathname = groupBy(
-      executors,
-      (item) => item.pathname,
-    );
 
     // index.tsx
     const indexContent = readFileSync(
@@ -37,32 +25,29 @@ export default (api: IApi) => {
       content: indexContent,
     });
 
-    const executorContent = readFileSync(
-      join(__dirname, './lib/Executor.tsx'),
+    // runtime.ts
+    const runtimeContent = readFileSync(
+      join(__dirname, './lib/runtime.ts'),
       'utf-8',
     );
+    api.writeTmpFile({
+      path: 'runtime.ts',
+      content: runtimeContent,
+    });
 
-    Object.keys(executorsGroupByPathname).forEach((pathname) => {
-      const dir = join('routes', pathname);
-
-      // executors.ts
-      api.writeTmpFile({
-        path: join(dir, 'executors.ts'),
-        content: ExecutorUtils.getExecutorsContent(
-          executorsGroupByPathname[pathname],
-        ),
-      });
-
-      // index.tsx
-      api.writeTmpFile({
-        path: join(dir, 'index.tsx'),
-        content: executorContent,
-      });
+    // executors.ts
+    api.writeTmpFile({
+      path: 'executors.ts',
+      content: ExecutorUtils.getExecutorsContent(executors),
     });
   });
 
   api.addTmpGenerateWatcherPaths(() => {
     return [join(api.paths.absSrcPath, 'executors')];
+  });
+
+  api.addRuntimePlugin(() => {
+    return [withTmpPath({ api, path: 'runtime.ts' })];
   });
 };
 

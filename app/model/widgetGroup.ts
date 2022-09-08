@@ -16,7 +16,7 @@ export type WidgetGroupEntity = {};
 
 export type CreationWidgetGroupEntity = WidgetGroupEntity & {};
 export class WidgetGroupModel extends Model<
-  InferAttributes<WidgetGroupModel, { omit: 'widgets' }>,
+  InferAttributes<WidgetGroupModel>,
   InferCreationAttributes<WidgetGroupModel>
 > {
   declare id: CreationOptional<string>;

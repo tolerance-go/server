@@ -86,6 +86,9 @@ export const layout: RuntimeConfig['layout'] = (props) => {
 
   return {
     logo: `${PUBLIC_PATH}logo.svg`,
+    menu: {
+      locale: false,
+    },
     route: {
       path: '/',
       routes: [

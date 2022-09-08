@@ -7,6 +7,7 @@ export const conventionRoutes = {
     /\/assets\/?/,
     /\/domains\/?/,
     /\/executors\/?/,
+    /\/*\.executors\/?/,
     /\/effects\/?/,
     /\/helps\/?/,
     /\/helpers\/?/,

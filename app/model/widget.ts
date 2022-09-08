@@ -1,10 +1,10 @@
 import { Application } from 'egg';
 import {
   Association,
-  Model,
+  CreationOptional,
   InferAttributes,
   InferCreationAttributes,
-  CreationOptional,
+  Model,
 } from 'sequelize';
 import { stringButArrayType } from '../utils/stringButArrayType';
 import { UserModel } from './user';
