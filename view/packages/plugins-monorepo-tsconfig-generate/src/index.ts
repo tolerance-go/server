@@ -1,20 +1,16 @@
-import { omitBy } from 'lodash';
-import { IApi } from 'umi';
-import { readFileSync, writeFileSync } from 'fs';
-import { join, relative } from 'path';
 import { getPackagesSync } from '@manypkg/get-packages';
+import prettier from '@umijs/utils/compiled/prettier';
+import { readFileSync, writeFileSync } from 'fs';
+import { omitBy } from 'lodash';
+import { join, relative } from 'path';
+import { IApi } from 'umi';
 
 let once = false;
 
 export default (api: IApi) => {
   api.describe({
     key: 'monorepoTsConfigGenerate',
-    config: {
-      schema(Joi) {
-        return Joi.object({});
-      },
-    },
-    enableBy: api.EnableBy.config,
+    enableBy: api.EnableBy.register,
   });
 
   const modifyTsConfig = () => {
@@ -22,9 +18,12 @@ export default (api: IApi) => {
       readFileSync(join(api.paths.absTmpPath, 'tsconfig.json'), 'utf-8'),
     );
 
-    const oldTsconfig = JSON.parse(
-      readFileSync(join(api.paths.cwd, 'tsconfig.json'), 'utf-8'),
+    const oldTsconfigContent = readFileSync(
+      join(api.paths.cwd, 'tsconfig.json'),
+      'utf-8',
     );
+
+    const oldTsconfig = JSON.parse(oldTsconfigContent);
 
     const pkg = JSON.parse(readFileSync(api.pkgPath, 'utf-8'));
 
@@ -59,7 +58,7 @@ export default (api: IApi) => {
 
     const monoPkgs = monorepos.packages.map((pkg) => pkg.packageJson.name);
 
-    const next = {
+    const nextTsConfig = {
       ...oldTsconfig,
       compilerOptions: {
         ...oldTsconfig.compilerOptions,
@@ -73,13 +72,17 @@ export default (api: IApi) => {
       },
     };
 
-    if (JSON.stringify(oldTsconfig) === JSON.stringify(next)) return;
+    const nextTsConfigContent = JSON.stringify(nextTsConfig);
+
+    if (oldTsconfigContent === nextTsConfigContent) return;
 
     api.logger.ready('monorepoTsConfigGenerate start gen tsconfig');
 
     writeFileSync(
       join(api.paths.cwd, 'tsconfig.json'),
-      JSON.stringify(next, null, 2),
+      prettier.format(nextTsConfigContent, {
+        parser: 'json',
+      }),
       'utf-8',
     );
   };

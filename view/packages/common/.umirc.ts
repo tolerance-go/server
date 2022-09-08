@@ -3,17 +3,7 @@ import path from 'path';
 import { BASE, PUBLIC_PATH } from './src/constants/base';
 
 export default defineConfig({
-  plugins: [
-    require.resolve('@umijs/max-plugin-openapi'),
-    path.resolve(
-      __dirname,
-      '..',
-      'plugins',
-      'src',
-      'monorepo-tsconfig-generate',
-      'index.ts',
-    ),
-  ],
+  plugins: [require.resolve('@umijs/max-plugin-openapi')],
   openAPI: [
     {
       requestLibPath:
@@ -22,11 +12,6 @@ export default defineConfig({
       projectName: 'server',
     },
   ],
-  monorepoTsConfigGenerate: {
-    paths: {
-      '@fenxing/common/*': ['./src/*'],
-    },
-  },
   npmClient: 'pnpm',
   base: BASE,
   publicPath: PUBLIC_PATH,

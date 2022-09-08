@@ -4,7 +4,6 @@ import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
   plugins: [require.resolve('@fenxing/plugins-monorepo-tsconfig-generate')],
-  monorepoTsConfigGenerate: {},
   proxy: {
     '/api': {
       target: 'http://127.0.0.1:7001',
