@@ -1,7 +1,7 @@
-import { Model } from 'sequelize';
+import { Model, ModelCtor } from 'sequelize';
 import { Union } from 'ts-toolbelt';
 type FilterString<T> = T extends string ? T : never;
-
+type GetModel<MC> = MC extends ModelCtor<infer M> ? M : MC;
 export type DTOName = string;
 
 export type DTOKey = string;
@@ -90,7 +90,7 @@ export type DTOWithModel<Model, IncludesDTOName extends DTOName = never> = {
         ? DTOArrayField<'string', true, IncludesDTOName>
         : IT extends number
         ? DTOArrayField<'integer' | 'number', true, IncludesDTOName>
-        : DTOCustomField<true, IncludesDTOName>
+        : DTOArrayField<'string' | 'integer' | 'number', true, IncludesDTOName>
       : Model[Key] extends number
       ? DTOIntegerField<true> | DTONumberField<true>
       : Model[Key] extends boolean
@@ -103,7 +103,11 @@ export type DTOWithModel<Model, IncludesDTOName extends DTOName = never> = {
       ? DTOArrayField<'string', false | undefined, IncludesDTOName>
       : IT extends number
       ? DTOArrayField<'integer' | 'number', false | undefined, IncludesDTOName>
-      : DTOCustomField<false | undefined, IncludesDTOName>
+      : DTOArrayField<
+          'string' | 'integer' | 'number',
+          false | undefined,
+          IncludesDTOName
+        >
     : NonNullable<Model[Key]> extends number
     ? DTOIntegerField<false | undefined> | DTONumberField<false | undefined>
     : NonNullable<Model[Key]> extends boolean
@@ -116,17 +120,17 @@ export type DTOGroup<IncludesDTOName extends DTOName = never> = Record<
   DTO<IncludesDTOName>
 >;
 
-export type DTOGroupWithModelGroup<
-  ModelGroup,
+export type DTOGroupWithModelCtorGroup<
+  ModelCtorGroup,
   IncludesDTOName extends DTOName = never,
 > = {
-  [Key in keyof ModelGroup]: DTOWithModel<
-    Omit<ModelGroup[Key], keyof Model>,
+  [Key in keyof ModelCtorGroup]: DTOWithModel<
+    Omit<GetModel<ModelCtorGroup[Key]>, keyof Model>,
     IncludesDTOName
   >;
 };
 
-type ModelGroup = Record<string, Model>;
+type ModelCtorGroup = Record<string, ModelCtor<Model>>;
 
 export function defineDTOGroup<DG extends DTOGroup>(dto: DG): DG;
 
@@ -150,15 +154,16 @@ export function defineDTOGroup(
   return dto;
 }
 
+
 export function defineDTOEntitiesGroup<
-  MG extends ModelGroup,
-  DG extends DTOGroupWithModelGroup<MG>,
+  MG extends ModelCtorGroup,
+  DG extends DTOGroupWithModelCtorGroup<MG>,
 >(models: MG, dto: DG): DG;
 
 export function defineDTOEntitiesGroup<
-  MG extends ModelGroup,
+  MG extends ModelCtorGroup,
   IncludeDTOGroup extends DTOGroup,
-  DG extends DTOGroupWithModelGroup<
+  DG extends DTOGroupWithModelCtorGroup<
     MG,
     FilterString<keyof Union.Merge<IncludeDTOGroup>>
   >,
@@ -171,8 +176,8 @@ export function defineDTOEntitiesGroup<
 ): DG;
 
 export function defineDTOEntitiesGroup(
-  _model: ModelGroup,
-  dto: DTOGroupWithModelGroup<ModelGroup>,
+  _model: ModelCtorGroup,
+  dto: DTOGroupWithModelCtorGroup<ModelCtorGroup>,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _opts?: {
     include: DTOGroup[];

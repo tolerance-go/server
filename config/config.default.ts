@@ -11,9 +11,9 @@ export default (appInfo: EggAppInfo) => {
   config.middleware = ['errorHandler', 'authTest'];
 
   // add your special config in here
-  const bizConfig = {
-    sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
-  };
+  // const bizConfig = {
+  //   sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+  // };
 
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
@@ -80,6 +80,6 @@ export default (appInfo: EggAppInfo) => {
   // the return config will combines to EggAppConfig
   return {
     ...config,
-    ...bizConfig,
+    // ...bizConfig,
   };
 };

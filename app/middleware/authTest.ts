@@ -1,6 +1,6 @@
 import { Context } from 'egg';
 export default () => {
-  return async function authTest(ctx: Context, next) {
+  return async function authTest(ctx: Context, next: () => Promise<any>) {
     console.log('ctx.request.url', ctx.request.url, ctx.request.method);
 
     const whiteList = [

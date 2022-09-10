@@ -1,27 +1,26 @@
 import { Application } from 'egg';
 import {
+  CreationAttributes,
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
   Model,
-  CreationAttributes,
 } from 'sequelize';
-import { WidgetLibModel } from './widgetLib';
-export interface UserModel
-  extends Model<
-    InferAttributes<UserModel>,
-    InferCreationAttributes<UserModel>
-  > {
+import { WidgetModel } from './widget';
+export class UserModel extends Model<
+  InferAttributes<UserModel>,
+  InferCreationAttributes<UserModel>
+> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
-  nickname: CreationOptional<string>;
-  password: string;
-  email: CreationOptional<string>;
-  avatar: CreationOptional<string>;
-  username: string;
-  createdAt: CreationOptional<string>;
-  updatedAt: CreationOptional<string>;
-  widget?: CreationAttributes<WidgetLibModel>[];
+  declare id: CreationOptional<string>;
+  declare nickname: CreationOptional<string | null>;
+  declare password: string;
+  declare email: CreationOptional<string | null>;
+  declare avatar: CreationOptional<string | null>;
+  declare username: string;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
+  declare widgets?: CreationAttributes<WidgetModel>[];
 }
 
 export default (app: Application) => {

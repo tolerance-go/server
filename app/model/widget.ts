@@ -19,15 +19,15 @@ export class WidgetModel extends Model<
   InferCreationAttributes<WidgetModel>
 > {
   declare id: CreationOptional<string>;
-  declare desc: CreationOptional<string>;
-  declare labels: CreationOptional<string>;
+  declare desc: CreationOptional<string | null>;
+  declare labels: CreationOptional<string[]>;
   declare name: string;
   declare elementType: string;
   declare createdAt: CreationOptional<string>;
   declare updatedAt: CreationOptional<string>;
   declare type: string;
   declare display: string;
-  declare detail?: string;
+  declare detail: CreationOptional<string>;
   declare widgetGroupId: CreationOptional<string>;
   declare userId: CreationOptional<string>;
   declare static associations: {
@@ -68,7 +68,11 @@ export default (app: Application) => {
       type: UUID,
       field: 'user_id',
     },
-    detail: TEXT('long'),
+    detail: {
+      type: TEXT('long'),
+      defaultValue: '',
+      allowNull: false,
+    },
   });
 
   (

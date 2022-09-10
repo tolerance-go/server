@@ -1,26 +1,21 @@
-const Identity = {
+import { defineDTO } from '../dto/entities/core';
+
+export const Identity = defineDTO({
   id: { type: 'string', required: true },
-};
+});
 
-const UserId = {
+export const UserId = defineDTO({
   userId: { type: 'string', required: true },
-};
+});
 
-const Timestamp = {
+export const Timestamp = defineDTO({
   createdAt: { type: 'string', required: true },
   updatedAt: { type: 'string', required: true },
-};
+});
 
-const ResponseBase = {
+export const ResponseBase = defineDTO({
   success: { type: 'boolean', required: true },
   errorCode: { type: 'integer', required: false },
   errorMessage: { type: 'string', required: false },
-  showType: { type: 'integer', required: false },
-};
-
-module.exports = {
-  UserId,
-  Identity,
-  Timestamp,
-  ResponseBase,
-};
+  showType: { type: 'boolean', required: false },
+});
